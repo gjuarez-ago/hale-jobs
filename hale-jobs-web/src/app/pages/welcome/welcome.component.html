@@ -1,0 +1,210 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar"
+            nzCollapsible
+            nzWidth="256px"
+            nzBreakpoint="md"
+            [(nzCollapsed)]="isCollapsed"
+            [nzTrigger]="null">
+    
+    <div class="sidebar-logo">
+      <a routerLink="/home">
+      <!-- <img class="logo-img" src="assets/images/logo-b.png" alt=""> -->
+      <h3> HALE JOBS </h3>
+      </a>
+    </div>
+
+
+    <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+
+      <li nz-menu-item  nzTitle="Dashboard" nzMatchRouter nzIcon="form">
+        <i nz-icon nzType="bar-chart"> </i> 
+        <span  routerLink="/dashboard/statisticts" > Dashboard </span>
+      </li>
+
+
+      <li nz-submenu nzOpen nzTitle="Mi trabajo" nzIcon="reconciliation">
+        <ul>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/my-offers"  >Mis ofertas</a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/my-exams" > Mis examenes </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/my-company" > Mi empresa </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/search-workers" > Buscar trabajador </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/my-contacts" > Libreta de contactos </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/complaints" > Gestión de quejas </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/my-notifications" > Notificaciones </a>
+          </li>
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/my-profile" > Mi perfil </a>
+          </li>
+          
+        </ul>
+      </li>
+
+      <li nz-submenu nzOpen nzTitle="Administración" nzIcon="apartment">
+        <ul>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/offers-informals"  >Ofertas informales</a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/offers-formals" > Ofertas formales </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/admin-comments" > Comentarios </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/admin-complaints" > Gestión de quejas </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/admin-payments" > Gestion de pagos </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/admin-postulations-i" > Postulaciones Inf. </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/admin-postulations-f" > Postulaciones form. </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/reviews-b" > Calificaciones N. </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/reviews-p" > Calificaciones P. </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/admin-notifications" > Notificaciones </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/worker-experiences" > Experiencias de trabajo </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/admin-users" > Gestión de usuarios </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/admin-companies" > Empresas registradas </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li nz-submenu nzOpen nzTitle="Catalogos" nzIcon="insert-row-left">
+        <ul>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/admin-permissions"  > Permisos </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/admin-cities"  >Ciudades INEGI </a>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/admin-states"  > Estados INEGI </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/type-of-jobs"  > Tipos de trabajo </a>
+          </li>
+
+          
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard/type-of-payments"  > Tipos de pago </a>
+          </li>
+
+          
+        </ul>
+      </li>
+
+      <!-- <li nz-submenu nzOpen nzTitle="Finanzas" nzIcon="shopping-cart">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/dashboard/finance">  Contabilidad y gastos </a>
+          </li>
+        </ul>
+      </li> -->
+      
+      <li nz-menu-item nzMatchRouter>
+        <i nz-icon nzType="solution"> </i> 
+        <span> FAQ </span>
+      </li>
+
+
+      <li nz-menu-item  nzTitle="Comprar" nzMatchRouter nzIcon="form">
+        <i nz-icon nzType="verified"> </i> 
+        <span> Aviso de privacidad </span>
+      </li>
+
+
+    </ul>
+
+    
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+      
+          <i class="trigger"
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></i>
+        </span> 
+        
+      <span class="avatar">
+        <nz-space>
+          <a *nzSpaceItem class="my-profile-text"> <strong> Gabriel Juarez </strong>  </a>
+          <!-- <a *nzSpaceItem class="avatar-user"  (click)="onLogOut()" > <i class="fas fa-sign-out-alt"></i> Salir </a>  -->
+          <nz-avatar  *nzSpaceItem class="avatar-user" nzText="GA"></nz-avatar> 
+        </nz-space>
+
+      </span> 
+      
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

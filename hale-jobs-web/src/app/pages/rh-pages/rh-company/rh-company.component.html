@@ -1,0 +1,182 @@
+<!-- <div class="nav">
+     
+    <nz-breadcrumb>
+     <nz-breadcrumb-item>
+       <i nz-icon nzType="home"></i>
+     </nz-breadcrumb-item>
+    
+     <nz-breadcrumb-item>Mi trabajo</nz-breadcrumb-item>
+ 
+     <nz-breadcrumb-item>
+       <a>
+         <i nz-icon nzType="user"></i>
+         <span>Mi empresa</span>
+       </a>
+     </nz-breadcrumb-item>
+ 
+ 
+   </nz-breadcrumb>
+</div> -->
+
+
+
+
+
+<div class="body-content">
+  <div class="content-profile">
+
+      <div class="img-user-content">
+
+
+          <div class="card">
+              <div class="cover-bg"></div>
+  
+              <div class="user-info-wrap">
+                  <div class="user-photo"></div>
+                  <div class="user-info">
+                      <div class="user-name">Florina Rothman</div>
+                      <div class="user-title">Cocinera</div>
+                  </div>
+              </div>
+  
+              <div class="user-bio">
+
+                  
+                  <div class="tags">
+                      <nz-space>
+                          <nz-tag *nzSpaceItem nzColor="#55acee">
+                              <i nz-icon nzType="twitter"></i>
+                              <span>Perfil verificado</span>
+                            </nz-tag>
+                            <nz-tag *nzSpaceItem nzColor="#fcad03">
+                              <i nz-icon nzType="youtube"></i>
+                              <span>Premium</span>
+                            </nz-tag>
+                      </nz-space>
+                  </div>
+
+                   <br>
+                  <p> <i>
+                    "No tienes que ser grande para empezar. Pero tienes que empezar para poder ser grande"
+                  </i>
+                  </p>
+
+              </div>
+          </div>
+
+
+          <div class="more-information-user card">
+              <!-- <div class="starts">
+              <nz-rate [ngModel]="4.5" nzAllowHalf></nz-rate>
+              <p> 4.6 Pts. </p>
+              </div> -->
+
+              <div class="buttons-verification">
+
+                  
+                  <button class="button-v" role="button"> Comprar membresia </button>
+
+                  <!-- <button class="button-v" role="button"> Verificar perfil </button> -->
+                  
+                  <button class="button-v" role="button"  routerLink="/profile/notifications"> Mis notificaciones </button>
+                  
+                  <button class="button-v" role="button" routerLink="/profile/my-payments"> Mis pagos </button>
+                  
+                  <button class="button-v" role="button" routerLink="/profile/settings-profile"> Ajustes </button>
+
+              </div>
+          </div>
+
+      </div>
+
+
+      <div class="content-information">
+
+          <div class="content-information-header card">
+
+              <div class="buttons-content">
+
+                                    
+                  <div class="button-element">
+                      <button class="button-22" role="button" routerLink="/profile/cv"> Mi CV </button>
+                  </div>
+
+
+                  <div class="button-element">
+                      <button class="button-22" role="button" routerLink="/profile/my-postulations"> Mis postulaciones </button>
+                  </div>
+
+                  
+                  <div class="button-element">
+                      <button class="button-22" role="button" routerLink="/profile/my-history"> Historial </button>
+                  </div>
+
+
+                  
+                  <div class="button-element">
+                      <button class="button-23" role="button"> Mis chambitas </button>
+                  </div>
+
+
+              </div>
+              
+          </div>
+
+
+          <div class="content-information-body card">
+
+             <router-outlet></router-outlet>
+              
+          </div>
+
+          <div class="content-information-footer card">
+
+            <p> Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.F </p>
+              
+          </div>
+
+
+
+
+
+
+      </div>
+
+
+  </div>
+
+
+
+</div>
+
+
+<!-- View Profile -->
+
+<!-- <nz-drawer
+[nzClosable]="false"
+[nzVisible]="visible"
+nzPlacement="right"
+[nzWidth]="500"
+nzTitle="Basic Drawer"
+(nzOnClose)="close()"
+>
+<ng-container *nzDrawerContent>
+<p>Some contents...</p>
+<p>Some contents...</p>
+<p>Some contents...</p>
+</ng-container>
+</nz-drawer> -->
+
+<!-- Change password -->
+
+<!-- <nz-modal [(nzVisible)]="visibleChangePassword" nzTitle="The first Modal" (nzOnCancel)="closeChangePassword()" (nzOnOk)="closeChangePassword()">
+  <ng-container *nzModalContent>
+    <p>Content one</p>
+    <p>Content two</p>
+    <p>Content three</p>
+  </ng-container>
+</nz-modal>
+-->
+
+
+<app-footer></app-footer>

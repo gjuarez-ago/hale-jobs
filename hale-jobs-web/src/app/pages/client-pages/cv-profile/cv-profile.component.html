@@ -1,0 +1,317 @@
+
+    <nz-page-header  [nzGhost]="false">
+        <nz-page-header-title> 📑 MI CV</nz-page-header-title>
+        <nz-page-header-extra>
+          <nz-space>
+            <!-- <button *nzSpaceItem nz-button>Operation</button> -->
+            <button *nzSpaceItem nz-button>Adjuntar CV (PDF)</button>
+            <button *nzSpaceItem nz-button nzType="primary" [disabled]="!validateForm.valid">Actualizar</button>
+          </nz-space>
+        </nz-page-header-extra>
+        <nz-page-header-content>
+
+            <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                
+              
+                <div class="header-exp">
+
+                    <div class="title"> Información personal </div>
+
+                    <div class="button-add"> 
+                      <!-- <button nz-button> <i nz-icon nzType="plus"></i> Agregar experiencia</button> -->
+                    </div>
+                </div>
+
+
+                <div class="f">
+                    
+                <div class="content-form-1">
+
+                    <nz-form-item class="input-content">
+                        <label class="input-label"> Tu nombre:  </label>
+                        <nz-form-control nzHasFeedback >
+                          <nz-input-group nzPrefixIcon="user">
+                            <input formControlName="userName" nz-input placeholder="Username" />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+    
+    
+                      <nz-form-item class="input-content">
+                        <label class="input-label"> Tu nombre:  </label>
+                        <nz-form-control nzHasFeedback >
+                          <nz-input-group nzPrefixIcon="lock">
+                            <input formControlName="password" nz-input type="text" placeholder="Password" />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+
+                      
+                      <nz-form-item class="input-content">
+                        <label class="input-label"> Tu nombre:  </label>
+                        <nz-form-control nzHasFeedback >
+                          <nz-input-group nzPrefixIcon="lock">
+                            <input formControlName="password" nz-input type="text" placeholder="Password" />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+                </div>
+
+                <div class="textarea-content">
+
+                    <nz-form-item class="inputarea-content">
+                        <label class="input-label"> Cuentanos acerca de ti:  </label>
+                        <nz-form-control >
+                            <nz-input-group [nzSuffix]="textAreaClearTpl" class="ant-input-affix-wrapper-textarea-with-clear-btn">
+                                <textarea nz-input formControlName="password" placeholder="textarea with clear icon"></textarea>
+                              </nz-input-group>
+                              <ng-template #textAreaClearTpl>
+                                <i
+                                  nz-icon
+                                  class="ant-input-clear-icon"
+                                  nzTheme="fill"
+                                  nzType="close-circle"
+                                ></i>
+                              </ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+
+                </div>
+
+                </div>
+
+
+                
+                <div class="exp-profesional">
+
+                    <div class="header-exp">
+
+                        <div class="title"> Experiencia profesional </div>
+
+                        <div class="button-add"> 
+                          <button nz-button> <i nz-icon nzType="plus"></i> Agregar experiencia</button>
+                        </div>
+                    </div>
+
+
+                    <div class="card-exp">
+
+                        <div class="title-card"> <p> Software Architect  </p> </div>
+                        <div class="subtitle-card"> <p> Junio 2022 - Actual - AT&T México </p></div>
+
+                        <div class="descripcion">
+                            <p>
+                                Attention to users through the help desk giving 1st level support and deriving reports to different areas. Survey, attention and follow-up of folios based on the requirements of the end users. Based on ITIL v4
+                            </p>
+                        </div>
+
+                        <div class="tags-tech">
+                            <nz-tag [nzColor]="'magenta'">Angular 12</nz-tag>
+                            <nz-tag [nzColor]="'red'">React.js</nz-tag>
+                            <nz-tag [nzColor]="'volcano'">Spring Boot</nz-tag>
+                            <nz-tag [nzColor]="'orange'">SQL Server</nz-tag>
+                            <nz-tag [nzColor]="'gold'">Github</nz-tag>
+                        </div>
+
+
+                    </div>
+
+                    <div class="card-exp">
+
+                        <div class="title-card"> <p> Software developer </p> </div>
+                        <div class="subtitle-card"> <p> Junio 2022 - Actual - Cotemar S.A de C.V </p></div>
+
+                        <div class="descripcion">
+                            <p>
+                                In charge of carrying out the migration and changes
+                                 in the architecture and infrastructure of the recharge system,
+                                  this so that chains such as COOPEL, BANORTE, BANAMEX and many more chains can connect and consume recharge services (SOAP). With this, it was possible to increase the response capacity, greater coverage but, above all, better communication with the chains that make use of the recharge service.
+                            </p>
+                        </div>
+
+                        <div class="tags-tech">
+                            <nz-tag [nzColor]="'magenta'">Angular 12</nz-tag>
+                            <nz-tag [nzColor]="'red'">React.js</nz-tag>
+                            <nz-tag [nzColor]="'volcano'">Spring Boot</nz-tag>
+                            <nz-tag [nzColor]="'orange'">SQL Server</nz-tag>
+                            <nz-tag [nzColor]="'gold'">Github</nz-tag>
+                        </div>
+
+
+                    </div>
+
+                    <div class="card-exp">
+
+                        <div class="title-card"> <p> Full stack developer  </p> </div>
+                        <div class="subtitle-card"> <p> Junio 2022 - Actual - Macropay </p></div>
+
+                        <div class="descripcion">
+                            <p>
+                                I am currently working with the following technologies: * Spring Boot JAVA * Angular 11 * Mysql * SAP Knowing and working with the following languages: - TypeScript - JavaScript - SQL - Java
+                            </p>
+                        </div>
+
+                        <div class="tags-tech">
+                            <nz-tag [nzColor]="'magenta'">Angular 12</nz-tag>
+                            <nz-tag [nzColor]="'orange'">SQL Server</nz-tag>
+                            <nz-tag [nzColor]="'gold'">Github</nz-tag>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <!-- Sección para las principales skills -->
+
+                <div class="skills">
+
+                    <div class="header-exp">
+
+                        <div class="title"> Mis habilidades </div>
+
+                        <div class="button-add"> 
+                          <button nz-button> <i nz-icon nzType="plus"></i> Agregar habilidad</button>
+                        </div>
+                    </div>
+
+
+                    <div class="description-help">
+                        <p> En esta sección te recomendamos colocamos tus principales habilidades tecnicas, como desarrollo de softwre, Gestión del tiempo etc. </p>
+                    </div>
+
+
+                    <div class="skill-list">
+
+                        <div class="skill-element"> Gestion del tiempo </div>
+                        <div class="skill-element"> Spring boot </div>
+                        <div class="skill-element"> React.js </div>
+                        <div class="skill-element"> Scrum </div>
+                        <div class="skill-element"> Mécanica </div>
+
+
+
+                    </div>
+
+                </div>
+                
+
+                <div class="education">
+
+                    
+                    <div class="header-exp">
+
+                        <div class="title"> Mi educación </div>
+
+                        <div class="button-add"> 
+                          <button nz-button> <i nz-icon nzType="plus"></i> Agregar</button>
+                        </div>
+                    </div>
+
+
+                    <div class="education-content">
+
+
+                        <div class="card-edu">
+
+                            <div class="title-edu"> <p> <strong> Universidad Autónoma del Carmen </strong></p> </div>
+                            <div class="title-date"><i> 2019 - Actual </i></div>
+
+                            <div class="status">
+                                Universitario - No titulado en Tecnologías de Información
+                            </div>
+
+
+                        </div>
+
+                        <div class="card-edu">
+
+                            <div class="title-edu"> <p> <strong> CONALEP Nacional </strong></p> </div>
+                            <div class="title-date"><i> 2019 - Actual </i></div>
+
+                            <div class="status">
+                                Técnico en En Informática
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="more-information">
+
+                    <div class="header-exp">
+
+                        <div class="title"> Mas información </div>
+
+
+
+                        <div class="button-add"> 
+                          <!-- <button nz-button> <i nz-icon nzType="plus"></i> Agregar</button> -->
+                        </div>
+                    </div>
+
+                    <div class="description-help">
+                        <p> Esta información es super importante y delicada por lo que tu eliges si deseas colocar tu edad, y dirección </p>
+                    </div>
+
+
+                    <div class="more-content">
+
+                        <div class="row-more">
+                            
+                        <div class="element-more">
+                            <label class="input-label"> Pais:  </label>
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+                                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                            </nz-select>
+                        </div>
+
+
+                        <div class="element-more">
+                            <label class="input-label"> Estado:  </label>
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+                                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                            </nz-select>
+                        </div>
+
+
+                        <div class="element-more">
+                            <label class="input-label"> Ciudad:  </label>
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+                                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                            </nz-select>
+                        </div>
+                        </div>
+
+
+                    </div>
+
+
+                    
+
+
+                </div>
+
+
+                 
+            
+
+            </form>
+          
+        </nz-page-header-content>
+      </nz-page-header>
+
+

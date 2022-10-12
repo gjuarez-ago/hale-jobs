@@ -1,0 +1,141 @@
+.body-content{
+    /* position: absolute; */
+    padding: 150px 10px 50px 10px;
+}
+
+
+.offer-content{
+    width: 85%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+.image-content {
+    width: 50%;
+}
+
+
+.info-content {
+    width: 48%;
+    padding: 0px 40px;
+
+}
+
+
+.element-s {
+    margin: 10px 0px;
+    background-color: rgb(233, 233, 233);
+    color: rgb(3, 3, 3);
+    padding: 10px;
+    font-size: 1.1em;
+    font-weight: 400;
+    border-radius: 10px;
+}
+
+
+
+
+/* CSS */
+.button-22 {
+  align-items: center;
+  appearance: button;
+  background-color: #0276FF;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: "RM Neue",sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 51px;
+  text-align: center;
+  text-transform: none;
+  transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-22:active {
+  background-color: #006AE8;
+}
+
+.button-22:hover {
+  background-color: #1C84FF;
+}
+
+
+/* CSS */
+.button-38 {
+  margin: 0px 10px;
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;  
+  padding: 10px 51px;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-38:hover {
+  background-color: rgb(249,250,251);
+}
+
+.button-38:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-38:focus-visible {
+  box-shadow: none;
+}
+
+.buttons-content {
+    margin: 15px 0px;
+    display: flex;
+}
+
+.line {
+    width: 100%;
+    background-color: #808080;
+    padding: 1px;
+    margin: 2px 0px 15px 0px;
+}
+
+.carrousel-img {
+    width: 100%;
+    margin: 0px 0px 50px 0px;
+}
+
+.carrousel-img img {
+    width: 100%;
+    border-radius: 10px;
+    transition: all .4s ease;
+    cursor: pointer;
+}
+
+.carrousel-img img:hover {
+    transform: scale(1.01) rotate(0deg);
+    /*cuando nos posicionamos sobre la imagen con esta propiedad aumentamos su escala y ademas la giramos*/
+    opacity: 0.9;
+}

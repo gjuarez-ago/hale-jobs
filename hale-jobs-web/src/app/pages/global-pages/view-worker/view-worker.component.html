@@ -1,0 +1,233 @@
+<div class="body-content">
+
+
+
+    <div class="content-profile">
+
+        <div class="img-user-content">
+
+
+            <div class="card">
+                <div class="cover-bg"></div>
+    
+                <div class="user-info-wrap">
+                    <div class="user-photo"></div>
+                    <div class="user-info">
+                        <div class="user-name">Florina Rothman</div>
+                        <div class="user-title">Cocinera</div>
+                    </div>
+                </div>
+    
+                <div class="user-bio">
+
+                    
+                    <div class="tags">
+                        <nz-space>
+                            <nz-tag *nzSpaceItem nzColor="#55acee">
+                                <i nz-icon nzType="twitter"></i>
+                                <span>Perfil verificado</span>
+                              </nz-tag>
+                              <nz-tag *nzSpaceItem nzColor="#fcad03">
+                                <i nz-icon nzType="youtube"></i>
+                                <span>Premium</span>
+                              </nz-tag>
+                        </nz-space>
+                    </div>
+
+
+                    <p>Web enthusiast. Travelaholic. Friendly communicator. Coffee enthusiast. Music geek.
+                        Food fan. Gamer.
+                    </p>
+
+
+
+
+
+                    <div class="social">
+                        <div class="social-icons">
+                            <a href="" class="fa">
+                                <i class="fa fa-behance-square"></i>
+                            </a>
+                            <a href="" class="fa">
+                                <i class="fa fa-facebook-square"></i>
+                            </a>
+                            <a href="" class="fa">
+                                <i class="fa fa-linkedin-square"></i>
+                            </a>
+                            <a href="" class="fa">
+                                <i class="fa fa-dribbble"></i>
+                            </a>
+                        </div>
+    
+                        <div class="message">
+                            <a href="" class="fa">
+                                <i class="fa fa-envelope-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="more-information-user card">
+                <div class="starts">
+                <nz-rate [ngModel]="4.5" nzAllowHalf></nz-rate>
+                <p> 4.6 Pts. </p>
+                </div>
+
+                <div class="buttons-verification">
+
+                    
+                    <button class="button-v" role="button"> Whatsapp </button>
+                    <button class="button-v" role="button"> Llamar </button>
+                    <button class="button-v" role="button"> Reportar perfil </button>
+                    
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="content-information">
+
+            <!-- <div class="content-information-header card">
+
+                <div class="buttons-content">
+
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Crear oferta </button>
+                    </div>
+
+                    
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Cambiar mi contraseña </button>
+                    </div>
+
+                    
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Mi perfil </button>
+                    </div>
+
+
+                    
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Cerrar sesión </button>
+                    </div>
+
+
+                </div>
+                
+            </div> -->
+
+
+            <div class="content-information-body card">
+
+                <div class="title-body">
+
+                    <nz-page-header nzBackIcon [nzGhost]="false">
+                        <nz-page-header-title>Información</nz-page-header-title>
+                        <!-- <nz-page-header-subtitle>01/09/2002</nz-page-header-subtitle> -->
+                        <!-- <nz-page-header-extra>
+                          <nz-space>
+                            <button *nzSpaceItem nz-button>Mis ofertas</button>
+                            <button *nzSpaceItem nz-button>Mis chambitas</button>
+                            <button *nzSpaceItem nz-button nzType="primary">Notificaciones</button>
+                          </nz-space>
+                        </nz-page-header-extra> -->
+                        <nz-page-header-content>
+                          <nz-descriptions nzSize="small" [nzColumn]="3">
+                            <nz-descriptions-item nzTitle="No. Postulaciones" [nzSpan]="1"> 12</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="No. Ofertas" [nzSpan]="1"><a> 493 </a></nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Ultima oferta" [nzSpan]="1">2017-01-10</nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Estatus" [nzSpan]="1"> <nz-tag [nzColor]="'magenta'">Ocupado</nz-tag></nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="Localidad" [nzSpan]="2">
+                              Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
+                            </nz-descriptions-item>
+                          </nz-descriptions>
+                        </nz-page-header-content>
+                      </nz-page-header>
+                </div>
+
+                <!-- <div class="buttons-content">
+
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Crear oferta </button>
+                    </div>
+
+                    
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Cambiar mi contraseña </button>
+                    </div>
+
+                    
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Mi perfil </button>
+                    </div>
+
+
+                    
+                    <div class="button-element">
+                        <button class="button-22" role="button"> Cerrar sesión </button>
+                    </div>
+
+
+                </div> -->
+
+                <div class="content-list-information-body">
+                    <nz-table #basicTable [nzData]="listOfData">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of basicTable.data">
+                            <td>{{ data.name }}</td>
+                            <td>{{ data.age }}</td>
+                            <td>{{ data.address }}</td>
+                            <td>
+                              <a>Action 一 {{ data.name }}</a>
+                              <nz-divider nzType="vertical"></nz-divider>
+                              <a>Delete</a>
+                            </td>
+                           
+                          </tr>
+                        </tbody>
+                      </nz-table>
+                </div>
+                
+                
+                
+            </div>
+
+            <div class="content-information-footer card">
+
+            
+              <p> Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.F </p>
+                
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

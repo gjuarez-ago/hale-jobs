@@ -1,0 +1,366 @@
+<div class="body-content">
+
+
+
+    <div class="box inputs-box">
+
+
+        <div class="row">
+            <div class="col">
+
+
+                <nz-select nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+                    <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                    <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                    <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                  </nz-select>
+
+            </div>
+
+            
+            <div class="col">
+                <nz-select nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+                    <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                    <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                    <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                  </nz-select>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <nz-select nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+                    <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                    <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                    <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                  </nz-select>
+            </div>
+
+            
+            <div class="col">
+               
+                <nz-input-group nzSize="large" [nzSuffix]="suffixIcon">
+                    <input
+                      placeholder="input here"
+                      nz-input
+                      [(ngModel)]="inputValue"
+                      [nzAutocomplete]="auto"
+                    />
+                  </nz-input-group>
+
+
+                  <ng-template #suffixIcon>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+
+
+                <nz-autocomplete #auto [compareWith]="compareFun">
+                  <nz-auto-option *ngFor="let option of options" [nzValue]="option" [nzLabel]="option.label">
+                    {{ option.label }}
+                  </nz-auto-option>
+                </nz-autocomplete>
+            </div>
+        </div>
+
+
+        <div class="filters">
+
+          <div class="box-filter">
+            <nz-radio-group>
+              <label class="la" nz-radio nzValue="A"> Buscon </label>
+              <label class="la" nz-radio nzValue="B"> Buscon  </label>
+            </nz-radio-group> 
+          </div>
+
+          <div class="box-filter">
+            MAX: $
+            <nz-input-number [(ngModel)]="demoValue" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number> 
+            MIN: $
+            <nz-input-number [(ngModel)]="demoValue" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+            .°° 
+          </div>
+
+
+          
+          <div class="box-filter">
+            <nz-checkbox-group [(ngModel)]="checkOptionsOne" (ngModelChange)="log(checkOptionsOne)"></nz-checkbox-group>
+          </div>
+
+          <div class="box-filter">
+            <button class="button-9" role="button">Realizar busqueda</button>
+          </div>
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+    <section class="card-section">
+        <div class="card-content">
+  
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://www.mndelgolfo.com/blog/wp-content/uploads/2018/03/Todo-lo-que-necesitas-saber-para-armar-tu-taller-de-carpinteri%CC%81a1.jpg"
+                alt="a brand new sports car" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-blue">Car design</span>
+              <h1>
+                Why is the sports cars so well designed?
+              </h1>
+              <p class="card-subtitle">
+                An exploration into the car design industry and how it works
+              </p>
+              <div class="card-author">
+                <img src="https://i.ytimg.com/vi/E9eZgB5vYZ4/maxresdefault.jpg" alt="author avatar" />
+                <div class="author-info">
+                  <p class="author-name">John Doe</p>
+                  <p class="post-timestamp">2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://i0.wp.com/losalbaniles.com/wp-content/uploads/2022/03/Peo%CC%81n-.jpg?resize=424%2C287&ssl=1"
+                alt="a brand new sports car" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-blue">Car design</span>
+              <h1>
+                Why is the sports cars so well designed?
+              </h1>
+              <p class="card-subtitle">
+                An exploration into the car design industry and how it works
+              </p>
+              <div class="card-author">
+                <img
+                  src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  alt="author avatar" />
+                <div class="author-info">
+                  <p class="author-name">John Doe</p>
+                  <p class="post-timestamp">2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPqIXvZkinLM26p_acuBfOan7ccgNeqvTtOg&usqp=CAU"
+                alt="a landscape view full of baloons" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-purple">Adventure</span>
+              <h1>
+                Discover new adventures over the world
+              </h1>
+              <p class="card-subtitle">
+                Adventure and baloons are trends these days
+              </p>
+              <div class="card-author">
+                <img
+                  src="https://images.unsplash.com/photo-1504728078670-d0a59873c8c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                  alt="author avatar" />
+                <div class="author-info">
+                  <p class="author-name">John Doe</p>
+                  <p class="post-timestamp">2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://images.ecestaticos.com/-kiloJUTSewHwWMEPF_CF9GPYWI=/0x48:1264x765/1600x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F3b0%2F743%2Ffaa%2F3b0743faa0f646f05786cfa60eda836a.jpg"
+                alt="a city full of buildings" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-pink">Engineering</span>
+              <h1>
+                Living in downtown in the biggest cities
+              </h1>
+              <p class="card-subtitle">
+                Citizens of the biggest cities in the world talk about their lives
+              </p>
+              <div class="card-author">
+                <img
+                  src="https://images.unsplash.com/photo-1506422748879-887454f9cdff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                  alt="author avatar" />
+                <div class="author-info">
+                  <p>John Doe</p>
+                  <p>2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://www.electricistasdelafuentemadrid.com/wp-content/uploads/2017/12/tres-puntos-clave-que-debera-verificar-al-contratar-a-un-electricista.jpg"
+                alt="a brand new sports car" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-blue">Car design</span>
+              <h1>
+                Why is the sports cars so well designed?
+              </h1>
+              <p class="card-subtitle">
+                An exploration into the car design industry and how it works
+              </p>
+              <div class="card-author">
+                <img
+                  src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  alt="author avatar" />
+                <div class="author-info">
+                  <p class="author-name">John Doe</p>
+                  <p class="post-timestamp">2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://www.arkiplus.com/wp-content/uploads/2016/06/ingeniero-electronico.jpg"
+                alt="a brand new sports car" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-blue">Car design</span>
+              <h1>
+                Why is the sports cars so well designed?
+              </h1>
+              <p class="card-subtitle">
+                An exploration into the car design industry and how it works
+              </p>
+              <div class="card-author">
+                <img
+                  src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  alt="author avatar" />
+                <div class="author-info">
+                  <p class="author-name">John Doe</p>
+                  <p class="post-timestamp">2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://previews.123rf.com/images/dolgachov/dolgachov1607/dolgachov160703617/59884204-al-por-mayor-log%C3%ADstica-carga-el-transporte-y-las-personas-concepto-hombre-con-cargador-y-el-portapap.jpg"
+                alt="a landscape view full of baloons" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-purple">Adventure</span>
+              <h1>
+                Discover new adventures over the world
+              </h1>
+              <p class="card-subtitle">
+                Adventure and baloons are trends these days
+              </p>
+              <div class="card-author">
+                <img
+                  src="https://images.unsplash.com/photo-1504728078670-d0a59873c8c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                  alt="author avatar" />
+                <div class="author-info">
+                  <p class="author-name">John Doe</p>
+                  <p class="post-timestamp">2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card-container" routerLink="/view/1">
+            <div class="card-image">
+              <img
+                src="https://serviciotecnicocomputadoras.com/wp-content/uploads/2018/10/Servicio-Tecnico-Computadoras-1-1500x1001.jpeg"
+                alt="a city full of buildings" />
+            </div>
+            <div class="card-body">
+              <span class="card-badge card-badge-pink">Engineering</span>
+              <h1>
+                Living in downtown in the biggest cities
+              </h1>
+              <p class="card-subtitle">
+                Citizens of the biggest cities in the world talk about their lives
+              </p>
+              <div class="card-author">
+                <img
+                  src="https://images.unsplash.com/photo-1506422748879-887454f9cdff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                  alt="author avatar" />
+                <div class="author-info">
+                  <p>John Doe</p>
+                  <p>2h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+  
+      </section>
+      
+
+
+
+
+</div>
+
+
+
+<!--  -->
+
+
+<div class="floatingButtonWrap">
+    <div class="floatingButtonInner">
+        <a href="#" class="floatingButton">
+            <i class="fa fa-search icon-default"></i>
+        </a>
+        <ul class="floatingMenu">
+            <li>
+                <a href="#">Add Supplier</a>
+            </li>
+            <li>
+                <a href="#">Add Table</a>
+            </li>
+            <li>
+                <a href="#">Add Food</a>
+            </li>
+            <li>
+                <a href="#">Add Menu Type</a>
+            </li>
+            <li>
+                <a href="#">Add Menu</a>
+            </li>
+            <li>
+                <a href="https://google.com" target="_blank">Go To Google</a>
+            </li>
+            <li>
+                <a href="#">Add Inventory</a>
+            </li>
+            <li>
+                <a href="#">Add Staff</a>
+            </li>
+        </ul>
+    </div>
+</div>

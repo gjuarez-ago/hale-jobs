@@ -1,0 +1,113 @@
+<section class="body-content">
+
+   
+   <div class="offer-content">
+   
+      <div class="image-content">
+
+        
+        <div class="carrousel-img" *ngFor="let index of array">
+            <img  nz-image [nzSrc]="index" alt="index">
+          </div>
+
+
+        <!-- <nz-carousel nzAutoPlay>
+          </nz-carousel> -->
+      </div>
+
+
+      <div class="info-content">
+
+        <h1> Desarrollador Front end Angular </h1>
+
+        <span> Área metropolitana ,Ciudad de México -  <i> hace 1 día </i> - <strong> 49 solicitudes </strong> - <nz-tag [nzColor]="'magenta'">Urgente</nz-tag></span>
+        
+        <div class="element-s"> <i nz-icon nzType="question-circle" nzTheme="outline"></i>  2 horas  </div>
+
+        <div class="element-s"> <i nz-icon nzType="question-circle" nzTheme="outline"></i>  Más de 10.001 empleados · Servicios de TI y consultoría de TI </div>
+
+        <div class="element-s"> <i nz-icon nzType="question-circle" nzTheme="outline"></i>  3 antiguos empleados </div>
+        
+        <div class="element-s"> <i nz-icon nzType="question-circle" nzTheme="outline"></i>  En busca de personal  </div>
+
+        
+        <div class="buttons-content">
+            <button class="button-22" role="button"> Postularme</button>
+
+            <button class="button-38" role="button"> Guardar </button>
+        </div>
+
+        <div class="line"></div>
+
+          <div class="description-content">
+            <h4>Mas información</h4>
+            <p>
+                Indra somos una de las principales empresas globales de tecnología y consultoría y el socio tecnológico global para los negocios clave de sus clientes en todo el mundo.
+                A través de su unidad de negocio Minsait, Indra da respuesta a los retos que la transformación digital plantea a sus clientes, por medio de la oferta de resultados inmediatos y tangibles a empresas e instituciones.
+              </p>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="coments-content">
+
+            <h4> Comentarios </h4>
+
+            <nz-comment>
+                <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
+                <nz-comment-content>
+                  <nz-form-item>
+                    <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+                      Agregar comentario
+                    </button>
+                  </nz-form-item>
+                </nz-comment-content>
+              </nz-comment>
+
+
+            
+            <nz-comment nzAuthor="Han Solo" >
+                <nz-avatar
+                  nz-comment-avatar
+                  nzIcon="user"
+                  nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                ></nz-avatar>
+                <nz-comment-content>
+                  <p>
+                    We supply a series of design principles, practical patterns and high quality design
+                  </p>
+                </nz-comment-content>
+                <!-- <nz-comment-action>
+                  <i
+                    nz-tooltip
+                    nzTitle="Dislike"
+                    nz-icon
+                    nzType="dislike"
+                    [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'"
+                    (click)="dislike()"
+                  ></i>
+                  <span class="count dislike">{{ dislikes }}</span>
+                </nz-comment-action> -->
+                <button class="button-22" role="button"> Ver perfil </button>
+
+              </nz-comment>
+
+              
+        </div>
+
+        
+
+
+
+
+        
+      </div>
+
+
+   </div>
+
+
+</section>
