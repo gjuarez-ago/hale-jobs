@@ -9,10 +9,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -34,7 +36,6 @@ import lombok.ToString;
 @Data
 public class User {
 	
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
@@ -43,16 +44,16 @@ public class User {
     
     private String consecutive;
 
-    @Column(columnDefinition = "varchar(100) default 'Pendiente'")
+    @Column(columnDefinition = "varchar(100)")
 	private String names;
 
-    @Column(columnDefinition = "varchar(100) default 'Pendiente'")
+    @Column(columnDefinition = "varchar(100)")
 	private String surnames;
 	
-    @Column(columnDefinition = "varchar(100) default 'Pendiente'")
+    @Column(columnDefinition = "varchar(100)")
 	private String motherLastName;
 	
-    @Column(columnDefinition = "varchar(100) default 'Pendiente'")
+    @Column(columnDefinition = "varchar(100)")
 	private String fatherLastName;
 	
 	// Dirección de correo o número telefonico
@@ -62,9 +63,6 @@ public class User {
 	private String gender;
 	
 	private Date dateOfBirth;
-	
-	@Column(columnDefinition = "varchar(100) default 'Pendiente'")
-	private String email;
 	
 	private String numberPhone;
 	
@@ -76,11 +74,14 @@ public class User {
 	
 	private String[] authorities;
 	
-	private String country;
+	// Pais (MX)
+	private Long country;
 	
-	private String city;
+	// Ciudad 
+	private Long city;
 	
-	private String state;
+	// Estado
+	private Long state;
 
 	private boolean isActive;
 	
@@ -96,6 +97,8 @@ public class User {
     // Es premium
     private boolean isPremium;
     
+    private boolean profileCompleted;
+    
     // URL del CV
     private String urlCV;
     
@@ -103,39 +106,38 @@ public class User {
     private String aboutMe;
     
     // Puesto
-    private String job;
+    private String jobTitle;
     
     // Salario
     private double salary;
     
-    // Skills
-    private String[] skills;
+    private Long companyId;
     
-    
-    // Education
-    private String school;
-    
+	// Categoria
+	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private JobCategory category;
+		
+	// subcategoria 
+	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private JobSubcategory subcategory;
+	
     @ManyToMany(targetEntity = WorkExperiences.class,cascade = CascadeType.ALL)
   	private List<WorkExperiences> workExperiences;
        
     @ManyToMany(targetEntity = Permission.class,cascade = CascadeType.ALL)
 	private List<Permission> permissions;
     
+    // Skills
+    @ManyToMany(targetEntity = Permission.class,cascade = CascadeType.ALL)
+    private List<SkillsByUser> skills;
+
+    @ManyToMany(targetEntity = Permission.class,cascade = CascadeType.ALL)
+    private List<SchoolByUser> schools;
+    
+    
     // Datos delicados
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String curp;
-	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String ocr;
-	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String cic;
-	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String urlINEF;
-	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String urlINEB;	
 	
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
@@ -146,7 +148,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   	private Date expireToken;
     
-    // Campo de auditoria
+    @JsonProperty(access = Access.WRITE_ONLY)
 	@Column(columnDefinition = "integer default 0")
 	private int regBorrado;
 

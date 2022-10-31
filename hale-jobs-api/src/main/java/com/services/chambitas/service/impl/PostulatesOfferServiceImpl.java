@@ -43,11 +43,8 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		Offer offer = exisOffer(request.getOfferId());
 		
 		element.setConsecutive(generateConsecutive());
-		element.setComments(request.getComments());
-		element.setAmountOffered(request.getAmountOffered());
 		element.setOffer(offer);
 		element.setUser(user);
-		element.setStatus("Enviada");
 		element.setRegBorrado(0);
 		element.setRegCreatedBy(user.getConsecutive());
 		element.setRegDateCreated(new Date());
@@ -62,11 +59,6 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		
 		PostulatesOffer element =  existPostulatesOffer(id);
 		User user =  existUser(request.getUserId());
-		
-		
-		element.setAmountOffered(request.getAmountOffered());
-		element.setComments(request.getComments());
-		element.setStatus(request.getStatus());
 		element.setRegDateUpdated(new Date());
 		element.setRegUpdateBy(user.getConsecutive());
 		

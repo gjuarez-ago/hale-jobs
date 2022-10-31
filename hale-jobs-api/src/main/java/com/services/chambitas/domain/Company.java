@@ -6,11 +6,14 @@ package com.services.chambitas.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -43,26 +46,43 @@ public class Company implements Serializable {
 	@Column(nullable = false)
 	private String description;
 	
-	@Column(nullable = false)
-	private String[] sectors;
+	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private JobCategory category;
+	
+	private double qualification;
 	
 	private String imageURL;	
 	
 	private String urlSite;
 	
-	private String sizeCompany;
+	private String urlLinkedin;
 	
-	private String typeCompany;
+	private String sizeCompany;
 	
 	private String ownerId;
 	
+	private String RFC;
+	
+	private String regimenFiscal;
+	
+	private String address;
+
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@Column(columnDefinition = "integer default 0")	
+	private int regBorrado;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Date regDateCreated;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String regCreatedBy;
 
-	@Column(columnDefinition = "integer default 0")
-	private int regBorrado;	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Date regDateUpdated;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String regUpdateBy;
 	
 	
 }

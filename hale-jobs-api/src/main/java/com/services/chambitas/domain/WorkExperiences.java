@@ -41,5 +41,5 @@ public class WorkExperiences implements Serializable{
 	private Date end;
 	
 	private boolean currentlyWork;
-
+	
 }

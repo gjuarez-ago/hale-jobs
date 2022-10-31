@@ -1,12 +1,16 @@
 package com.services.chambitas.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +35,22 @@ public class TypeOfPayment  implements Serializable{
     private String clave;
 	
 	private String valor;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Date regDateCreated;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String regCreatedBy;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Date regDateUpdated;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String regUpdateBy;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@Column(columnDefinition = "integer default 0")
+	private int regBorrado;
+	
 
 }

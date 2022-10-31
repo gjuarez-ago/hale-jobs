@@ -1,0 +1,5 @@
+package com.services.chambitas.repository;
+
+public interface IJobSubcategoryRepository {
+
+}

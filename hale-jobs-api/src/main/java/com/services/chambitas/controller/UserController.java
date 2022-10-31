@@ -84,11 +84,11 @@ public class UserController {
 		 return new ResponseEntity<>(result, jwtHeader, HttpStatus.OK);
 		}
 		
-	   @PostMapping("/register")
-	    public ResponseEntity<User> register(@RequestBody RegisterDTO user) throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException {
-	        User newUser = userService.register(user.getUsername(), user.getEmail() ,user.getPassword());
-	        return new ResponseEntity<>(newUser, OK);
- 	   }
+//	   @PostMapping("/register")
+//	    public ResponseEntity<User> register(@RequestBody RegisterDTO user) throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException {
+//	        User newUser = userService.registerClient(user.getUsername(), user.getEmail() ,user.getPassword());
+//	        return new ResponseEntity<>(newUser, OK);
+// 	   }
 	   
 	   @DeleteMapping("/desactivate-profile/{username}")
 	   public ResponseEntity<User> desactivateProfile(@PathVariable("username") String username) throws UserNotFoundException {
@@ -96,39 +96,24 @@ public class UserController {
 		   return new ResponseEntity<User>(response, HttpStatus.OK);
 	   }
 	   
-	   @PostMapping("/add")
-	    public ResponseEntity<User> addNewUser(@RequestParam("names") String firstName,
-                              	    	       @RequestParam("motherName") String mName,
-                                               @RequestParam("fatherName") String fName,
-	                                           @RequestParam("username") String username,
-	                                           @RequestParam("email") String email,
-	                                           @RequestParam("role") String role,
-	                                           @RequestParam("gender") String gender,
-	                                           @RequestParam("dateOfBirth") Date dateOfBirth,
-	                                           @RequestParam("isNonLocked") String isNonLocked                     
-	    		) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException, MessagingException {
-	    	
-	    	
-	        User newUser = userService.addNewUser(firstName, mName, fName, username, email, role, gender, dateOfBirth, Boolean.parseBoolean(isNonLocked));
-	        return new ResponseEntity<>(newUser, OK);
-	    }
+	
 
-	    @PostMapping("/update")
-	    public ResponseEntity<User> update(@RequestParam("currentUsername") String currentUsername,
-	                                       @RequestParam("names") String firstName,
-	                                       @RequestParam("motherName") String mName,
-	                                       @RequestParam("fatherName") String fName,
-	                                       @RequestParam("username") String username,
-	                                       @RequestParam("email") String email,
-	                                       @RequestParam("role") String role,
-	                                       @RequestParam("gender") String gender,
-                                           @RequestParam("dateOfBirth") Date dateOfBirth,
-	                                       @RequestParam("isActive") String isActive,
-	                                       @RequestParam("isNonLocked") String isNonLocked) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
-	        User updatedUser = userService.updateUser(currentUsername, firstName, mName, fName, username,email, role,gender, dateOfBirth, Boolean.parseBoolean(isNonLocked), Boolean.parseBoolean(isActive));
-	        return new ResponseEntity<>(updatedUser, OK);
-	    }
-	    
+//	    @PostMapping("/update")
+//	    public ResponseEntity<User> update(@RequestParam("currentUsername") String currentUsername,
+//	                                       @RequestParam("names") String firstName,
+//	                                       @RequestParam("motherName") String mName,
+//	                                       @RequestParam("fatherName") String fName,
+//	                                       @RequestParam("username") String username,
+//	                                       @RequestParam("email") String email,
+//	                                       @RequestParam("role") String role,
+//	                                       @RequestParam("gender") String gender,
+//                                           @RequestParam("dateOfBirth") Date dateOfBirth,
+//	                                       @RequestParam("isActive") String isActive,
+//	                                       @RequestParam("isNonLocked") String isNonLocked) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
+//	        User updatedUser = userService.updateUser(currentUsername, firstName, mName, fName, username,email, role,gender, dateOfBirth, Boolean.parseBoolean(isNonLocked), Boolean.parseBoolean(isActive));
+//	        return new ResponseEntity<>(updatedUser, OK);
+//	    }
+//	    
 	    
 	    @PostMapping("/update-profile/{username}")
 	    public ResponseEntity<User> updateProfile(@PathVariable("username") String username, @RequestBody UserDTO request) throws UserNotFoundException {

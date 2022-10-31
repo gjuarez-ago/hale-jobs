@@ -27,6 +27,9 @@ public class StateINEGI implements Serializable {
 	@Column(nullable = false, updatable = false)
 	private Long id;
 	
+	// MX - COL - ESP - ARG
+	private String country;
+	
 	private String clave;
 	
 	private String valor;

@@ -5,7 +5,6 @@ import static com.services.chambitas.constant.UserImplConstant.FOUND_USER_BY_USE
 import static com.services.chambitas.constant.UserImplConstant.NO_USER_FOUND_BY_EMAIL;
 import static com.services.chambitas.constant.UserImplConstant.NO_USER_FOUND_BY_USERNAME;
 import static com.services.chambitas.enumeration.Role.ROLE_USER;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -29,10 +28,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.services.chambitas.domain.Permission;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.UserPrincipal;
+import com.services.chambitas.domain.dto.CreateCompanyDTO;
+import com.services.chambitas.domain.dto.UserCVDTO;
 import com.services.chambitas.domain.dto.UserDTO;
 import com.services.chambitas.enumeration.Role;
 import com.services.chambitas.exception.domain.EmailExistException;
@@ -83,31 +85,49 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	        }
 	}
 
+	
 	@Override
-	public User register(String username, String email, String password)
-			throws UserNotFoundException, UsernameExistException, EmailExistException, MessagingException {
-		
-		    validateNewUsernameAndEmail(EMPTY, username);
-		    validateEmail(email);
-		    String consecutive = generateConsecutive();
-	        User user = new User();
-	        user.setUsername(username);
-	        user.setJoinDate(new Date());
-	        user.setConsecutive(consecutive);
-	        user.setPassword(encodePassword(password));
-	        user.setActive(true);
-	        user.setNotLocked(true);
-	        user.setNames("");
-	        user.setEmail(email);
-	        user.setFatherLastName("");
-	        user.setMotherLastName("");
-	        user.setSurnames("");
-	        user.setRole(ROLE_USER.name());
-	        user.setAuthorities(ROLE_USER.getAuthorities());
-	        userRepository.save(user);
-	        emailService.sendNotification(username, "CODE 50594", "bicosind@gmail.com");
-	        return user;	
+	public User registerClient(UserDTO request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	
+
+	@Override
+	public User createUserCV(UserCVDTO request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User updateUserCV(Long userId, UserCVDTO request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User addCvFileByUser(Long userId, MultipartFile cv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User changeProfileView(Long userId, boolean value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public User registerCompany(CreateCompanyDTO request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 	@Override
 	public List<User> getUsers() {
@@ -119,37 +139,36 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		return userRepository.findUserByUsername(username);
 	}
 	
-	@Override
-	public User addNewUser(String names, String newMotherLastName, String newFatherLastName, String username, String email, String role, String gender, Date dateOfBirth,
-			boolean isNonLocked) throws UserNotFoundException,
-			UsernameExistException, EmailExistException, IOException, NotAnImageFileException, MessagingException {
-		
-		  validateNewUsernameAndEmail(EMPTY, username);
-		  User user = new User();
-	      String password = generatePassword();
-	      user.setNames(names);
-	      user.setSurnames(newFatherLastName + " "  + newMotherLastName);
-	      user.setMotherLastName(newMotherLastName);
-	      user.setFatherLastName(newFatherLastName);
-	      user.setJoinDate(new Date());
-	      user.setUsername(username);
-	      user.setEmail(email);
-	      user.setPassword(encodePassword(password));
-	      user.setGender(gender);
-	      user.setDateOfBirth(dateOfBirth);
-	      user.setActive(true);
-	      user.setNotLocked(isNonLocked);
-	      user.setRole(getRoleEnumName(role).name());
-	      user.setAuthorities(getRoleEnumName(role).getAuthorities());
-	      userRepository.save(user);
-	      LOGGER.info("New user password: " + password);
-	      emailService.sendNewPasswordEmail(user.getNames(), password, user.getEmail());
-	      
-	      return user;  
-	}
+//	@Override
+//	public User addNewUser(String names, String newMotherLastName, String newFatherLastName, String username, String email, String role, String gender, Date dateOfBirth,
+//			boolean isNonLocked) throws UserNotFoundException,
+//			UsernameExistException, EmailExistException, IOException, NotAnImageFileException, MessagingException {
+//		
+//		  validateUsername(username);
+//		  User user = new User();
+//	      String password = generatePassword();
+//	      user.setNames(names);
+//	      user.setSurnames(newFatherLastName + " "  + newMotherLastName);
+//	      user.setMotherLastName(newMotherLastName);
+//	      user.setFatherLastName(newFatherLastName);
+//	      user.setJoinDate(new Date());
+//	      user.setUsername(username);
+//	      user.setPassword(encodePassword(password));
+//	      user.setGender(gender);
+//	      user.setDateOfBirth(dateOfBirth);
+//	      user.setActive(true);
+//	      user.setNotLocked(isNonLocked);
+//	      user.setRole(getRoleEnumName(role).name());
+//	      user.setAuthorities(getRoleEnumName(role).getAuthorities());
+//	      userRepository.save(user);
+//	      LOGGER.info("New user password: " + password);
+//	      emailService.sendNewPasswordEmail(names, password, username);
+//	      
+//	      return user;  
+//	}
 
 	@Override
-	public User updateUser(String currentUsername, String newFirstName, String motherName, String fatherName, String newUsername,String email, String role, String gender, Date dateOfBirth, boolean isNonLocked, boolean isActive)
+	public User updateUser(String currentUsername, String newFirstName, String motherName, String fatherName, String newUsername, String role, String gender, Date dateOfBirth, boolean isNonLocked, boolean isActive)
 			throws UserNotFoundException, UsernameExistException, EmailExistException, IOException,
 			NotAnImageFileException {
 		
@@ -159,7 +178,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	        currentUser.setMotherLastName(motherName);
 	        currentUser.setFatherLastName(fatherName);
 	        currentUser.setUsername(newUsername);
-	        currentUser.setEmail(email);
 	        currentUser.setActive(isActive);
 	        currentUser.setGender(gender);
 	        currentUser.setDateOfBirth(dateOfBirth);
@@ -181,7 +199,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public void resetPassword(String newPassword, String email, String token) throws MessagingException, EmailNotFoundException, GenericException {
 	
-		User user = userRepository.findUserByTokenAndEmail(token, email);
+		User user = userRepository.findUserByTokenAndUsername(token, email);
 	
 		if(user == null ) { 
 	    	 throw new GenericException("El token es incorrecto o bien ya fue utilizado.");
@@ -202,11 +220,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		
 		User element = validateUpdateUsername(currentUsername);
 		element.setNames(request.getNames());
-		element.setSurnames(request.getFatherLN() + " "  + request.getMotherLN());
-		element.setMotherLastName(request.getMotherLN());
-		element.setFatherLastName(request.getFatherLN());
 		element.setGender(request.getGender());
-		element.setEmail(request.getEmailContact());
 		element.setDateOfBirth(request.getDateOfBirth());
 		userRepository.save(element);
 		
@@ -217,7 +231,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public void recoveryPassword(String email) throws EmailNotFoundException, MessagingException {
 		
-		    User user = userRepository.findUserByEmail(email);
+		    User user = userRepository.findUserByUsername(email);
 		    
 	        if (user == null) {
 	            throw new EmailNotFoundException(NO_USER_FOUND_BY_EMAIL + email);
@@ -234,7 +248,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	        userRepository.save(user);
 	        
 	        LOGGER.info("Token generate: " + token);
-	        emailService.resetPassword(user.getNames(), token, user.getEmail());
+	        emailService.resetPassword(user.getNames(), token, user.getUsername());
 	}
 
 	@Override
@@ -307,9 +321,9 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     }
 	
 	
-	private void validateEmail(String email) throws UsernameExistException {
+	private void validateUsername(String email) throws UsernameExistException {
 		
-		User user = userRepository.findUserByEmail(email);
+		User user = userRepository.findUserByUsername(email);
 		
 		if(user != null) {
 			 throw new UsernameExistException(EMAIL_ALREADY_EXISTS);
@@ -381,6 +395,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		return consecutive;
 	}
 
+
+
+
+	
 
 
 		

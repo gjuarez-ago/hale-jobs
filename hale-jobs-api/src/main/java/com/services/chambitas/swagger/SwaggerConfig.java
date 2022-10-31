@@ -19,6 +19,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableWebMvc
 public class SwaggerConfig {
+	
+	
 
 	 @Bean
 	    public Docket api() {
@@ -32,11 +34,11 @@ public class SwaggerConfig {
 	    private ApiInfo metaData() {
 	        return new ApiInfoBuilder()
 	                .title("Cotta Finance | Documentación API")
-	                .description("Cotta Finance 2022")
+	                .description("Hale Jobs 2022")
 	                .version("1.1.0")
 	                .license("Apache 2.0")
 	                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
-	                .contact(new Contact("Gabriel Juarez", "DEV","gabriel.juarez@cotta-finance.mx"))
+	                .contact(new Contact("Gabriel Juarez", "DEV","gabriel.juarez@hale.com.mx"))
 	                .build();
 	    }
 	    

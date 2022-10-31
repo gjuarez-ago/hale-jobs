@@ -32,7 +32,7 @@ public class OfferController {
    // Crear oferta
 	@PostMapping("/create")
 	public ResponseEntity<Offer> createOffer(
-	@RequestParam("amountOffered") double amountOffered, @RequestParam("title") String title,
+	@RequestParam("amountOffered") int amountOffered, @RequestParam("title") String title,
 	@RequestParam("description") String description,@RequestParam("status")  boolean status,
 	@RequestParam("urgency") String urgency, @RequestParam("state") String state,
 	@RequestParam("city") String city, @RequestParam("address") String address,
@@ -45,7 +45,7 @@ public class OfferController {
    // Editar oferta
 	@PostMapping("/edit")
 	public ResponseEntity<Offer> editOffer(
-	@RequestParam("amountOffered") double amountOffered, @RequestParam("title") String title,
+	@RequestParam("amountOffered") int amountOffered, @RequestParam("title") String title,
 	@RequestParam("description") String description,@RequestParam("status")  boolean status,
 	@RequestParam("urgency") String urgency, @RequestParam("state") String state,
 	@RequestParam("city") String city, @RequestParam("address") String address,

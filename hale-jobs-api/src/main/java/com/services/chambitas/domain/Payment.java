@@ -54,6 +54,8 @@ public class Payment implements Serializable{
 	
 	private String statusReference;
 	
+	private int pack;
+	
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
 	

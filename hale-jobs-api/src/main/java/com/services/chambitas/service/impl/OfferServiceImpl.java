@@ -79,7 +79,7 @@ public class OfferServiceImpl implements IOfferService{
 
 
 	@Override
-	public Offer createOffer(double amountOffered, String title, String description, boolean status, String urgency,
+	public Offer createOffer(int amountOffered, String title, String description, boolean status, String urgency,
 			String state, String city, String address, MultipartFile[] images, String typeOfJob,String typeOfPayment, String userId) throws NotAnImageFileException, IOException, GenericException {
 		
 		
@@ -107,17 +107,16 @@ public class OfferServiceImpl implements IOfferService{
 		element.setConsecutive(generateConsecutive());
 		element.setTitle(title);
 		element.setDescription(description); // Descripción de la chambita
-		element.setImages(list); // Imagenes de la chambita
 		element.setStatus(1); // Estatus de la solicitud (Creada)
 		element.setUser(user);
 		element.setUrgency(urgency);
 		element.setHaveComplaint(false);
 		element.setTypeOfPayment(tpyePayment);
 		element.setTypeOfJob(typeJob);
-		element.setAmountOffered(amountOffered);
-		
-		element.setState(state);
-		element.setCity(city); 
+//		element.setAmountOffered(amountOffered);
+	
+//		element.setState(state);
+//		element.setCity(city); 
 		element.setAddress(address);
 		
 		element.setRegDateCreated(new Date());
@@ -137,7 +136,7 @@ public class OfferServiceImpl implements IOfferService{
 		User user = existUser(userId);
 		
 		element.setDescription(description);
-		element.setAmountOffered(amountOffered);
+//		element.setAmountOfferedInit(amountOffered);
 		element.setUrgency(urgency);
 		element.setAddress(address);
 		element.setTypeOfPayment(tpyePayment);
@@ -171,24 +170,24 @@ public class OfferServiceImpl implements IOfferService{
 	@Override
 	public Offer reportOffer(String id, String comment, String category, String userId) throws GenericException {
 		
-		Offer element = exisOffer(id);
+		Offer offer = exisOffer(id);
 		User user = existUser(userId);
 		
 		Complaints complaint = new Complaints();
 		
 		complaint.setComments(comment);
-		complaint.setOfferId(id);
+		complaint.setOffer(offer);
 		complaint.setRegCreatedBy(user.getConsecutive());
-		complaint.setUserId(user.getConsecutive());
+		complaint.setUser(user);
 		complaint.setRegDateCreated(new Date());
 		complaint.setTitle(category);
 		
-		element.setHaveComplaint(true); // La oferta ha sido reportada
+		offer.setHaveComplaint(true); // La oferta ha sido reportada
 		
 		complaintRepository.save(complaint);
-		offerRepository.save(element);
+		offerRepository.save(offer);
 
-		return element;
+		return offer;
 	}
 
 	@Override
@@ -199,9 +198,7 @@ public class OfferServiceImpl implements IOfferService{
 		User user = existUser(userPostulate);
 		
 		element.setStatus(2);
-		element.setUserSelected(user);
-		element.setAmountAcepted(amountAcepted);
-		
+
 		offerRepository.save(element);
 		
 		return element;

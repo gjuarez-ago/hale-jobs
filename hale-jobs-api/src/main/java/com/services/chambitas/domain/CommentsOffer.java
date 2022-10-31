@@ -36,6 +36,9 @@ public class CommentsOffer implements Serializable {
 
 	@Column(nullable = false)
 	private String consecutive;
+	
+	@Column(nullable = false)
+	private String comment;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
@@ -43,13 +46,8 @@ public class CommentsOffer implements Serializable {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Offer offer;
 	
-	@Column(nullable = false)
-	private String comment;
-
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Date regDateCreated;
-
-	@Column(columnDefinition = "integer default 0")
-	private int regBorrado;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String regCreatedBy;
@@ -59,5 +57,12 @@ public class CommentsOffer implements Serializable {
 
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String regUpdateBy;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@Column(columnDefinition = "integer default 0")
+	private int regBorrado;
+	
+	
+	
 
 }

@@ -9,16 +9,18 @@ public class UserDTO {
 	
 private String names;
 	
-    private String motherLN;
+    private String motherln;
     
-    private String fatherLN;
+    private String fatherln;
    
 	private String gender;
 	
-	private String emailContact;
+	private String password;
+	
+	private String email;
 	
 	private Date dateOfBirth;
 	
-	private String location;
+	private String numberphone;
 
 }

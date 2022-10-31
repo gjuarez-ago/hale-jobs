@@ -15,7 +15,7 @@ import com.services.chambitas.exception.domain.NotAnImageFileException;
 public interface IOfferService {
 	
 	// Crear oferta por usuario
-	Offer createOffer(double amountOffered,String title,
+	Offer createOffer(int amountOffered,String title,
 	String description,boolean status,
 	String urgency,String state,
 	String city,String address,

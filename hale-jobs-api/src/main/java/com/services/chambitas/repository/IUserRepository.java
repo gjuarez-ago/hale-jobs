@@ -17,9 +17,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     User findUserByUsername(String username);
     
-    User findUserByEmail(String email);
-    
-    User findUserByTokenAndEmail(String token, String username);
+    User findUserByTokenAndUsername(String token, String username);
        
     User findUserByConsecutive(String consecutive);
 

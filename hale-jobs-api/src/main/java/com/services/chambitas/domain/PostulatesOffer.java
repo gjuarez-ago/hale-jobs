@@ -36,27 +36,15 @@ public class PostulatesOffer implements Serializable{
 		
 	@Column(nullable = false)
 	private String consecutive;
-	
-	@Column(nullable = false)
-	private double amountOffered;
-	
-	@Column(nullable = false)
-	private String comments;
-
-	private Date regDateCreated;
-	
-	// Estatus de la solicitud pendiente por confirmar, elegido, rechazado.
-	private String status;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Offer offer;
-	
-	@Column(columnDefinition = "integer default 0")
-	private int RegBorrado;
 
+	private Date regDateCreated;
+	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String regCreatedBy;
 
@@ -66,8 +54,8 @@ public class PostulatesOffer implements Serializable{
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String regUpdateBy;
 
+	@Column(columnDefinition = "integer default 0")
+	private int RegBorrado;
 
-	
-	
 
 }
