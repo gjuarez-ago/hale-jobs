@@ -80,6 +80,9 @@ public class Offer implements Serializable {
 	// Remoto, Presencial, Hibrido
 	private String workPlace; 
 	
+	// Bronce - Plata - Oro
+	private int typeOfOffer;
+	
 	// 1 : Creada, 2 : Pausada, 3 : Completada, 4 : Cerrada por usuario, 5 : Bloqueada por reportes
 	@Column(nullable = false)
 	private int status;
@@ -126,6 +129,9 @@ public class Offer implements Serializable {
 	// subcategoria 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private JobSubcategory subcategory;
+	
+	
+	
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private Date regDateCreated;

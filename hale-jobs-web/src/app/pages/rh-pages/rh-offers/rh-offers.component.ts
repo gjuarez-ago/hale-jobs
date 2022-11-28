@@ -75,7 +75,7 @@ export class RhOffersComponent implements OnInit {
     private ngxSpinner :  NgxSpinnerService
   ) {
 
-    this.isLoadingGeneral = true;
+    this.isLoadingGeneral = false;
 
     this.validateForm = this.fb.group({
       loanId: [''],

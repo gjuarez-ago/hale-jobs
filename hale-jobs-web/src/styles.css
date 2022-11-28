@@ -2,93 +2,93 @@
 
 
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 main {
-  text-align: center;
-  position: relative;
+    text-align: center;
+    position: relative;
 }
 
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #002a51;
-  }
-  
-  .ant-tabs-tab:hover {
-      color: #000000;
-  }
-  
-  .menu-sidebar {
+    color: #002a51;
+}
+
+.ant-tabs-tab:hover {
+    color: #000000;
+}
+
+.menu-sidebar {
     background-color: rgb(255, 255, 255);
-  }
-  
-  .sidebar-logo {
-      background-color: rgb(255, 255, 255) !important;
-  }
-  
-  
-      .app-header {
-  
-          background-color: rgb(10, 10, 10) !important;    
-      }
-  
-  
-  
-  
-  
-  
-      .ant-menu-item a:hover {
-      color:rgb(201, 115, 98);
-      }
-  
-      .ant-menu-item-selected {
-      color:rgb(201, 115, 98) !important;
-      }
-  
-  
-      .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-expand-icon, .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
-      color:rgb(201, 115, 98);
-      background-color: rgb(247, 209, 202);
-      }
-  
-      .ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after, .ant-menu-inline .ant-menu-item::after 
-      {
-          border-right: 3px solid #d14926 !important;
-      }
-  
-      .ant-menu-item-selected a, .ant-menu-item-selected a:hover {
-          color:rgb(201, 115, 98) !important;
-      }
-  
-  
-      li.ant-menu-item.ant-menu-item-selected {
-          background-color: rgb(245, 228, 225) !important;
-      }
-  
-      .ant-menu-item:hover {
-          color:rgb(201, 115, 98) !important;
-      }
-  
-  
-      .ant-menu-submenu-title {
-          color:rgb(0, 0, 0) !important;
-      }
-  
-  
-      .ant-menu-submenu-title:hover {
-          color:rgb(201, 115, 98) !important;
-      }
-  
-  
-      .ant-menu-submenu-selected {
-          color:rgb(201, 115, 98) !important;
-      }
-  
-  
-  
-  
+}
+
+.sidebar-logo {
+    background-color: rgb(255, 255, 255) !important;
+}
+
+
+.app-header {
+
+    background-color: rgb(10, 10, 10) !important;
+}
+
+
+
+
+
+
+.ant-menu-item a:hover {
+    color: rgb(201, 115, 98);
+}
+
+.ant-menu-item-selected {
+    color: rgb(201, 115, 98) !important;
+}
+
+
+.ant-menu-submenu:hover>.ant-menu-submenu-title>.ant-menu-submenu-expand-icon,
+.ant-menu-submenu:hover>.ant-menu-submenu-title>.ant-menu-submenu-arrow {
+    color: rgb(201, 115, 98);
+    background-color: rgb(247, 209, 202);
+}
+
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after,
+.ant-menu-inline .ant-menu-item::after {
+    border-right: 3px solid #d14926 !important;
+}
+
+.ant-menu-item-selected a,
+.ant-menu-item-selected a:hover {
+    color: rgb(201, 115, 98) !important;
+}
+
+
+li.ant-menu-item.ant-menu-item-selected {
+    background-color: rgb(245, 228, 225) !important;
+}
+
+.ant-menu-item:hover {
+    color: rgb(201, 115, 98) !important;
+}
+
+
+.ant-menu-submenu-title {
+    color: rgb(0, 0, 0) !important;
+}
+
+
+.ant-menu-submenu-title:hover {
+    color: rgb(201, 115, 98) !important;
+}
+
+
+.ant-menu-submenu-selected {
+    color: rgb(201, 115, 98) !important;
+}

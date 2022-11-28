@@ -10,37 +10,32 @@ import { User } from '../models/User';
   providedIn: 'root'
 })
 export class AuthService {
-  
-  public loggedInUsername : any = {};
-  public userActive = new BehaviorSubject<any>([]);  
 
-  public host  = environment.apiUrl;
+  public loggedInUsername: any = {};
+  public userActive = new BehaviorSubject<any>([]);
+
+  public host = environment.apiUrl;
   private token: any;
   private jwtHelper = new JwtHelperService;
-  
+
   constructor(private http: HttpClient) { }
 
-
-  
-  getUser(){
+  getUser() {
     return this.userActive.asObservable();
   }
-  
+
   setUserActive(k: any) {
-     this.loggedInUsername = k;
-     this.userActive.next(this.loggedInUsername);
+    this.loggedInUsername = k;
+    this.userActive.next(this.loggedInUsername);
   }
-
-
-
 
   public login(user: User): Observable<HttpResponse<User>> {
-   return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
+    return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
   }
 
- public register(user: User): Observable<User> {
-   return this.http.post<User>(`${this.host}/user/register`, user);
- }
+  public register(user: User): Observable<User> {
+    return this.http.post<User>(`${this.host}/user/register`, user);
+  }
 
   // * Recovery password
   public recoveryPassword(form: FormData): Observable<CustomHttpRespone> {
@@ -53,7 +48,7 @@ export class AuthService {
   }
 
 
-  public logOut(): void  {
+  public logOut(): void {
     this.token = null;
     this.loggedInUsername = null;
     localStorage.removeItem("user");
@@ -61,52 +56,52 @@ export class AuthService {
     localStorage.removeItem("users");
   }
 
-  public saveToken(token: string) : void {
-   
-   this.token = token;
-   localStorage.setItem("token",token);
+  public saveToken(token: string): void {
+
+    this.token = token;
+    localStorage.setItem("token", token);
   }
 
   public addUserToLocalCache(user: User) {
-   localStorage.setItem('user', JSON.stringify(user));
-  } 
-
-  public getUserFromLocalCache() : User {
-   // Sintaxis para campos que pueden venir vacios
-   return JSON.parse(localStorage.getItem('user') || '{}');
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
-  public loadToken() : void  {
+  public getUserFromLocalCache(): User {
+    // Sintaxis para campos que pueden venir vacios
+    return JSON.parse(localStorage.getItem('user') || '{}');
+  }
+
+  public loadToken(): void {
     this.token = localStorage.getItem("token");
   }
 
-  
- public getToken(): string {
-   return this.token;
- }
 
- public isUserLoggedIn(): boolean {
-  this.loadToken();
-  console.log(this.token);
+  public getToken(): string {
+    return this.token;
+  }
+
+  public isUserLoggedIn(): boolean {
+    this.loadToken();
+    console.log(this.token);
 
 
-  if (this.token != null && this.token !== ''){
-    console.log(this.jwtHelper.decodeToken(this.token).sub);
-    if (this.jwtHelper.decodeToken(this.token).sub != null) {
-      if (!this.jwtHelper.isTokenExpired(this.token)) {
-        this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;
-        return true;
-      }else{
-        this.logOut();
-        return false;
+    if (this.token != null && this.token !== '') {
+      console.log(this.jwtHelper.decodeToken(this.token).sub);
+      if (this.jwtHelper.decodeToken(this.token).sub != null) {
+        if (!this.jwtHelper.isTokenExpired(this.token)) {
+          this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;
+          return true;
+        } else {
+          this.logOut();
+          return false;
+        }
       }
+    } else {
+      this.logOut();
+      return false;
     }
-  } else {
-    this.logOut();
     return false;
   }
-  return false;
-}
 
 
 }

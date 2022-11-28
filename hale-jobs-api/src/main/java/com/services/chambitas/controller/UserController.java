@@ -4,7 +4,6 @@ import static com.services.chambitas.constant.SecurityConstant.JWT_TOKEN_HEADER;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,15 +35,11 @@ import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.UserPrincipal;
 import com.services.chambitas.domain.dto.LoginDTO;
 import com.services.chambitas.domain.dto.RecoveryPasswordDTO;
-import com.services.chambitas.domain.dto.RegisterDTO;
 import com.services.chambitas.domain.dto.ResetPasswordDTO;
 import com.services.chambitas.domain.dto.UserDTO;
-import com.services.chambitas.exception.domain.EmailExistException;
 import com.services.chambitas.exception.domain.EmailNotFoundException;
 import com.services.chambitas.exception.domain.GenericException;
-import com.services.chambitas.exception.domain.NotAnImageFileException;
 import com.services.chambitas.exception.domain.UserNotFoundException;
-import com.services.chambitas.exception.domain.UsernameExistException;
 import com.services.chambitas.service.IUserService;
 import com.services.chambitas.utility.JWTTokenProvider;
 

@@ -66,7 +66,10 @@ public class Company implements Serializable {
 	private String regimenFiscal;
 	
 	private String address;
-
+	
+	private boolean isvisible;
+	
+	private boolean isRecruiter;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(columnDefinition = "integer default 0")	

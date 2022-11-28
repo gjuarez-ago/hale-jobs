@@ -27,7 +27,7 @@ import lombok.ToString;
 /**
  * @author gjuarezd
  *
- */
+*/
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -97,6 +97,8 @@ public class User {
     // Es premium
     private boolean isPremium;
     
+    private boolean publicProfile;
+    
     private boolean profileCompleted;
     
     // URL del CV
@@ -114,11 +116,11 @@ public class User {
     private Long companyId;
     
 	// Categoria
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private JobCategory category;
 		
 	// subcategoria 
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private JobSubcategory subcategory;
 	
     @ManyToMany(targetEntity = WorkExperiences.class,cascade = CascadeType.ALL)
@@ -128,17 +130,14 @@ public class User {
 	private List<Permission> permissions;
     
     // Skills
-    @ManyToMany(targetEntity = Permission.class,cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = SkillsByUser.class,cascade = CascadeType.ALL)
     private List<SkillsByUser> skills;
 
-    @ManyToMany(targetEntity = Permission.class,cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = SchoolByUser.class,cascade = CascadeType.ALL)
     private List<SchoolByUser> schools;
     
+    private String rfc;
     
-    // Datos delicados
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String curp;
-	
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
     

@@ -60,100 +60,99 @@ import { AdminTypeOfPaymentsComponent } from './pages/admin-pages/admin-type-of-
 import { AdminTypeOfJobComponent } from './pages/admin-pages/admin-type-of-job/admin-type-of-job.component';
 import { CvProfileComponent } from './pages/client-pages/cv-profile/cv-profile.component';
 import { PreviewProfileComponent } from './pages/client-pages/preview-profile/preview-profile.component';
+import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 
 const routes: Routes = [
-  { path: 'dashboard', component: WelcomeComponent, children: [
+  {
+    path: 'dashboard', component: WelcomeComponent, children: [
 
-     { path: "my-statisticts", component: RhDashboardComponent },
-     { path: "my-offers", component: RhOffersComponent },
-     { path: "create-offer", component: RhCreateOfferComponent },
-     { path: "edit-offer/:id", component: RhEditOfferComponent },
-     { path: "my-exams", component: RhExamsComponent },
-     { path: "create-exam", component: RhExamsComponent },
-     { path: "preview-exam/:id", component: RhPreviewExamComponent },
-     { path: "view-exam/:user", component: RhViewExamByOfferComponent },
-     { path: "my-company", component: RhCompanyComponent },
-     { path: "my-company-coworkers", component: RhViewCoworkersComponent },
-     { path: "search-workers", component: RhSearchWorkersComponent },
-     { path: "view-worker/:id", component: RhDashboardComponent },
-     { path: "my-contacts", component: RhContactBookComponent },
-     { path: "complaints", component: RhComplaintsComponent },
-     { path: "my-notifications", component: RhNotificationsComponent },
-     { path: "my-profile", component: RhProfileComponent },
-     { path: "chat-one-to-one", component: RhContactBookComponent },
+      { path: "my-statisticts", component: RhDashboardComponent },
+      { path: "my-offers", component: RhOffersComponent },
+      { path: "create-offer", component: RhCreateOfferComponent },
+      { path: "edit-offer/:id", component: RhEditOfferComponent },
+      { path: "my-exams", component: RhExamsComponent },
+      { path: "create-exam", component: RhExamsComponent },
+      { path: "preview-exam/:id", component: RhPreviewExamComponent },
+      { path: "view-exam/:user", component: RhViewExamByOfferComponent },
+      { path: "my-company", component: RhCompanyComponent },
+      { path: "my-company-coworkers", component: RhViewCoworkersComponent },
+      { path: "search-workers", component: RhSearchWorkersComponent },
+      { path: "view-worker/:id", component: RhDashboardComponent },
+      { path: "my-contacts", component: RhContactBookComponent },
+      { path: "complaints", component: RhComplaintsComponent },
+      { path: "my-notifications", component: RhNotificationsComponent },
+      { path: "my-profile", component: RhProfileComponent },
+      { path: "chat-one-to-one", component: RhContactBookComponent },
+      { path: "statisticts", component: AdminDashboardComponent },
+      { path: "offers-informals", component: AdminOffersIComponent },
+      { path: "offers-formals", component: AdminOffersComponent },
+      { path: "admin-comments", component: AdminCommentsComponent },
+      { path: "admin-complaints", component: AdminComplaintsComponent },
+      { path: "admin-payments", component: AdminPaymentsComponent },
+      { path: "admin-postulations-i", component: AdminPostulationsIComponent },
+      { path: "admin-postulations-f", component: AdminPostulationsComponent },
+      { path: "reviews-b", component: AdminReviewsByBusinessComponent },
+      { path: "reviews-p", component: AdminReviewsByUserComponent },
+      { path: "worker-experiences", component: AdminWorkersExperiencesComponent },
+      { path: "admin-notifications", component: AdminNotficationsComponent },
+      { path: "admin-companies", component: AdminOpinionsByCompanyComponent },
+      { path: "admin-users", component: AdminUsersComponent },
+      // Catalogs
+      { path: "permissions", component: AdminPermissionsComponent },
+      // { path: "cities", component: AdminPermissionsComponent },
+      // { path: "states", component: AdminPermissionsComponent },
+      { path: "type-of-payments", component: AdminTypeOfPaymentsComponent },
+      { path: "type-of-jobs", component: AdminTypeOfJobComponent },
+      // Others
+      { path: "faq", component: AdminPermissionsComponent },
+      { path: "privacy", component: AdminPermissionsComponent },
 
-    //  Admin
-    { path: "statisticts", component: AdminDashboardComponent },
-    { path: "offers-informals", component: AdminOffersIComponent },
-    { path: "offers-formals", component: AdminOffersComponent },
-    { path: "admin-comments", component: AdminCommentsComponent },
-    { path: "admin-complaints", component: AdminComplaintsComponent },
-    { path: "admin-payments", component: AdminPaymentsComponent },
-    { path: "admin-postulations-i", component: AdminPostulationsIComponent },
-    { path: "admin-postulations-f", component: AdminPostulationsComponent },
-    { path: "reviews-b", component: AdminReviewsByBusinessComponent },
-    { path: "reviews-p", component: AdminReviewsByUserComponent },
-    { path: "worker-experiences", component: AdminWorkersExperiencesComponent },
-    { path: "admin-notifications", component: AdminNotficationsComponent },
-    { path: "admin-companies", component: AdminOpinionsByCompanyComponent },
-    { path: "admin-users", component: AdminUsersComponent },
+      // Default
 
-    // Catalogs
-    { path: "permissions", component: AdminPermissionsComponent },    
-    // { path: "cities", component: AdminPermissionsComponent },
-    // { path: "states", component: AdminPermissionsComponent },
-    { path: "type-of-payments", component: AdminTypeOfPaymentsComponent },
-    { path: "type-of-jobs", component: AdminTypeOfJobComponent },
-
-    // Others
-    { path: "faq", component: AdminPermissionsComponent },    
-    { path: "privacy", component: AdminPermissionsComponent },
-
-    // Default
-
-     { path: '', pathMatch: 'full', redirectTo: '/login' },
+      { path: '', pathMatch: 'full', redirectTo: '/login' },
     ],
-  // canActivate: [ AuthGuard ]
+    // canActivate: [ AuthGuard ]
   },
-  {path: 'auth', component: AuthComponent, children : [
-    { path: "login", component: LoginComponent },
-    { path: "register", component: RegisterComponent },
-    { path: "recovery-password", component: RecoveryPasswordComponent },
-  ]
+  {
+    path: 'auth', component: AuthComponent, children: [
+      { path: "login", component: LoginComponent },
+      { path: "register", component: RegisterComponent },
+      { path: "recovery-password", component: RecoveryPasswordComponent },
+      { path: "reset-password/:token/:user", component: ResetPasswordComponent },
+    ]
   },
-  { path: 'profile', component: MyProfileComponent,  children: [
+  {
+    path: 'profile', component: MyProfileComponent, children: [
       { path: 'cv', component: CvProfileComponent },
       { path: 'settings-profile', component: SettingsProfileComponent },
-      { path: 'my-postulations', component: MyPostulationsComponent }, 
-      { path: 'view-cv', component: PreviewProfileComponent }, 
-      { path: 'my-exams', component: MyExamsComponent }, 
-      { path: 'my-history', component: MyHistoryComponent }, 
+      { path: 'my-postulations', component: MyPostulationsComponent },
+      { path: 'view-cv', component: PreviewProfileComponent },
+      { path: 'my-exams', component: MyExamsComponent },
+      { path: 'my-history', component: MyHistoryComponent },
       { path: 'my-companies', component: MyCompaniesComponent },
-      { path: 'my-payments', component: MyPaymentsComponent }, 
+      { path: 'my-payments', component: MyPaymentsComponent },
       { path: 'payment', component: PaymentClientComponent },
       { path: 'notifications', component: MyNotificationsComponent },
-  ]},
+    ]
+  },
   {
     path: '', component: NavbarComponent, children: [
-      
       // Global pages
-      { path: 'home', component: HomeComponent},
-      { path: 'search', component: SearchOffersComponent}, 
+      { path: 'home', component: HomeComponent },
+      { path: 'search', component: SearchOffersComponent },
       { path: 'search-jobs', component: SearchJobsComponent },
       { path: 'companies', component: SearchCompaniesComponent },
       { path: 'company/:id', component: ViewCompaniesComponent },
       { path: 'view-job/:id', component: ViewJobComponent },
-      { path: 'packs', component: PaymentClientComponent},
-      
+      { path: 'packs', component: PaymentClientComponent },
+
       { path: 'support-candidates', component: SupportCandidatesComponent },
       { path: 'faq', component: AboutComponent },
       { path: 'about', component: AboutComponent },
       { path: "terms-and-conditions", component: TermsConditionsComponent },
       { path: "privacy-policies", component: PrivacyPoliciesComponent },
-
       // { path: 'view/:id', component: ViewOfferComponent },
       { path: '', pathMatch: 'full', redirectTo: '/home' },
-      
     ],
     data: { animation: 'HomePage' }
   },

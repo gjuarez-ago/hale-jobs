@@ -25,7 +25,6 @@ import com.services.chambitas.service.IOfferService;
 @RequestMapping(path = {"/offer"})
 public class OfferController {
 	
-	
 	@Autowired
 	IOfferService service;
 	

@@ -73,10 +73,8 @@ public class OfferServiceImpl implements IOfferService{
 	
 	@Autowired
 	IComplaintRepository complaintRepository;
-	
-	
+		
 	private Logger LOGGER = LoggerFactory.getLogger(getClass());
-
 
 	@Override
 	public Offer createOffer(int amountOffered, String title, String description, boolean status, String urgency,

@@ -1,15 +1,10 @@
 <nz-spin [nzSpinning]="isSpinning">
     <form #f="ngForm" nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-      <p class="presentacion-title"><span class="welcome">Bienvenido </span>, Ingresa los datos correspondientes para
-        registrarte: </p>
-  
-      <!-- <nz-switch (ngModelChange)="changeRegistration($event)" [ngModelOptions]="{standalone: true}" [ngModel]="isCompany" nzCheckedChildren="Compañía" nzUnCheckedChildren="Usuario"></nz-switch>
-       -->
-  
-  
-      <div nz-row [nzGutter]="8">
-        <div nz-col nzSpan="12">    
-      <nz-form-item class="input-content-1" *ngIf="!isCompany">
+      <p class="presentacion-title"><span class="welcome">Bienvenido </span>, Ingresa los datos correspondientes para registrarte: </p>
+      <!-- <nz-switch (ngModelChange)="changeRegistration($event)" [ngModelOptions]="{standalone: true}" [ngModel]="isCompany" nzCheckedChildren="Compañía" nzUnCheckedChildren="Usuario"></nz-switch>-->
+      <div>
+        <div>    
+      <nz-form-item class="input-content">
         <nz-form-control nzErrorTip="Campo obligatorio">
           <nz-input-group nzPrefixIcon="user">
             <input type="text"  nz-input formControlName="firstName" placeholder="Nombres (s) " />
@@ -17,9 +12,8 @@
         </nz-form-control>
       </nz-form-item>
         </div>
-  
-        <div nz-col nzSpan="12">
-          <nz-form-item class="input-content-1" *ngIf="!isCompany">
+        <div>
+          <nz-form-item class="input-content">
             <nz-form-control nzErrorTip="Campo obligatorio">
               <nz-input-group nzPrefixIcon="user">
                 <input type="text"  nz-input formControlName="lastName" placeholder="Apellidos (s)" />
@@ -27,21 +21,8 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-  
-        
-        <div *ngIf="isCompany" nz-col nzSpan="24">
-      <nz-form-item class="input-content-1" *ngIf="isCompany" >
-        <nz-form-control nzErrorTip="Campo obligatorio">
-          <nz-input-group nzPrefixIcon="idcard">
-            <input type="text"  nz-input formControlName="businessName" placeholder="Razón social" />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-        </div>
       </div>
-  
-  
-  
+      
       <nz-form-item class="input-content">
         <nz-form-control nzErrorTip="Correo electrónico no válido">
           <nz-input-group nzPrefixIcon="mail">

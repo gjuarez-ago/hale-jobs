@@ -37,7 +37,6 @@ public class SelectedUsers implements Serializable{
 	@Column(nullable = false)
 	private String consecutive;
 	
-
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
 

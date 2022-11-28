@@ -23,11 +23,12 @@ section {
     width: 50%;
     display: flex;
     justify-content: center;
+    border-bottom-right-radius: 70%;
     align-items: center;
     margin: 0px;
     border: 0px;
     padding: 0px;
-    background-image:url(https://images.pexels.com/photos/1714340/pexels-photo-1714340.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940); 
+    background-image:url(https://images.pexels.com/photos/13100888/pexels-photo-13100888.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1); 
     background-size:cover; 
     background-repeat: no-repeat;
     background-position: center;

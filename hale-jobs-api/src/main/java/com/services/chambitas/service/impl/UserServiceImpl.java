@@ -181,6 +181,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	        currentUser.setActive(isActive);
 	        currentUser.setGender(gender);
 	        currentUser.setDateOfBirth(dateOfBirth);
+	        
 	        currentUser.setNotLocked(isNonLocked);
 	        currentUser.setRole(getRoleEnumName(role).name());
 	        currentUser.setAuthorities(getRoleEnumName(role).getAuthorities());
