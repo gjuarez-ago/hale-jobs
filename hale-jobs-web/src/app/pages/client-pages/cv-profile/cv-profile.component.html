@@ -1,0 +1,617 @@
+<nz-page-header [nzGhost]="false">
+  <nz-page-header-title> 📑 MI CV</nz-page-header-title>
+  <nz-page-header-extra>
+    <nz-space>
+      <button *nzSpaceItem nz-button>Generar CV (PDF)</button>
+    </nz-space>
+  </nz-page-header-extra>
+  <nz-page-header-content>
+    <div class="header-exp">
+      <div class="title"> Información personal <span class="span-small"> (presiona para editar) </span> </div>
+      <div class="button-add">
+      </div>
+    </div>
+
+    <div class="f">
+      <div class="card" (click)="showModalInfoUser()">
+
+        <div class="flex-principal">
+          <p class="p-s">
+            Puesto: <strong> {{userInformationOriginal && userInformationOriginal.jobTitle}} </strong>
+          </p>
+          <p class="p-s">
+            Salario: <strong> {{userInformationOriginal && userInformationOriginal.salary | currency}}</strong>
+          </p>
+        </div>
+        <div class="we">
+          
+        <p class="p-s">
+          <strong> Acerca de mi: </strong>
+          {{userInformationOriginal && userInformationOriginal.aboutMe}}
+        </p>
+        </div>
+        <div class="icon-edit">
+          <i nz-icon nzType="edit" class="icon-edit-i" nzTheme="outline"></i>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="exp-profesional">
+
+      <div class="header-exp">
+        <div class="title"> Experiencia profesional <span class="span-small"> (presiona para editar) </span> </div>
+        <div class="button-add">
+          <button nz-button (click)="showModalAddExp()"> <i nz-icon nzType="plus"></i> Agregar experiencia</button>
+        </div>
+      </div>
+
+      <div *ngIf="loadingListWorkExperiences" >
+        <nz-skeleton></nz-skeleton>
+        <nz-skeleton></nz-skeleton>
+        <nz-skeleton></nz-skeleton>
+        <nz-skeleton></nz-skeleton>
+      </div>
+     
+      <div *ngIf="listWorkExperiences.length > 0">
+        <div *ngFor="let experience of listWorkExperiences; index as i">
+          <div class="card-exp" (click)="showModalEditExp(experience)">
+
+            <div class="title-card">
+              <p> {{ experience.job }} </p>
+            </div>
+            <div class="subtitle-card">
+              <p> {{ experience.company }} </p>
+            </div>
+            <div class="subtitle-card">
+              <p> {{ experience.begins | date:'MMM, y' }} - {{ experience.ends | date:'MMM, y' }} </p>
+            </div>
+
+            <div class="descripcion">
+              <p>
+                {{ experience.description }}
+              </p>
+            </div>
+
+            <div class="tags-tech">
+              <nz-tag class="tag-a" [nzColor]="'magenta'" *ngFor="let skill of experience.skills"> {{ skill }} </nz-tag>
+            </div>
+
+            <div class="icon-edit">
+              <i nz-icon nzType="edit" class="icon-edit-i" nzTheme="outline"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-edus" *ngIf="listWorkExperiences.length == 0">
+        <nz-empty></nz-empty>
+      </div>
+
+    </div>
+
+
+    <!-- Sección para las principales skills -->
+
+    <div class="skills">
+      <div class="header-exp">
+        <div class="title"> Mis habilidades <span class="span-small"> (presiona para editar) </span> </div>
+        <div class="button-add">
+        </div>
+      </div>
+
+
+      <div class="description-help">
+        <p> En esta sección te recomendamos colocamos tus principales habilidades tecnicas, como desarrollo de softwre,
+          Gestión del tiempo etc. </p>
+      </div>
+
+      <div class="skill-list">
+        <div class="skill-element" (click)="showModalSkills()"
+          *ngFor="let skill of listSkills"> {{ skill }} 
+        </div>
+
+        <div class="card-edus" *ngIf="listSkills.length == 0">
+          <nz-empty></nz-empty>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="education">
+
+
+      <div class="header-exp">
+
+        <div class="title"> Mi educación <span class="span-small"> (presiona para editar) </span> </div>
+
+        <div class="button-add">
+          <button nz-button (click)="showModalEducation()"> <i nz-icon nzType="plus"></i> Agregar</button>
+        </div>
+      </div>
+
+      <div *ngIf="listSchools.length > 0">
+
+        <div class="education-content" *ngFor="let education of listSchools; index as i">
+          <div class="card-edu" (click)="showModalEducation(i)">
+
+            <div class="info">
+              <div class="title-edu">
+                <p> <strong> {{ education.name }} </strong></p>
+              </div>
+              <div class="title-date"><span> {{ education.begins | date:'MMM, y' }} - {{ education.ends | date:'MMM,y' }} </span></div>
+              <div class="status">
+                {{ education.schoolName }} - {{education.type}}
+              </div>
+            </div>
+
+            <div class="icon-edit">
+              <i nz-icon nzType="edit" class="icon-edit-i" nzTheme="outline"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      
+      <div class="card-edus" *ngIf="listSchools.length == 0">
+        <nz-empty></nz-empty>
+      </div>
+
+    </div>
+
+    <div class="education">
+
+
+      <div class="header-exp">
+
+        <div class="title"> Mis certificaciones <span class="span-small"> (presiona para editar) </span> </div>
+
+        <div class="button-add">
+          <button nz-button (click)="showModalCertificate()"> <i nz-icon nzType="plus"></i> Agregar
+            certificación</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="certificateUserArray.length > 0">
+        <div class="education-content" *ngFor="let certificate of certificateUserArray; index as i">
+          <div class="card-edu" (click)="showModalCertificate(i)">
+            <div class="info">
+              <div class="title-edu">
+                <p> <strong> {{ certificate.nameCertificate }} </strong></p>
+              </div>
+              <div class="title-date"><span> {{ certificate.startDate | date:'MMM, y' }} - {{ certificate.endDate |
+                  date:'MMM, y' }} </span></div>
+              <div class="status">
+                {{ certificate.levelCertificate }}
+              </div>
+            </div>
+            <div class="icon-edit">
+              <i nz-icon nzType="edit" class="icon-edit-i" nzTheme="outline"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-edus" *ngIf="certificateUserArray.length == 0">
+        <nz-empty></nz-empty>
+      </div>
+
+    </div>
+
+    <!-- </form> -->
+
+  </nz-page-header-content>
+</nz-page-header>
+
+
+<!-- MODAL INFORMACIÓN USUARIO -->
+<nz-drawer [nzVisible]="visibleInfoPersonal" nzPlacement="right"
+  [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="520" [nzVisible]="visibleInfoPersonal"
+  nzTitle="Información personal" [nzFooter]="footerUserInfo" (nzOnClose)="handleOk()">
+  <ng-container *nzDrawerContent>
+    <form nz-form [formGroup]="userInfoPersonalForm" class="form-preferences">
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Puesto de trabajo</nz-form-label>
+
+          <input class="number-phone" type="text" nz-input id="jobTitle" formControlName="jobTitle" [(ngModel)]="userInformation && userInformation.jobTitle"
+          placeholder="Ejemplo: Ing. De Software" maxlength="50"/>
+    
+        </nz-form-control>
+      </nz-form-item>
+
+
+      
+      <nz-form-item class="personal-form-control">
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Salario</nz-form-label>
+          <nz-input-group>
+            <input class="text-field-center" type="number" nz-input id="salary" formControlName="salary"
+              placeholder="Ejempl: $25000" maxlength="10" (keypress)="validateFormat($event)"  [(ngModel)]="userInformation && userInformation.salary"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido! - Minímo 50 carácteres">
+          <nz-form-label>Acerca de mi</nz-form-label>
+          <nz-textarea-count [nzMaxCharacterCount]="200">
+            <textarea rows="7" nz-input placeholder="Escríbenos un poco más sobre ti" id="aboutMe" formControlName="aboutMe" [(ngModel)]="userInformation && userInformation.aboutMe"
+              minlength="50"></textarea>
+          </nz-textarea-count>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+
+  <ng-template #footerUserInfo>
+    <div class="flex-xap">
+      <nz-space class="pd-1">
+        <button *nzSpaceItem  nzShape="round" nzDanger nz-button (click)="closeModalInfoUser()">Cerrar</button>
+        <button *nzSpaceItem  nzShape="round" nzType="primary" nz-button (click)="saveInfoUser()">Actualizar información</button>
+      </nz-space>
+    </div>
+
+  </ng-template>
+</nz-drawer>
+
+
+<!-- MODAL EXPERIENCIA USUARIO EDICION -->
+<nz-drawer [nzVisible]="visibleEditExperience" nzPlacement="right"
+  [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="520" 
+  nzTitle="Editar experiencia de trabajo" [nzFooter]="footerTplExp1" (nzOnClose)="closeModalEditExp()">
+  <ng-container *nzDrawerContent>
+    <nz-spin [nzSpinning]="isLoadingWorkExperience">
+      <form nz-form [formGroup]="registerRecruiterExperienceProfessionalForm" class="form-preferences">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Es necesario saber este dato!- Minímo 8 carácteres">
+            <nz-form-label>Titulo de trabajo</nz-form-label>
+            <input class="number-phone" type="text" nz-input id="job" formControlName="job"
+              placeholder="Ejemplo: Ing. De Software" maxlength="50"  [(ngModel)]="workExperienceEdit && workExperienceEdit.job" />
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Es necesario saber este dato!">
+            <label>¿Cuál es el nombre de la compañia donde trabajas o trabajaste?</label>
+            <nz-input-group>
+              <input class="number-phone" type="text" nz-input placeholder="Escribe tu título de certificado"
+                id="company" formControlName="company" maxlength="50" [(ngModel)]="workExperienceEdit && workExperienceEdit.company" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+  
+     
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido!">
+            <nz-form-label>¿Qué habilidades desempeñastes en este trabajo?</nz-form-label>
+            <nz-select nzMode="tags" nzPlaceHolder="Selecciona una opción" id="skills" 
+            formControlName="skills" [(ngModel)]="workExperienceEdit && workExperienceEdit.skills">
+            <nz-option *ngFor="let skill of technicalAttitudes" [nzLabel]="skill.value" [nzValue]="skill.value"></nz-option></nz-select>
+  
+          </nz-form-control>
+        </nz-form-item>
+  
+        <div class="col-flex">
+          <nz-form-item class="add-certificate">
+            <nz-form-control nzErrorTip="Campo requerido!">
+              <nz-form-label>Fecha de inicio</nz-form-label>
+              <nz-date-picker nzMode="month" [nzSize]="'default'" id="begins" formControlName="begins" [(ngModel)]="workExperienceEdit && workExperienceEdit.begins" nzFormat="MMM-yyy"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+  
+          <div class="size-box"></div>
+  
+          <nz-form-item class="add-certificate">
+            <nz-form-control nzErrorTip="Campo requerido!">
+              <nz-form-label>Fecha de termino</nz-form-label>
+              <nz-date-picker nzMode="month" [nzSize]="'default'" nzFormat="MMM-yyy" id="ends" formControlName="ends" [(ngModel)]="workExperienceEdit && workExperienceEdit.ends" ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido! - Minímo 50 carácteres">
+            <nz-form-label>Cuentanos acerca de tus actividades diarias</nz-form-label>
+            <nz-textarea-count [nzMaxCharacterCount]="200" >
+              <textarea rows="7" nz-input
+                placeholder="¿Cúales fuerón tus actividades diarias y principales logros en este trabajo?" id="description" formControlName="description" [(ngModel)]="workExperienceEdit && workExperienceEdit.description"></textarea>
+            </nz-textarea-count>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-spin>
+  </ng-container>
+
+  <ng-template #footerTplExp1>
+    <div class="flex-xap">
+      <nz-space class="pd-1">
+        <button *nzSpaceItem  nzShape="round" nzDanger nz-button (click)="closeModalEditExp()">Cerrar</button>
+        <button *nzSpaceItem  nzShape="round" nzType="primary" nz-button (click)="editExperienceUser()">Actualizar experiencia</button>
+      </nz-space>
+        
+      <div nz-col class="gutter-row" [nzSpan]="4">
+        <button nz-button nzType="primary" nzDanger nzShape="round" (click)="deleteExperienceUser()"><span nz-icon nzType="delete"></span></button>
+      </div>
+
+    </div>
+
+  </ng-template>
+</nz-drawer>
+
+
+<!-- MODAL EXPERIENCIA USUARIO AGREGAR  -->
+<nz-drawer [nzVisible]="visibleAddExperience" nzPlacement="right"
+  [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="520" 
+  nzTitle="Agregar experiencia de trabajo" [nzFooter]="footerTplExp2" (nzOnClose)="closeModalAddExp()">
+  <ng-container *nzDrawerContent>
+    <nz-spin [nzSpinning]="isLoadingWorkExperience">
+      <form nz-form [formGroup]="registerRecruiterExperienceProfessionalForm" class="form-preferences">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Es necesario saber este dato!- Minímo 8 carácteres">
+            <nz-form-label>Titulo de trabajo</nz-form-label>
+            <input class="number-phone" type="text" nz-input id="job" formControlName="job"
+              placeholder="Ejemplo: Ing. De Software" maxlength="50"  [(ngModel)]="workExperienceEdit && workExperienceEdit.job" />
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Es necesario saber este dato!">
+            <label>¿Cuál es el nombre de la compañia donde trabajas o trabajaste?</label>
+            <nz-input-group>
+              <input class="number-phone" type="text" nz-input placeholder="Escribe tu título de certificado"
+                id="company" formControlName="company" maxlength="50" [(ngModel)]="workExperienceEdit && workExperienceEdit.company" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+  
+     
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido!">
+            <nz-form-label>¿Qué habilidades desempeñastes en este trabajo?</nz-form-label>
+            <nz-select nzMode="tags" nzPlaceHolder="Selecciona una opción" id="skills" 
+            formControlName="skills" [(ngModel)]="workExperienceEdit && workExperienceEdit.skills">
+            <nz-option *ngFor="let skill of technicalAttitudes" [nzLabel]="skill.value" [nzValue]="skill.value"></nz-option></nz-select>
+  
+          </nz-form-control>
+        </nz-form-item>
+  
+        <div class="col-flex">
+          <nz-form-item class="add-certificate">
+            <nz-form-control nzErrorTip="Campo requerido!">
+              <nz-form-label>Fecha de inicio</nz-form-label>
+              <nz-date-picker nzMode="month" [nzSize]="'default'" id="begins" formControlName="begins" [(ngModel)]="workExperienceEdit && workExperienceEdit.begins" nzFormat="MMM-yyy"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+  
+          <div class="size-box"></div>
+  
+          <nz-form-item class="add-certificate">
+            <nz-form-control nzErrorTip="Campo requerido!">
+              <nz-form-label>Fecha de termino</nz-form-label>
+              <nz-date-picker nzMode="month" [nzSize]="'default'" nzFormat="MMM-yyy" id="ends" formControlName="ends" [(ngModel)]="workExperienceEdit && workExperienceEdit.ends" ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido! - Minímo 50 carácteres">
+            <nz-form-label>Cuentanos acerca de tus actividades diarias</nz-form-label>
+            <nz-textarea-count [nzMaxCharacterCount]="200" >
+              <textarea rows="7" nz-input
+                placeholder="¿Cúales fuerón tus actividades diarias y principales logros en este trabajo?" id="description" formControlName="description" [(ngModel)]="workExperienceEdit && workExperienceEdit.description"></textarea>
+            </nz-textarea-count>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-spin>
+  </ng-container>
+
+  <ng-template #footerTplExp2>
+    <div class="flex-xap">
+      <nz-space class="pd-1">
+        <button *nzSpaceItem  nzShape="round" nzDanger nz-button (click)="closeModalAddExp()">Cerrar</button>
+        <button *nzSpaceItem  nzShape="round" nzType="primary" nz-button (click)="saveExperienceUser()">Guardar experiencia</button>
+      </nz-space>
+    </div>
+
+  </ng-template>
+</nz-drawer>
+
+
+<!-- MODAL HABILIDADES USUARIO -->
+
+<nz-drawer [nzClosable]="false" [nzVisible]="visibleAddSkills" nzPlacement="right" [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false" [nzWidth]="520"  nzTitle="Información personal"
+  [nzFooter]="footerUserSkills" (nzOnClose)="closeModalSkills()">
+  <ng-container *nzDrawerContent>
+    
+    <nz-spin [nzSpinning]="isLoadingSkillsSave">
+      <form nz-form [formGroup]="skillsForm" class="form-preferences">
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido!">
+            <nz-form-label>Habilidades</nz-form-label>
+  
+            <nz-select nzMode="tags" nzPlaceHolder="Selecciona una opción" id="skills" formControlName="skills" [(ngModel)]="listSkillsEdit">
+              <nz-option *ngFor="let skill of technicalAttitudes" [nzLabel]="skill.value"
+                [nzValue]="skill.value"></nz-option></nz-select>
+  
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-spin>
+ 
+  </ng-container>
+
+  <ng-template #footerUserSkills>
+    <nz-space>
+      <button *nzSpaceItem nzShape="round" nzDanger nz-button (click)="closeModalSkills()">Cerrar</button>
+      <button *nzSpaceItem nzShape="round" nzType="primary" nz-button (click)="saveSkillsUser()">Guardar</button>
+    </nz-space>
+  </ng-template>
+</nz-drawer>
+
+
+<!-- MODAL EDUCACION USUARIO -->
+
+<nz-drawer [nzClosable]="false" [nzVisible]="visibleAddEducation" nzPlacement="right"
+  [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="520" [nzVisible]="visibleAddEducation"
+  nzTitle="Agregar experiencia de trabajo" [nzFooter]="footerEducation" (nzOnClose)="handleOk()">
+  <ng-container *nzDrawerContent>
+
+
+
+    <form nz-form [formGroup]="EducationUserForm" class="form-preferences">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Nombre de la escuela</nz-form-label>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="nameSchool"
+            formControlName="nameSchool">
+            <nz-option *ngFor="let school of schools" [nzLabel]="school.schoolName"
+              [nzValue]="school.schoolName"></nz-option></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Nivel escolar</nz-form-label>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="levelSchool"
+            formControlName="levelSchool">
+            <nz-option *ngFor="let level of levelSchool" [nzLabel]="level.levelName"
+              [nzValue]="level.levelName"></nz-option></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div class="col-flex">
+        <nz-form-item class="add-certificate">
+          <nz-form-control nzErrorTip="Campo requerido!">
+            <nz-form-label>Fecha de inicio</nz-form-label>
+            <nz-date-picker nzMode="month" [nzSize]="'default'" id="startDate" formControlName="startDate"
+              nzFormat="MMM-yyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="size-box"></div>
+
+        <nz-form-item class="add-certificate">
+          <nz-form-control nzErrorTip="Campo requerido!">
+            <nz-form-label>Fecha de termino</nz-form-label>
+            <nz-date-picker nzMode="month" [nzSize]="'default'" nzFormat="MMM-yyy" id="endDate"
+              formControlName="endDate"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </form>
+  </ng-container>
+
+  <ng-template #footerEducation>
+
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <button class="button-red pd-1" nz-button (click)="closeModal()">Cerrar</button>
+
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <button class="button-blue pd-1" nz-button
+          (click)="saveEducationUser()">Guardar</button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="8">
+
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="4">
+        <button nz-button nzType="primary" nzDanger nzShape="round" (click)="deleteEducationUser()"><span nz-icon
+            nzType="delete"></span></button>
+
+      </div>
+    </div>
+
+  </ng-template>
+</nz-drawer>
+
+<!-- MODAL CERTIFICADOS USUARIO -->
+
+<nz-drawer [nzClosable]="false" [nzVisible]="visibleAddCertificate" nzPlacement="right"
+  [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="520" [nzVisible]="visibleAddCertificate"
+  nzTitle="Agregar experiencia de trabajo" [nzFooter]="footerCertificate" (nzOnClose)="handleOk()">
+  <ng-container *nzDrawerContent>
+    <form nz-form [formGroup]="CertificateUserForm" class="form-preferences">
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Certificado</nz-form-label>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="nameCertificate"
+            formControlName="nameCertificate">
+            <nz-option *ngFor="let school of schools" [nzLabel]="school.schoolName"
+              [nzValue]="school.schoolName"></nz-option></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Tipo certificado</nz-form-label>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="levelCertificate"
+            formControlName="levelCertificate">
+            <nz-option *ngFor="let level of levelStudies" [nzLabel]="level.valor"
+              [nzValue]="level.id"></nz-option></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div class="col-flex">
+        <nz-form-item class="add-certificate">
+          <nz-form-control nzErrorTip="Campo requerido!">
+            <nz-form-label>Fecha de inicio</nz-form-label>
+            <nz-date-picker nzMode="month" [nzSize]="'default'" id="startDate" formControlName="startDate"
+              nzFormat="MMM-yyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="size-box"></div>
+
+        <nz-form-item class="add-certificate">
+          <nz-form-control nzErrorTip="Campo requerido!">
+            <nz-form-label>Fecha de termino</nz-form-label>
+            <nz-date-picker nzMode="month" [nzSize]="'default'" nzFormat="MMM-yyy" id="endDate"
+              formControlName="endDate"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </form>
+  </ng-container>
+
+  <ng-template #footerCertificate>
+
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <button class="button-red pd-1" nz-button (click)="closeModal()">Cerrar</button>
+
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <button class="button-blue pd-1" nz-button
+          (click)="saveCertificateUser()">Guardar</button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="8">
+
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="4">
+        <button nz-button nzType="primary" nzDanger nzShape="round" (click)="deleteCertificateUser()"><span nz-icon
+            nzType="delete"></span></button>
+
+      </div>
+    </div>
+
+  </ng-template>
+</nz-drawer>

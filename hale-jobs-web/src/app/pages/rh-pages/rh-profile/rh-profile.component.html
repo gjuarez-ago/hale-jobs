@@ -1,0 +1,326 @@
+
+
+<div class="body-content">
+  <div class="content-profile">  
+    <div class="img-user-content">
+
+      <div class="card card-user-edit box">
+        <br>
+        <div class="content">
+         
+          <label for="file">
+          <div class="content-img">
+            <img
+            src="https://gajuarezdelac.github.io/assets/images/2.jpg"
+            alt="" />
+            <div class="centered">
+              <i nz-icon nzType="camera" nzTheme="outline"></i>
+            </div>
+
+            
+          </div>
+        </label>
+
+        <input id="file"
+        class="absolute w-full h-full"
+        ref="file"
+        type="file"
+        accept="image/*" style=" visibility: hidden;"/>
+
+
+          <strong>David Warner</strong>
+          <p>bicosind@gmail.com</p>
+        </div>
+
+     
+        <!-- <div class="btn">
+          <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i>Assign</a>
+          <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>View</a>
+        </div> -->
+
+        <div class="user-bio">
+          <div class="tags">
+            <nz-space>
+              <nz-tag class="ap" *nzSpaceItem nzColor="#55acee">
+                <i nz-icon nzType="aim"></i>
+                <span>Carmen, Campeche</span>
+              </nz-tag>
+              <nz-tag class="ap" *nzSpaceItem nzColor="#093b85">
+                <i nz-icon nzType="team"></i>
+                <span>Hombre</span>
+              </nz-tag>
+
+              
+
+            </nz-space>
+          </div>
+
+          <br>
+          <p> <i>
+              "No tienes que ser grande para empezar. Pero tienes que empezar para poder ser grande"
+            </i>
+          </p>
+
+          <div class="social">
+            <div class="social-icons">
+              <a href="" class="fa">
+                Perfil publico
+              </a>
+
+            </div>
+
+            <div class="message">
+              <a href="" class="fa">
+                <nz-switch [(ngModel)]="switchValue"></nz-switch>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      
+
+
+    </div>
+
+
+    <div class="content-information">
+
+      <div class="content-information-header card">
+
+        <div class="ls">
+          <nz-tabset>
+            
+            <nz-tab  [nzTitle]="titleTemplate2">
+              <ng-template #titleTemplate2>
+                <span nz-icon [nzType]="'user'"></span>
+                 Información personal
+              </ng-template>
+             
+              
+              <div class="">
+    
+                <div class="f">
+                  <form nz-form [nzLayout]="'vertical'" action="">
+                    
+                <div class="content-form-1">               
+                    <nz-form-item class="input-content">
+                      <label class="input-label"> Puesto de trabajo:  </label>
+                      <nz-form-control nzHasFeedback >
+                        <nz-input-group nzPrefixIcon="idcard">
+                          <input  nz-input placeholder="Puesto de trabajo" />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+  
+                    <nz-form-item class="input-content">
+                      <label class="input-label"> Número de contacto:  </label>
+                      <nz-form-control nzHasFeedback >
+                        <nz-input-group nzPrefixIcon="phone">
+                          <input  nz-input type="text" placeholder="Número de contacto" />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>                 
+              </div>
+
+              <div class="textarea-content">
+
+                  <nz-form-item class="inputarea-content">
+                      <label class="input-label"> Mi resumen:  </label>
+                      <nz-form-control >
+                          <nz-input-group [nzSuffix]="textAreaClearTpl" class="ant-input-affix-wrapper-textarea-with-clear-btn">
+                              <textarea nz-input  rows="7" placeholder="¿Cúales han sido tus principales a lo largo de este tiempo y como te describes?"></textarea>
+                            </nz-input-group>
+                            <ng-template #textAreaClearTpl>
+                              <i
+                                nz-icon
+                                class="ant-input-clear-icon"
+                                nzTheme="fill"
+                                nzType="close-circle"
+                              ></i>
+                            </ng-template>
+                      </nz-form-control>
+                    </nz-form-item>
+
+              </div>
+
+                  </form>
+
+                </div>
+
+
+    
+           
+              </div>
+              <button  type="button"  nz-button nzType="primary" [nzSize]="'default'" nzShape="round">
+                <i nz-icon nzType="save"></i>
+                Guardar
+              </button>
+    
+            </nz-tab>
+
+
+              <nz-tab  [nzTitle]="titleTemplate">
+                <ng-template #titleTemplate>
+                  <span nz-icon [nzType]="'setting'"></span>
+                   Mi cuenta
+                </ng-template>
+               
+                
+                <div class="settings-profile">
+      
+                  <div class="a">
+      
+      
+                      <div class="opt">
+                          <p> Recibir notificaciones </p>
+                          <nz-switch [(ngModel)]="switchValue1"></nz-switch>
+                      </div>
+      
+                      <div class="opt">
+                          <p> Estoy buscando empleo </p>
+                          <nz-switch [(ngModel)]="switchValue1"></nz-switch>
+                      </div>
+                      
+      
+                      <div class="opt">
+                          <p> Recibir notificaciones </p>
+                          <nz-switch [(ngModel)]="switchValue1"></nz-switch>
+                      </div>
+                      
+      
+      
+      
+                  </div>
+
+                  
+      
+      
+                  <div class="b">
+      
+      
+                      <div class="btn-opt">
+      
+                          <p class="descripcion">
+                              Si continúas con este proceso tu cuenta y tu CV serán eliminados y no podrás recuperarlos. 
+                          </p>
+      
+                          <div class="button-s">
+                              <button type="button"  nz-button [nzSize]="'default'" nzShape="round" nzBlock nzDanger>Eliminar cuenta</button>
+                          </div>
+      
+      
+                      </div>
+      
+                  </div>
+      
+      
+                
+      
+      
+                </div>
+      
+                <div class="links">
+      
+      
+                  <div class="link-a">
+                      <a href="http://"> Aviso de privacidad </a>
+                  </div>
+      
+                  
+                  <div class="link-a">
+                      <a href="http://"> Terminos y condiciones </a>
+                  </div>
+      
+      
+              </div>
+      
+      
+      
+      
+              </nz-tab>
+      
+              <nz-tab  [nzTitle]="titleTemplate1">
+                  <ng-template #titleTemplate1>
+                    <span nz-icon [nzType]="'lock'"></span>
+                    Cambiar contraseña
+                  </ng-template>
+                  
+      
+                  <h3>Cambiar contraseña</h3>
+      
+                  <form nz-form [formGroup]="validateForm"  (ngSubmit)="submitForm()">
+                      <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input your username!">
+                          <label> Escribe la contraseña actual: </label>
+                          <nz-input-group nzPrefixIcon="lock">
+                            <input type="text" class="input-text" nzSize="large" nz-input
+                            placeholder="Escribe el titulo de la oferta" />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+      
+                      <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input your Password!">
+                          <label> Contraseña nueva: </label>
+                          <nz-input-group nzPrefixIcon="lock">
+                            <input type="password" class="input-text" nz-input formControlName="password" placeholder="Password" />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+      
+                      <nz-form-item>
+                          <nz-form-control nzErrorTip="Please input your Password!">
+                              <label> Confirmar contraseña: </label>
+                            <nz-input-group nzPrefixIcon="lock">
+                              <input type="password" class="input-text" nz-input formControlName="password" placeholder="Password" />
+                            </nz-input-group>
+                          </nz-form-control>
+                      </nz-form-item>
+
+
+                    <button type="button"  nz-button nzType="primary" [nzSize]="'default'" nzShape="round">
+                      <i nz-icon nzType="save"></i>
+                      Actualizar</button>
+
+    
+                    </form>
+                  
+      
+      
+      
+              </nz-tab>
+      
+          </nz-tabset>
+         </div>
+
+
+
+      </div>
+
+      <div class="content-information-footer card">
+
+        <p> Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el
+          texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se
+          dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un
+          libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en
+          documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación
+          de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de
+          autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.F </p>
+
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+  </div>
+
+
+
+</div>

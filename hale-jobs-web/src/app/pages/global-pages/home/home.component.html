@@ -1,0 +1,491 @@
+  <!-- Content -->
+
+  <div class="banner">
+    <div class="sizebox"></div>
+
+    <div class="container-img">
+      <section id="email-info" class="flex">
+
+        <h1 class="title-banner slide-down">¿Buscas trabajo?</h1>
+        <h2 class="slide-down">Unete a la mas grande comunidad de trabajadores de México </h2>
+        <form [formGroup]="searchForm" (ngSubmit)="submitForm()">
+
+          <div class="input-search">
+
+            <div class="one-search">
+              <nz-form-item class="input-content">
+                <nz-form-control nzErrorTip="¿Que tipo de puesto estas buscando?">
+                  <nz-input-group nzPrefixIcon="search">
+                    <input class="search" type="text" formControlName="value" nz-input placeholder="¿Qué trabajo estas buscando?" />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+
+              <div id="input">
+                <button type="submit" value="Buscar una chambita"> <i class="laa"
+                    [nzTwotoneColor]="'#ffff'" nz-icon nzType="search" nzTheme="outline"></i> </button>
+              </div>
+
+
+            </div>
+
+          </div>
+
+          <div class="one-search__back">
+            <a routerLink="/companies" class="one-search__back--companies">Búsqueda por empresa</a>
+          </div>
+
+
+        </form>
+      </section>
+    </div>
+
+    <!-- https://codepen.io/ZaynAlaoudi/pen/GBrqdp -->
+    <!-- https://codepen.io/ZaynAlaoudi/pen/zzgXYO -->
+    <!-- https://codepen.io/fadzrinmadu/pen/xxqYoxm -->
+    <!-- https://codepen.io/gabriel-22-01-2000/pen/rNJEdMg -->
+
+    <section class="about">
+
+
+
+      <div class="history-search"> 
+
+      <h1 class="title-cate">
+         Busquedas mas frecuentes
+      </h1>
+
+
+        <div class="list-card-history">
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+    <div class="banner-ad">
+
+
+
+    </div>
+
+
+
+
+    <section class="categories">
+
+      <h1 class="title-cate">
+        Categorias principales 
+      </h1>
+
+      <div class="wrapper">
+        <div class="page_categories">
+          <div class="fighting_games gallery">           
+              <h1>UX/UI </h1>
+          </div>
+          <div class="sports_games gallery">
+            <h1><i class="fas fa-futbol"></i> UX/UI </h1>
+          </div>
+          <div class="girls_games gallery">
+            <h1><i class="fab fa-gitlab"></i> Desarrollo Móvil </h1>
+          </div>
+          <div class="racing_games gallery">
+            <h1><i class="fas fa-flag-checkered"></i> Desarrollo WEB</h1>
+          </div>
+          <div class="shooting_games gallery">
+            <h1><i class="fas fa-fighter-jet"></i> Project Management </h1>
+          </div>
+          <div class="fighting_games gallery">           
+            <h1>UX/UI </h1>
+        </div>
+        <div class="sports_games gallery">
+          <h1><i class="fas fa-futbol"></i> UX/UI </h1>
+        </div>
+        <div class="girls_games gallery">
+          <h1><i class="fab fa-gitlab"></i> Desarrollo Móvil </h1>
+        </div>
+        <div class="racing_games gallery">
+          <h1><i class="fas fa-flag-checkered"></i> Desarrollo WEB</h1>
+        </div>
+        <div class="shooting_games gallery">
+          <h1><i class="fas fa-fighter-jet"></i> Project Management </h1>
+        </div>
+          <div class="RBG_games gallery">
+            <h1><i class="fab fa-accusoft"></i> Diseño grafico </h1>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <div class="al">
+
+      <h1 class="title-cate">
+        Mis ultimas busquedas 
+      </h1>
+
+      <div class="alala">
+        <div class="offer-content">
+          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
+          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+
+         
+        </div>
+
+        <div class="offer-content">
+          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
+          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+
+         </div>
+
+        <div class="offer-content">
+          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
+          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+
+         
+        </div>
+
+        <div class="offer-content">
+          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
+          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+
+        
+        </div>
+      </div>
+    </div>
+
+    <!-- <section class="card-section">
+      <div class="card-content">
+
+
+        <div class="card-container">
+          <div class="card-image">
+            <img
+              src="https://www.mndelgolfo.com/blog/wp-content/uploads/2018/03/Todo-lo-que-necesitas-saber-para-armar-tu-taller-de-carpinteri%CC%81a1.jpg"
+              alt="a brand new sports car" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-blue">Car design</span>
+            <h1>
+              Why is the sports cars so well designed?
+            </h1>
+            <p class="card-subtitle">
+              An exploration into the car design industry and how it works
+            </p>
+            <div class="card-author">
+              <img src="https://i.ytimg.com/vi/E9eZgB5vYZ4/maxresdefault.jpg" alt="author avatar" />
+              <div class="author-info">
+                <p class="author-name">John Doe</p>
+                <p class="post-timestamp">2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-container">
+          <div class="card-image">
+            <img
+              src="https://i0.wp.com/losalbaniles.com/wp-content/uploads/2022/03/Peo%CC%81n-.jpg?resize=424%2C287&ssl=1"
+              alt="a brand new sports car" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-blue">Car design</span>
+            <h1>
+              Why is the sports cars so well designed?
+            </h1>
+            <p class="card-subtitle">
+              An exploration into the car design industry and how it works
+            </p>
+            <div class="card-author">
+              <img
+                src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="author avatar" />
+              <div class="author-info">
+                <p class="author-name">John Doe</p>
+                <p class="post-timestamp">2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="card-container">
+          <div class="card-image">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPqIXvZkinLM26p_acuBfOan7ccgNeqvTtOg&usqp=CAU"
+              alt="a landscape view full of baloons" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-purple">Adventure</span>
+            <h1>
+              Discover new adventures over the world
+            </h1>
+            <p class="card-subtitle">
+              Adventure and baloons are trends these days
+            </p>
+            <div class="card-author">
+              <img
+                src="https://images.unsplash.com/photo-1504728078670-d0a59873c8c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                alt="author avatar" />
+              <div class="author-info">
+                <p class="author-name">John Doe</p>
+                <p class="post-timestamp">2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-container">
+          <div class="card-image">
+            <img
+              src="https://images.ecestaticos.com/-kiloJUTSewHwWMEPF_CF9GPYWI=/0x48:1264x765/1600x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F3b0%2F743%2Ffaa%2F3b0743faa0f646f05786cfa60eda836a.jpg"
+              alt="a city full of buildings" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-pink">Engineering</span>
+            <h1>
+              Living in downtown in the biggest cities
+            </h1>
+            <p class="card-subtitle">
+              Citizens of the biggest cities in the world talk about their lives
+            </p>
+            <div class="card-author">
+              <img
+                src="https://images.unsplash.com/photo-1506422748879-887454f9cdff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                alt="author avatar" />
+              <div class="author-info">
+                <p>John Doe</p>
+                <p>2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-container">
+          <div class="card-image">
+            <img
+              src="https://www.electricistasdelafuentemadrid.com/wp-content/uploads/2017/12/tres-puntos-clave-que-debera-verificar-al-contratar-a-un-electricista.jpg"
+              alt="a brand new sports car" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-blue">Car design</span>
+            <h1>
+              Why is the sports cars so well designed?
+            </h1>
+            <p class="card-subtitle">
+              An exploration into the car design industry and how it works
+            </p>
+            <div class="card-author">
+              <img
+                src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="author avatar" />
+              <div class="author-info">
+                <p class="author-name">John Doe</p>
+                <p class="post-timestamp">2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-container">
+          <div class="card-image">
+            <img src="https://www.arkiplus.com/wp-content/uploads/2016/06/ingeniero-electronico.jpg"
+              alt="a brand new sports car" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-blue">Car design</span>
+            <h1>
+              Why is the sports cars so well designed?
+            </h1>
+            <p class="card-subtitle">
+              An exploration into the car design industry and how it works
+            </p>
+            <div class="card-author">
+              <img
+                src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="author avatar" />
+              <div class="author-info">
+                <p class="author-name">John Doe</p>
+                <p class="post-timestamp">2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="card-container">
+          <div class="card-image">
+            <img
+              src="https://previews.123rf.com/images/dolgachov/dolgachov1607/dolgachov160703617/59884204-al-por-mayor-log%C3%ADstica-carga-el-transporte-y-las-personas-concepto-hombre-con-cargador-y-el-portapap.jpg"
+              alt="a landscape view full of baloons" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-purple">Adventure</span>
+            <h1>
+              Discover new adventures over the world
+            </h1>
+            <p class="card-subtitle">
+              Adventure and baloons are trends these days
+            </p>
+            <div class="card-author">
+              <img
+                src="https://images.unsplash.com/photo-1504728078670-d0a59873c8c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                alt="author avatar" />
+              <div class="author-info">
+                <p class="author-name">John Doe</p>
+                <p class="post-timestamp">2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-container">
+          <div class="card-image">
+            <img
+              src="https://serviciotecnicocomputadoras.com/wp-content/uploads/2018/10/Servicio-Tecnico-Computadoras-1-1500x1001.jpeg"
+              alt="a city full of buildings" />
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-pink">Engineering</span>
+            <h1>
+              Living in downtown in the biggest cities
+            </h1>
+            <p class="card-subtitle">
+              Citizens of the biggest cities in the world talk about their lives
+            </p>
+            <div class="card-author">
+              <img
+                src="https://images.unsplash.com/photo-1506422748879-887454f9cdff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                alt="author avatar" />
+              <div class="author-info">
+                <p>John Doe</p>
+                <p>2h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </section> -->
+
+
+
+
+    <!-- Team section -->
+
+    <div class="team-section">
+
+       <h1 class="title-apa">Busquedas recomendadas </h1>
+
+      <p class="apa">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo repudiandae nihil rem qui quibusdam eum beatae</p>
+
+
+
+
+
+      <div class="container">
+
+        <div class="list-found">
+
+          <div class="list-content">
+            <p> Top puestos </p>
+            <ul>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+            </ul>
+          </div>
+
+          <div class="list-content">
+            <p> Top categorias </p>
+            <ul>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+              <li><a href="#"> empleos en ciudad de mexico</a></li>
+            
+            </ul>
+          </div>
+
+          <div class="list-content">
+            <p> Top regiones </p>
+            <ul>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+            </ul>
+          </div>
+
+          <div class="list-content">
+            <p> Top Categorias </p>
+            <ul>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li><a href="#"> Trabajos en HSBC </a></li>
+            </ul>
+          </div>
+
+        </div>
+
+
+    
+      </div>
+
+    </div>
+
+
+
+
+    <!-- End content section -->
+  </div>
+
+
+
+  <a href="https://api.whatsapp.com/send?phone=51955081075&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Varela%202."
+    class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+  </a>

@@ -1,0 +1,216 @@
+
+
+  .content-form-1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .input-label {
+    margin: 0px 0px 3px 0px;
+  }
+
+  .col-flex {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .ant-picker{
+     width: 200px !important;
+  }
+
+  .input-content {
+    width: 49%;
+    margin: 5px 0px 10px 0px; 
+  }
+
+
+  input {
+    padding: 10px;
+    margin: 5px 2px;
+  }
+
+  .textarea-content {
+    width: 100%;
+    margin: 15px 0px 0px 0px;
+    border-radius: 10px;
+  }
+
+
+  .header-exp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0px 20px 0px;    
+  }
+
+  .header-exp .title {
+
+    font-weight: bold;
+  }
+
+
+  .f {
+    border-radius: 10px;
+    padding: 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  }
+
+  .card-exp {
+    cursor: pointer;
+    margin: 15px 0px;
+    border-radius: 10px;
+    padding: 10px 10px 20px 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  }
+
+  .title-card p{
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .subtitle-card p{
+    
+    font-size: 13px;
+    font-weight: 300;
+    margin:0px 0px 18px 0px;
+    padding: 0px;
+  }
+
+  .skill-list {
+
+    display: flex;
+    justify-content: initial;
+    flex-wrap: wrap;
+
+    margin: 15px 0px;
+    border-radius: 10px;
+    padding: 10px 10px 20px 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  }
+
+  .skill-element {
+    
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px 7px;
+    background-color: rgb(65, 139, 40);
+    color: white;
+    border-radius: 10px;
+  }
+
+  .card-edu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin: 10px 0px;
+    border-radius: 10px;
+    padding: 15px 10px 15px 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  }
+
+  
+  .card-edus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 15px auto;
+    border-radius: 10px;
+    padding: 10px 10px 20px 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  }
+
+  .title-edu p{
+    margin: 0px;
+  }
+
+  .row-more {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .element-more {
+    width: 32%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .flex-principal {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+   .p-s{
+    margin:2px;
+    padding: 0px 80px 0px 0px;
+    font-size: 1.1em;
+  }
+
+  .span-small {
+    font-size: 10px;
+    font-weight: 100;
+  }
+
+  i.icon-edit-i {
+    color: white;
+    font-size: 22px;
+    margin: 0px 10px 0px 0px;
+  }
+
+
+  .card {
+    cursor: pointer;
+  }
+
+  .card:hover i{
+    cursor: pointer;
+    color: rgb(10, 10, 10);
+  }
+
+  .card-edu:hover i{
+    cursor: pointer;
+    color: rgb(10, 10, 10);
+  }
+
+  .card-exp:hover i {
+    cursor: pointer;
+    color: rgb(10, 10, 10);
+  }
+
+
+  .icon-edit {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .we {
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .descripcion {
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+  .tag-a {
+    margin: 5px 5px;
+  }
+
+
+  .pd-1 {
+    margin: 0px 10px;
+  }
+
+  .flex-xap {
+    display: flex;
+    justify-content: space-between;
+  }

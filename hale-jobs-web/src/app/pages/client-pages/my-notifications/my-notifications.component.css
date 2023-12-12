@@ -1,0 +1,22 @@
+.list {
+    margin: 20px 0px;
+    background-color: rgb(242, 242, 242) !important;
+    padding-top: 20px 40px;
+    border-radius: 10px;
+}
+
+nz-list-item {
+    padding: 10px 20px;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+
+
+   input {
+    width: 300px;
+  }

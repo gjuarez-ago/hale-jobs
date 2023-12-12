@@ -1,0 +1,668 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/models/core/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { GenericService } from 'src/app/services/generic.service';
+
+@Component({
+  selector: 'app-complete-register-user',
+  templateUrl: './complete-register-user.component.html',
+  styleUrls: ['./complete-register-user.component.css']
+})
+export class CompleteRegisterUserComponent implements OnInit {
+
+  public isLoadingGeneral = false;
+
+  public current = 0;
+
+
+
+  public user: User | undefined;
+  public idUser !: number;
+  public subscriptions: Subscription[] = [];
+
+  public isLoadingSupers = false;
+  public isLoadingCategories = false;
+
+
+  public currentStep = 0;
+
+  public visibleAddCertificate = false;
+  public visibleAddExperiences = false;
+  public visibleAlert = false;
+  public visibleAlertProfessional = false;
+  public visibleAlertCV = false;
+  public verificateFormsSteps: boolean = true;
+  public certificatesUser: any = [];
+  public experiencesWorkUser: any = [];
+  public listStates : any = [];
+  public listCities : any = [];
+  public listSubcategories : any = [];
+  public levelStudies : any = [];
+  public listTypeOfJobs : any = [];
+  public listModwork: any = [];
+
+
+  public citySelected : any;
+  public stateSelected : any;
+
+  index = 'First-content';
+
+  //DECLARACIÓN DE FORMULARIOS REACTIVOS
+  registerRecruiterForm = new FormGroup({
+    state: new FormControl(null, Validators.required),
+    city: new FormControl(null, Validators.required),
+    gender: new FormControl(null, Validators.required),
+    numberPhone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
+    dateOfBirth: new FormControl(null, [Validators.required]),
+  });
+
+  registerRecruiterSection2Form = new FormGroup({
+    findJobs: new FormControl(null, Validators.required),
+    findJob: new FormControl(null, Validators.required),
+    learnSkills: new FormControl(null, Validators.required),
+  });
+
+  registerRecruiterCVSection1Form = new FormGroup({
+    jobTitle: new FormControl(null, [Validators.required]),
+    salary: new FormControl(null, Validators.required),
+    modalidadTrabajo: new FormControl(null, Validators.required),
+    relocated: new FormControl(null, Validators.required),
+    skills: new FormControl(null, Validators.required),
+  });
+
+  registerRecruiterCVSection2Form = new FormGroup({
+    name: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+    type: new FormControl(null, [Validators.required]),
+    schoolName: new FormControl(null, [Validators.required, Validators.minLength(5)]),
+    begins: new FormControl(null, Validators.required),
+    ends: new FormControl(null, Validators.required),
+  });
+
+  registerRecruiterCVSection3Form = new FormGroup({
+    aboutMe: new FormControl(null, [Validators.required, Validators.minLength(50)]),
+  });
+
+  registerRecruiterExperienceProfessionalForm = new FormGroup({
+    job: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
+    company: new FormControl(null, Validators.required),
+    skills: new FormControl(null, Validators.required),
+    begins: new FormControl(null, Validators.required),
+    ends: new FormControl(null, Validators.required),
+    description: new FormControl(null, [Validators.required, Validators.minLength(50)]),
+  });
+
+
+
+  constructor(
+    private router: Router,
+    private authenticationService: AuthService,
+    private message: NzMessageService,
+    private genericService : GenericService,
+  ) {
+
+    
+
+
+  }
+
+
+  ngOnInit(): void {
+    if (this.authenticationService.isUserLoggedIn()) {
+      this.user = this.authenticationService.getUserFromLocalCache();
+      this.idUser = this.user.id;
+      this.getStates();
+      this.getLevelOfStudy();
+      this.getSubcategories();  
+    } else {
+      this.router.navigateByUrl("/auth/login");
+    }
+  }
+
+
+
+  public deleteCardCertificate(index:any){
+    this.certificatesUser.splice(index, 1)
+  }
+
+  public deleteCardExperience(index:any){
+    this.experiencesWorkUser.splice(index, 1)
+  }
+
+  public submitFormSection1() {
+    if (this.registerRecruiterForm.valid) {
+      this.changeContent();
+      this.current += 1;
+    } else {
+      Object.values(this.registerRecruiterForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+  }
+
+  public submitFormSection2() {
+    if (this.registerRecruiterSection2Form.valid) {
+      this.changeContent();
+      this.current += 1;
+    } else {
+      Object.values(this.registerRecruiterSection2Form.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+  }
+
+  provinceChange(value : any): void {
+    if(value) {
+      this.citySelected = undefined;
+      this.getCities(value);
+    }else {
+      this.listCities = [];
+      this.citySelected = undefined;
+    }
+    // this.registerRecruiterForm.get('idCity')?.reset()
+  }
+
+  getDatesCitys = (citys: any) => citys.idState == this.registerRecruiterForm.get('idState')?.value;
+
+
+
+
+  pre(): void {
+    this.current -= 1;
+
+  }
+
+  verificationForms(): void {
+    if (this.registerRecruiterCVSection3Form.valid) {
+      this.changeContent();
+      this.current += 1;
+      this.visibleAlert = false;
+    } else {
+      this.visibleAlert = true;
+      Object.values(this.registerRecruiterCVSection3Form.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+  }
+
+  next(): void {
+    this.changeContent();
+  }
+
+  done(): void {
+    this.router.navigate(['project/list']);
+  }
+
+
+  changeContent(): void {
+    switch (this.current) {
+      case 0: {
+        break;
+      }
+      case 1: {
+        break;
+      }
+      case 2: {
+        break;
+      }
+      default: {
+      }
+    }
+  }
+
+  preStep(): void {
+    this.currentStep -= 1;
+    this.changeContent();
+  }
+
+  nextStep(): void {
+
+    if (this.registerRecruiterCVSection1Form.valid) {
+      this.currentStep += 1;
+      this.changeContent();
+    }else {
+      Object.values(this.registerRecruiterCVSection1Form.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+    
+  }
+
+  nextStep2(): void {
+
+    if (this.certificatesUser.length > 0) {
+      this.currentStep += 1;
+      this.changeContent();
+      this.visibleAlertCV = false;
+    } else {
+      this.visibleAlertCV = true;
+    }
+  }
+
+
+
+
+  doneSteps(): void {
+    console.log('done');
+  }
+
+  changeContentSteps(): void {
+    switch (this.current) {
+      case 0: {
+        this.index = 'First-content';
+        break;
+      }
+      case 1: {
+        this.index = 'Second-content';
+        break;
+      }
+      case 2: {
+        this.index = 'third-content';
+        break;
+      }
+      default: {
+        this.index = 'error';
+      }
+    }
+  }
+
+
+
+
+  showModal(): void {
+    this.visibleAddCertificate = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.visibleAddCertificate = false;
+  }
+
+  closeModal(): void {
+    this.visibleAddCertificate = false;
+    this.visibleAddExperiences = false;
+  }
+
+  saveCertificate(): void {
+
+    if (this.registerRecruiterCVSection2Form.valid) {
+      this.certificatesUser.push(this.registerRecruiterCVSection2Form.value);
+      this.visibleAddCertificate = false;
+      this.registerRecruiterCVSection2Form.reset()
+    } else {
+      Object.values(this.registerRecruiterCVSection2Form.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+
+  }
+
+  saveExperienceUser(): void {
+    if (this.registerRecruiterExperienceProfessionalForm.valid) {
+      this.experiencesWorkUser.push(this.registerRecruiterExperienceProfessionalForm.value);
+      this.visibleAddExperiences = false;
+      this.registerRecruiterExperienceProfessionalForm.reset()
+    } else {
+      Object.values(this.registerRecruiterExperienceProfessionalForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+  }
+
+  saveFormsData(): void {
+    if (this.experiencesWorkUser.length > 0) {
+      
+      const formsData = { 
+         ...this.registerRecruiterForm.value, 
+         ...this.registerRecruiterSection2Form.value,
+         ...this.registerRecruiterCVSection1Form.value, 
+         ...this.registerRecruiterCVSection3Form.value, 
+         schools: this.certificatesUser,
+         experiences: this.experiencesWorkUser,
+         username: "bicosind@gmail.com" }
+
+      // console.log(this.registerRecruiterForm.value);
+      // console.log(this.registerRecruiterSection2Form.value);
+      // console.log(this.registerRecruiterCVSection1Form.value);
+      // console.log(this.registerRecruiterCVSection3Form.value);      
+      // console.log(this.certificatesUser);
+      // console.log(this.experiencesWorkUser);
+
+      console.log(formsData);
+
+      this.isLoadingGeneral = true;
+
+      this.authenticationService.registerUser(formsData).subscribe(
+        (response: any) => {
+          this.message.create("success", 'Actualizado correctamente!');
+          this.router.navigate(['profile/cv']);
+          this.isLoadingGeneral=false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create("error", 'Ha ocurrido un error al guardar la información');
+          this.isLoadingGeneral=false;
+        }
+      )
+      
+    
+      
+    } else {
+      this.visibleAlertProfessional = true;
+    }
+  }
+
+
+
+  showModalExp(): void {
+    this.visibleAddExperiences = true;
+  }
+
+  closeModalExp(): void {
+    console.log('Button ok clicked!');
+    this.visibleAddExperiences = false;
+  }
+
+  //VALIDACIÓN DE INPUT DE TELEFONO PARA NO ACEPTAR LETRAS
+  validateFormat(event:any) {
+    let key;
+    if (event.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+    } else {
+      key = event.keyCode;
+      key = String.fromCharCode(key);
+    }
+    const regex = /[0-9]|\./;
+     if (!regex.test(key)) {
+      event.returnValue = false;
+       if (event.preventDefault) {
+        event.preventDefault();
+       }
+     }
+    }
+
+
+    // Services API
+
+    getStates() {
+      this.isLoadingGeneral = true;
+      this.genericService.getAllStates().subscribe(
+        (response: any) => {
+         console.log(response);
+          this.listStates = response.map((prop: any, key: any) => {
+            return {
+              ...prop,
+              key: key + 1,
+            };
+          }); 
+          this.isLoadingGeneral = false;       
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
+          this.isLoadingGeneral = false;
+        }
+      )
+    }
+
+
+    getCities(p : any) {
+      this.isLoadingGeneral = true;
+      this.genericService.getAllCities(p).subscribe(
+        (response: any) => {
+         console.log(response);
+          this.listCities = response.map((prop: any, key: any) => {
+            return {
+              ...prop,
+              key: key + 1,
+            };
+          });        
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
+          this.isLoadingGeneral = false;
+        }
+      )
+    }
+
+    getSubcategories() {
+      this.isLoadingGeneral = true;
+      this.genericService.getAllSubcategoriesByCategory().subscribe(
+        (response: any) => {
+         console.log(response);
+          this.listSubcategories = response.map((prop: any, key: any) => {
+            return {
+              ...prop,
+              key: key + 1,
+            };
+          }); 
+          this.isLoadingGeneral = false;       
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
+        }
+      )
+    }
+
+    getLevelOfStudy() {
+      this.isLoadingGeneral = true;
+      this.genericService.getAllTypeOfLevelStudy().subscribe(
+        (response: any) => {
+         console.log(response);
+          this.levelStudies = response.map((prop: any, key: any) => {
+            return {
+              ...prop,
+              key: key + 1,
+            };
+          });        
+          this.isLoadingGeneral=false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
+          this.isLoadingGeneral=false;
+        }
+      )
+    }
+
+    getTypeOfJobs() {
+      this.isLoadingGeneral = true;
+      this.genericService.getAllTypeOfJobs().subscribe(
+        (response: any) => {
+         console.log(response);
+          this.listTypeOfJobs = response.map((prop: any, key: any) => {
+            return {
+              ...prop,
+              key: key + 1,
+            };
+          });        
+          this.isLoadingGeneral=false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
+          this.isLoadingGeneral=false;
+        }
+      )
+    }
+
+    getModWorks() {
+      this.isLoadingGeneral = true;
+      this.genericService.getAllTypeOfJobs().subscribe(
+        (response: any) => {
+         console.log(response);
+          this.listModwork = response.map((prop: any, key: any) => {
+            return {
+              ...prop,
+              key: key + 1,
+            };
+          }); 
+          this.isLoadingGeneral = false;       
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
+          this.isLoadingGeneral = false;
+        }
+      )
+    }
+
+
+    public modalityWork: any = [
+      {
+        id: 1,
+        name: 'PRESENCIAL'
+      },
+      {
+        id: 2,
+        name: 'REMOTO'
+      },
+      {
+        id: 3,
+        name: 'AMBOS'
+      },
+    ]
+  
+  
+    public technicalAttitudes: any = [
+      {
+        id: 1,
+        name: 'Manejo de hojas de cálculo'
+      },
+      {
+        id: 2,
+        name: 'Uso de programas de edición fotográfica'
+      },
+      {
+        id: 3,
+        name: 'Redacción de textos'
+      },
+      {
+        id: 4,
+        name: 'Java'
+      },
+      {
+        id: 5,
+        name: 'Programación orientada objetos'
+      },
+      {
+        id: 6,
+        name: 'C#'
+      },
+      {
+        id: 7,
+        name: 'C++'
+      },
+      {
+        id: 8,
+        name: 'AWS Services'
+      },
+      {
+        id: 9,
+        name: 'Azure Devops'
+      },
+      {
+        id: 10,
+        name: 'Google Cloud'
+      },
+      {
+        id: 11,
+        name: 'C'
+      },
+      {
+        id: 12,
+        name: 'Ruby and Rails'
+      },
+      {
+        id: 13,
+        name: 'Python'
+      },
+      {
+        id: 14,
+        name: '.Net Core'
+      },
+      {
+        id: 15,
+        name: 'Angular'
+      },
+      {
+        id: 16,
+        name: 'React.js'
+      },
+      {
+        id: 17,
+        name: 'Next.js'
+      },
+      {
+        id: 18,
+        name: 'MySQL'
+      },
+      {
+        id: 19,
+        name: 'SQL Server'
+      },
+      {
+        id: 20,
+        name: 'RxJS'
+      },
+      {
+        id: 21,
+        name: 'Linux'
+      },
+      {
+        id: 23,
+        name: 'PLSQL-Oracle'
+      },
+      {
+        id: 24,
+        name: 'SQLite'
+      },
+      {
+        id: 25,
+        name: 'Git'
+      },
+      {
+        id: 26,
+        name: 'Spring Boot'
+      },
+      {
+        id: 27,
+        name: 'Spring Framework'
+      },
+      {
+        id: 28,
+        name: 'Servicios Rest'
+      },
+      {
+        id: 29,
+        name: 'Microservicios'
+      },
+      {
+        id: 30,
+        name: 'Servicios SOAP'
+      },
+    ];
+
+}
+
+
+

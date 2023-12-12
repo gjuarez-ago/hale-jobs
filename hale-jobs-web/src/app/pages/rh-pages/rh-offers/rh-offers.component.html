@@ -1,0 +1,644 @@
+<nz-spin [nzSpinning]="isLoadingGeneral">
+
+
+  <div class="nav">
+    <p> 📕 Mis ofertas</p>
+  </div>
+
+
+
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+    <div nz-row [nzGutter]="24">
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label nzFor="email"> Titulo de la oferta </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+                 <input type="text" class="input-text" nzSize="large" nz-input formControlName="offerTitle"
+                  placeholder="Escribe el titulo de la oferta" />
+           
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label  nzFor="surnames"> Categoria de la oferta </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona la Categoría"  formControlName="subcategory">
+                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              </nz-select>                 
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label  nzFor="email"> Monto ofertado </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el sueldo aprox." formControlName="amount">
+                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              </nz-select>        
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label nzFor="email"> Nivel de estudios </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el nivel de estudios" formControlName="studyLevel">
+                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              </nz-select>        
+           
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label  nzFor="surnames"> Lugar de trabajo </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el lugar de trabajo" formControlName="workPlace" >
+                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              </nz-select>        
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label  nzFor="email"> Estatus de la oferta </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el estatus de la oferta" formControlName="statusOffer">
+                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              </nz-select>        
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="8">
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <div class="inner-box">
+          <nz-space>
+
+
+            <button *nzSpaceItem type="button" (click)="generateExcel()" nz-button
+              class="button-red">
+              <i nz-icon nzType="audit"></i>
+              Exportar ofertas
+            </button>
+
+
+            <button *nzSpaceItem type="button"  nz-button
+            class="button-white">
+            <a routerLink="/dashboard/new-offer" routerLinkActive="active" target="_blank">
+              <i nz-icon nzType="plus"></i>
+              Nueva oferta
+            </a>
+          </button>
+
+
+
+          </nz-space>
+        </div>
+      </div>
+
+      <div nz-col class="gutter-row" align="right" [nzSpan]="12">
+        <div class="inner-box">
+         
+          <button  type="submit" nz-button
+          class="button-white">
+          <i nz-icon nzType="search"></i>
+          Realizar Busqueda
+        </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <br />
+
+
+  <div class="card-content">
+    
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Java Developer 1</h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+      
+      <div class="button-super">
+        <nz-space>
+          <button *nzSpaceItem (click)="openViewModal()" nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
+          <button *nzSpaceItem (click)="openEditDrawer()" nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem (click)="showDeleteModal()" nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+        </nz-space>
+      </div>
+    </div>
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Java Developer </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+      
+      <div class="button-super">
+        <nz-space>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+        </nz-space>
+      </div>
+    </div>
+
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Java Developer </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+      
+      <div class="button-super">
+        <nz-space>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+        </nz-space>
+      </div>
+    </div>
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Java Developer </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+      
+      <div class="button-super">
+        <nz-space>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+        </nz-space>
+      </div>
+    </div>
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Java Developer </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+      
+      <div class="button-super">
+        <nz-space>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+        </nz-space>
+      </div>
+    </div>
+
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Frontend Angular </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+    </div>
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> React Developer </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+    </div>
+
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Java Developer </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Backend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+       <div class="button-super">
+        <nz-space>
+          <button *nzSpaceItem nz-button class="button-white pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+        </nz-space>
+      </div>
+
+
+    </div>
+
+    <div class="card-description">
+      <div class="card-title">
+        <h2> Frontend Angular </h2>
+      </div>
+      <div class="salary">
+        $10,000.00 MX a $20,000.00
+      </div>
+
+      <div class="salary">
+        Posición Remota
+      </div>
+
+      <div class="tags">
+        <nz-tag nzColor="success">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Desarrollo Frontend</span>
+        </nz-tag>
+      </div>
+
+     
+      <div class="category">
+        Tecnologias de la información, <br/> Desarrollo de software
+      </div>
+      <div class="date-published">
+        <p> Hace 1 semana</p>
+      </div>
+    </div>
+
+
+
+    <!-- <nz-table #fixedTable #basicTable [nzData]="listOfData">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Address</th>
+          <th>Age</th>
+          <th>Address</th>
+          <th nzRight nzAlign="center" nzWidth="140px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.name }}</td>
+          <td>{{ data.age }}</td>
+          <td>{{ data.address }}</td>
+          <td>{{ data.age }}</td>
+          <td>{{ data.address }}</td>
+          <td nzRight nzAlign="center">
+            <nz-space>
+
+
+              <button nz-button nzShape="circle" nzType="text">
+                <i nz-icon nzTheme="twotone" [nzTwotoneColor]="'#08a000'" nzType="edit"></i>
+              </button>
+
+              <button nz-button nzShape="circle" nzType="text">
+                <i nz-icon nzTheme="twotone" [nzTwotoneColor]="'#a31600'" nzType="delete"></i>
+              </button>
+            </nz-space>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table> -->
+
+
+  </div>
+
+
+</nz-spin>
+
+<nz-drawer
+       [nzWidth]="500"
+      [nzClosable]="false"
+      [nzVisible]="visibleEditDrawer"
+      nzPlacement="right"
+      nzTitle="Editar oferta"
+      (nzOnClose)="closeEditDrawer()"
+      [nzFooter]="footerTpl"
+    >
+      <ng-container *nzDrawerContent>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </ng-container>
+
+      <ng-template #footerTpl>
+        <nz-space>
+            <button *nzSpaceItem class="button-red pd-1" nz-button (click)="closeEditDrawer()">Cerrar</button>
+            <button *nzSpaceItem class="button-blue pd-1" nz-button (click)="closeEditDrawer()">Continuar</button>
+        </nz-space>
+    </ng-template>
+
+    </nz-drawer>
+
+
+<nz-modal 
+[nzStyle]="{ top: '20px' }"
+
+[nzWidth]="1000"
+[(nzVisible)]="visibleModal" nzTitle="Detalle de la oferta" (nzOnCancel)="closeViewModal()">
+  <ng-container *nzModalContent>
+    <nz-tabset>
+      <nz-tab [nzTitle]="titleTemplate1">
+        
+        <ng-template #titleTemplate1>
+          <span nz-icon [nzType]="'info-circle'"></span>
+           Información de la ofertas
+        </ng-template>
+
+        <nz-descriptions nzTitle="Java Developer" nzBordered>
+          <nz-descriptions-item nzTitle="Categoria">Cloud Database</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Compañia">Prepaid</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Tipo de pago">YES</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Tipo de trabajo">2018-04-24 18:00:00</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Lugar de trabajo" [nzSpan]="2">
+            2018-04-24 18:00:00 To 2019-04-24 18:00:00
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Urgencia" [nzSpan]="3">
+            <nz-badge nzStatus="processing" nzText="Running"></nz-badge>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Salario">$80.00</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Mostrar salario">$20.00</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Mostrar compañia">$60.00</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Descripción"  [nzSpan]="3">
+            Data disk type: MongoDB
+            Database version: 3.4
+            Package: dds.mongo.mid
+            Storage space: 10 GB
+            Replication_factor:3Region: East China 1
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Beneficios"  [nzSpan]="3">
+              <ul>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+              
+              </ul>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Actividades"  [nzSpan]="3">
+              <ul>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+              
+              </ul>
+            </nz-descriptions-item>
+
+            <nz-descriptions-item nzTitle="Habilidades"  [nzSpan]="3">
+              <ul>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
+              
+              </ul>
+            </nz-descriptions-item>
+
+        </nz-descriptions>
+
+        </nz-tab>
+
+        <nz-tab [nzTitle]="titleTemplate2">
+        
+          <ng-template #titleTemplate2>
+            <span nz-icon [nzType]="'info-circle'"></span>
+            Postulaciones
+          </ng-template>
+
+          <nz-list nzItemLayout="horizontal" [nzLoading]="'true'">
+            <nz-list-item *ngFor="let item of listOfData">
+              <nz-list-item-meta
+                nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              >
+                <nz-list-item-meta-title>
+                  <a href="https://ng.ant.design">{{ item.name }}</a>
+                </nz-list-item-meta-title>
+              </nz-list-item-meta>
+            </nz-list-item>
+
+            <ul>
+              <nz-list-item-action><a >edit</a></nz-list-item-action>
+              <nz-list-item-action><a>more</a></nz-list-item-action>
+            </ul>
+
+            <nz-list-empty *ngIf="listOfData.length === 0"></nz-list-empty>
+          </nz-list>
+  
+          </nz-tab>
+
+          
+          <nz-tab [nzTitle]="titleTemplate3">
+        
+            <ng-template #titleTemplate3>
+              <span nz-icon [nzType]="'info-circle'"></span>
+              Quejas y sugerencias
+            </ng-template>
+    
+            Content of Tab Pane 1</nz-tab>
+
+            
+    </nz-tabset>
+  </ng-container>
+
+
+  <div *nzModalFooter>
+    <button  class="button-red" nz-button (click)="closeViewModal()">Cerrar</button>
+  </div>
+
+
+</nz-modal>
+

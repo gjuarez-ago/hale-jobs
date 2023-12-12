@@ -1,0 +1,492 @@
+<div class="body-content">
+
+
+    
+  <div class="box inputs-box">
+
+     <form action="">
+      <div class="search-filter">
+
+          <div class="one input">
+              <nz-form-item class="input-content">
+                  <nz-form-control nzErrorTip="Correo electrónico no válido">
+                    <nz-input-group nzPrefixIcon="search">
+                      <input [nzSize]="'large'" type="email" nz-input placeholder="¿Qué trabajo estas buscando?" />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+          </div>
+
+          <div class="two input">
+              <nz-form-item class="input-content">
+                  <nz-form-control nzErrorTip="Correo electrónico no válido">
+                    <nz-select class="search" nzShowSearch nzAllowClear nzPlaceHolder="¿En que estado estas buscando?" [(ngModel)]="selectedValue">
+                      <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                      <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                      <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+          </div>
+
+          <div class="three input">
+            <button type="button"  nz-button nzType="primary" [nzSize]="'default'" nzBlock nzShape="round">
+              <i nz-icon nzType="search"></i>
+              Realizar busqueda</button>
+
+          
+          </div>
+      </div>
+
+
+      <div class="more-filters">
+
+        <div class="element">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+              <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+              <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+              <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+            </nz-select>
+        </div>
+
+        
+        <div class="element">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+              <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+              <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+              <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+            </nz-select>
+
+        </div>
+
+        <div class="element">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+          </nz-select>
+        </div>
+
+        <div class="element">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+          </nz-select>
+        </div>
+
+        <div class="element">
+          <button type="button"  nz-button nzType="primary" [nzSize]="'default'" nzShape="round">
+            <i nz-icon nzType="clear"></i>
+            Limpiar filtros</button>
+        </div>
+
+        
+        <div class="element">
+          <button type="button"  nz-button nzType="primary" [nzSize]="'default'" nzShape="round">
+            <i nz-icon nzType="plus"></i>
+            Mas filtros</button>
+
+
+        </div>
+
+
+
+
+
+
+      </div>
+
+
+
+
+  </form>
+  </div>
+
+
+  <section class="request-list">
+
+
+      <div class="content-principal">
+
+          <!-- Lista -->
+          <div class="list">
+
+            <div class="stats-filters">
+
+              <div class="total"> 200 resultados encontrados</div>
+
+              <div class="order-by">
+                <!-- <label class="label-s"> Ordenar por </label> -->
+                <nz-select ngModel="lucy">
+                  <nz-option nzValue="jack" nzLabel="Fecha"></nz-option>
+                  <nz-option nzValue="lucy" nzLabel="Relevancia"></nz-option>
+                </nz-select>
+              </div>
+
+            </div>
+
+            <a routerLink="/view-job/1" target="_blank">
+            <div class="card"  >
+
+              <div class="card-title"> 
+                <h2> Java Developer </h2> 
+
+                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
+              
+              </div>
+
+
+               <div class="salary">
+               $10,000.00 MX a  $20,000.00
+               </div> 
+
+               <div class="salary">
+                Posición Remota
+                </div> 
+
+              <div class="points-key">
+
+                <!-- <h3> Te ofrece: </h3> -->
+
+                <!-- <ul class="points">
+                  <li> Capacitación pagada </li>
+                  
+                  <li> Vales de despensa </li>
+                  <li> Fondo de ahorro </li>
+                  <li>Vacaciones </li>
+
+                </ul> -->
+              </div>
+
+              <div class="tags">
+                <nz-tag nzColor="success">
+                  <i nz-icon nzType="check-circle"></i>
+                  <span>Cumples con los requisitos del perfil</span>
+                </nz-tag>
+
+                  
+                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
+              
+              </div>
+
+              <div class="description">
+
+                <h3> Descripción de la vacante: </h3>
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
+                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
+              </div>
+
+
+              <div class="company-and-place">
+                 
+                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
+            
+              </div>
+
+              <div class="category">
+                Tecnologias de la información , Desarrollo de software
+               
+
+              </div>
+
+
+
+              <div class="date-published">
+                <p> Hace 1 semana</p>
+              </div>
+
+
+              
+
+              
+
+
+
+            </div>
+          </a>
+
+            <div class="card">
+
+              <div class="card-title"> 
+                <h2> Java Developer </h2> 
+
+                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
+              
+              </div>
+
+
+               <div class="salary">
+               $10,000.00 MX a  $20,000.00
+               </div> 
+
+               <div class="salary">
+                Posición Remota
+                </div> 
+
+              <div class="points-key">
+
+                <!-- <h3> Te ofrece: </h3> -->
+<!-- 
+                <ul class="points">
+                  <li> Capacitación pagada </li>
+                  
+                  <li> Vales de despensa </li>
+                  <li> Fondo de ahorro </li>
+                  <li>Vacaciones </li>
+
+                </ul> -->
+              </div>
+
+              <div class="tags">
+                <nz-tag nzColor="success">
+                  <i nz-icon nzType="check-circle"></i>
+                  <span>Cumples con los requisitos del perfil</span>
+                </nz-tag>
+
+                  
+                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
+              
+              </div>
+
+              <div class="description">
+
+                <h3> Descripción de la vacante: </h3>
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
+                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
+              </div>
+
+
+              <div class="company-and-place">
+                 
+                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
+            
+              </div>
+
+              <div class="category">
+                Tecnologias de la información , Desarrollo de software
+               
+
+              </div>
+
+
+
+              <div class="date-published">
+                <p> Hace 1 semana</p>
+              </div>
+
+
+              
+
+              
+
+
+
+            </div>
+
+            <div class="card">
+
+              <div class="card-title"> 
+                <h2> Java Developer </h2> 
+
+                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
+              
+              </div>
+
+
+               <div class="salary">
+               $10,000.00 MX a  $20,000.00
+               </div> 
+
+               <div class="salary">
+                Posición Remota
+                </div> 
+
+              <div class="points-key">
+
+                <h3> Te ofrece: </h3>
+
+                <ul class="points">
+                  <li> Capacitación pagada </li>
+                  
+                  <li> Vales de despensa </li>
+                  <li> Fondo de ahorro </li>
+                  <li>Vacaciones </li>
+
+                </ul>
+              </div>
+
+              <div class="tags">
+                <nz-tag nzColor="success">
+                  <i nz-icon nzType="check-circle"></i>
+                  <span>Cumples con los requisitos del perfil</span>
+                </nz-tag>
+
+                  
+                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
+              
+              </div>
+
+              <div class="description">
+
+                <h3> Descripción de la vacante: </h3>
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
+                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
+              </div>
+
+
+              <div class="company-and-place">
+                 
+                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
+            
+              </div>
+
+              <div class="category">
+                Tecnologias de la información , Desarrollo de software
+               
+
+              </div>
+
+
+
+              <div class="date-published">
+                <p> Hace 1 semana</p>
+              </div>
+
+
+              
+
+              
+
+
+
+            </div>
+
+            <div class="card">
+
+              <div class="card-title"> 
+                <h2> Java Developer </h2> 
+
+                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
+              
+              </div>
+
+
+               <div class="salary">
+               $10,000.00 MX a  $20,000.00
+               </div> 
+
+               <div class="salary">
+                Posición Remota
+                </div> 
+
+              <div class="points-key">
+
+                <h3> Te ofrece: </h3>
+
+                <ul class="points">
+                  <li> Capacitación pagada </li>
+                  
+                  <li> Vales de despensa </li>
+                  <li> Fondo de ahorro </li>
+                  <li>Vacaciones </li>
+
+                </ul>
+              </div>
+
+              <div class="tags">
+                <nz-tag nzColor="success">
+                  <i nz-icon nzType="check-circle"></i>
+                  <span>Cumples con los requisitos del perfil</span>
+                </nz-tag>
+
+                  
+                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
+              
+              </div>
+
+              <div class="description">
+
+                <h3> Descripción de la vacante: </h3>
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
+                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
+              </div>
+
+
+              <div class="company-and-place">
+                 
+                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
+            
+              </div>
+
+              <div class="category">
+                Tecnologias de la información , Desarrollo de software
+               
+
+              </div>
+
+
+
+              <div class="date-published">
+                <p> Hace 1 semana</p>
+              </div>
+
+
+              
+
+              
+
+
+
+            </div>
+
+
+
+
+          </div>
+
+
+          <!-- Sección de promoción -->
+          <div class="ad">
+
+            <nz-card  [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
+              <nz-card-meta
+                nzTitle="Card title"
+                nzDescription="This is the description"
+                [nzAvatar]="avatarTemplate"
+              ></nz-card-meta>
+            </nz-card>
+            <ng-template #avatarTemplate>
+              <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+            </ng-template>
+            <ng-template #coverTemplate>
+              <img alt="example" src="http://localhost:4200/assets/images/kk.png" />
+            </ng-template>
+            <ng-template #actionSetting>
+              <i nz-icon nzType="setting"></i>
+            </ng-template>
+            <ng-template #actionEdit>
+              <i nz-icon nzType="edit"></i>
+            </ng-template>
+            <ng-template #actionEllipsis>
+              <i nz-icon nzType="ellipsis"></i>
+            </ng-template>
+          </div>
+
+
+      </div>
+  
+
+
+  </section>
+
+
+  <section class="help-search">
+
+  </section>
+
+</div>

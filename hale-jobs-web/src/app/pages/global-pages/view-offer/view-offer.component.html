@@ -1,0 +1,133 @@
+<div class="body-content">
+
+  <div class="content">
+
+   <div class="header">
+
+       <nz-page-header
+         class="site-page-header"
+         (nzBack)="onBack()"
+         nzBackIcon
+         nzTitle="Volver"
+       ></nz-page-header>
+       
+      </div>
+
+      
+      <div class="card-body">
+       <div class="card-description">
+           <div class="card-title"> 
+               <h2> Java Developer </h2> 
+               <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
+             </div>
+
+
+              <div class="salary">
+              $10,000.00 MX a  $20,000.00
+              </div> 
+
+              <div class="salary">
+               Posición Remota
+               </div> 
+
+             <div class="points-key">
+
+               <h3> Te ofrece: </h3>
+
+               <ul class="points">
+                 <li> Capacitación pagada </li>
+                 
+                 <li> Vales de despensa </li>
+                 <li> Fondo de ahorro </li>
+                 <li>Vacaciones </li>
+
+               </ul>
+             </div>
+
+             <div class="tags">
+               <nz-tag nzColor="success">
+                 <i nz-icon nzType="check-circle"></i>
+                 <span>Cumples con los requisitos del perfil</span>
+               </nz-tag>
+
+                 
+               <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
+             
+             </div>
+
+             <div class="description">
+
+               <h3> Descripción de la vacante: </h3>
+
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl,
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
+
+             </div>
+
+
+             <div class="company-and-place">
+                
+                <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
+           
+             </div>
+
+             <div class="category">
+               Tecnologias de la información , Desarrollo de software
+              
+
+             </div>
+
+
+
+             <div class="date-published">
+               <p> Hace 1 semana</p>
+             </div>
+
+
+             
+
+
+       </div>
+
+       <div class="card-postulate">
+         <nz-card  [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
+           <nz-card-meta
+             nzTitle="Card title"
+             nzDescription="This is the description"
+             [nzAvatar]="avatarTemplate"
+           ></nz-card-meta>
+         </nz-card>
+         <ng-template #avatarTemplate>
+           <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+         </ng-template>
+         <ng-template #coverTemplate>
+           <img alt="example" src="https://c8.alamy.com/compes/bxbnxd/logotipo-del-banco-hsbc-en-londres-inglaterra-reino-unido-europa-bxbnxd.jpg" />
+         </ng-template>
+         <ng-template #actionSetting>
+           <i nz-icon nzType="setting"></i>
+         </ng-template>
+         <ng-template #actionEdit>
+           <i nz-icon nzType="edit"></i>
+         </ng-template>
+         <ng-template #actionEllipsis>
+           <i nz-icon nzType="ellipsis"></i>
+         </ng-template>
+
+       </div>
+
+
+
+      </div>
+
+
+
+
+  </div>
+
+
+
+
+
+</div>

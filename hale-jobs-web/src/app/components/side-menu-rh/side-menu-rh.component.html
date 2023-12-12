@@ -1,0 +1,78 @@
+<nz-layout>
+  <nz-header>
+    <div class="logo">
+      <a href="">  <img src="assets/images/logo-b.png" alt="" > </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+      <li nz-menu-item nzSelected>Inicio</li>
+      <li nz-menu-item>Buscar trabajador</li>
+      <li nz-menu-item>Informes Administrador</li>
+      <nz-avatar class="avatar" [nzSize]="42" nzText="GJ"></nz-avatar>
+    </ul>
+    
+  </nz-header>
+  <nz-layout>
+    <nz-sider nzWidth="250px" nzTheme="light" [(nzCollapsed)]="isCollapsed" nzCollapsible>
+      <ul nz-menu nzMode="inline" class="sider-menu">
+
+        <li nz-menu-item routerLink="/dashboard/statisticts" nzSelected>
+          <span nz-icon nzType="bar-chart"> </span> 
+          <span> Dashboard </span>
+        </li>
+
+        <li nz-menu-item routerLink="/dashboard/my-offers"  >
+          <i nz-icon nzType="folder-open" nzTheme="outline"></i>
+          <span> Mis ofertas </span>
+        </li>
+
+        <li nz-menu-item routerLink="/dashboard/my-company" >
+          <i nz-icon nzType="appstore-add" nzTheme="outline"></i> 
+          <span>  Mis empresas </span>
+        </li>
+
+        <li nz-menu-item routerLink="/dashboard/search-workers">
+          <i nz-icon nzType="monitor" nzTheme="outline"></i>
+          <span> Buscar trabajador</span>
+        </li>
+
+        <li nz-menu-item routerLink="/dashboard/my-contacts">
+          <i nz-icon nzType="contacts" nzTheme="outline"></i>
+          <span> Mensajes </span>  
+        </li>
+
+        <li nz-menu-item routerLink="/dashboard/complaints">
+          <i nz-icon nzType="node-collapse" nzTheme="outline"></i>
+        <span> Gestión de quejas</span>  
+        </li>
+
+        
+        <li nz-menu-item routerLink="/dashboard/my-notifications">
+          <i nz-icon nzType="bell" nzTheme="outline"></i>
+          <span>Notificaciones </span> 
+        </li>
+
+
+        <li nz-menu-item routerLink="/dashboard/history">
+          <i nz-icon nzType="container" nzTheme="outline"></i>
+          <span>Historial de usuarios</span> 
+        </li>
+
+        <li nz-menu-item routerLink="/dashboard/my-profile">
+          <i nz-icon nzType="setting" nzTheme="outline"></i>
+        <span> Mi perfil </span>  
+        </li>
+
+        <li nz-menu-item>
+          <span nz-icon nzType="logout"></span>
+          <span>Cerrar sesión</span>
+        </li>
+
+      </ul>
+    </nz-sider>
+    <nz-layout class="inner-layout">
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

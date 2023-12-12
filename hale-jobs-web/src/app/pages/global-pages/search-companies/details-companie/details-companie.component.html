@@ -1,0 +1,176 @@
+<div nz-row class="p-3 container-principal" [nzGutter]="16">
+  <div nz-col nzSpan="8">
+    <nz-card class="companie">
+      <div >
+        <div class="content-img">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/free-hsbc-282802.png" alt="" width="200px" />            
+        </div>
+
+        <div >
+          <h1>HSBC México</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui eius, reiciendis iusto saepe illum ipsa,
+            laborum maiores et nemo ipsum perspiciatis iure debitis vitae itaque, voluptatum quas. Iusto, numquam
+            voluptatibus.</p>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card style="margin-top: .5rem">
+      <div>
+        <div class="comment-header" nz-col nzSpan="24">
+          <h4 class="pd-a">Alberto Ramirez Vazquez</h4>
+          <p class="pd-a">Subdirector de Area</p>
+        </div>
+
+      
+
+
+        <div class="alala">
+          <div class="rate-title">
+            <nz-rate [ngModel]="'4'" ></nz-rate>
+          </div>
+
+          <div>
+            <button nz-button nzType="dashed" nzDanger>Calificar</button>
+          </div>
+        </div>
+
+      </div>
+
+    </nz-card>
+  </div>
+
+
+  
+  <div nz-col nzSpan="16">
+    <nz-card>
+      <nz-tabset nzType="card">
+        
+        <nz-tab [nzTitle]="tab1">
+        
+          <ng-template #tab1>
+            <i nz-icon [nzType]="'audit'"></i>
+            Empleos
+          </ng-template>
+
+          <div class="offer-content">
+            <h3> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
+            <h4> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+  
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quae earum asperiores ad molestias. Illum, suscipit ut est deleniti, laudantium quia voluptas fuga, iste error fugiat necessitatibus eaque. Sint, officia.
+            </p>
+          </div>
+
+          
+          <div class="offer-content">
+            <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
+            <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+  
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quae earum asperiores ad molestias. Illum, suscipit ut est deleniti, laudantium quia voluptas fuga, iste error fugiat necessitatibus eaque. Sint, officia.
+            </p>
+          </div>
+
+          
+          <div class="offer-content">
+            <h3> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
+            <h4> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+  
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quae earum asperiores ad molestias. Illum, suscipit ut est deleniti, laudantium quia voluptas fuga, iste error fugiat necessitatibus eaque. Sint, officia.
+            </p>
+          </div>
+
+
+        </nz-tab>
+
+
+        
+
+
+        <nz-tab [nzTitle]="tab2">
+        
+          <ng-template #tab2>
+            <i nz-icon [nzType]="'comment'"></i>
+            Comentarios
+          </ng-template>
+
+          <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+            <ng-template #item let-item>
+              <nz-comment [nzAuthor]="item" [nzDatetime]="item">
+                <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item"></nz-avatar>
+                <nz-comment-content>
+                  <p>{{ item }}</p>
+                </nz-comment-content>
+                <nz-comment-action>
+
+                  <div nz-col class="rates" >
+                    <div class="rate">
+                    <span  class="ant-rate-text"> Cultura </span>
+                    <nz-rate [ngModel]="'4'" ></nz-rate>
+                    </div>
+      
+                    
+                    <div class="rate">
+                      <span  class="ant-rate-text"> Sueldo </span>
+                      <nz-rate [ngModel]="'4'" ></nz-rate>
+                      </div>
+      
+                      
+                    <div class="rate">
+                      <span  class="ant-rate-text"> Ambiente laboral </span>
+                      <nz-rate [ngModel]="'4'" ></nz-rate>
+                      </div>
+      
+                 
+                  </div>
+
+                  
+                </nz-comment-action>
+              </nz-comment>
+            </ng-template>
+          </nz-list>
+
+
+      
+        </nz-tab>
+        <nz-tab [nzTitle]="tab3">
+        
+          <ng-template #tab3>
+            <i nz-icon [nzType]="'shop'"></i>
+            Acerca de la empresa
+          </ng-template>
+
+          <div class="content-resume">
+               <h2> Resumen </h2>
+               <p>
+                NTT DATA is a top 10 global IT services provider, headquartered in Tokyo and operating in more than 50 countries. 
+
+For us, work is not only for technological innovation, it is about connecting people to create better solutions for everyday life. 
+
+NTT DATA offers an advanced portfolio of consulting, application, business process, cloud, and infrastructure services to businesses and governments worldwide.
+
+Our roots cross continents and cultures, dating back five decades. Since the foundation of NTT DATA , we have made sustainable business growth through our DNA to be people-oriented. Through our long-term perspective, we hope to make a big difference in this world by getting the small things right. This pedigree yields a characteristic unique to NTT DATA​: the opportunity for a global brand with the creative energy and enthusiasm of an entrepreneur.
+               </p>
+
+               <h3>Sitio web</h3>
+               <p>
+                <a href=""> http://www.nttdata.com </a>
+               </p>
+               
+               <h3>Tamaño de la empresa</h3>
+               <p>
+                +10.001 empleados
+               </p>
+
+               <h3> Campo de especialización </h3>
+               <p>
+                Advisory Services, Application Development and Management, Enterprise Application Services, Business Intelligence and Analytics, Infrastructure Services, Outsourcing Services, SAP Solutions, Oracle Solutions, Cloud Solutions, System Integration, Digital Transformation y IT Service
+               </p>
+
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </nz-card>
+  </div>
+</div>
