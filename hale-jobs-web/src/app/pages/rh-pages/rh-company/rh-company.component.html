@@ -12,7 +12,7 @@
             <nz-form-label  nzFor="email"> Nombre de la empresa </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
                  <input type="text" class="input-text" nzSize="large" nz-input
-                  placeholder="¿Cuál es nombre de la empresa?"  formControlName="company" />
+                  placeholder="¿Cuál es nombre de la empresa?"  formControlName="name" />
            
             </nz-form-control>
           </nz-form-item>
@@ -35,11 +35,9 @@
           <nz-form-item class="input-content">
             <nz-form-label [nzSpan]="12" nzFor="email"> Cátegoria </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
-              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear formControlName="category"  nzPlaceHolder="Seleeciona la categoria de la empresa">
-                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-              </nz-select>        
+              <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona una categoría" formControlName="category">
+                <nz-option *ngFor="let data of listCategory" [nzLabel]="data.name" [nzValue]="data.name"></nz-option>
+            </nz-select>     
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -50,14 +48,14 @@
         <div class="inner-box">
           <nz-space>
 
-            <button *nzSpaceItem type="button" (click)="generateExcel()" nz-button
+            <!-- <button *nzSpaceItem type="button" (click)="generateExcel()" nz-button
               class="button-red">
               <i nz-icon nzType="audit"></i>
               Exportar ofertas
-            </button>
+            </button> -->
 
             <button *nzSpaceItem type="button" (click)="generateExcel()" nz-button
-            class="button-white">
+            class="button-blue">
             <a routerLink="/dashboard/new-company" routerLinkActive="active" target="_blank">
               <i nz-icon nzType="plus"></i>
             Crear Empresa
@@ -83,21 +81,41 @@
   <br />
 
 
+  <div class="form-inline">
+    
+    <div class="pagination-content">
+      <nz-pagination 
+[nzPageSize]="pageSize"
+[nzPageIndex]="current"
+[nzTotal]="total"
+(nzPageSizeChange)="changePageSize($event)"
+(nzPageIndexChange)="changeCurrentPage($event)" id="demo"></nz-pagination> 
+    </div>
+
+    <div class="text-co">
+      <span class="mr-md-auto"> {{totalElementByPage}} coincidencias </span> 
+    </div>
+
+   
+
+  </div>
+
   <div class="card-content">
+
+
   
-    <div class="card-description">
+    <div *ngFor="let item of data" class="card-description">
       <nz-card class="companie">
         <div nz-row>
           <div nz-col nzSpan="10">
             <img class="logo"
-              src="https://images-platform.99static.com//GqiNYfr25HeRZ-I7ivnrKIe3DGg=/176x145:735x704/fit-in/500x500/99designs-contests-attachments/116/116714/attachment_116714964"
+              [src]="item.imageURL"
               alt="" width="200px" height="200px">
           </div>
           <div nz-col nzSpan="14">
-            <h1>Inc. Code</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui eius, reiciendis iusto saepe illum ipsa,
-              laborum maiores et nemo ipsum perspiciatis iure debitis vitae itaque, voluptatum quas. Iusto, numquam
-              voluptatibus.</p>
+            <h1>{{item.name}}</h1>
+            <h4>{{item.category}}</h4>
+            <p class="text-wrap">{{item.description}}</p>
           </div>
         </div>
       </nz-card>
@@ -114,147 +132,7 @@
     </div>
   
 
-    <div class="card-description">
-      <nz-card class="companie">
-        <div nz-row>
-          <div nz-col nzSpan="10">
-            <img class="logo"
-              src="https://yt3.googleusercontent.com/JUx8EKreAxpTi90Hv23PVlKE4DOlTFuC_zEps4HodT7FW5c5zm3y7HlYs2cBjfFtget3kBA5TA=s900-c-k-c0x00ffffff-no-rj"
-              alt="" width="200px" height="200px">
-          </div>
-          <div nz-col nzSpan="14">
-            <h1>Inc. Code</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui eius, reiciendis iusto saepe illum ipsa,
-              laborum maiores et nemo ipsum perspiciatis iure debitis vitae itaque, voluptatum quas. Iusto, numquam
-              voluptatibus.</p>
-          </div>
-        </div>
-      </nz-card>
-  
-  
-      <nz-card style="margin-top: .5rem">
-        <nz-space>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-        </nz-space>
-      </nz-card>
-    </div>
-  
-
-
-    <div class="card-description">
-      <nz-card class="companie">
-        <div nz-row>
-          <div nz-col nzSpan="10">
-            <img class="logo"
-              src="https://cdn2.excelsior.com.mx/media/styles/image800x600/public/pictures/2022/12/09/2871238.jpg"
-              alt="" width="200px" height="200px">
-          </div>
-          <div nz-col nzSpan="14">
-            <h1>Inc. Code</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui eius, reiciendis iusto saepe illum ipsa,
-              laborum maiores et nemo ipsum perspiciatis iure debitis vitae itaque, voluptatum quas. Iusto, numquam
-              voluptatibus.</p>
-          </div>
-        </div>
-      </nz-card>
-  
-      <nz-card style="margin-top: .5rem">
-        <nz-space>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-        </nz-space>
-      </nz-card>
-      
-    </div>
-  
-
-
-    <div class="card-description">
-      <nz-card class="companie">
-        <div class="flex-item">
-          <div nz-col class="left-img">
-            <img class="logo"
-              src="https://play-lh.googleusercontent.com/bLcZm3_Wc-sdHuh5UoNRSbXb126TaY2W7QvDN0d5GSZe8lqH8AlfLz2BGNPdMyOsEDYu=s150-rw"
-              alt="">
-          </div>
-          <div nz-col class="right-img">
-            <h1>Inc. Code</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui eius, reiciendis iusto saepe illum ipsa,
-              laborum maiores et nemo ipsum perspiciatis iure debitis vitae itaque, voluptatum quas. Iusto, numquam
-              voluptatibus.</p>
-          </div>
-        </div>
-      </nz-card>
-  
-  
-      <nz-card style="margin-top: .5rem">
-        <div nz-row>
-          <div nz-col nzSpan="12">
-            <p>Categoria</p>
-            <sub>Sub categoria</sub>
-            <div>
-              <span class="fa fa-star checked" style="margin-right: 5px;"></span>
-              <span class="fa fa-star checked" style="margin-right: 5px;"></span>
-              <span class="fa fa-star checked" style="margin-right: 5px;"></span>
-              <span class="fa fa-star" style="margin-right: 5px;"></span>
-              <span class="fa fa-star" style="margin-right: 5px;"></span>
-            </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row nzJustify="end" nzAlign="bottom">
-              <button nz-button nzType="dashed" nzDanger>Recomendado</button>
-            </div>
-          </div>
-        </div>
-  
-      </nz-card>
-    </div>
-  
-
-    <div class="card-description">
-      <nz-card class="companie">
-        <div nz-row>
-          <div nz-col nzSpan="10">
-            <img class="logo"
-              src="https://images-platform.99static.com//GqiNYfr25HeRZ-I7ivnrKIe3DGg=/176x145:735x704/fit-in/500x500/99designs-contests-attachments/116/116714/attachment_116714964"
-              alt="" width="200px" height="200px">
-          </div>
-          <div nz-col nzSpan="14">
-            <h1>Inc. Code</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui eius, reiciendis iusto saepe illum ipsa,
-              laborum maiores et nemo ipsum perspiciatis iure debitis vitae itaque, voluptatum quas. Iusto, numquam
-              voluptatibus.</p>
-          </div>
-        </div>
-      </nz-card>
-  
-  
-      <nz-card style="margin-top: .5rem">
-        <div nz-row>
-          <div nz-col nzSpan="12">
-            <p>Categoria</p>
-            <sub>Sub categoria</sub>
-            <div>
-              <span class="fa fa-star checked" style="margin-right: 5px;"></span>
-              <span class="fa fa-star checked" style="margin-right: 5px;"></span>
-              <span class="fa fa-star checked" style="margin-right: 5px;"></span>
-              <span class="fa fa-star" style="margin-right: 5px;"></span>
-              <span class="fa fa-star" style="margin-right: 5px;"></span>
-            </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row nzJustify="end" nzAlign="bottom">
-              <button nz-button nzType="dashed" nzDanger>Recomendado</button>
-            </div>
-          </div>
-        </div>
-  
-      </nz-card>
-    </div>
-  
+   
 
 
 

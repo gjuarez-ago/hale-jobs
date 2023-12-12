@@ -15,13 +15,18 @@ export class NavbarComponent implements OnInit {
 
   public user: User | undefined;
 
-
-  constructor(private authenticationService: AuthService,
-    private router: Router, private modal: NzModalService, private message: NzMessageService) { }
+  constructor(private authenticationService: AuthService,    private modal: NzModalService,
+    private router: Router, private message: NzMessageService) { }
 
   ngOnInit(): void {
-  }
+    if (this.authenticationService.isUserLoggedIn()) {
+      this.user = this.authenticationService.getUserFromLocalCache();
+    }
 
+    // else {
+    //   this.router.navigateByUrl('/auth/login');
+    // }
+  }
   
   public onLogOut(): void {
     this.authenticationService.logOut();
@@ -32,5 +37,39 @@ export class NavbarComponent implements OnInit {
   createMessage(type: string, message: string): void {
     this.message.create(type, message);
   }
+
+  public getInitials() {
+    let nameString =
+      this.user?.names +
+      ' ' +
+      this.user?.motherLastName +
+      ' ' +
+      this.user?.fatherLastName;
+    const fullName = nameString.split(' ');
+    const initials = fullName.shift()!.charAt(0) + fullName.pop()!.charAt(0);
+    return initials.toUpperCase();
+  }
+
+  info(): void {
+    this.modal.warning({
+      nzTitle: '¿Seguro que deseas cerrar sesión?',
+      // nzContent: 'Bla bla ...',
+      nzOkText: 'OK',
+      nzCancelText: 'Cancelar',
+      nzOnOk: () => {
+        this.onLogOut();
+      },
+    });
+  }
+
+  public toGoMyProfile() {
+    if(this.user?.typeOfUser == 1) {
+      this.router.navigateByUrl('profile/cv');
+    }else {
+      this.router.navigateByUrl('/dashboard/statisticts');
+    }
+  }
+
+
 
 }

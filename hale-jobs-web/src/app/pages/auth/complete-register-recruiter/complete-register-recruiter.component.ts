@@ -128,7 +128,6 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
 
       const formData = {...this.registerRecruiterForm.value, ...this.registerRecruiterSection2Form.value, ...this.registerRecruiterSection3Form.value, username: "bicosind@gmail.com"}
 
-      console.log(formData);
       
       this.isLoadingGeneral = true;
 

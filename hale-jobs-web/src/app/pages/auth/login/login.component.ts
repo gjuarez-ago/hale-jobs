@@ -79,7 +79,6 @@ export class LoginComponent implements OnInit {
           this.authenticationService.addUserToLocalCache(response.body);
           this.isSpinning = false;
           // this.authenticationService.setUserActive(response.body);
-
           this.ngxSpinner.hide();
           this.redirect(response.body.role!);
         },
@@ -100,13 +99,11 @@ export class LoginComponent implements OnInit {
   redirect(role: string) {
     switch (role) {
       case 'ROLE_USER':
-        this.router.navigateByUrl('/dashboard/statisticts');
+        this.router.navigateByUrl('/profile/cv');
         break;
-
       case 'ROLE_HR':
         this.router.navigateByUrl('/dashboard/statisticts');
         break;
-
       case 'ROLE_ADMIN':
         this.router.navigateByUrl('/dashboard/statisticts');
         break;

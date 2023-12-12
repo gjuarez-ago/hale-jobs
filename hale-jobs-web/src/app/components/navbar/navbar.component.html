@@ -49,8 +49,8 @@
             </div>
           </div>
         </li> -->
-        <li><a class="btn-login" routerLink="/auth/login">Iniciar sesión</a></li>
-        <li><a class="btn-profile" routerLink="/profile/cv">Mi perfil</a></li>
+        <li *ngIf="!user"><a class="btn-login" routerLink="/auth/login">Iniciar sesión</a></li>
+        <li *ngIf="user"><a class="btn-login" (click)="toGoMyProfile()">Mi perfil</a></li>
       </ul>
 
       

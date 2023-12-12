@@ -99,8 +99,8 @@
       
   .content-img img {
     border: 5px dotted #c8c8c8;
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
     border-radius: 20px;
     overflow: hidden;
     object-fit: cover;
@@ -140,6 +140,7 @@
   .img-left {
     padding: 10px 20px;
     width: 20%;
+    margin: 0px 20px 0px 0px;
   }
 
   .info {

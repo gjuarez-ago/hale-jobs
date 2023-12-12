@@ -6,7 +6,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/models/core/user.model';
+import { PaginationCompany } from 'src/app/models/pagination-company';
 import { AuthService } from 'src/app/services/auth.service';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-rh-company',
@@ -16,11 +19,18 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RhCompanyComponent implements OnInit {
 
   // * Variables de la tabla
-  public pageSize: number = 10;
+  public pageSize: number = 6;
   public current: number = 1;
   public subscriptions: Subscription[] = [];
   public total: number = 0;
   public totalElementByPage = 0;
+  public data: any[] = [];
+
+    
+  public user: User| undefined;
+  public userId : any;
+
+
 
   //  public data : Content[] = [];
   //  public temp : Content[] = [];
@@ -34,6 +44,7 @@ export class RhCompanyComponent implements OnInit {
 
 
   constructor(
+    private companyService : CompanyService,
     private authenticationService: AuthService,
     private fb: FormBuilder,
     private modal: NzModalService,
@@ -45,20 +56,23 @@ export class RhCompanyComponent implements OnInit {
     this.isLoadingGeneral = false;
 
     this.validateForm = this.fb.group({
-      company: [''],
+      name: [''],
       rfc: [''],
-      category: [null],
+      category: [''],
     });
 
   }
 
   ngOnInit(): void {
-    this.ngxSpinner.show();
-
-    setTimeout(() => {
-      this.ngxSpinner.hide();
-    }, 2000);
+    if (this.authenticationService.isUserLoggedIn()) {
+      this.user = this.authenticationService.getUserFromLocalCache();
+      this.userId = this.user.id;
+      this.getListPaginate();
+    } else {
+      this.router.navigateByUrl("/auth/login");
+    }
   }
+
 
   submitForm(): void {
 
@@ -77,7 +91,37 @@ export class RhCompanyComponent implements OnInit {
   this.ngxSpinner.show();
   let form = this.validateForm.value;
 
-  console.log(form);
+  this.isLoadingTable = true;
+  this.isLoadingGeneral = true;
+  this.subscriptions.push(
+    this.companyService
+      .getCompaniesByOwner({
+        pageNo: this.current - 1,
+        pageSize: this.pageSize,
+        ownerId: this.userId,
+        name: form.name,
+        category: form.category ? form.category : '', 
+        rfc: form.rfc
+      })
+      .subscribe(
+        (response: any) => {
+          this.data = response.content;
+          this.total = response.totalElements;
+          this.totalElementByPage = response.numberOfElements;
+          this.isLoadingTable = false;
+          this.isLoadingGeneral = false;
+          this.ngxSpinner.hide();
+
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingTable = false;
+          this.isLoadingGeneral = false;
+          this.message.create('error', errorResponse.error.message);
+          this.ngxSpinner.hide();
+
+        }
+      )
+  );
   
 
 
@@ -106,29 +150,149 @@ export class RhCompanyComponent implements OnInit {
   ];
 
 
-  generateExcel() {
-
-  }
-
-  getCompanies() {
-    this.ngxSpinner.show();
+  getListPaginate(): void {
+    this.isLoadingTable = true;
+    this.isLoadingGeneral = true;
     this.subscriptions.push(
-      this.authenticationService.login('').subscribe(
-        (response: any) => {
-          this.ngxSpinner.hide();
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.ngxSpinner.hide();
-          this.createMessage('error', errorResponse.error.message);
-        }
-      )
+      this.companyService
+        .getCompaniesByOwner({
+          pageNo: this.current - 1,
+          pageSize: this.pageSize,
+          ownerId: this.userId,
+          name: this.validateForm.value["name"],
+          category: this.validateForm.value["category"] ? this.validateForm.value["category"] : '' , 
+          rfc: this.validateForm.value["rfc"]
+        })
+        .subscribe(
+          (response: any) => {
+            this.data = response.content;
+            this.total = response.totalElements;
+            this.totalElementByPage = response.numberOfElements;
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
     );
   }
+
+  changePageSize($event: number): void {
+    this.pageSize = $event;
+    this.getListPaginate();
+  }
+
+  changeCurrentPage($event: number): void {
+    this.current = $event;
+    this.getListPaginate();
+  }
+  
+  public generateExcel() {
+
+  }
+
 
   createMessage(type: string, message: string): void {
     this.message.create(type, message);
   }
 
+  
+  public listCategory = [
+    {
+      id: 1,
+      name: "Tecnologías de la información - Sistemas"
+    },
+    {
+      id: 2,
+      name: "Administrativo"
+    },
+    {
+      id: 3,
+      name: "Ventas"
+    },
+    {
+      id: 4,
+      name: "Contabilidad - Finanzas"
+    },
+    {
+      id: 5,
+      name: "Atencion a clientes - Call Center"
+    },
+    {
+      id: 6,
+      name: "Ingeniería"
+    },
+    {
+      id: 7,
+      name: "Manufactura, Producción y Operaciones"
+    },
+    {
+      id: 8,
+      name: "Logística, Transporte, Distribución y Almacén"
+    },
+    {
+      id: 9,
+      name: "Mercadotecnia, Publicidad, Relaciones Públicas"
+    },
+    {
+      id: 10,
+      name: "Recursos Humanos"
+    },
+    {
+      id: 11,
+      name: "Sector salud"
+    },
+    
+    {
+      id: 12,
+      name: "Construcción,Inmobilaria o Arquitectura"
+    },
+    {
+      id: 13,
+      name: "Servicios generales, Oficios y Seguridad"
+    },  
+    {
+      id: 14,
+      name: "Seguros y reaseguros"
+    },
+    {
+      id: 15,
+      name: "Derecho y leyes"
+    },
+    {
+      id: 16,
+      name: "Educación"
+    },
+    {
+      id: 16,
+      name: "Arte y diseño"
+    },
+    {
+      id: 17,
+      name: "Turismo, Hoteleria, Hospitabilidad y Gastronomía"
+    },
+    {
+      id: 18,
+      name: "Medios digitales, Comunicación y creatividad"
+    },
+    {
+      id: 19,
+      name: "Veterinaria y Agricultura"
+    },
+    {
+      id: 20,
+      name: "Minería,Energía o Recursos naturales "
+    },
+    {
+      id: 21,
+      name: "Deportes, Salud y belleza "
+    },
+
+
+  ]
 
 }
 
@@ -139,3 +303,4 @@ interface Person {
   age: number;
   address: string;
 }
+

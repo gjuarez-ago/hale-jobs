@@ -94,8 +94,6 @@ export class MyProfileComponent implements OnInit {
     this.isLoadingGeneral = true;
     this.authenticationService.getCurrentUser("bicosind@gmail.com").subscribe(
       (response: any) => {
-       
-       
        this.userInformation = response;
        this.previewImage = response.profileImageUrl == null ? 'https://thumbs.dreamstime.com/z/no-user-profile-picture-24185395.jpg' : response.profileImageUrl;
        console.log(response);
@@ -288,8 +286,7 @@ changePublicProfile(value : any) {
     this.imgLoad = event.target.files[0];
     this.previewImage  = await getBase64(this.imgLoad);
     this.previewVisible = true;
-    
-}
+  }
 
 
 

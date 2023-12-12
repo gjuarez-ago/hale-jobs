@@ -2,11 +2,10 @@
 
     <div class="proyect-section">
         <div class="project-description">
-            <h1>Creación de oferta (Datos basicos) </h1>
+            <h1>Creación de una compañia (Datos basicos) </h1>
             <div class="dl">
                 <div class="text">
-                    <p>😅 Decidimos no volver complejo nuestro registro, mas sin embargo necesitamos que nos
-                        ayudes con cierta información tuya para brindarte una mejor experiencia </p>
+                    <p>😅 En esta sección te permitiremos crear una empresa con la cual estaras relacionando tus ofertas, dicha empresa de igual forma nos servira para generar tus facturas por lo cual te sugerimos llenar los datos correctamente.</p>
                 </div>
             </div>
 
@@ -16,8 +15,7 @@
                <div class="img-left">
                 <label for="file">
                     <div class="content-img">
-                      <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"
+                      <img [src]="previewImage"
                       alt="" />
                       <div class="centered">
                         <i nz-icon nzType="camera" nzTheme="outline"></i>
@@ -31,6 +29,7 @@
                   class="absolute w-full h-full"
                   ref="file"
                   type="file"
+                  (change)="handleChange($event)"
                   accept="image/*" style=" visibility: hidden;"/>
                </div>
 
@@ -45,7 +44,7 @@
                             <nz-form-label nzFor="email"> Nombre de la empresa </nz-form-label>
                             <nz-form-control nzErrorTip="Campo requerido">
                                  <input type="text" class="input-text" nzSize="large" nz-input
-                                  placeholder="Escribe el titulo de la oferta" />
+                                  placeholder="Nombre de la empresa" formControlName="name" />
                            
                             </nz-form-control>
                           </nz-form-item>
@@ -57,11 +56,8 @@
                           <nz-form-item class="input-content">
                             <nz-form-label  nzFor="surnames"> Categoria de la empresa </nz-form-label>
                             <nz-form-control nzErrorTip="Campo requerido">
-                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado"
-                                [(ngModel)]="selectedValue">
-                                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona una categoría" formControlName="category">
+                                <nz-option *ngFor="let data of listCategory" [nzLabel]="data.name" [nzValue]="data.name"></nz-option>
                             </nz-select>        
                             </nz-form-control>
                           </nz-form-item>
@@ -77,11 +73,8 @@
                             <nz-form-item class="input-content">
                               <nz-form-label nzFor="email"> Tamaño de la empresa </nz-form-label>
                               <nz-form-control nzErrorTip="Campo requerido">
-                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado"
-                                [(ngModel)]="selectedValue">
-                                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Número de personas en tu empresa" formControlName="size">
+                                <nz-option *ngFor="let data of listSize" [nzLabel]="data.size" [nzValue]="data.size"></nz-option>
                             </nz-select>      
                              
                               </nz-form-control>
@@ -94,11 +87,8 @@
                               <nz-form-item class="input-content">
                                 <nz-form-label  nzFor="email">  Regimen fiscal </nz-form-label>
                                 <nz-form-control nzErrorTip="Campo requerido">
-                                    <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado"
-                                    [(ngModel)]="selectedValue">
-                                    <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                                    <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                                    <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                                <nz-select   formControlName="regimenFiscal" nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado">
+                                    <nz-option *ngFor="let data of listRegimen" [nzLabel]="data.regimen" [nzValue]="data.regimen"></nz-option>
                                 </nz-select>      
                                 </nz-form-control>
                               </nz-form-item>
@@ -110,12 +100,7 @@
                             <nz-form-item class="input-content">
                               <nz-form-label  nzFor="email"> RFC </nz-form-label>
                               <nz-form-control nzErrorTip="Campo requerido">
-                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado"
-                                [(ngModel)]="selectedValue">
-                                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-                            </nz-select>      
+                                <input type="text" class="input-text" nzSize="large" nz-input placeholder="Registro Federal de Contribuyentes"  formControlName="rfc"/>           
                               </nz-form-control>
                             </nz-form-item>
                           </div>
@@ -126,15 +111,33 @@
                               <nz-form-item class="input-content">
                                 <nz-form-label  nzFor="email"> Linkedin </nz-form-label>
                                 <nz-form-control nzErrorTip="Campo requerido">
-                                  <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado"
-                                  [(ngModel)]="selectedValue">
-                                  <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                                  <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                                  <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-                              </nz-select>      
+                                  <input type="text" class="input-text" nzSize="large" nz-input placeholder="URL de Linkedin"  formControlName="urlLinkedin"/>           
                                 </nz-form-control>
                               </nz-form-item>
                             </div>
+                          </div>
+
+
+                          <div nz-col class="gutter-row" [nzSpan]="12">
+                            <div class="inner-box">
+                              <nz-form-item class="input-content">
+                                <nz-form-label  nzFor="email"> Número de contacto </nz-form-label>
+                                <nz-form-control nzErrorTip="Campo requerido">
+                                  <input type="text"  class="input-text" nzSize="large" nz-input placeholder="Número de contacto"  formControlName="numberPhone"/>           
+                                </nz-form-control>
+                              </nz-form-item>
+                            </div>
+                          </div>
+  
+                          <div nz-col class="gutter-row" [nzSpan]="12">
+                              <div class="inner-box">
+                                <nz-form-item class="input-content">
+                                  <nz-form-label  nzFor="email"> E-mail de contacto </nz-form-label>
+                                  <nz-form-control nzErrorTip="Campo requerido">
+                                    <input type="email" class="input-text" nzSize="large" nz-input placeholder="Email de contacto"  formControlName="emailContact"/>           
+                                  </nz-form-control>
+                                </nz-form-item>
+                              </div>
                           </div>
 
                           <div nz-col class="gutter-row" [nzSpan]="24">
@@ -142,15 +145,29 @@
                               <nz-form-item class="input-content">
                                 <nz-form-label  nzFor="email"> Sitio web de la empresa </nz-form-label>
                                 <nz-form-control nzErrorTip="Campo requerido">
-                                    <input type="text" class="input-text" nzSize="large" nz-input
-                                    placeholder="Escribe el titulo de la oferta" />
-                             
+                                    <input type="text" class="input-text" formControlName="urlSite" nzSize="large" nz-input placeholder="Sitio web o página de la empresa" />
                                 </nz-form-control>
                               </nz-form-item>
                             </div>
                           </div>
+                      </div>
 
-                          
+                      <div class="">
+                        <div class="" nz-row >
+                            <div nz-col class="gutter-row" [nzSpan]="24">
+                                <div class="inner-box">
+                                    <nz-form-item nzErrorTip="Campo requerido!">
+                                        <nz-form-label  nzFor="email"> Dirección fiscal </nz-form-label>
+                                        <nz-form-control>
+                                            <nz-textarea-count [nzMaxCharacterCount]="70">
+                                                <textarea formControlName="address" rows="5" nz-input
+                                                    placeholder="Escribe la dirección fiscal o bien de tu oficina de contacto"></textarea>
+                                            </nz-textarea-count>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                          </div>
                       </div>
 
                       <div class="">
@@ -160,8 +177,8 @@
                                     <nz-form-item nzErrorTip="Campo requerido!">
                                         <nz-form-label  nzFor="email"> Descripción de empresa </nz-form-label>
                                         <nz-form-control>
-                                            <nz-textarea-count [nzMaxCharacterCount]="200">
-                                                <textarea rows="10" nz-input
+                                            <nz-textarea-count [nzMaxCharacterCount]="400">
+                                                <textarea formControlName="description" rows="10" nz-input
                                                     placeholder="Cuentanos un poco de lo que haces día a día, que disfrustas y disgusta de tu trabajo, pero sobre todo cuentanos lo que consideres que te podriamos ayudar a mejorar tu experiencia."></textarea>
                                             </nz-textarea-count>
                                         </nz-form-control>
@@ -170,6 +187,8 @@
                             </div>
                           </div>
                       </div>
+
+                     
 
                       
                     <div class="button-super">

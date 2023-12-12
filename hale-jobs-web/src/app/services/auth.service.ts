@@ -56,27 +56,29 @@ export class AuthService {
   public logOut(): void {
     this.token = null;
     this.loggedInUsername = null;
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.removeItem("user_hale");
+    localStorage.removeItem("token_hale");
     localStorage.removeItem("users");
   }
 
   public saveToken(token: string): void {
     this.token = token;
-    localStorage.setItem("token", token);
-  }
-
-  public addUserToLocalCache(user: User) {
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-
-  public getUserFromLocalCache(): User {
-    return JSON.parse(localStorage.getItem('user') || '{}');
+    localStorage.setItem("token_hale", token);
   }
 
   public loadToken(): void {
-    this.token = localStorage.getItem("token");
+    this.token = localStorage.getItem("token_hale");
   }
+
+  public addUserToLocalCache(user: User) {
+    localStorage.setItem('user_hale', JSON.stringify(user));
+  }
+
+  public getUserFromLocalCache(): User {
+    return JSON.parse(localStorage.getItem('user_hale') || '{}');
+  }
+
+
 
 
   public getToken(): string {

@@ -4,10 +4,10 @@
       <a href="">  <img src="assets/images/logo-b.png" alt="" > </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-      <li nz-menu-item nzSelected>Inicio</li>
+      <!-- <li nz-menu-item nzSelected>Inicio</li>
       <li nz-menu-item>Buscar trabajador</li>
-      <li nz-menu-item>Informes Administrador</li>
-      <nz-avatar class="avatar" [nzSize]="42" nzText="GJ"></nz-avatar>
+      <li nz-menu-item>Informes Administrador</li> -->
+      <nz-avatar (click)="info()"  class="avatar" [nzSize]="42" nzText="GJ"></nz-avatar>
     </ul>
     
   </nz-header>
@@ -62,7 +62,7 @@
         <span> Mi perfil </span>  
         </li>
 
-        <li nz-menu-item>
+        <li nz-menu-item (click)="info()">
           <span nz-icon nzType="logout"></span>
           <span>Cerrar sesión</span>
         </li>

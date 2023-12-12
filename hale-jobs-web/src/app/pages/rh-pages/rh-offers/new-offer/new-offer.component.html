@@ -135,7 +135,7 @@
                         <div nz-col class="gutter-row" [nzSpan]="8">
                           <div class="inner-box">
                             <nz-form-item class="input-content">
-                              <nz-form-label  nzFor="surnames"> Nivel de estudios minimo </nz-form-label>
+                              <nz-form-label  nzFor="surnames"> Nivel de estudios deseado </nz-form-label>
                               <nz-form-control nzErrorTip="Campo requerido">
                                 <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado" formControlName="levelStudy" >
                                 <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
@@ -219,7 +219,7 @@
                         <div nz-col class="gutter-row" [nzSpan]="24">
                             <div class="inner-box">
                                 <nz-form-item >
-                                    <nz-form-label  nzFor="email"> Descripción de la ciudad </nz-form-label>
+                                    <nz-form-label  nzFor="email"> Descripción de la oferta </nz-form-label>
                                     <nz-form-control   nzErrorTip="Campo requerido!"   >
                                         <nz-textarea-count [nzMaxCharacterCount]="200" >
                                             <textarea rows="10" nz-input formControlName="description"
@@ -430,8 +430,9 @@
 
             <h1>Creación de oferta (Revisión) </h1>
 
-            <nz-descriptions nzTitle="{{ofertaForm.title}}" nzBordered>
-                <nz-descriptions-item nzTitle="Categoria">Cloud Database</nz-descriptions-item>
+            <nz-descriptions nzTitle="Resumen de la oferta" nzBordered>
+              <nz-descriptions-item nzTitle="Titulo de la oferta" [nzSpan]="3"> {{ofertaForm.title}} </nz-descriptions-item>              
+                <nz-descriptions-item nzTitle="Categoria"> {{ofertaForm.title}} </nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Compañia">Prepaid</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Tipo de pago">YES</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Tipo de trabajo">2018-04-24 18:00:00</nz-descriptions-item>

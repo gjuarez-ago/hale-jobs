@@ -18,7 +18,7 @@ export class NewOfferComponent implements OnInit {
     public visibleCreateDrawer = false;
     public isLoadingCreateDrawer = false;
 
-    public currentStep = 1;
+    public currentStep = 0;
     public index = '';
 
     public addFormBeneficts! : FormGroup;
