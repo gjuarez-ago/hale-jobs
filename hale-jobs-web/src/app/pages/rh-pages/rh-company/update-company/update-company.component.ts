@@ -1,15 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
+import {FormControl,
   FormGroup,
   NgForm,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
@@ -17,13 +14,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
-  selector: 'app-new-company',
-  templateUrl: './new-company.component.html',
-  styleUrls: ['./new-company.component.css'],
+  selector: 'app-update-company',
+  templateUrl: './update-company.component.html',
+  styleUrls: ['./update-company.component.css']
 })
-export class NewCompanyComponent implements OnInit {
-  
-  
+export class UpdateCompanyComponent implements OnInit {
+
   public user: User| undefined;
   public userId : any;
   public subcriptions: Subscription[] = [];

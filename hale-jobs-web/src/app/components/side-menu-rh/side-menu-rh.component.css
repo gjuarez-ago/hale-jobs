@@ -15,6 +15,10 @@
   line-height: 64px;
 }
 
+.dark {
+  color: black !important;
+}
+
 nz-header {
   display: flex;
   justify-content: space-between;

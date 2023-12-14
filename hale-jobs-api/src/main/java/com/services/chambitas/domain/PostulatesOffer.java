@@ -37,10 +37,10 @@ public class PostulatesOffer implements Serializable{
 	@Column(nullable = false)
 	private String consecutive;
 
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private User user;
 
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Offer offer;
 	
 	private int status;

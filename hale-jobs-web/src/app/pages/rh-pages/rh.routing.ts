@@ -29,6 +29,7 @@ import { AdminTypeOfJobComponent } from '../admin-pages/admin-type-of-job/admin-
 import { RhHistoryComponent } from './rh-history/rh-history.component';
 import { NewOfferComponent } from './rh-offers/new-offer/new-offer.component';
 import { NewCompanyComponent } from './rh-company/new-company/new-company.component';
+import { UpdateCompanyComponent } from './rh-company/update-company/update-company.component';
 
 const routes: Routes = [
     {
@@ -37,9 +38,11 @@ const routes: Routes = [
           { path: "my-offers", component: RhOffersComponent},
           { path: "new-offer", component: NewOfferComponent },
           { path: "edit-offer/:id", component: RhDashboardComponent },
-          { path: "history", component: RhHistoryComponent },
+          
           { path: "my-company", component: RhCompanyComponent },
           { path: "new-company", component: NewCompanyComponent },
+          { path: "update-company/:id", component: UpdateCompanyComponent },
+
           { path: "search-workers", component: RhSearchWorkersComponent },
           { path: "view-worker/:id", component: RhDashboardComponent },
           { path: "my-contacts", component: RhContactBookComponent },
@@ -47,6 +50,9 @@ const routes: Routes = [
           { path: "my-notifications", component: RhNotificationsComponent },
           { path: "my-profile", component: RhProfileComponent },
           { path: "chat-one-to-one", component: RhContactBookComponent },
+          { path: "history", component: RhHistoryComponent },
+          
+
           { path: "statisticts", component: AdminDashboardComponent },
           { path: "offers-formals", component: AdminOffersComponent },
           { path: "admin-comments", component: AdminCommentsComponent },

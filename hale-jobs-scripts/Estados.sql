@@ -1,3 +1,4 @@
+USE HALE_DB;
 
 INSERT INTO stateinegi(clave,valor,country) VALUES ('AGS','Aguascalientes','MX');
 INSERT INTO stateinegi(clave,valor,country) VALUES ('BC','Baja California','MX');

@@ -4,15 +4,31 @@
       <a href="">  <img src="assets/images/logo-b.png" alt="" > </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-      <!-- <li nz-menu-item nzSelected>Inicio</li>
-      <li nz-menu-item>Buscar trabajador</li>
-      <li nz-menu-item>Informes Administrador</li> -->
+      
+      <!-- nzSelected -->
+      <li nz-menu-item  routerLink="/dashboard/my-offers">
+        <i class="dark" nz-icon nzType="folder-open" nzTheme="outline"></i>
+        <span class="dark"> Mis ofertas </span>
+      </li>
+      <li nz-menu-item routerLink="/dashboard/my-company">
+        <i class="dark" nz-icon nzType="appstore-add" nzTheme="outline"></i> 
+        <span class="dark">  Mis empresas </span>
+      </li>
+      <li nz-menu-item routerLink="/dashboard/search-workers">
+        <i class="dark" nz-icon nzType="monitor" nzTheme="outline"></i> 
+        <span class="dark">  Buscar personal </span>
+      </li>
+      <li nz-menu-item routerLink="/dashboard/statisticts" >
+        <span class="dark" nz-icon nzType="bar-chart"> </span> 
+          <span class="dark"> Dashboard </span>
+      </li>
+
       <nz-avatar (click)="info()"  class="avatar" [nzSize]="42" nzText="GJ"></nz-avatar>
     </ul>
     
   </nz-header>
   <nz-layout>
-    <nz-sider nzWidth="250px" nzTheme="light" [(nzCollapsed)]="isCollapsed" nzCollapsible>
+    <!-- <nz-sider nzWidth="250px" nzTheme="light" [(nzCollapsed)]="isCollapsed" nzCollapsible>
       <ul nz-menu nzMode="inline" class="sider-menu">
 
         <li nz-menu-item routerLink="/dashboard/statisticts" nzSelected>
@@ -68,7 +84,7 @@
         </li>
 
       </ul>
-    </nz-sider>
+    </nz-sider> -->
     <nz-layout class="inner-layout">
       <nz-content>
         <router-outlet></router-outlet>

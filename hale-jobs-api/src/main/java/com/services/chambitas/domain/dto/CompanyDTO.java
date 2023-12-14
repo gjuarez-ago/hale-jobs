@@ -12,7 +12,7 @@ public class CompanyDTO {
 	
 	private String description;
 	
-	private Long category;
+	private String category;
 	
 	private String urlSite;
 	
@@ -24,8 +24,12 @@ public class CompanyDTO {
 	
 	private String address;
 	
-	private boolean isvisible;
+	private boolean showCompany;
 	
 	private Long userId;
+	
+	private String numberPhone;
+	
+	private String emailContact;
 	
 }

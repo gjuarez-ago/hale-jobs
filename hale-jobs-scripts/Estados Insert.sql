@@ -1,3 +1,4 @@
+USE HALE_DB;
 
 INSERT INTO cityinegi(clave,valor) VALUES ('AGS','Aguascalientes');
 INSERT INTO cityinegi(clave,valor) VALUES ('AGS','Asientos');

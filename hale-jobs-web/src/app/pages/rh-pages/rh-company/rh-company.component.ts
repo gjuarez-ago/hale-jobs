@@ -128,26 +128,6 @@ export class RhCompanyComponent implements OnInit {
   }
 
 
-  listOfData: Person[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
 
 
   getListPaginate(): void {
@@ -190,10 +170,42 @@ export class RhCompanyComponent implements OnInit {
     this.getListPaginate();
   }
   
-  public generateExcel() {
-
+  public info(element : any): void {
+    this.modal.warning({
+      nzTitle: `¿Seguro que deseas eliminar la siguiente empresa (${element.name})?`,
+      // nzContent: 'Bla bla ...',
+      nzOkText: 'Eliminar',
+      nzCancelText: 'Cancelar',
+      nzOnOk: () => {
+        this.deleteUserById(element);
+      },
+    });
   }
 
+  private deleteUserById(element : any) {
+
+    this.isLoadingTable = true;
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.companyService
+        .deleteCompanyById(element.id)
+        .subscribe(
+          (response: any) => {
+            this.message.create('success', "Empresa eliminada correctamente");
+            this.getListPaginate();
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
+    );
+  }
+
+  public updateRouter(item : any) {
+    this.router.navigateByUrl(``)
+  }
 
   createMessage(type: string, message: string): void {
     this.message.create(type, message);
@@ -295,12 +307,3 @@ export class RhCompanyComponent implements OnInit {
   ]
 
 }
-
-
-interface Person {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
-

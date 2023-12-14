@@ -42,7 +42,7 @@ export class CompanyService {
   }
 
   public deleteCompanyById(id: any): Observable<any> {
-    return this.http.get<any>(`${this.host}/company/delete/${id}`);
+    return this.http.delete<any>(`${this.host}/company/delete/${id}`);
   }
 
   public getCompaniesGeneral(params : any): Observable<any> {

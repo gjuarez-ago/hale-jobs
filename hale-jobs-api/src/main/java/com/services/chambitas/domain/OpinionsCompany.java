@@ -42,7 +42,7 @@ public class OpinionsCompany implements Serializable {
 	
 	private Long userId;
 	
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Company company;
 	
 	

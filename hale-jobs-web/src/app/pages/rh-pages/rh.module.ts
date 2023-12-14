@@ -36,6 +36,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ChartsModule } from 'ng2-charts';
 import { NewOfferComponent } from './rh-offers/new-offer/new-offer.component';
 import { NewCompanyComponent } from './rh-company/new-company/new-company.component';
+import { UpdateCompanyComponent } from './rh-company/update-company/update-company.component';
 
 
 const welcomeComponents: any = [
@@ -67,11 +68,12 @@ const welcomeComponents: any = [
   AdminPermissionsComponent,
   AdminTypeOfJobComponent,
   AdminTypeOfPaymentsComponent,
+  UpdateCompanyComponent,
 ]
 
 @NgModule({
   declarations: [
-    welcomeComponents
+    welcomeComponents,
   ],
   imports: [
     CommonModule,

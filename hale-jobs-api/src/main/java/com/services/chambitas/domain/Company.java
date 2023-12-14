@@ -6,14 +6,12 @@ package com.services.chambitas.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -39,12 +37,8 @@ public class Company implements Serializable {
 
 	@Column(nullable = false)
 	private String name;
-	
-	@Column(nullable = false)
-	private String description;
-	
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private JobCategory category;
+
+	private String category;
 	
 	private double qualification;
 	
@@ -61,12 +55,21 @@ public class Company implements Serializable {
 	private String RFC;
 	
 	private String regimenFiscal;
-	
-	private String address;
-	
+		
 	private boolean isvisible;
 	
 	private boolean isRecruiter;
+	
+	private String numberPhone;
+	
+	private String emailContact;
+	
+	@Lob
+	private String address;
+	
+	@Lob
+	@Column(nullable = false)
+	private String description;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(columnDefinition = "integer default 0")	

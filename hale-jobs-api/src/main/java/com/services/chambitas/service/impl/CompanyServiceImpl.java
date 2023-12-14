@@ -34,18 +34,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.services.chambitas.domain.Company;
 import com.services.chambitas.domain.File;
-import com.services.chambitas.domain.JobCategory;
 import com.services.chambitas.domain.dto.CompanyDTO;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.NotAnImageFileException;
 import com.services.chambitas.repository.ICompanyRepository;
 import com.services.chambitas.repository.IFileRepository;
-import com.services.chambitas.repository.IJobCategoryRepository;
 import com.services.chambitas.service.ICompanyService;
 
 @Service
 @Transactional
 public class CompanyServiceImpl implements ICompanyService{
+	
+	private Logger LOGGER = LoggerFactory.getLogger(getClass());
+
 	
 	@Autowired
 	private ICompanyRepository repository;
@@ -53,10 +54,9 @@ public class CompanyServiceImpl implements ICompanyService{
 	@Autowired
 	private IFileRepository fileRepository;
 	
-	@Autowired 
-	private IJobCategoryRepository categoryRepository;
+//	@Autowired 
+//	private IJobCategoryRepository categoryRepository;
 	
-	private Logger LOGGER = LoggerFactory.getLogger(getClass());
 		
 	@Override
 	public Company findCompanyById(Long id) throws GenericException {
@@ -98,13 +98,14 @@ public class CompanyServiceImpl implements ICompanyService{
 	@Override
 	public Company updateCompany(Long id, CompanyDTO request) throws GenericException {
 		
-		JobCategory cat =  existCategory(request.getCategory());
 	    Company company = existCompany(id);
 	    
 		company.setAddress(request.getAddress());
-		company.setCategory(cat);
+		company.setEmailContact(request.getEmailContact());
+		company.setNumberPhone(request.getNumberPhone());
+		company.setCategory(request.getCategory());
 		company.setDescription(request.getDescription());
-	    company.setIsvisible(request.isIsvisible());
+	    company.setIsvisible(request.isShowCompany());
 	    company.setName(request.getName());
 	    company.setOwnerId(request.getOwnerId());
 	    company.setSizeCompany(request.getSizeCompany());
@@ -123,9 +124,9 @@ public class CompanyServiceImpl implements ICompanyService{
 	}	
 	
 	@Override
-	public Page<Company> getCompaniesByOwner(Long ownerId, int pageNo, int pageSize) {
+	public Page<Company> getCompaniesByOwner(Long ownerId,  String name, String rfc, String category, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
-		Page<Company> response = repository.getCompaniesByOwnerId(ownerId, pageable);
+		Page<Company> response = repository.getCompaniesByOwnerId(ownerId, name, rfc, category,pageable);
 		return response;
 	}
 	
@@ -139,11 +140,11 @@ public class CompanyServiceImpl implements ICompanyService{
     }
 
 	@Override
-	public Company createCompany(MultipartFile image, String name, String description, Long category, String urlSite,
-			String urlLinkedin, Long ownerId, String regimenFiscal, String rfc, String address, String sizeCompany,  boolean isPublic) throws NotAnImageFileException, IOException, GenericException {
+	public Company createCompany(MultipartFile image, String name, String description, String category, String urlSite,
+			String urlLinkedin, Long ownerId, String regimenFiscal, String rfc, String address, String numberPhone, String emailContact, String sizeCompany,  boolean showCompany) throws NotAnImageFileException, IOException, GenericException {
 	
-		JobCategory cat =  existCategory(category);
 		validateName(name);
+		validateRFC(rfc);
 		Company company =  new Company();
 		File entityFile = new File();
 
@@ -154,10 +155,12 @@ public class CompanyServiceImpl implements ICompanyService{
 		
 		saveImage(ownerId, entityFile, image);	
 		
+		company.setEmailContact(emailContact);
+		company.setNumberPhone(numberPhone);
 		company.setAddress(address);
-		company.setCategory(cat);
+		company.setCategory(category);
 		company.setDescription(description);
-	    company.setIsvisible(isPublic);
+	    company.setIsvisible(showCompany);
 	    company.setName(name);
 	    company.setOwnerId(ownerId);
 	    company.setQualification(0);
@@ -206,16 +209,16 @@ public class CompanyServiceImpl implements ICompanyService{
     }
 	
 	
-	private JobCategory existCategory(Long id) throws GenericException {
-		
-		JobCategory category = categoryRepository.findJobCategoryById(id);
-	
-		if(category == null) {
-			throw new GenericException("No se encontro la categoría");
-		}
-		
-		return category;
-	}
+//	private JobCategory existCategory(Long id) throws GenericException {
+//		
+//		JobCategory category = categoryRepository.findJobCategoryById(id);
+//	
+//		if(category == null) {
+//			throw new GenericException("No se encontro la categoría");
+//		}
+//		
+//		return category;
+//	}
 	
 	private Company existCompany(Long id) throws GenericException {
 		
@@ -223,6 +226,18 @@ public class CompanyServiceImpl implements ICompanyService{
 		
 		if(element == null) {
 			throw new GenericException("No hemos encontrado la compañia");
+		}
+		
+		return element;
+	}
+	
+	
+	private Company validateRFC(String rfc) throws GenericException {
+		
+		Company element = repository.findCompanyByRFC(rfc);
+		
+		if(element != null) {
+			throw new GenericException("Ya existe una empresa con el mismo RFC");
 		}
 		
 		return element;

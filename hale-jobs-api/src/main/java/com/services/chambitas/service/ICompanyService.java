@@ -25,10 +25,10 @@ public interface ICompanyService {
 		
 	Page<Company> getCompaniesGlobal(String keyword, int pageNo, int pageSize);
 	
-	Page<Company> getCompaniesByOwner(Long ownerId, int pageNo, int pageSize);
+	Page<Company> getCompaniesByOwner(Long ownerId,String name, String rfc, String category, int pageNo, int pageSize);
 		
 	Company updateCompany(Long id, CompanyDTO request) throws GenericException;
 	
-	Company createCompany(MultipartFile image,String name,String description,Long category,String urlSite,String urlLinkedin,Long ownerId,String regimenFiscal,String rfc,String address,String sizeCompany, boolean isPublic) throws NotAnImageFileException, IOException, GenericException;
+	Company createCompany(MultipartFile image,String name,String description,String category,String urlSite,String urlLinkedin,Long ownerId,String regimenFiscal,String rfc,String address,String numberPhone, String emailContact, String sizeCompany, boolean isPublic) throws NotAnImageFileException, IOException, GenericException;
 	
 }

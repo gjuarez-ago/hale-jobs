@@ -1,8 +1,4 @@
-CREATE TABLE type_of_payment(
-   id    INTEGER  NOT NULL PRIMARY KEY 
-  ,clave INTEGER  NOT NULL
-  ,valor VARCHAR(12) NOT NULL
-);
+USE HALE_DB;
 
 INSERT INTO type_of_payment(id,clave,valor) VALUES (1,1,'Nómina');
 INSERT INTO type_of_payment(id,clave,valor) VALUES (2,2,'Honorarios');

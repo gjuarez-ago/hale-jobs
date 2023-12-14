@@ -56,7 +56,7 @@ public class Payment implements Serializable{
 	
 	private int pack;
 	
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private User user;
 	
 	@Column(columnDefinition = "integer default 0")

@@ -54,7 +54,7 @@
               Exportar ofertas
             </button> -->
 
-            <button *nzSpaceItem type="button" (click)="generateExcel()" nz-button
+            <button *nzSpaceItem type="button" nz-button
             class="button-blue">
             <a routerLink="/dashboard/new-company" routerLinkActive="active" target="_blank">
               <i nz-icon nzType="plus"></i>
@@ -113,8 +113,8 @@
               alt="" width="200px" height="200px">
           </div>
           <div nz-col nzSpan="14">
-            <h1>{{item.name}}</h1>
-            <h4>{{item.category}}</h4>
+            <h1 class="hp-2">{{item.name}}</h1>
+            <h4 class="hp-2">{{item.category}}</h4>
             <p class="text-wrap">{{item.description}}</p>
           </div>
         </div>
@@ -124,8 +124,8 @@
       <nz-card style="margin-top: .5rem">
         <nz-space>
           <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+          <button routerLink="/dashboard/update-company/10"  *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button (click)="info(item)" *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
         </nz-space>
       </nz-card>
 

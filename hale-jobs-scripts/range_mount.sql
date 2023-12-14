@@ -1,3 +1,4 @@
+USE HALE_DB;
 
 INSERT INTO range_amount(id,clave,valor) VALUES (1,'Z','De $6,500 MXN a $10,000 MXN');
 INSERT INTO range_amount(id,clave,valor) VALUES (2,'Z','De $10,001 MXN a $15,000 MXN');

@@ -37,13 +37,12 @@ public class CompanyController{
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
-	
 	@PostMapping("create")
 	public ResponseEntity<Company> createCompany(
 			@RequestParam(value = "image") MultipartFile image,
 			@RequestParam(value = "name") String name,
 			@RequestParam(value = "description") String description,
-			@RequestParam(value = "category") Long category,
+			@RequestParam(value = "category") String category,
 			@RequestParam(value = "urlSite") String urlSite,
 			@RequestParam(value = "urlLinkedin") String urlLinkedin,
 			@RequestParam(value = "ownerId") Long ownerId,
@@ -51,15 +50,17 @@ public class CompanyController{
 			@RequestParam(value = "rfc") String rfc,
 			@RequestParam(value = "address") String address,
 			@RequestParam(value = "size") String sizeCompany,
-			@RequestParam(value = "public") boolean isPublic
+			@RequestParam(value = "numberPhone") String numberPhone,
+			@RequestParam(value = "emailContact") String emailContact,
+			@RequestParam(value = "showCompany") boolean isPublic
 			) throws NotAnImageFileException, IOException, GenericException {
-		Company response = service.createCompany(image, name, description, category, urlSite, urlLinkedin, ownerId, regimenFiscal, rfc, address, sizeCompany, isPublic);
+		Company response = service.createCompany(image, name, description, category, urlSite, urlLinkedin, ownerId, regimenFiscal, rfc, address, numberPhone, emailContact, sizeCompany, isPublic);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Company> deleteCompanyById(@PathVariable(value = "id") Long id) throws GenericException {
-		Company response = service.findCompanyById(id);
+		Company response = service.deleteCompanyById(id);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 
@@ -86,10 +87,13 @@ public class CompanyController{
 	
 	@GetMapping("/get-companies-by-owner")
 	public ResponseEntity<Page<Company>> getCompaniesGlobal(
-     @RequestParam(value = "ownerId", required = false) Long ownerId,
+     @RequestParam(value = "ownerId", required = true) Long ownerId,
+     @RequestParam(value = "name", required = false , defaultValue = "") String name,
+     @RequestParam(value = "rfc", required = false, defaultValue = "") String rfc,
+     @RequestParam(value = "category", required = false, defaultValue = "") String category,
      @RequestParam(value = "pageNo", required = false, defaultValue = "0") int pageNo,
      @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
-		Page<Company> response = service.getCompaniesByOwner(ownerId, pageNo, pageSize);
+		Page<Company> response = service.getCompaniesByOwner(ownerId, name, rfc, category,  pageNo, pageSize);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 
