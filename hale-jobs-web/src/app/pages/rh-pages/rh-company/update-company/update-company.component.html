@@ -38,6 +38,13 @@
                   type="file"
                   (change)="handleChange($event)"
                   accept="image/*" style=" visibility: hidden;"/>
+
+                  <p  nz-popover nzPopoverTitle="Permites que tu empresa sea visible en las busquedas y al visualizar las ofertas relacionadas a esta."  nzPopoverPlacement="topRight">
+                    
+                    Mostrar empresa </p>
+                  <nz-switch [(ngModel)]="currentElement && currentElement.isvisible" nzCheckedChildren="Publica" nzUnCheckedChildren="Privada"></nz-switch>
+
+
                </div>
 
                <div class="info">
@@ -51,7 +58,7 @@
                             <nz-form-label nzFor="email"> Nombre de la empresa </nz-form-label>
                             <nz-form-control nzErrorTip="Campo requerido">
                                  <input type="text" class="input-text" nzSize="large" nz-input
-                                  placeholder="Nombre de la empresa" formControlName="name" />
+                                  placeholder="Nombre de la empresa" formControlName="name" [ngModel]="currentElement && currentElement.name" />
                            
                             </nz-form-control>
                           </nz-form-item>
@@ -63,7 +70,7 @@
                           <nz-form-item class="input-content">
                             <nz-form-label  nzFor="surnames"> Categoria de la empresa </nz-form-label>
                             <nz-form-control nzErrorTip="Campo requerido">
-                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona una categoría" formControlName="category">
+                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona una categoría" formControlName="category" [ngModel]="currentElement && currentElement.category" >
                                 <nz-option *ngFor="let data of listCategory" [nzLabel]="data.name" [nzValue]="data.name"></nz-option>
                             </nz-select>        
                             </nz-form-control>
@@ -80,7 +87,7 @@
                             <nz-form-item class="input-content">
                               <nz-form-label nzFor="email"> Tamaño de la empresa </nz-form-label>
                               <nz-form-control nzErrorTip="Campo requerido">
-                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Número de personas en tu empresa" formControlName="size">
+                                <nz-select nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Número de personas en tu empresa" formControlName="size" [ngModel]="currentElement && currentElement.sizeCompany">
                                 <nz-option *ngFor="let data of listSize" [nzLabel]="data.size" [nzValue]="data.size"></nz-option>
                             </nz-select>      
                              
@@ -94,7 +101,7 @@
                               <nz-form-item class="input-content">
                                 <nz-form-label  nzFor="email">  Regimen fiscal </nz-form-label>
                                 <nz-form-control nzErrorTip="Campo requerido">
-                                <nz-select   formControlName="regimenFiscal" nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado">
+                                <nz-select   formControlName="regimenFiscal" nzShowSearch nzAllowClear [nzSize]="'large'" nzPlaceHolder="Selecciona un estado" [ngModel]="currentElement && currentElement.regimenFiscal">
                                     <nz-option *ngFor="let data of listRegimen" [nzLabel]="data.regimen" [nzValue]="data.regimen"></nz-option>
                                 </nz-select>      
                                 </nz-form-control>
@@ -107,7 +114,7 @@
                             <nz-form-item class="input-content">
                               <nz-form-label  nzFor="email"> RFC </nz-form-label>
                               <nz-form-control nzErrorTip="Campo requerido">
-                                <input type="text" class="input-text" nzSize="large" nz-input placeholder="Registro Federal de Contribuyentes"  formControlName="rfc"/>           
+                                <input type="text" class="input-text" nzSize="large" nz-input placeholder="Registro Federal de Contribuyentes"  formControlName="rfc"  [ngModel]="currentElement && currentElement.rfc"/>           
                               </nz-form-control>
                             </nz-form-item>
                           </div>
@@ -118,7 +125,7 @@
                               <nz-form-item class="input-content">
                                 <nz-form-label  nzFor="email"> Linkedin </nz-form-label>
                                 <nz-form-control nzErrorTip="Campo requerido">
-                                  <input type="text" class="input-text" nzSize="large" nz-input placeholder="URL de Linkedin"  formControlName="urlLinkedin"/>           
+                                  <input type="text" class="input-text" nzSize="large" nz-input placeholder="URL de Linkedin"  formControlName="urlLinkedin" [ngModel]="currentElement && currentElement.urlLinkedin"/>           
                                 </nz-form-control>
                               </nz-form-item>
                             </div>
@@ -130,7 +137,7 @@
                               <nz-form-item class="input-content">
                                 <nz-form-label  nzFor="email"> Número de contacto </nz-form-label>
                                 <nz-form-control nzErrorTip="Campo requerido">
-                                  <input type="text"  class="input-text" nzSize="large" nz-input placeholder="Número de contacto"  formControlName="numberPhone"/>           
+                                  <input type="text"  class="input-text" nzSize="large" nz-input placeholder="Número de contacto"  formControlName="numberPhone" [ngModel]="currentElement && currentElement.numberPhone"/>           
                                 </nz-form-control>
                               </nz-form-item>
                             </div>
@@ -141,7 +148,7 @@
                                 <nz-form-item class="input-content">
                                   <nz-form-label  nzFor="email"> E-mail de contacto </nz-form-label>
                                   <nz-form-control nzErrorTip="Campo requerido">
-                                    <input type="email" class="input-text" nzSize="large" nz-input placeholder="Email de contacto"  formControlName="emailContact"/>           
+                                    <input type="email" class="input-text" nzSize="large" nz-input placeholder="Email de contacto"  formControlName="emailContact" [ngModel]="currentElement && currentElement.emailContact" />           
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
@@ -152,7 +159,7 @@
                               <nz-form-item class="input-content">
                                 <nz-form-label  nzFor="email"> Sitio web de la empresa </nz-form-label>
                                 <nz-form-control nzErrorTip="Campo requerido">
-                                    <input type="text" class="input-text" formControlName="urlSite" nzSize="large" nz-input placeholder="Sitio web o página de la empresa" />
+                                    <input type="text" class="input-text" formControlName="urlSite" nzSize="large" nz-input placeholder="Sitio web o página de la empresa" [ngModel]="currentElement && currentElement.urlSite" />
                                 </nz-form-control>
                               </nz-form-item>
                             </div>
@@ -167,7 +174,7 @@
                                         <nz-form-label  nzFor="email"> Dirección fiscal </nz-form-label>
                                         <nz-form-control>
                                             <nz-textarea-count [nzMaxCharacterCount]="70">
-                                                <textarea formControlName="address" rows="5" nz-input
+                                                <textarea formControlName="address" [ngModel]="currentElement && currentElement.address" rows="5" nz-input
                                                     placeholder="Escribe la dirección fiscal o bien de tu oficina de contacto"></textarea>
                                             </nz-textarea-count>
                                         </nz-form-control>
@@ -185,8 +192,8 @@
                                         <nz-form-label  nzFor="email"> Descripción de empresa </nz-form-label>
                                         <nz-form-control>
                                             <nz-textarea-count [nzMaxCharacterCount]="400">
-                                                <textarea formControlName="description" rows="10" nz-input
-                                                    placeholder="Cuentanos un poco de lo que haces día a día, que disfrustas y disgusta de tu trabajo, pero sobre todo cuentanos lo que consideres que te podriamos ayudar a mejorar tu experiencia."></textarea>
+                                                <textarea formControlName="description" [ngModel]="currentElement && currentElement.description" rows="10" nz-input
+                                                    placeholder="Cuentanos un poco acerca de la empresa y que te gustaria contarle a las personas que visualicen tu muro."></textarea>
                                             </nz-textarea-count>
                                         </nz-form-control>
                                     </nz-form-item>

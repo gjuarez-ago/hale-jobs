@@ -22,8 +22,12 @@ public interface IOfferRepository extends JpaRepository<Offer, Long>{
 	@Query(value = "SELECT o.* FROM offer AS o WHERE o.user_id = :userId AND o.reg_borrado = 0",nativeQuery = true)
  	List<Offer> findOfferByUserMovil(@Param("userId") Long userId);
 	
-	@Query(value = "SELECT o.* FROM offer AS o WHERE o.user_id = :userId AND o.reg_borrado = 0",nativeQuery = true)
- 	Page<Offer> findOfferByUserWEB(@Param("userId") Long userId, Pageable pageable);
+	@Query(value = "SELECT o.* FROM offer AS o \n"
+			+ "INNER JOIN job_subcategory AS j ON j.id = o.subcategory_id\n"
+			+ "INNER JOIN level_study AS l ON l.id = o.level_study_id\n"
+			+ "WHERE o.user_id = :userId AND o.category_id = 1 AND o.status = :status\n"
+			+ "AND j.valor LIKE %:subcategory% AND l.clave LIKE %:level_study% AND o.title LIKE %:title% AND o.work_place LIKE %:work_place% AND o.urgency LIKE %:urgency% AND o.reg_borrado = 0",nativeQuery = true)
+ 	Page<Offer> findOfferByUserWEB(@Param("userId") Long userId, @Param("status") int status, @Param("subcategory") String subcategory, @Param("work_place") String workPlace, @Param("urgency") String urgency,@Param("level_study") String levelStudy,@Param("title")  String title,  Pageable pageable);
 	
 	// Métodos para realizar busqueda
 	@Query(value = "SELECT o.* FROM offer AS o WHERE o.user_id = :title AND o.reg_borrado = 0",nativeQuery = true)

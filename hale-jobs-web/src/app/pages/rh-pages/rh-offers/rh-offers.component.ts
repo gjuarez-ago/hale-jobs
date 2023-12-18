@@ -66,7 +66,7 @@ export class RhOffersComponent implements OnInit {
     this.validateForm = this.fb.group({
       offerTitle: [''],
       subcategory: [null],
-      amount: [null],
+      urgency: [null],
       studyLevel: [null],
       workPlace: [null],
       statusOffer: [null]

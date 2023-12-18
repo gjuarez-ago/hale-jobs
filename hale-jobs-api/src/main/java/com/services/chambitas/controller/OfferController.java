@@ -80,11 +80,19 @@ public class OfferController {
    
    // Mostrar ofertas WEB
    @GetMapping("/view-offer-w")
-	public ResponseEntity<Page<Offer>> getAllOffersByUserWEB(@RequestParam("user") Long userId,
-			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-           @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-		
-		Page<Offer> response = service.getAllOfferByUserWEB(userId, pageNo, pageSize);
+	public ResponseEntity<Page<Offer>> getAllOffersByUserWEB(
+		@RequestParam("user") Long userId,
+		@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+		@RequestParam(value = "subcategory", required = true, defaultValue = "") String subcategory,
+		@RequestParam(value = "title", required = false, defaultValue = "") String title, 
+		@RequestParam(value = "status", required = false) int status,
+		@RequestParam(value = "workPlace", required = false, defaultValue = "") String workPlace,
+		@RequestParam(value = "urgency", required = false, defaultValue = "") String urgency,
+		@RequestParam(value = "levelStudy", required = false, defaultValue = "") String levelStudy
+        ) {
+	   
+		Page<Offer> response = service.getAllOfferByUserWEB(userId, subcategory, title, status, workPlace, urgency, levelStudy, pageNo, pageSize);
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}	
 		

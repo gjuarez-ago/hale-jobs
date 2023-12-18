@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Offer } from 'src/app/models/core/offer.model';
 import { environment } from 'src/environments/environment';
+import { PaginationOffer } from '../models/pagination-offer';
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +54,24 @@ export class OfferService {
     return this.http.post<Offer>(`${this.url}/offer/select-postulate?amountAcepted=${amountAcepted}&offerId=${offerId}&userId=${userId}`, {})
   }
 
-  public getAllOffersByUserWEB(userId: number, page: number = 0, pageSize: number = 10): Observable<Offer> {
-    return this.http.get<Offer>(`${this.url}/offer/view-offer-w?userId=${userId}&page=${page}&pageSize=${pageSize}`)
+  public getAllOffersByUserWEB(pagination : PaginationOffer): Observable<Offer> {
+
+    
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        userId: pagination.userId,
+        subCategory: pagination.subCategory,
+        title: pagination.title,
+        status: pagination.status,
+        urgency: pagination.urgency,
+        workPlace: pagination.workPlace,
+        levelStudy: pagination.levelStudy,
+      }
+    });
+
+    return this.http.get<Offer>(`${this.url}/offer/view-offer-w`,{params: params})
   }
 
 }

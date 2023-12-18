@@ -36,7 +36,7 @@ export class NewCompanyComponent implements OnInit {
   public imgLoad : File | undefined;
   public isLoadingGeneral: boolean = false;
   public show : any = true;
-
+  public switchValue1 : any = true;
 
   public listRegimen = [
     {
@@ -318,7 +318,10 @@ export class NewCompanyComponent implements OnInit {
     }
 
     let form = this.createForm.value;
-    this.ngxSpinner.show();
+
+    console.log(this.switchValue1);
+    
+    
 
     const formData = new FormData();
     formData.append("image", this.imgLoad);
@@ -327,7 +330,7 @@ export class NewCompanyComponent implements OnInit {
     formData.append("description", form.description);
     formData.append("name", form.name);    
     formData.append("ownerId", this.userId);
-    formData.append("showCompany", this.show);    
+    formData.append("showCompany", this.switchValue1);    
     formData.append("regimenFiscal", form.regimenFiscal);
     formData.append("rfc", form.rfc);
     formData.append("size", form.size);

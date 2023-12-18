@@ -10,8 +10,6 @@ public class OfferDTO {
 	
 	private String description;
 	
-	private String comment;
-
 	// Urgencia del trabajo
 	private String urgency;
 	
@@ -29,8 +27,6 @@ public class OfferDTO {
 	
 	private String[] skills;
 
-	private int maxPostulations;
-	
 	private String workPlace; 
 	
 	private int typeOfOffer;

@@ -5,7 +5,7 @@ import {FormControl,
   NgForm,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
@@ -23,6 +23,7 @@ export class UpdateCompanyComponent implements OnInit {
   public user: User| undefined;
   public userId : any;
   public subcriptions: Subscription[] = [];
+  public currentElement : any;
 
   @ViewChild('f') myForm: NgForm | undefined;
   public createForm!: FormGroup;
@@ -32,6 +33,9 @@ export class UpdateCompanyComponent implements OnInit {
   public imgLoad : File | undefined;
   public isLoadingGeneral: boolean = false;
   public show : any = true;
+  public switchValue1 = true;
+  public idCompany : any;
+  public updateImagen : any = false;
 
 
   public listRegimen = [
@@ -263,7 +267,9 @@ export class UpdateCompanyComponent implements OnInit {
     private companyService : CompanyService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService
+    private ngxSpinner: NgxSpinnerService,
+    private actRoute: ActivatedRoute,
+
   ) {
     this.createForm = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
@@ -286,6 +292,9 @@ export class UpdateCompanyComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
+      this.idCompany = this.actRoute.snapshot.params.id;
+      this.getCompanyById(this.idCompany);
+
     } else {
       this.router.navigateByUrl("/auth/login");
     }
@@ -296,6 +305,10 @@ export class UpdateCompanyComponent implements OnInit {
   }
 
   public submitForm() {
+
+    const formData = new FormData();
+
+    
     for (const i in this.createForm.controls) {
       if (this.createForm.controls.hasOwnProperty(i)) {
         this.createForm.controls[i].markAsDirty();
@@ -308,22 +321,21 @@ export class UpdateCompanyComponent implements OnInit {
       return;
     }
 
-    if(!this.imgLoad) {
+    if((!this.imgLoad && this.updateImagen) || this.previewImage == "https://placehold.jp/150x150.png") {
       this.createMessage('warning', 'Es necesario cargar la imagen de perfil!');
       return;
+    }else {
+      formData.append("image", this.imgLoad!);
     }
 
     let form = this.createForm.value;
-    this.ngxSpinner.show();
 
-    const formData = new FormData();
-    formData.append("image", this.imgLoad);
     formData.append("address", form.address);
     formData.append("category", form.category);
     formData.append("description", form.description);
     formData.append("name", form.name);    
     formData.append("ownerId", this.userId);
-    formData.append("showCompany", this.show);    
+    formData.append("showCompany", this.currentElement.isvisible);    
     formData.append("regimenFiscal", form.regimenFiscal);
     formData.append("rfc", form.rfc);
     formData.append("size", form.size);
@@ -331,11 +343,12 @@ export class UpdateCompanyComponent implements OnInit {
     formData.append("urlSite", form.urlSite);
     formData.append("numberPhone", form.numberPhone);
     formData.append("emailContact", form.emailContact);
+    formData.append("updateImagen", this.updateImagen);
 
     this.isLoadingGeneral = true;
     this.ngxSpinner.show();
 
-    this.companyService.createCompany(formData).subscribe(
+    this.companyService.updateCompany(this.currentElement.id,this.userId, formData).subscribe(
       (response: any) => {
         this.message.create("success", 'Empresa creada correctamente!');
         this.isLoadingGeneral=false;
@@ -352,6 +365,29 @@ export class UpdateCompanyComponent implements OnInit {
     )
   }
 
+  public getCompanyById(id :any) {
+    
+    this.isLoadingGeneral = true;
+    this.ngxSpinner.show();
+
+    this.companyService.getCompanyById(id).subscribe(
+      (response: any) => {
+
+        this.currentElement = response;
+        this.message.create("success", 'Empresa creada correctamente!');
+        this.imgLoad = undefined;
+        this.previewImage = response.imageURL;
+        this.isLoadingGeneral=false;
+        this.ngxSpinner.hide();
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error",  errorResponse.error.message);
+        this.isLoadingGeneral=false;
+        this.ngxSpinner.hide();
+      }
+    )
+  }
+
   createMessage(type: string, message: string): void {
     this.message.create(type, message);
   }
@@ -359,20 +395,22 @@ export class UpdateCompanyComponent implements OnInit {
   
   async handleChange(event:any){
     this.previewVisible = false;
-    // this.previewImage = "";
-
-    const file:File = event.target.files[0];
+    this.previewImage = "https://placehold.jp/150x150.png";
+    this.updateImagen = false;
+    const file : File = event.target.files[0];
     const isImg = file.type === 'image/png' || file.type === 'image/jpeg'
 
     if (!isImg) {
-      this.message.error('Disculpa, Solo se aceptan Imagenes Jpg/png ');
+      this.message.error('Disculpa, Solo se aceptan imagenes Jpg/png ');
       this.isLoadingGeneral = false;
       return;
     }
 
     this.imgLoad = event.target.files[0];
+    this.updateImagen = true;
     this.previewImage  = await getBase64(this.imgLoad!);
     this.previewVisible = true;
+
   }
 
 

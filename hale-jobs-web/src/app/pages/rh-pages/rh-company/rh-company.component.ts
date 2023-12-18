@@ -1,13 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
-import { PaginationCompany } from 'src/app/models/pagination-company';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyService } from 'src/app/services/company.service';
 
@@ -25,12 +24,9 @@ export class RhCompanyComponent implements OnInit {
   public total: number = 0;
   public totalElementByPage = 0;
   public data: any[] = [];
-
     
   public user: User| undefined;
   public userId : any;
-
-
 
   //  public data : Content[] = [];
   //  public temp : Content[] = [];
@@ -41,6 +37,10 @@ export class RhCompanyComponent implements OnInit {
 
   // * Variables para realizar el filtrado
   public validateForm!: FormGroup;
+
+  public visible = false;
+  public viewCompany: any;
+  public isLoadingView : any = false;
 
 
   constructor(
@@ -105,30 +105,25 @@ export class RhCompanyComponent implements OnInit {
       })
       .subscribe(
         (response: any) => {
+
           this.data = response.content;
+          this.isLoadingGeneral = false;
           this.total = response.totalElements;
           this.totalElementByPage = response.numberOfElements;
           this.isLoadingTable = false;
-          this.isLoadingGeneral = false;
           this.ngxSpinner.hide();
-
+       
         },
         (errorResponse: HttpErrorResponse) => {
           this.isLoadingTable = false;
           this.isLoadingGeneral = false;
           this.message.create('error', errorResponse.error.message);
           this.ngxSpinner.hide();
-
         }
       )
   );
   
-
-
   }
-
-
-
 
   getListPaginate(): void {
     this.isLoadingTable = true;
@@ -182,6 +177,16 @@ export class RhCompanyComponent implements OnInit {
     });
   }
 
+  public openViewDrawer(item : any): void {
+    this.getCompanyById(item);
+    this.visible = true;
+
+  }
+
+  public closeViewDrawer(): void {
+    this.visible = false;
+  }
+
   private deleteUserById(element : any) {
 
     this.isLoadingTable = true;
@@ -197,6 +202,24 @@ export class RhCompanyComponent implements OnInit {
           (errorResponse: HttpErrorResponse) => {
             this.isLoadingTable = false;
             this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
+    );
+  }
+
+  private getCompanyById(element : any) {
+    this.isLoadingView = true;
+    this.subscriptions.push(
+      this.companyService
+        .getCompanyById(element.id)
+        .subscribe(
+          (response: any) => {
+            this.viewCompany = response;
+            this.isLoadingView = false;
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingView = false;
             this.message.create('error', errorResponse.error.message);
           }
         )

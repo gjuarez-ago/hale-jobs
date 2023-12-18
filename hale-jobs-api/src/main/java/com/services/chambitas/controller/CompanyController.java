@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.services.chambitas.domain.Company;
-import com.services.chambitas.domain.dto.CompanyDTO;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.NotAnImageFileException;
 import com.services.chambitas.service.ICompanyService;
@@ -98,8 +96,24 @@ public class CompanyController{
 	}
 
 	@PutMapping("update/{id}/{userId}")
-	public ResponseEntity<Company> updateCompany(@PathVariable(value="id") Long id, @RequestBody CompanyDTO request) throws GenericException {
-		Company response = service.updateCompany(id, request);
+	public ResponseEntity<Company> updateCompany(@PathVariable(value="id") Long id, 
+			@RequestParam(value = "image", required = false) MultipartFile image,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "description") String description,
+			@RequestParam(value = "category") String category,
+			@RequestParam(value = "urlSite") String urlSite,
+			@RequestParam(value = "urlLinkedin") String urlLinkedin,
+			@RequestParam(value = "ownerId") Long ownerId,
+			@RequestParam(value = "regimenFiscal") String regimenFiscal,
+			@RequestParam(value = "rfc") String rfc,
+			@RequestParam(value = "address") String address,
+			@RequestParam(value = "size") String sizeCompany,
+			@RequestParam(value = "numberPhone") String numberPhone,
+			@RequestParam(value = "emailContact") String emailContact,
+			@RequestParam(value = "showCompany") boolean isPublic,
+			@RequestParam(value = "updateImagen") boolean updateImagen
+			) throws GenericException, NotAnImageFileException, IOException {
+		Company response = service.updateCompany(id, image, name, description, category, urlSite, urlLinkedin, ownerId, regimenFiscal, rfc, address, numberPhone, emailContact, sizeCompany, isPublic, updateImagen);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	

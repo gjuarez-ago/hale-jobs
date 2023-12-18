@@ -17,8 +17,8 @@ export class CompanyService {
     return this.http.post<any>(`${this.host}/company/create`, form);
   }
 
-  public updateCompany(id: any, userId:any, form: any): Observable<any> {
-    return this.http.post<any>(`${this.host}/company/update/${id}/${userId}`, form);
+  public updateCompany(id: any, userId:any, form: FormData): Observable<any> {
+    return this.http.put<any>(`${this.host}/company/update/${id}/${userId}`, form);
   }
 
   public getCompaniesByOwner(pagination : PaginationCompany): Observable<any> {
@@ -37,7 +37,7 @@ export class CompanyService {
     return this.http.get<any>(`${this.host}/company/get-companies-by-owner`, {params: params});
   }
 
-  public getCompaniesById(id: any): Observable<any> {
+  public getCompanyById(id: any): Observable<any> {
     return this.http.get<any>(`${this.host}/company/find/${id}`);
   }
 

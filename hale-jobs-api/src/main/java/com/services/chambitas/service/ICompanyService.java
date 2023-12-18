@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.services.chambitas.domain.Company;
-import com.services.chambitas.domain.dto.CompanyDTO;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.NotAnImageFileException;
 
@@ -27,7 +26,8 @@ public interface ICompanyService {
 	
 	Page<Company> getCompaniesByOwner(Long ownerId,String name, String rfc, String category, int pageNo, int pageSize);
 		
-	Company updateCompany(Long id, CompanyDTO request) throws GenericException;
+	Company updateCompany(Long id, MultipartFile image, String name, String description, String category, String urlSite,
+			String urlLinkedin, Long ownerId, String regimenFiscal, String rfc, String address, String numberPhone, String emailContact, String sizeCompany,  boolean showCompany, boolean updateImagen) throws GenericException, NotAnImageFileException, IOException;
 	
 	Company createCompany(MultipartFile image,String name,String description,String category,String urlSite,String urlLinkedin,Long ownerId,String regimenFiscal,String rfc,String address,String numberPhone, String emailContact, String sizeCompany, boolean isPublic) throws NotAnImageFileException, IOException, GenericException;
 	

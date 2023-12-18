@@ -46,10 +46,9 @@ public class Offer implements Serializable {
 	@Column(nullable = false)
 	private String description;
 	
-	// Comentario clave acerca de la posición
 	@Lob
 	private String comment;
-
+	
 	// Urgencia del trabajo
 	@Column(nullable = false)
 	private String urgency;
@@ -81,7 +80,11 @@ public class Offer implements Serializable {
 	// 1 : Creada, 2 : Pausada, 3 : Completada, 4 : Cerrada por usuario, 5 : Bloqueada por reportes
 	@Column(nullable = false)
 	private int status;
-
+	
+	// 7 días 
+	@Column(nullable = false)
+	private Date vencimiento;
+	
 	// La compañia de la persona
 	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Company company;

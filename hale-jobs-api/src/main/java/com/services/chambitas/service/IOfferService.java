@@ -25,7 +25,7 @@ public interface IOfferService {
 		
 	List<Offer> getAllOfferByUserMovil(Long userId);
 	
-	Page<Offer> getAllOfferByUserWEB(Long userId, int pageNo, int pageSize);
+	Page<Offer> getAllOfferByUserWEB(Long userId, String subcategory,String title, int status,  String workPlace,   String urgency,  String levelStudy, int pageNo, int pageSize);
 	
 	List<Offer> findOfferGeneralMovil(String keyword);
 

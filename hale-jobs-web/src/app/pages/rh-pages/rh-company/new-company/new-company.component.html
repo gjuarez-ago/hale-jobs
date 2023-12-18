@@ -38,7 +38,16 @@
                   type="file"
                   (change)="handleChange($event)"
                   accept="image/*" style=" visibility: hidden;"/>
+
+                  <p  nz-popover nzPopoverTitle="Permites que tu empresa sea visible en las busquedas y al visualizar las ofertas relacionadas a esta."  nzPopoverPlacement="topRight">
+                    
+                    Mostrar empresa </p>
+                  <nz-switch [(ngModel)]="switchValue1" nzCheckedChildren="Publica" nzUnCheckedChildren="Privada"></nz-switch>
+
                </div>
+
+
+
 
                <div class="info">
 

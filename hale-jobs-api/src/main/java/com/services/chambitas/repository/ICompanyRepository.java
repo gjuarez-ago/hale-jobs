@@ -14,7 +14,7 @@ public interface ICompanyRepository extends JpaRepository<Company, Long>{
 	
 	Company findCompanyById(Long id);
 	
-	Company findCompanyByName(String name);
+	Company findCompanyByNameIgnoreCase(String name);
 	 
 	Company findCompanyByRFC(String rfc);
 	 

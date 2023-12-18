@@ -1,5 +1,6 @@
 package com.services.chambitas.service.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -104,12 +105,18 @@ public class OfferServiceImpl implements IOfferService{
 		RangeAmount rangeAmount = existRangeAmount(request.getRangeAmount());
 		JobSubcategory subcategory = existSubcategory(request.getSubcategory());
 		
+		 Date dt = new Date();
+		 Calendar c = Calendar.getInstance();
+		 c.setTime(dt);
+		 c.add(Calendar.DATE, 7);
+		 dt = c.getTime();
+		
         element.setConsecutive(generateConsecutive());
         element.setTitle(request.getTitle());
         element.setBenefits(request.getBenefits());
         element.setCategory(category);
         element.setCity(city);
-        element.setComment(request.getComment());
+        element.setComment(request.getAddress());
         element.setCompany(company);
         element.setCountry(country);
         element.setDescription(request.getDescription());
@@ -128,7 +135,8 @@ public class OfferServiceImpl implements IOfferService{
         element.setUser(user);
         element.setTypeOfOffer(request.getTypeOfOffer());
         element.setWorkPlace(request.getWorkPlace());
-        element.setUrgency(request.getUrgency());;
+        element.setUrgency(request.getUrgency());
+        element.setVencimiento(dt);
         
 		element.setRegDateCreated(new Date());
 		element.setRegCreatedBy(request.getUserId());
@@ -211,9 +219,9 @@ public class OfferServiceImpl implements IOfferService{
 	}
 
 	@Override
-	public Page<Offer> getAllOfferByUserWEB(Long userId, int pageNo, int pageSize) {
+	public Page<Offer> getAllOfferByUserWEB(Long userId, String subcategory, String title,int status,String workPlace,   String urgency,  String levelStudy,  int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
-		Page<Offer> response = offerRepository.findOfferByUserWEB(userId, pageable);
+		Page<Offer> response = offerRepository.findOfferByUserWEB(userId, status, subcategory, workPlace, urgency, levelStudy, title, pageable);
 		return response;	
 	}
 

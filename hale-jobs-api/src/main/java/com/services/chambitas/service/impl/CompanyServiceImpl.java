@@ -34,7 +34,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.services.chambitas.domain.Company;
 import com.services.chambitas.domain.File;
-import com.services.chambitas.domain.dto.CompanyDTO;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.NotAnImageFileException;
 import com.services.chambitas.repository.ICompanyRepository;
@@ -94,26 +93,45 @@ public class CompanyServiceImpl implements ICompanyService{
 		return response;	
 	}
 	
-	
 	@Override
-	public Company updateCompany(Long id, CompanyDTO request) throws GenericException {
+	public Company updateCompany(Long id, MultipartFile image, String name, String description, String category, String urlSite,
+			String urlLinkedin, Long ownerId, String regimenFiscal, String rfc, String address, String numberPhone, String emailContact, String sizeCompany,  boolean showCompany, boolean updateImagen) throws GenericException, NotAnImageFileException, IOException {
 		
 	    Company company = existCompany(id);
+	    validateRFCUpdated(rfc, company.getRFC());
+	    validateNameUpdated(name, company.getName());
 	    
-		company.setAddress(request.getAddress());
-		company.setEmailContact(request.getEmailContact());
-		company.setNumberPhone(request.getNumberPhone());
-		company.setCategory(request.getCategory());
-		company.setDescription(request.getDescription());
-	    company.setIsvisible(request.isShowCompany());
-	    company.setName(request.getName());
-	    company.setOwnerId(request.getOwnerId());
-	    company.setSizeCompany(request.getSizeCompany());
-	    company.setUrlLinkedin(request.getUrlLinkedin());
-	    company.setUrlSite(request.getUrlSite());
+		if(updateImagen) {
+			
+	        File entityFile = new File();
+	        
+			if(!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(image.getContentType())) {
+	            throw new NotAnImageFileException(image.getOriginalFilename() + "is not an image file. Please upload an image file");
+			}
+			
+			saveImage(ownerId, entityFile, image);
+		    company.setImageURL(entityFile.getRouteFile());
+
+		}
+		
+		company.setEmailContact(emailContact);
+		company.setNumberPhone(numberPhone);
+		company.setAddress(address);
+		company.setCategory(category);
+		company.setDescription(description);
+	    company.setIsvisible(showCompany);
+	    company.setName(name);
+	    company.setOwnerId(ownerId);
+	    company.setQualification(0);
+	    company.setRecruiter(false);
+	    company.setRegimenFiscal(regimenFiscal);
+	    company.setRFC(rfc);
+	    company.setSizeCompany(sizeCompany);	    
+	    company.setUrlLinkedin(urlLinkedin);
+	    company.setUrlSite(urlSite);
 	   
 	    company.setRegDateUpdated(new Date());
-	    company.setRegUpdateBy(request.getUserId());
+	    company.setRegUpdateBy(ownerId);
 	    
 		return company;
 	}
@@ -243,15 +261,41 @@ public class CompanyServiceImpl implements ICompanyService{
 		return element;
 	}
 	
+	
+	private Company validateRFCUpdated(String rfc, String currentRFC) throws GenericException {
+		
+		Company element = repository.findCompanyByRFC(rfc);
+		
+		if(element != null) {
+				throw new GenericException("Ya existe una empresa con el mismo RFC");
+		}
+		
+		return element;
+	}
+	
 	private Company validateName(String name) throws GenericException {
 		
-        Company element = repository.findCompanyByName(name);
+        Company element = repository.findCompanyByNameIgnoreCase(name);
+        
 		if(element != null) {
 			throw new GenericException("Ya existe una empresa con este nombre!");
 		}
 		
 		return element;
 	}
+	
+	private Company validateNameUpdated(String name, String currentName) throws GenericException {
+		
+        Company element = repository.findCompanyByNameIgnoreCase(name);
+        
+		if(element != null && element.getRFC() != name) {
+				throw new GenericException("Ya existe una empresa con este nombre!");
+		}
+		
+		return element;
+	}
+	
+	
 	
 	
 	private String generateConsecutive() {
