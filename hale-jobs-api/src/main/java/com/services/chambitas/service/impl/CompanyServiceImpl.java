@@ -137,8 +137,8 @@ public class CompanyServiceImpl implements ICompanyService{
 	}
 
 	@Override
-	public List<Company> getCompaniesOnlyKeywords() {
-		return repository.getCompanies();
+	public List<Company> getCompaniesByUser(Long id) {
+		return repository.getCompaniesByUser(id);
 	}	
 	
 	@Override

@@ -68,9 +68,9 @@ public class CompanyController{
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 
-	@GetMapping("/find-companies-field")
-	public ResponseEntity<List<Company>> getCompaniesOnlyKeywords() {
-		List<Company> response = service.getCompaniesOnlyKeywords();
+	@GetMapping("/get-companies-by-user/{user}")
+	public ResponseEntity<List<Company>> getCompaniesOnlyKeywords(@PathVariable(value="user") Long userId) {
+		List<Company> response = service.getCompaniesByUser(userId);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 

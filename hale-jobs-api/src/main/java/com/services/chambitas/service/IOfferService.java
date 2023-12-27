@@ -23,9 +23,9 @@ public interface IOfferService {
 	
 	Offer reportOffer(String id, String comment, String category, Long userId) throws GenericException;
 		
-	List<Offer> getAllOfferByUserMovil(Long userId);
+	List<Offer> getAllOfferByUserMovil(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob,int status);
 	
-	Page<Offer> getAllOfferByUserWEB(Long userId, String subcategory,String title, int status,  String workPlace,   String urgency,  String levelStudy, int pageNo, int pageSize);
+	List<Offer> getAllOfferByUserWEB(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob,int status);
 	
 	List<Offer> findOfferGeneralMovil(String keyword);
 

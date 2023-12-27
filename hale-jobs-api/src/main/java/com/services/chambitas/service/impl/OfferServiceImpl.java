@@ -152,20 +152,45 @@ public class OfferServiceImpl implements IOfferService{
 	
 		Offer element = exisOffer(request.getOfferId());
 		
-		RangeAmount rangeAmount = existRangeAmount(request.getRangeAmount());
+		// Entidades
 		TypeOfPayment tpyePayment = existTypePayment(request.getTypeOfPayment());
+		TypeOfJob typeJob = existTypeJob(request.getTypeOfJob());
 		User user = existUser(request.getUserId());
+		JobCategory category = existCategory(request.getCategory());
+		Company company = existCompany(request.getCompany());
+		LevelStudy study = existLevelStudy(request.getLevelStudy());
+		RangeAmount rangeAmount = existRangeAmount(request.getRangeAmount());
+		JobSubcategory subcategory = existSubcategory(request.getSubcategory());
 		
-		element.setDescription(request.getDescription());
-		
-		element.setTitle(request.getTitle());
-		element.setRangeAmount(rangeAmount);
-		element.setUrgency(request.getUrgency());
-		element.setTypeOfPayment(tpyePayment);
-		element.setUser(user);
-		
-		offerRepository.save(element);
-		
+		   element.setConsecutive(generateConsecutive());
+	        element.setTitle(request.getTitle());
+	        element.setBenefits(request.getBenefits());
+	        element.setCategory(category);
+	        element.setComment(request.getAddress());
+	        element.setCompany(company);
+	        element.setDescription(request.getDescription());
+	        element.setHaveComplaint(false);
+	        element.setLevelStudy(study);
+	        element.setMainActivities(request.getMainActivities());
+	        element.setRangeAmount(rangeAmount);
+	        element.setShowCompany(request.isShowCompany());
+	        element.setShowSalary(request.isShowSalary());
+	        element.setSkills(request.getSkills());
+	        element.setStatus(0);
+	        element.setSubcategory(subcategory);
+	        element.setTypeOfPayment(tpyePayment);
+	        element.setTypeOfJob(typeJob);
+	        element.setUser(user);
+	        element.setTypeOfOffer(request.getTypeOfOffer());
+	        element.setWorkPlace(request.getWorkPlace());
+	        element.setUrgency(request.getUrgency());
+	        
+			element.setRegDateCreated(new Date());
+			element.setRegCreatedBy(request.getUserId());
+			element.setRegBorrado(0);
+			
+			offerRepository.save(element);		
+			
 		return element;
 	}
 
@@ -213,15 +238,18 @@ public class OfferServiceImpl implements IOfferService{
 	}
 
 	@Override
-	public List<Offer> getAllOfferByUserMovil(Long userId) {
-	    List<Offer> list = offerRepository.findOfferByUserMovil(userId);
+	public List<Offer> getAllOfferByUserMovil(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob, int status) {
+	    List<Offer> list = offerRepository.findOfferByUserMovil(userId, title, subcategory, rangeAmount, urgency, workPlace , levelStudy,typeJob, status);
+	    System.err.println(list.size());
 		return list;
 	}
 
 	@Override
-	public Page<Offer> getAllOfferByUserWEB(Long userId, String subcategory, String title,int status,String workPlace,   String urgency,  String levelStudy,  int pageNo, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNo, pageSize);   
-		Page<Offer> response = offerRepository.findOfferByUserWEB(userId, status, subcategory, workPlace, urgency, levelStudy, title, pageable);
+	public List<Offer> getAllOfferByUserWEB(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob, int status) {
+//		Pageable pageable = PageRequest.of(pageNo, pageSize); 	
+		List<Offer> response = offerRepository.findOfferByUserWEB(userId, title, subcategory, rangeAmount, urgency, workPlace , levelStudy,typeJob, status);
+		
+		System.err.println(response.size());
 		return response;	
 	}
 
@@ -300,8 +328,8 @@ public class OfferServiceImpl implements IOfferService{
 	}
 	
 	
-	private StateINEGI existState(Long id) throws GenericException {
-		StateINEGI response = stateRepository.findStateINEGIById(id);
+	private StateINEGI existState(String id) throws GenericException {
+		StateINEGI response = stateRepository.findStateINEGIByClave(id);
 		
 		if(response == null) {
 			throw new GenericException("No hemos encontrado el estado!");

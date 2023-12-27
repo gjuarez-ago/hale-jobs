@@ -37,6 +37,10 @@ export class CompanyService {
     return this.http.get<any>(`${this.host}/company/get-companies-by-owner`, {params: params});
   }
 
+  public getCompaniesByOwnerWP(user : any): Observable<any> {
+    return this.http.get<any>(`${this.host}/company/get-companies-by-user/${user}`);
+  }
+
   public getCompanyById(id: any): Observable<any> {
     return this.http.get<any>(`${this.host}/company/find/${id}`);
   }

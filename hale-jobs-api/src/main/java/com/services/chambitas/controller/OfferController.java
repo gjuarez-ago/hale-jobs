@@ -73,14 +73,25 @@ public class OfferController {
  
    // Mostrar ofertas por usuario móvil
    @GetMapping("/view-offer-m/{user}")
-   public ResponseEntity<List<Offer>> getAllOffersByUserMovil(@PathVariable("user") Long userId) {
-		List<Offer> response = service.getAllOfferByUserMovil(userId);
+   public ResponseEntity<List<Offer>> getAllOffersByUserMovil(@PathVariable("user") Long userId,
+			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+			@RequestParam(value = "subcategory", required = true, defaultValue = "") String subcategory,
+			@RequestParam(value = "title", required = false, defaultValue = "") String title, 
+			@RequestParam(value = "status", required = false) int status,
+			@RequestParam(value = "workPlace", required = false, defaultValue = "") String workPlace,
+			@RequestParam(value = "urgency", required = false, defaultValue = "") String urgency,
+			@RequestParam(value = "levelStudy", required = false, defaultValue = "") String levelStudy,
+			@RequestParam(value = "rangeAmount", required = false, defaultValue = "") String rangeAmount,
+			@RequestParam(value = "typeJob", required = false, defaultValue = "") String typeJob
+		   ) {
+		List<Offer> response = service.getAllOfferByUserMovil(userId, title,subcategory, rangeAmount,urgency ,  workPlace,levelStudy, typeJob, status);
 		return new ResponseEntity<>(response , HttpStatus.OK);
    }
    
    // Mostrar ofertas WEB
    @GetMapping("/view-offer-w")
-	public ResponseEntity<Page<Offer>> getAllOffersByUserWEB(
+	public ResponseEntity<List<Offer>> getAllOffersByUserWEB(
 		@RequestParam("user") Long userId,
 		@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
@@ -89,10 +100,11 @@ public class OfferController {
 		@RequestParam(value = "status", required = false) int status,
 		@RequestParam(value = "workPlace", required = false, defaultValue = "") String workPlace,
 		@RequestParam(value = "urgency", required = false, defaultValue = "") String urgency,
-		@RequestParam(value = "levelStudy", required = false, defaultValue = "") String levelStudy
+		@RequestParam(value = "levelStudy", required = false, defaultValue = "") String levelStudy,
+		@RequestParam(value = "rangeAmount", required = false, defaultValue = "") String rangeAmount,
+		@RequestParam(value = "typeJob", required = false, defaultValue = "") String typeJob
         ) {
-	   
-		Page<Offer> response = service.getAllOfferByUserWEB(userId, subcategory, title, status, workPlace, urgency, levelStudy, pageNo, pageSize);
+		List<Offer> response = service.getAllOfferByUserWEB(userId, title,subcategory, rangeAmount,urgency ,  workPlace,levelStudy, typeJob, status);
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}	
 		

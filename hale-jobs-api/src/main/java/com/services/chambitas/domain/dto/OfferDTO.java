@@ -31,8 +31,6 @@ public class OfferDTO {
 	
 	private int typeOfOffer;
 	
-	private int status;
-
 	private Long company;
 
 	private Long typeOfJob;
@@ -43,7 +41,7 @@ public class OfferDTO {
 	
 	private Long country;
 	
-	private Long state;
+	private String state;
 
 	private Long levelStudy;
 	

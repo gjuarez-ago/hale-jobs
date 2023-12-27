@@ -2,10 +2,12 @@ export interface PaginationOffer {
     urgency: string
     title: string
     status: string
-    subCategory: number
-    levelStudy: number
-    workPlace: number
-    userId: number
+    subcategory: string
+    levelStudy: string
+    workPlace: string
+    typeOfJob : string
+    rangeAmount : string
+    user: number
     pageNo: number
     pageSize: number
 }

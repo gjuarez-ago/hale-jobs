@@ -118,6 +118,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.getStates();
       this.getLevelOfStudy();
       this.getSubcategories();  
+      this.getModWorks();
     } else {
       this.router.navigateByUrl("/auth/login");
     }
@@ -174,12 +175,8 @@ export class CompleteRegisterUserComponent implements OnInit {
 
   getDatesCitys = (citys: any) => citys.idState == this.registerRecruiterForm.get('idState')?.value;
 
-
-
-
   pre(): void {
     this.current -= 1;
-
   }
 
   verificationForms(): void {

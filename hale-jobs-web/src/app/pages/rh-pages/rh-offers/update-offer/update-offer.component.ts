@@ -6,7 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,13 +18,15 @@ import { GenericService } from 'src/app/services/generic.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 
+
 @Component({
-  selector: 'app-new-offer',
-  templateUrl: './new-offer.component.html',
-  styleUrls: ['./new-offer.component.css'],
+  selector: 'app-update-offer',
+  templateUrl: './update-offer.component.html',
+  styleUrls: ['./update-offer.component.css']
 })
-export class NewOfferComponent implements OnInit {
- 
+export class UpdateOfferComponent implements OnInit {
+
+  
   public subscriptions: Subscription[] = [];
   public user: User | undefined;
   public userId: any;
@@ -60,6 +62,9 @@ export class NewOfferComponent implements OnInit {
   public citySelected: any;
   public stateSelected: any = null;
 
+  public offer : any;
+  offerId: any;
+
   constructor(
     private clipboard: Clipboard,
     private companyService: CompanyService,
@@ -70,7 +75,8 @@ export class NewOfferComponent implements OnInit {
     private modal: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService
+    private ngxSpinner: NgxSpinnerService,
+    private actRoute: ActivatedRoute,
   ) {
     this.createForm = this.fb.group({
       title: [null, [Validators.required, Validators.maxLength(100), Validators.minLength(5)]],
@@ -82,8 +88,6 @@ export class NewOfferComponent implements OnInit {
       levelStudy: [null, [Validators.required]],
       workPlace: [null, [Validators.required]],
       description: [null, [Validators.required, Validators.maxLength(200), Validators.minLength(10)]],
-      state: [null, [Validators.required]],
-      city: [null, [Validators.required]],
       showCompany: ['A'],
       showSalary: ['A'],
     });
@@ -123,7 +127,12 @@ export class NewOfferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   
+    this.offerId = this.actRoute.snapshot.params.id;
+
     if (this.authenticationService.isUserLoggedIn()) {
+
+      
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
       this.getCompaniesByUser(this.userId);
@@ -131,7 +140,8 @@ export class NewOfferComponent implements OnInit {
       this.getRangeAmount();
       this.getTypeOfJob();
       this.getSubcategories();
-      this.getStates();
+      this.getOfferById(this.offerId)
+
     } else {
       this.router.navigateByUrl('/auth/login');
     }
@@ -161,17 +171,15 @@ export class NewOfferComponent implements OnInit {
     this.listHabilities.forEach((e : any) => {habilities.push(e.value);});
 
     let data = {
+      "offerId": this.offerId,
       "address": "",
       "category": 1,
-      "city": this.ofertaForm.city,
       "company": this.ofertaForm.company,
-      "country": 1, //MX
       "description": this.ofertaForm.description,
       "levelStudy": this.ofertaForm.levelStudy,
       "rangeAmount": this.ofertaForm.rangeAmount,
       "showCompany": this.ofertaForm.showCompany == 'A' ? true : false,
       "showSalary": this.ofertaForm.showSalary == 'A' ? true : false,
-      "state": this.ofertaForm.state,
       "subcategory": this.ofertaForm.category,
       "title": this.ofertaForm.title,
       "typeOfJob": this.ofertaForm.workPlace,
@@ -185,16 +193,18 @@ export class NewOfferComponent implements OnInit {
       "mainActivities": mainActivities,
     }
 
+    
+
     this.ngxSpinner.show();
     this.isLoadingGeneral = true;
     this.subscriptions.push(
-      this.offerService.createOffer(data).subscribe(
+      this.offerService.editOffer(data).subscribe(
         (response: any) => {
           this.listCompanies = response;
           this.isLoadingGeneral = false;
           this.ngxSpinner.hide();
           this.router.navigateByUrl('/dashboard/my-offers');
-          this.message.create('success', "Oferta creada correctamente");
+          this.message.create('success', "Oferta actualizada correctamente");
         },
         (errorResponse: HttpErrorResponse) => {
           this.isLoadingGeneral = false;
@@ -231,6 +241,8 @@ export class NewOfferComponent implements OnInit {
 
         this.currentStep += 1;
         this.ofertaForm = this.createForm.value;
+
+        
 
         break;
       }
@@ -292,7 +304,6 @@ export class NewOfferComponent implements OnInit {
     });
 
     this.addFormActivities.reset();
-    console.log(this.listActivities);
   }
 
   addHabilities() {
@@ -373,15 +384,6 @@ export class NewOfferComponent implements OnInit {
     );
   }
 
-  provinceChange(value: any): void {
-    if (value) {
-      this.citySelected = undefined;
-      this.getCitiesByState(value);
-    } else {
-      this.listCitiesByState = [];
-      this.citySelected = undefined;
-    }
-  }
 
   public getCitiesByState(state: any) {
     this.isLoadingGeneral = true;
@@ -489,6 +491,32 @@ export class NewOfferComponent implements OnInit {
         },
         (errorResponse: HttpErrorResponse) => {
           this.isLoadingGeneral = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+    );
+  }
+
+  public getOfferById(id : any) {
+    this.isLoadingGeneral = true;
+    this.ngxSpinner.show();
+    this.subscriptions.push(
+      this.offerService.findOfferById(id).subscribe(
+        (response: any) => {
+
+          this.offer = response;
+          this.isLoadingGeneral = false;
+          this.ngxSpinner.hide();
+          this.citySelected = response.city.id;
+          this.listActivities = response.mainActivities.map((prop: any, key: any) => {return {value: prop,key: key + 1}}); 
+          this.listBeneficts = response.benefits.map((prop: any, key: any) => {return {value: prop,key: key + 1}}); 
+          this.listHabilities = response.skills.map((prop: any, key: any) => {return {value: prop,key: key + 1}}); 
+        
+          
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.ngxSpinner.hide();
           this.message.create('error', errorResponse.error.message);
         }
       )

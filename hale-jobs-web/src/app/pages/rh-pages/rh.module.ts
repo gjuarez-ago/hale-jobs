@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxModulesComponents } from 'src/app/modules/ngx-modules-component';
 import { NgZoroModulesComponents } from 'src/app/modules/ngzoro-modules-component';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { SideMenuRh } from '../../components/side-menu-rh/side-menu-rh.component';
 import { RhDashboardComponent } from './rh-dashboard/rh-dashboard.component';
@@ -37,7 +38,7 @@ import { ChartsModule } from 'ng2-charts';
 import { NewOfferComponent } from './rh-offers/new-offer/new-offer.component';
 import { NewCompanyComponent } from './rh-company/new-company/new-company.component';
 import { UpdateCompanyComponent } from './rh-company/update-company/update-company.component';
-
+import { UpdateOfferComponent } from './rh-offers/update-offer/update-offer.component';
 
 const welcomeComponents: any = [
   SideMenuRh,
@@ -69,6 +70,7 @@ const welcomeComponents: any = [
   AdminTypeOfJobComponent,
   AdminTypeOfPaymentsComponent,
   UpdateCompanyComponent,
+  UpdateOfferComponent, 
 ]
 
 @NgModule({
@@ -84,6 +86,7 @@ const welcomeComponents: any = [
     RouterModule,
     ComponentsModule,
     ChartsModule,
+    ClipboardModule,
   ],
   exports: [
     welcomeComponents,

@@ -207,10 +207,10 @@
 
     <!-- <p> <span class="title"> Calificación:  </span> {{viewCompany && viewCompany.qualification}} </p> -->
     <p> <span class="title"> Visibilidad de la empresa:  </span>  
-      <nz-badge nzColor="green" nzText="Publica" *ngIf="viewCompany.isvisible" >
+      <nz-badge nzColor="green" nzText="Publica" *ngIf="viewCompany && viewCompany.isvisible" >
       </nz-badge>
 
-      <nz-badge nzColor="green" nzText="Privada" *ngIf="!viewCompany.isvisible" >
+      <nz-badge nzColor="green" nzText="Privada" *ngIf="viewCompany && !viewCompany.isvisible" >
       </nz-badge>
 
     </p>

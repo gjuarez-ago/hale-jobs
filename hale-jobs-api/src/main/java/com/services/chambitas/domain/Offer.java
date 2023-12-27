@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,11 +41,10 @@ public class Offer implements Serializable {
 	@Column(nullable = false)
 	private String title;
 
-	@Lob
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String description;
 	
-	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String comment;
 	
 	// Urgencia del trabajo
@@ -63,12 +61,15 @@ public class Offer implements Serializable {
 	private boolean showCompany;
     
 	// Beneficios de la vacante
+	@Column(columnDefinition = "LONGBLOB")
 	private String[] benefits;
 
 	// Principales actividades
+	@Column(columnDefinition = "LONGBLOB")
 	private String[] mainActivities;
 	
 	// Principales habilidades
+	@Column(columnDefinition = "LONGBLOB")
 	private String[] skills;
 	
 	// Remoto, Presencial, Hibrido

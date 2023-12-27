@@ -8,11 +8,11 @@
   <div class="proyect-section" *ngIf="currentStep == 0">
     <div class="project-description">
       <nz-page-header
-      class="site-page-header"
-      (nzBack)="onBack()"
-      nzBackIcon
-      nzTitle="Creación de una oferta (Datos esenciales)"
-    ></nz-page-header>
+        class="site-page-header"
+        (nzBack)="onBack()"
+        nzBackIcon
+        nzTitle="Actualización de una oferta (Datos esenciales)"
+      ></nz-page-header>
 
       <div class="dl">
         <div class="text">
@@ -47,6 +47,7 @@
                       nz-input
                       placeholder="Escribe el titulo de la oferta"
                       formControlName="title"
+                      [ngModel]="offer && offer.title"
                     />
                   </nz-form-control>
                 </nz-form-item>
@@ -58,12 +59,23 @@
                 <nz-form-item class="input-content">
                   <nz-form-label nzFor="surnames">
                     Subcategoría de la oferta
-                  
                   </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
-                    <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Subcategoría"  formControlName="category">
-                      <nz-option *ngFor="let item of listSubcategory" [nzLabel]="item.valor" [nzValue]="item.id"></nz-option>
-                    </nz-select>       
+                    <nz-select
+                      class="input-text-select"
+                      nzSize="large"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Subcategoría"
+                      formControlName="category"
+                      [ngModel]="offer && offer.subcategory.id"
+                    >
+                      <nz-option
+                        *ngFor="let item of listSubcategory"
+                        [nzLabel]="item.valor"
+                        [nzValue]="item.id"
+                      ></nz-option>
+                    </nz-select>
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -76,11 +88,21 @@
                     Empresa quien oferta
                   </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
-         
-                    <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Subcategoría"  formControlName="company">
-                      <nz-option *ngFor="let item of listCompanies" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
-                    </nz-select>  
-
+                    <nz-select
+                      class="input-text-select"
+                      nzSize="large"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Subcategoría"
+                      formControlName="company"
+                      [ngModel]="offer && offer.company.id"
+                    >
+                      <nz-option
+                        *ngFor="let item of listCompanies"
+                        [nzLabel]="item.name"
+                        [nzValue]="item.id"
+                      ></nz-option>
+                    </nz-select>
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -91,7 +113,9 @@
             <div nz-col class="gutter-row" [nzSpan]="8">
               <div class="inner-box">
                 <nz-form-item class="input-content">
-                  <nz-form-label nzFor="email"> Urgencia de contratación </nz-form-label>
+                  <nz-form-label nzFor="email">
+                    Urgencia de contratación
+                  </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
                     <nz-select
                       class="input-text-select"
@@ -99,10 +123,10 @@
                       nzShowSearch
                       nzAllowClear
                       nzPlaceHolder="Urgencia de contratación"
-                      formControlName="urgency">
-                      <nz-option
-                        nzLabel="Urgente"
-                        nzValue="A"></nz-option>
+                      formControlName="urgency"
+                      [ngModel]="offer && offer.urgency"
+                    >
+                      <nz-option nzLabel="Urgente" nzValue="A"></nz-option>
                       <nz-option nzLabel="Moderada" nzValue="B"></nz-option>
                       <nz-option nzLabel="Baja" nzValue="C"></nz-option>
                     </nz-select>
@@ -110,107 +134,46 @@
                 </nz-form-item>
               </div>
             </div>
-<!-- 
-            <div nz-col class="gutter-row" [nzSpan]="8">
-              <div class="inner-box">
-                <nz-form-item class="input-content">
-                  <nz-form-label nzFor="email"> Tipo de pago </nz-form-label>
-                  <nz-form-control nzErrorTip="Campo requerido">
-                    <nz-select
-                      nzShowSearch
-                      nzAllowClear
-                      [nzSize]="'large'"
-                      nzPlaceHolder="Selecciona un estado"
-                      formControlName="typeOfPayment">
-                      <nz-option nzLabel="Nómina" nzValue="A"></nz-option>
-                      <nz-option nzLabel="Honorarios" nzValue="B"></nz-option>
-                      <nz-option nzLabel="Esquema mixto" nzValue="C"></nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div> -->
+            <!-- 
+              <div nz-col class="gutter-row" [nzSpan]="8">
+                <div class="inner-box">
+                  <nz-form-item class="input-content">
+                    <nz-form-label nzFor="email"> Tipo de pago </nz-form-label>
+                    <nz-form-control nzErrorTip="Campo requerido">
+                      <nz-select
+                        nzShowSearch
+                        nzAllowClear
+                        [nzSize]="'large'"
+                        nzPlaceHolder="Selecciona un estado"
+                        formControlName="typeOfPayment">
+                        <nz-option nzLabel="Nómina" nzValue="A"></nz-option>
+                        <nz-option nzLabel="Honorarios" nzValue="B"></nz-option>
+                        <nz-option nzLabel="Esquema mixto" nzValue="C"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div> -->
 
             <div nz-col class="gutter-row" [nzSpan]="8">
               <div class="inner-box">
                 <nz-form-item class="input-content">
                   <nz-form-label nzFor="email"> Salario </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
-                    <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Rango salarial" formControlName="rangeAmount">
-                      <nz-option *ngFor="let item of listRangeAmount" [nzLabel]="item.valor" [nzValue]="item.id"></nz-option>                
-                    </nz-select>    
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-
-
-            <div nz-col class="gutter-row" [nzSpan]="8">
-              <div class="inner-box">
-                <nz-form-item class="input-content">
-                  <nz-form-label nzFor="email"> Tipo de trabajo </nz-form-label>
-                  <nz-form-control nzErrorTip="Campo requerido">
-                    <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Tipo de trabajo" formControlName="typeOfJob" >
-                      <nz-option nzLabel="Jornada completa" nzValue="A"></nz-option>
-                      <nz-option nzLabel="Media jornada" nzValue="B"></nz-option>
-                      <nz-option nzLabel="Pasantias" nzValue="C"></nz-option>
-                      <nz-option nzLabel="Por proyecto" nzValue="D"></nz-option>
-                    </nz-select>  
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-          </div>
-
-          <div nz-row [nzGutter]="24">
-          
-            <div nz-col class="gutter-row" [nzSpan]="8">
-              <div class="inner-box">
-                <nz-form-item class="input-content">
-                  <nz-form-label nzFor="surnames">
-                    Nivel de estudios deseado
-                  </nz-form-label>
-                  <nz-form-control nzErrorTip="Campo requerido">
-                    <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Nivel de estudios" formControlName="levelStudy">
-                      <nz-option *ngFor="let item of listLevelStudy" [nzLabel]="item.valor" [nzValue]="item.id"></nz-option>                
-                    </nz-select>    
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-
-            <div nz-col class="gutter-row" [nzSpan]="8">
-              <div class="inner-box">
-                <nz-form-item class="input-content">
-                  <nz-form-label nzFor="email">
-                    Lugar de trabajo
-                  </nz-form-label>
-                  <nz-form-control nzErrorTip="Campo requerido">
-                    <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Lugar de trabajo" formControlName="workPlace" >
-                      <nz-option *ngFor="let item of listTypeOfJob" [nzLabel]="item.valor" [nzValue]="item.id"></nz-option>                
-                    </nz-select>    
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-
-            <div nz-col class="gutter-row" [nzSpan]="8">
-              <div class="inner-box">
-                <nz-form-item class="input-content">
-                  <nz-form-label nzSize="large" nzFor="surnames"> Estado </nz-form-label>
-                  <nz-form-control nzErrorTip="Campo requerido">
                     <nz-select
+                      class="input-text-select"
+                      nzSize="large"
                       nzShowSearch
                       nzAllowClear
-                      nzPlaceHolder="Selecciona un estado"
-                      id="state"
-                      formControlName="state"
-                      (ngModelChange)="provinceChange($event)"
+                      nzPlaceHolder="Rango salarial"
+                      formControlName="rangeAmount"
+                      [ngModel]="offer && offer.rangeAmount.id"
+
                     >
                       <nz-option
-                        *ngFor="let state of listStates"
-                        [nzValue]="state.clave"
-                        [nzLabel]="state.valor"
+                        *ngFor="let item of listRangeAmount"
+                        [nzLabel]="item.valor"
+                        [nzValue]="item.id"
                       ></nz-option>
                     </nz-select>
                   </nz-form-control>
@@ -218,10 +181,66 @@
               </div>
             </div>
 
+            <div nz-col class="gutter-row" [nzSpan]="8">
+              <div class="inner-box">
+                <nz-form-item class="input-content">
+                  <nz-form-label nzFor="email"> Tipo de trabajo </nz-form-label>
+                  <nz-form-control nzErrorTip="Campo requerido">
+                    <nz-select
+                      class="input-text-select"
+                      nzSize="large"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Tipo de trabajo"
+                      formControlName="typeOfJob"
+                      [ngModel]="offer && offer.workPlace"
+                    >
+                      <nz-option
+                        nzLabel="Jornada completa"
+                        nzValue="A"
+                      ></nz-option>
+                      <nz-option
+                        nzLabel="Media jornada"
+                        nzValue="B"
+                      ></nz-option>
+                      <nz-option nzLabel="Pasantias" nzValue="C"></nz-option>
+                      <nz-option nzLabel="Por proyecto" nzValue="D"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
           </div>
 
           <div nz-row [nzGutter]="24">
-            <!-- <div nz-col class="gutter-row" [nzSpan]="8">
+            <div nz-col class="gutter-row" [nzSpan]="8">
+              <div class="inner-box">
+                <nz-form-item class="input-content">
+                  <nz-form-label nzFor="surnames">
+                    Nivel de estudios deseado
+                  </nz-form-label>
+                  <nz-form-control nzErrorTip="Campo requerido">
+                    <nz-select
+                      class="input-text-select"
+                      nzSize="large"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Nivel de estudios"
+                      formControlName="levelStudy"
+                      [ngModel]="offer && offer.levelStudy.id"
+                    >
+                      <nz-option
+                        *ngFor="let item of listLevelStudy"
+                        [nzLabel]="item.valor"
+                        [nzValue]="item.id"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-col class="gutter-row" [nzSpan]="8">
               <div class="inner-box">
                 <nz-form-item class="input-content">
                   <nz-form-label nzFor="email">
@@ -229,55 +248,53 @@
                   </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
                     <nz-select
+                      class="input-text-select"
+                      nzSize="large"
                       nzShowSearch
                       nzAllowClear
-                      [nzSize]="'large'"
-                      nzPlaceHolder="Selecciona un estado"
-                      formControlName="numberPostulates"
+                      nzPlaceHolder="Lugar de trabajo"
+                      formControlName="workPlace"
+                      [ngModel]="offer && offer.typeOfJob.id"
                     >
-                      <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                      <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                      <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                      <nz-option
+                        *ngFor="let item of listTypeOfJob"
+                        [nzLabel]="item.valor"
+                        [nzValue]="item.id"
+                      ></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
               </div>
-            </div> -->
-
-       
-
-            <div nz-col class="gutter-row" [nzSpan]="8">
-              <div class="inner-box">
-                <nz-form-item class="input-content">
-                  <nz-form-label nzFor="city"> Ciudad </nz-form-label>
-                  <nz-form-control nzErrorTip="Campo requerido">
-                    <nz-select nzSize="large" nzShowSearch [(ngModel)]="citySelected" nzAllowClear nzPlaceHolder="Seleccciona el municipio" id="city"
-                    formControlName="city" [nzDisabled]="createForm.get('state')?.value == null">
-                    <nz-option *ngFor="let city of listCitiesByState" [nzValue]="city.id"
-                      [nzLabel]="city.valor"></nz-option>
-                  </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
             </div>
-
-
             <div nz-col class="gutter-row" [nzSpan]="8">
               <div class="inner-box">
                 <nz-form-item class="input-content">
-                  <nz-form-label nzFor="email"> Mostrar información de la empresa </nz-form-label>
+                  <nz-form-label nzFor="email">
+                    Mostrar información de la empresa
+                  </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
                     <nz-select
                       [nzSize]="'large'"
                       nzPlaceHolder="Selecciona un estado"
-                      formControlName="showCompany">
+                      formControlName="showCompany"
+                      [ngModel]="offer && offer.showCompany ? 'A' : 'B'"
+
+                    >
                       <nz-option nzLabel="Mostrar" nzValue="A"></nz-option>
                       <nz-option nzLabel="No mostrar" nzValue="B"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
               </div>
-            </div> 
+            </div>
+
+        
+          </div>
+
+          <div nz-row [nzGutter]="24">
+
+
+         
 
             <div nz-col class="gutter-row" [nzSpan]="8">
               <div class="inner-box">
@@ -287,17 +304,16 @@
                     <nz-select
                       [nzSize]="'large'"
                       nzPlaceHolder="Selecciona una opcón"
-                      formControlName="showSalary">
+                      formControlName="showSalary"
+                      [ngModel]="offer && offer.showSalary ? 'A' : 'B'"
+                    >
                       <nz-option nzLabel="Mostrar" nzValue="A"></nz-option>
                       <nz-option nzLabel="No mostrar" nzValue="B"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
               </div>
-            </div> 
-
-       
-
+            </div>
           </div>
 
           <div class="" nz-row>
@@ -312,6 +328,7 @@
                       <textarea
                         rows="10"
                         nz-input
+                        [ngModel]="offer && offer.description"
                         formControlName="description"
                         placeholder="Cuentanos un poco de lo que haces día a día, que disfrustas y disgusta de tu trabajo, pero sobre todo cuentanos lo que consideres que te podriamos ayudar a mejorar tu experiencia."
                       ></textarea>
@@ -341,13 +358,12 @@
 
   <div class="proyect-section" *ngIf="currentStep == 1">
     <div class="section-form-new">
-      
       <nz-page-header
-      class="site-page-header"
-      (nzBack)="onBack()"
-      nzBackIcon
-      nzTitle="Creación de oferta (Descripción de funciones)"
-    ></nz-page-header>
+        class="site-page-header"
+        (nzBack)="onBack()"
+        nzBackIcon
+        nzTitle="Creación de oferta (Descripción de funciones)"
+      ></nz-page-header>
       <div class="dl">
         <div class="text">
           <p>
@@ -400,11 +416,24 @@
         </nz-empty>
 
         <ul>
-          <li *ngFor="let element of listActivities">{{ element.value }}     
-            <button class="btn-opts" (click)="removeActivity(element)" nzDanger nz-button nzType="dashed" nzShape="circle">
-              <span nz-icon nzType="close" nzTheme="outline" ></span>
+          <li *ngFor="let element of listActivities">
+            {{ element.value }}
+            <button
+              class="btn-opts"
+              (click)="removeActivity(element)"
+              nzDanger
+              nz-button
+              nzType="dashed"
+              nzShape="circle"
+            >
+              <span nz-icon nzType="close" nzTheme="outline"></span>
             </button>
-            <button (click)="copy(element.value)" nz-button nzType="dashed" nzShape="circle">
+            <button
+              (click)="copy(element.value)"
+              nz-button
+              nzType="dashed"
+              nzShape="circle"
+            >
               <span nz-icon nzType="copy" nzTheme="outline"></span>
             </button>
           </li>
@@ -422,7 +451,6 @@
           <nz-form-item class="input-content">
             <nz-form-control nzErrorTip="Longitud mínima 8, Maxima 80">
               <input
-                
                 formControlName="value"
                 nzSize="large"
                 class="passenger-input"
@@ -454,11 +482,24 @@
         </nz-empty>
 
         <ul>
-          <li *ngFor="let element of listHabilities">{{ element.value }}
-            <button class="btn-opts"  (click)="removeHability(element)" nz-button nzType="dashed" nzDanger nzShape="circle">
+          <li *ngFor="let element of listHabilities">
+            {{ element.value }}
+            <button
+              class="btn-opts"
+              (click)="removeHability(element)"
+              nz-button
+              nzType="dashed"
+              nzDanger
+              nzShape="circle"
+            >
               <span nz-icon nzType="close" nzTheme="outline"></span>
             </button>
-            <button (click)="copy(element.value)" nz-button nzType="dashed" nzShape="circle">
+            <button
+              (click)="copy(element.value)"
+              nz-button
+              nzType="dashed"
+              nzShape="circle"
+            >
               <span nz-icon nzType="copy" nzTheme="outline"></span>
             </button>
           </li>
@@ -514,11 +555,24 @@
         </nz-empty>
 
         <ul>
-          <li *ngFor="let element of listBeneficts">{{ element.value }}
-            <button class="btn-opts" (click)="removeBenefict(element)" nz-button nzType="dashed" nzDanger nzShape="circle">
+          <li *ngFor="let element of listBeneficts">
+            {{ element.value }}
+            <button
+              class="btn-opts"
+              (click)="removeBenefict(element)"
+              nz-button
+              nzType="dashed"
+              nzDanger
+              nzShape="circle"
+            >
               <span nz-icon nzType="close" nzTheme="outline"></span>
             </button>
-            <button (click)="copy(element.value)" nz-button nzType="dashed" nzShape="circle">
+            <button
+              (click)="copy(element.value)"
+              nz-button
+              nzType="dashed"
+              nzShape="circle"
+            >
               <span nz-icon nzType="copy" nzTheme="outline"></span>
             </button>
           </li>
@@ -556,34 +610,37 @@
         <nz-descriptions-item nzTitle="Titulo de la oferta" [nzSpan]="3">
           {{ ofertaForm.title }}
         </nz-descriptions-item>
-        
+
         <nz-descriptions-item nzTitle="Compañia" [nzSpan]="3">
-          {{getCompany(ofertaForm.company)}}
+          {{ getCompany(ofertaForm.company) }}
         </nz-descriptions-item>
 
         <nz-descriptions-item nzTitle="Categoría" [nzSpan]="2">
           {{ getCategory(ofertaForm.category) }}
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Tipo de trabajo" [nzSpan]="2">
-          {{getWorkPlace(ofertaForm.typeOfJob)}}
+          {{ getWorkPlace(ofertaForm.typeOfJob) }}
         </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Lugar de trabajo" [nzSpan]="2">  
-          {{getTypeOfJobS(ofertaForm.workPlace)}}
+        <nz-descriptions-item nzTitle="Lugar de trabajo" [nzSpan]="2">
+          {{ getTypeOfJobS(ofertaForm.workPlace) }}
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Urgencia" [nzSpan]="3">
-          <nz-badge nzStatus="processing" nzText="{{getUrgency(ofertaForm.urgency)}}"></nz-badge>
+          <nz-badge
+            nzStatus="processing"
+            nzText="{{ getUrgency(ofertaForm.urgency) }}"
+          ></nz-badge>
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Salario">
-          {{getRangeAmountS(ofertaForm.rangeAmount)}}
+          {{ getRangeAmountS(ofertaForm.rangeAmount) }}
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Mostrar salario">
-          {{ showValues(ofertaForm.showSalary)}}
-          </nz-descriptions-item>
+          {{ showValues(ofertaForm.showSalary) }}
+        </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Mostrar compañia">
-          {{showValues(ofertaForm.showCompany)}}
-          </nz-descriptions-item>
+          {{ showValues(ofertaForm.showCompany) }}
+        </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Descripción" [nzSpan]="3">
-          {{ofertaForm && ofertaForm.description}}
+          {{ ofertaForm && ofertaForm.description }}
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Beneficios" [nzSpan]="3">
           <ul>
@@ -620,7 +677,7 @@
             class="button-blue pd-1"
             (click)="doneSteps()"
           >
-            Crear oferta
+            Actualizar oferta
           </button>
         </nz-space>
       </div>

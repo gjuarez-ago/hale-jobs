@@ -34,7 +34,7 @@ export class GenericService {
   }
   
   public getAllRangeAmount(): Observable<any> {
-    return this.http.get<any>(`${this.url}/range-amount/list`)
+    return this.http.get<any>(`${this.url}/range-amount/get-all`)
   }
 
   public getAllTypeOfPayments(): Observable<any> {

@@ -20,7 +20,7 @@ public interface ICompanyService {
 	
 	String updateProfileImage(Long userId, Long id, MultipartFile image) throws IOException, NotAnImageFileException, GenericException;
 	
-	List<Company> getCompaniesOnlyKeywords();
+	List<Company> getCompaniesByUser(Long user);
 		
 	Page<Company> getCompaniesGlobal(String keyword, int pageNo, int pageSize);
 	

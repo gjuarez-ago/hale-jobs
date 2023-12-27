@@ -21,6 +21,9 @@ public interface ICompanyRepository extends JpaRepository<Company, Long>{
     @Query(value = "SELECT c FROM Company c WHERE c.regBorrado = 0")
 	Page<Company> getCompaniesGlobal(Pageable pageable);
     
+    @Query(value = "SELECT c FROM Company c WHERE c.ownerId = :ownerId AND c.regBorrado = 0")
+	List<Company> getCompaniesByUser(@Param(value = "ownerId") Long ownerId);
+    
     @Query(value = "SELECT c FROM Company c WHERE c.regBorrado = 0")
 	List<Company> getCompanies();
     

@@ -38,8 +38,8 @@ export class OfferService {
     return this.http.post<Offer>(`${this.url}/offer/edit`, offer)
   }
 
-  public findOfferById(offerId: number): Observable<Offer> {
-    return this.http.delete<Offer>(`${this.url}/offer/find/${offerId}`)
+  public findOfferById(offerId: any): Observable<any> {
+    return this.http.get<any>(`${this.url}/offer/find/${offerId}`)
   }
 
   public reportOffer(category: string, comments: string, offerId: string, userId: string): Observable<Offer> {
@@ -54,24 +54,25 @@ export class OfferService {
     return this.http.post<Offer>(`${this.url}/offer/select-postulate?amountAcepted=${amountAcepted}&offerId=${offerId}&userId=${userId}`, {})
   }
 
-  public getAllOffersByUserWEB(pagination : PaginationOffer): Observable<Offer> {
+  public getAllOffersByUserWEB(pagination : PaginationOffer): Observable<any> {
 
-    
     const params = new HttpParams({
       fromObject: {
         pageNo: pagination.pageNo,
         pageSize: pagination.pageSize,
-        userId: pagination.userId,
-        subCategory: pagination.subCategory,
+        user: pagination.user,
+        subcategory: pagination.subcategory,
         title: pagination.title,
         status: pagination.status,
         urgency: pagination.urgency,
         workPlace: pagination.workPlace,
         levelStudy: pagination.levelStudy,
+        typeOfJob: pagination.typeOfJob,
+        rangeAmount: pagination.rangeAmount
       }
     });
 
-    return this.http.get<Offer>(`${this.url}/offer/view-offer-w`,{params: params})
+    return this.http.get<any>(`${this.url}/offer/view-offer-w`,{params: params})
   }
 
 }

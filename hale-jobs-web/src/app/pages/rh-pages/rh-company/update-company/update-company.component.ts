@@ -353,9 +353,9 @@ export class UpdateCompanyComponent implements OnInit {
         this.message.create("success", 'Empresa creada correctamente!');
         this.isLoadingGeneral=false;
         this.ngxSpinner.hide();
-        this.createForm.reset();
         this.imgLoad = undefined;
         this.previewImage = "https://placehold.jp/150x150.png";
+        this.router.navigateByUrl('/dashboard/my-company');
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create("error",  errorResponse.error.message);

@@ -9,43 +9,55 @@
 
   <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <div nz-row [nzGutter]="24">
-      <div nz-col class="gutter-row" [nzSpan]="8">
+      <div nz-col class="gutter-row" [nzSpan]="6">
         <div class="inner-box">
           <nz-form-item class="input-content">
             <nz-form-label nzFor="email"> Titulo de la oferta </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
-                 <input type="text" class="input-text" nzSize="large" nz-input formControlName="offerTitle"
-                  placeholder="Escribe el titulo de la oferta" />
+                 <input type="text" class="input-text" nzSize="large" nz-input formControlName="title"
+                  placeholder="Titulo de la oferta" />
            
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
 
-      <div nz-col class="gutter-row" [nzSpan]="8">
+      
+      <div nz-col class="gutter-row" [nzSpan]="6">
         <div class="inner-box">
           <nz-form-item class="input-content">
-            <nz-form-label  nzFor="surnames"> Categoria de la oferta </nz-form-label>
+            <nz-form-label  nzFor="surnames"> Salario </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
-              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona la Categoría"  formControlName="subcategory">
-                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Rango salarial" formControlName="rangeAmount">
+                <nz-option *ngFor="let item of listRangeAmount" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>                
+              </nz-select>                      
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label  nzFor="surnames"> Subcategoría de la oferta </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Subcategoría"  formControlName="subcategory">
+                <nz-option *ngFor="let item of listSubcategory" [nzLabel]="item.valor" [nzValue]="item.valor"></nz-option>
               </nz-select>                 
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
 
-      <div nz-col class="gutter-row" [nzSpan]="8">
+      <div nz-col class="gutter-row" [nzSpan]="6">
         <div class="inner-box">
           <nz-form-item class="input-content">
             <nz-form-label  nzFor="email"> Urgencia </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
-              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el sueldo aprox." formControlName="urgency">
-                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Urgencia de contratación" formControlName="urgency">
+                <nz-option nzLabel="Contratación urgente" nzValue="A"></nz-option>
+                <nz-option nzLabel="Moderada" nzValue="B"></nz-option>
+                <nz-option nzLabel="Baja" nzValue="C"></nz-option>
               </nz-select>        
             </nz-form-control>
           </nz-form-item>
@@ -54,46 +66,59 @@
     </div>
 
     <div nz-row [nzGutter]="24">
-      <div nz-col class="gutter-row" [nzSpan]="8">
+      <div nz-col class="gutter-row" [nzSpan]="6">
         <div class="inner-box">
           <nz-form-item class="input-content">
             <nz-form-label nzFor="email"> Nivel de estudios </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
-              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el nivel de estudios" formControlName="studyLevel">
-                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Nivel de estudios" formControlName="levelStudy">
+                <nz-option *ngFor="let item of listLevelStudy" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>                
               </nz-select>        
-           
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
 
-      <div nz-col class="gutter-row" [nzSpan]="8">
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <div class="inner-box">
+          <nz-form-item class="input-content">
+            <nz-form-label  nzFor="surnames"> Tipo de trabajo </nz-form-label>
+            <nz-form-control nzErrorTip="Campo requerido">
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Tipo de trabajo" formControlName="workPlace" >
+                <nz-option nzLabel="Jornada completa" nzValue="A"></nz-option>
+                <nz-option nzLabel="Media jornada" nzValue="B"></nz-option>
+                <nz-option nzLabel="Pasantias" nzValue="C"></nz-option>
+                <nz-option nzLabel="Por proyecto" nzValue="D"></nz-option>
+              </nz-select>        
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col class="gutter-row" [nzSpan]="6">
         <div class="inner-box">
           <nz-form-item class="input-content">
             <nz-form-label  nzFor="surnames"> Lugar de trabajo </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
-              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el lugar de trabajo" formControlName="workPlace" >
-                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Lugar de trabajo" formControlName="typeOfJob" >
+                <nz-option *ngFor="let item of listTypeOfJob" [nzLabel]="item.valor" [nzValue]="item.valor"></nz-option>                
               </nz-select>        
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
 
-      <div nz-col class="gutter-row" [nzSpan]="8">
+      
+
+      <div nz-col class="gutter-row" [nzSpan]="6">
         <div class="inner-box">
           <nz-form-item class="input-content">
             <nz-form-label  nzFor="email"> Estatus de la oferta </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
-              <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona el estatus de la oferta" formControlName="statusOffer">
-                <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+              <nz-select class="input-text-select" nzSize="large" nzPlaceHolder="Estatus de la oferta" [ngModel]="statusOffer" formControlName="status">
+                <nz-option nzLabel="Vigente" nzValue="0"></nz-option>
+                <nz-option nzLabel="Cerrada" nzValue="1"></nz-option>
+                <nz-option nzLabel="Bloqueada" nzValue="2"></nz-option>
               </nz-select>        
             </nz-form-control>
           </nz-form-item>
@@ -109,14 +134,14 @@
 
             <button *nzSpaceItem type="button" (click)="generateExcel()" nz-button
               class="button-red">
-              <i nz-icon nzType="audit"></i>
-              Exportar ofertas
+              <i nz-icon nzType="clear"></i>
+              Limpiar filtros
             </button>
 
 
             <button *nzSpaceItem type="button"  nz-button
             class="button-white">
-            <a routerLink="/dashboard/new-offer" routerLinkActive="active" target="_blank">
+            <a routerLink="/dashboard/new-offer" routerLinkActive="active" >
               <i nz-icon nzType="plus"></i>
               Nueva oferta
             </a>
@@ -140,34 +165,32 @@
       </div>
     </div>
   </form>
-
   <br />
 
 
   <div class="card-content">
-    
-    <div class="card-description">
+    <div *ngFor="let item of data" class="card-description">
       <div class="card-title">
-        <h2> Java Developer 1</h2>
+        <p class="pa-s"> {{item.title}} - {{item.workPlace}}</p>
       </div>
       <div class="salary">
-        $10,000.00 MX a $20,000.00
+        {{ item.rangeAmount.valor }}
       </div>
 
       <div class="salary">
-        Posición Remota
+        {{ item.typeOfJob.valor }}
       </div>
 
       <div class="tags">
         <nz-tag nzColor="success">
           <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
+          <span>{{item.urgency}}</span>
         </nz-tag>
       </div>
 
      
       <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
+        {{item.levelStudy.valor}} <br/> {{item.subcategory.valor}}
       </div>
       <div class="date-published">
         <p> Hace 1 semana</p>
@@ -176,315 +199,14 @@
       <div class="button-super">
         <nz-space>
           <button *nzSpaceItem (click)="openViewModal()" nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem (click)="openEditDrawer()" nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem (click)="showDeleteModal()" nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+          <button *nzSpaceItem  routerLink="/dashboard/update-offer/{{ item.consecutive }}" nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem (click)="showDeleteModal(item.consecutive)" nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
         </nz-space>
       </div>
     </div>
 
-    <div class="card-description">
-      <div class="card-title">
-        <h2> Java Developer </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
-        </nz-tag>
-      </div>
-
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-      
-      <div class="button-super">
-        <nz-space>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-        </nz-space>
-      </div>
-    </div>
-
-
-    <div class="card-description">
-      <div class="card-title">
-        <h2> Java Developer </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
-        </nz-tag>
-      </div>
-
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-      
-      <div class="button-super">
-        <nz-space>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-        </nz-space>
-      </div>
-    </div>
-
-    <div class="card-description">
-      <div class="card-title">
-        <h2> Java Developer </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
-        </nz-tag>
-      </div>
-
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-      
-      <div class="button-super">
-        <nz-space>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-        </nz-space>
-      </div>
-    </div>
-
-    <div class="card-description">
-      <div class="card-title">
-        <h2> Java Developer </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
-        </nz-tag>
-      </div>
-
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-      
-      <div class="button-super">
-        <nz-space>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-        </nz-space>
-      </div>
-    </div>
-
-
-    <div class="card-description">
-      <div class="card-title">
-        <h2> Frontend Angular </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
-        </nz-tag>
-      </div>
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-    </div>
-
-    <div class="card-description">
-      <div class="card-title">
-        <h2> React Developer </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
-        </nz-tag>
-      </div>
-
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-    </div>
-
-
-    <div class="card-description">
-      <div class="card-title">
-        <h2> Java Developer </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Backend</span>
-        </nz-tag>
-      </div>
-
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-       <div class="button-super">
-        <nz-space>
-          <button *nzSpaceItem nz-button class="button-white pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
-        </nz-space>
-      </div>
-
-
-    </div>
-
-    <div class="card-description">
-      <div class="card-title">
-        <h2> Frontend Angular </h2>
-      </div>
-      <div class="salary">
-        $10,000.00 MX a $20,000.00
-      </div>
-
-      <div class="salary">
-        Posición Remota
-      </div>
-
-      <div class="tags">
-        <nz-tag nzColor="success">
-          <i nz-icon nzType="check-circle"></i>
-          <span>Desarrollo Frontend</span>
-        </nz-tag>
-      </div>
-
-     
-      <div class="category">
-        Tecnologias de la información, <br/> Desarrollo de software
-      </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
-      </div>
-    </div>
-
-
-
-    <!-- <nz-table #fixedTable #basicTable [nzData]="listOfData">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Address</th>
-          <th>Age</th>
-          <th>Address</th>
-          <th nzRight nzAlign="center" nzWidth="140px">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data">
-          <td>{{ data.name }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
-          <td nzRight nzAlign="center">
-            <nz-space>
-
-
-              <button nz-button nzShape="circle" nzType="text">
-                <i nz-icon nzTheme="twotone" [nzTwotoneColor]="'#08a000'" nzType="edit"></i>
-              </button>
-
-              <button nz-button nzShape="circle" nzType="text">
-                <i nz-icon nzTheme="twotone" [nzTwotoneColor]="'#a31600'" nzType="delete"></i>
-              </button>
-            </nz-space>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table> -->
+ 
+   
 
 
   </div>

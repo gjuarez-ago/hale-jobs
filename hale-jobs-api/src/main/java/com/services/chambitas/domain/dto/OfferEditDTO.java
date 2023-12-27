@@ -7,18 +7,47 @@ public class OfferEditDTO {
 	
 	String offerId;
 	
-	String title;
+	// Titulo de la vacante
+	private String title;
 	
-	String description;
+	private String description;
 	
-	String urgency; 
+	// Urgencia del trabajo
+	private String urgency;
 	
-	String address;
+	// Dirección de trabajo
+	private String address;
+
+	// Mostrar salario
+	private boolean showSalary;
 	
-	Long typeOfPayment;
+    private boolean showCompany;
+    
+	private String[] benefits;
+
+	private String[] mainActivities;
 	
-	Long userId;
+	private String[] skills;
+
+	private String workPlace; 
 	
-	Long rangeAmount;
+	private int typeOfOffer;
+	
+	private Long company;
+
+	private Long typeOfJob;
+
+	private Long typeOfPayment;
+	
+	private Long rangeAmount;
+		
+	private Long levelStudy;
+	
+	private Long category;
+		
+	private Long subcategory;
+	
+	private Long userId;
+
 
 }

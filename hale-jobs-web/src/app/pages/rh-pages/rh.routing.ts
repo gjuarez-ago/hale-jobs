@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { SideMenuRh } from '../../components/side-menu-rh/side-menu-rh.component';
 import { RhDashboardComponent } from './rh-dashboard/rh-dashboard.component';
 import { RhOffersComponent } from './rh-offers/rh-offers.component';
-import { RhExamsComponent } from './rh-exams/rh-exams.component';
 import { RhCompanyComponent } from './rh-company/rh-company.component';
 import { RhSearchWorkersComponent } from './rh-search-workers/rh-search-workers.component';
 import { RhContactBookComponent } from './rh-contact-book/rh-contact-book.component';
@@ -30,6 +29,7 @@ import { RhHistoryComponent } from './rh-history/rh-history.component';
 import { NewOfferComponent } from './rh-offers/new-offer/new-offer.component';
 import { NewCompanyComponent } from './rh-company/new-company/new-company.component';
 import { UpdateCompanyComponent } from './rh-company/update-company/update-company.component';
+import { UpdateOfferComponent } from './rh-offers/update-offer/update-offer.component';
 
 const routes: Routes = [
     {
@@ -37,7 +37,7 @@ const routes: Routes = [
           { path: "my-statistics", component: RhDashboardComponent },
           { path: "my-offers", component: RhOffersComponent},
           { path: "new-offer", component: NewOfferComponent },
-          { path: "edit-offer/:id", component: RhDashboardComponent },
+          { path: "update-offer/:id", component: UpdateOfferComponent },
           
           { path: "my-company", component: RhCompanyComponent },
           { path: "new-company", component: NewCompanyComponent },

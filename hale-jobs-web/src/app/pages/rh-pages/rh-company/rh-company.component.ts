@@ -53,7 +53,6 @@ export class RhCompanyComponent implements OnInit {
     private ngxSpinner: NgxSpinnerService
   ) {
 
-    this.isLoadingGeneral = false;
 
     this.validateForm = this.fb.group({
       name: [''],
