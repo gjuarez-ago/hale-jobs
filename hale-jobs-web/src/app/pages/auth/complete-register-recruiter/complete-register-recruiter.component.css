@@ -13,6 +13,12 @@
     background-color: rgb(250, 249, 249);
 }
 
+.button-super {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
 .content-right {
     margin: 5% 0px 0px 20%;
     width: 80%;

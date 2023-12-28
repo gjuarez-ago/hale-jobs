@@ -16,10 +16,7 @@ import { GenericService } from 'src/app/services/generic.service';
 export class CompleteRegisterUserComponent implements OnInit {
 
   public isLoadingGeneral = false;
-
-  public current = 2;
-
-
+  public current = 0;
 
   public user: User | undefined;
   public idUser !: number;
@@ -94,12 +91,12 @@ export class CompleteRegisterUserComponent implements OnInit {
     company: new FormControl(null, Validators.required),
     skills: new FormControl(null, Validators.required),
     begins: new FormControl(null, Validators.required),
-    ends: new FormControl(null, Validators.required),
+    ends: new FormControl(null),
     checked: new FormControl(false),
     description: new FormControl(null, [Validators.required, Validators.minLength(50)]),
   });
 
-
+  public listRangeAmount : any = [];
 
   constructor(
     private router: Router,
@@ -122,6 +119,8 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.getLevelOfStudy();
       this.getSubcategories();  
       this.getModWorks();
+      this.getRangeAmount();
+      
     } else {
       this.router.navigateByUrl("/auth/login");
     }
@@ -307,6 +306,20 @@ export class CompleteRegisterUserComponent implements OnInit {
     if (this.registerRecruiterCVSection2Form.valid) {
       
       let form = this.registerRecruiterCVSection2Form.value;
+    
+      let f1 = new Date(form.begins);
+      let f2 = new Date(form.ends);
+
+      if(f2 < f1 && !this.checkedSchool){
+        this.message.create("info", 'La fecha de inicio no debe ser mayor a la de termino');
+        return;
+      }
+
+      if((form.ends == null || form.ends == undefined) && !this.checkedSchool) {
+        this.message.create("warning", 'Es necesario agregar la fecha de termino');
+        return;
+      }
+
       let data = {
         "name": form.name,
         "type": form.type,
@@ -338,9 +351,37 @@ export class CompleteRegisterUserComponent implements OnInit {
 
   saveExperienceUser(): void {
     if (this.registerRecruiterExperienceProfessionalForm.valid) {
-      this.experiencesWorkUser.push(this.registerRecruiterExperienceProfessionalForm.value);
+      
+      let form = this.registerRecruiterExperienceProfessionalForm.value;
+
+      let f1 = new Date(form.begins);
+      let f2 = new Date(form.ends);
+
+      if(f2 < f1 && !this.checkedWork){
+        this.message.create("info", 'La fecha de inicio no debe ser mayor a la de termino');
+        return;
+      }
+      
+      
+      if((form.ends == null || form.ends == undefined) && !this.checkedWork) {
+        this.message.create("info", 'Es necesario agregar la fecha de termino');
+        return;
+      }
+
+      let data = {
+        "job": form.job,
+        "company": form.company,
+        "skills": form.skills,
+        "begins": form.begins,
+        "ends": form.checked ?  'Actual' : form.ends,
+        "checked": form.checked ? true : false,
+        "description": form.description
+    }
+      
+      this.experiencesWorkUser.push(data);
       this.visibleAddExperiences = false;
       this.registerRecruiterExperienceProfessionalForm.reset()
+      this.checkedWork = false;
     } else {
       Object.values(this.registerRecruiterExperienceProfessionalForm.controls).forEach(control => {
         if (control.invalid) {
@@ -376,8 +417,11 @@ export class CompleteRegisterUserComponent implements OnInit {
 
       this.authenticationService.registerUser(formsData).subscribe(
         (response: any) => {
-          this.message.create("success", 'Actualizado correctamente!');
-          this.router.navigate(['profile/cv']);
+          this.message.create("success", 'Perfil actualizado correctamente!');
+          this.user!.profileCompleted = true;
+          this.authenticationService.addUserToLocalCache(this.user!);
+
+          this.router.navigateByUrl("/profile/cv");
           this.isLoadingGeneral=false;
         },
         (errorResponse: HttpErrorResponse) => {
@@ -443,6 +487,24 @@ export class CompleteRegisterUserComponent implements OnInit {
           this.isLoadingGeneral = false;
         }
       )
+    }
+
+    public getRangeAmount() {
+      this.isLoadingGeneral = true;
+      this.subscriptions.push(
+        this.genericService
+          .getAllRangeAmount()
+          .subscribe(
+            (response: any) => {
+              this.listRangeAmount = response;
+              this.isLoadingGeneral = false;
+            },
+            (errorResponse: HttpErrorResponse) => {
+              this.isLoadingGeneral = false;
+              this.message.create('error', errorResponse.error.message);
+            }
+          )
+      );
     }
 
 

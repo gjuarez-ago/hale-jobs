@@ -133,8 +133,11 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
 
       this.authenticationService.registerCompany(formData).subscribe(
         (response: any) => {
-          this.message.create("success", 'Actualizado correctamente!');
-          this.router.navigate(['dashboard/statisticts']);
+          this.message.create("success", 'Perfil actualizado correctamente!');
+          this.user!.profileCompleted = true;
+          this.authenticationService.addUserToLocalCache(this.user!);
+
+          this.router.navigateByUrl("/dashboard/statisticts");
           this.isLoadingGeneral=false;
         },
         (errorResponse: HttpErrorResponse) => {
@@ -232,8 +235,6 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
       }
     }
   }
-
-
 
  
 //VALIDACIÓN DE INPUT DE TELEFONO PARA NO ACEPTAR LETRAS
