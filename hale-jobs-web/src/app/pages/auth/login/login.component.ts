@@ -70,7 +70,6 @@ export class LoginComponent implements OnInit {
     this.isSpinning = true;
     let user = this.validateForm.value;
 
-
     this.subcriptions.push(
       this.authenticationService.login(user).subscribe(
         (response: any) => {
@@ -80,7 +79,7 @@ export class LoginComponent implements OnInit {
           this.isSpinning = false;
           // this.authenticationService.setUserActive(response.body);
           this.ngxSpinner.hide();
-          this.redirect(response.body.role!);
+          this.redirect(response.body);
         },
         (errorResponse: HttpErrorResponse) => {
           
@@ -96,22 +95,43 @@ export class LoginComponent implements OnInit {
     this.message.create(type, message);
   }
 
-  redirect(role: string) {
-    switch (role) {
-      case 'ROLE_USER':
-        this.router.navigateByUrl('/profile/cv');
-        break;
-      case 'ROLE_HR':
-        this.router.navigateByUrl('/dashboard/statisticts');
-        break;
-      case 'ROLE_ADMIN':
-        this.router.navigateByUrl('/dashboard/statisticts');
-        break;
+  redirect(data: any) {
+    if(data.profileCompleted) {
+      switch (data.role) {
+        case 'ROLE_USER':
+          this.router.navigateByUrl('/profile/cv');
+          break;
+        case 'ROLE_HR':
+          this.router.navigateByUrl('/dashboard/statisticts');
+          break;
+        case 'ROLE_ADMIN':
+          this.router.navigateByUrl('/dashboard/statisticts');
+          break;
+        default:
+          // alert("El usuario no tiene un rol en estos momentos")
+          break;
+      }
+    } else {
+      switch (data.role) {
+        case 'ROLE_USER':
+          this.router.navigateByUrl('/register/user');
+          break;
+        case 'ROLE_HR':
+          this.router.navigateByUrl('/register/recruiter');
+          break;
+        case 'ROLE_ADMIN':
+          this.router.navigateByUrl('/register/recruiter');
+          break;
+        default:
+          // alert("El usuario no tiene un rol en estos momentos")
+          break;
+      }
 
-      default:
-        // alert("El usuario no tiene un rol en estos momentos")
-        break;
     }
+
+
+
+ 
   }
 
 

@@ -67,7 +67,7 @@ export class OfferService {
         urgency: pagination.urgency,
         workPlace: pagination.workPlace,
         levelStudy: pagination.levelStudy,
-        typeOfJob: pagination.typeOfJob,
+        typeJob: pagination.typeOfJob,
         rangeAmount: pagination.rangeAmount
       }
     });

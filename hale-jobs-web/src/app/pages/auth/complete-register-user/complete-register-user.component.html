@@ -73,11 +73,13 @@
               <nz-form-item class="personal-form-control">
                 <nz-form-control nzErrorTip="Por favor selecciona un municipio!">
                   <nz-form-label>¿En que ciudad de tu estado vives?*</nz-form-label>
-                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Seleccciona el municipio" id="city"
-                    formControlName="city"  [(ngModel)]="citySelected">
-                    <nz-option *ngFor="let city of listCities" [nzValue]="city.id"
-                      [nzLabel]="city.valor"></nz-option>
-                  </nz-select>
+              
+
+                  <nz-select nzSize="large" nzShowSearch [(ngModel)]="citySelected" nzAllowClear nzPlaceHolder="Seleccciona el municipio" id="city"
+                  formControlName="city" [nzDisabled]="registerRecruiterForm.get('state')?.value == null">
+                  <nz-option *ngFor="let city of listCities" [nzValue]="city.id"
+                    [nzLabel]="city.valor"></nz-option>
+                </nz-select>
                 </nz-form-control>
               </nz-form-item>
             </div>
@@ -262,8 +264,8 @@
                           <nz-form-label>¿En que te especializas actualmente?</nz-form-label>
                           <nz-select nzMode="tags" nzPlaceHolder="Selecciona una o varias opciones" id="skills"
                             formControlName="skills">
-                            <nz-option *ngFor="let area of technicalAttitudes" [nzLabel]="area.name"
-                              [nzValue]="area.name"></nz-option>
+                            <nz-option *ngFor="let area of listSubcategories" [nzLabel]="area.valor"
+                            [nzValue]="area.valor"></nz-option>
                           </nz-select>
                         </nz-form-control>
                       </nz-form-item>
@@ -517,14 +519,17 @@
         </nz-form-item>
 
         <div class="size-box"></div>
-
-        <nz-form-item class="add-certificate">
+        <nz-form-item *ngIf="!checkedSchool" class="add-certificate">
           <nz-form-control nzErrorTip="Campo requerido!">
             <nz-form-label>Fecha de termino</nz-form-label>
             <nz-date-picker nzMode="month" nzPlaceHolder="Mes de termino" nzFormat="MMM-yyy" [nzSize]="'default'" id="ends"
               formControlName="ends"></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
+      </div>
+
+      <div class="size-box-a">
+        <label nz-checkbox [(ngModel)]="checkedSchool" formControlName="checked">Lo estoy consiguiendo aún</label>
       </div>
 
     </form>
@@ -571,11 +576,6 @@
         <nz-form-control nzErrorTip="Campo requerido!">
           <nz-form-label>¿Qué habilidades desempeñastes en este trabajo?</nz-form-label>
 
-          <!-- <nz-input-group>
-            <input class="number-phone" type="text" nz-input placeholder="Escribe tus skils" id="skillsWork"
-              formControlName="skillsWork" />
-          </nz-input-group> -->
-
           <nz-select nzMode="tags" nzPlaceHolder="Selecciona una opción" id="skills"
           formControlName="skills">
           <nz-option *ngFor="let skill of technicalAttitudes" [nzLabel]="skill.name" [nzValue]="skill.name"></nz-option></nz-select>
@@ -600,6 +600,10 @@
             <nz-date-picker nzMode="month" [nzSize]="'default'" nzFormat="MMM-yyy" id="ends" formControlName="ends"></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
+      </div>
+
+      <div class="size-box-a">
+        <label nz-checkbox [(ngModel)]="checkedWork" formControlName="checked">Sigo trabajando ahi</label>
       </div>
 
       <nz-form-item>

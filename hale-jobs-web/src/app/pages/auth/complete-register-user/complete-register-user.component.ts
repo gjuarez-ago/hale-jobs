@@ -17,7 +17,7 @@ export class CompleteRegisterUserComponent implements OnInit {
 
   public isLoadingGeneral = false;
 
-  public current = 0;
+  public current = 2;
 
 
 
@@ -46,7 +46,8 @@ export class CompleteRegisterUserComponent implements OnInit {
   public listTypeOfJobs : any = [];
   public listModwork: any = [];
 
-
+  public checkedSchool = false;
+  public checkedWork = false;
   public citySelected : any;
   public stateSelected : any;
 
@@ -79,8 +80,9 @@ export class CompleteRegisterUserComponent implements OnInit {
     name: new FormControl(null, [Validators.required, Validators.minLength(10)]),
     type: new FormControl(null, [Validators.required]),
     schoolName: new FormControl(null, [Validators.required, Validators.minLength(5)]),
-    begins: new FormControl(null, Validators.required),
-    ends: new FormControl(null, Validators.required),
+    begins: new FormControl(null, [Validators.required]),
+    ends: new FormControl(null),
+    checked: new FormControl(false),
   });
 
   registerRecruiterCVSection3Form = new FormGroup({
@@ -93,6 +95,7 @@ export class CompleteRegisterUserComponent implements OnInit {
     skills: new FormControl(null, Validators.required),
     begins: new FormControl(null, Validators.required),
     ends: new FormControl(null, Validators.required),
+    checked: new FormControl(false),
     description: new FormControl(null, [Validators.required, Validators.minLength(50)]),
   });
 
@@ -203,6 +206,8 @@ export class CompleteRegisterUserComponent implements OnInit {
     this.router.navigate(['project/list']);
   }
 
+  
+
 
   changeContent(): void {
     switch (this.current) {
@@ -296,12 +301,28 @@ export class CompleteRegisterUserComponent implements OnInit {
     this.visibleAddExperiences = false;
   }
 
+
   saveCertificate(): void {
 
     if (this.registerRecruiterCVSection2Form.valid) {
-      this.certificatesUser.push(this.registerRecruiterCVSection2Form.value);
+      
+      let form = this.registerRecruiterCVSection2Form.value;
+      let data = {
+        "name": form.name,
+        "type": form.type,
+        "schoolName": form.schoolName,
+        "begins": form.begins,
+        "ends": form.checked ? 'Actual' : form.ends,
+        "checked": form.checked ? true : false
+    };
+
+      
+      this.certificatesUser.push(data);
       this.visibleAddCertificate = false;
-      this.registerRecruiterCVSection2Form.reset()
+      this.registerRecruiterCVSection2Form.reset();
+      this.checkedSchool = false;
+
+
     } else {
       Object.values(this.registerRecruiterCVSection2Form.controls).forEach(control => {
         if (control.invalid) {
@@ -309,6 +330,8 @@ export class CompleteRegisterUserComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+
+      return;
     }
 
   }

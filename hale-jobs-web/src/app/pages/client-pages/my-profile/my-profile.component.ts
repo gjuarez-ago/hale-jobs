@@ -72,6 +72,7 @@ export class MyProfileComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
+      this.redirect(this.user);
 
       this.getCurrentUser();
       this.getStates();
@@ -288,7 +289,44 @@ changePublicProfile(value : any) {
     this.previewVisible = true;
   }
 
+  redirect(data: any) {
+    if(data.profileCompleted) {
+      switch (data.role) {
+        case 'ROLE_USER':
+          this.router.navigateByUrl('/profile/cv');
+          break;
+        case 'ROLE_HR':
+          this.router.navigateByUrl('/dashboard/statisticts');
+          break;
+        case 'ROLE_ADMIN':
+          this.router.navigateByUrl('/dashboard/statisticts');
+          break;
+        default:
+          // alert("El usuario no tiene un rol en estos momentos")
+          break;
+      }
+    } else {
+      switch (data.role) {
+        case 'ROLE_USER':
+          this.router.navigateByUrl('/register/user');
+          break;
+        case 'ROLE_HR':
+          this.router.navigateByUrl('/register/recruiter');
+          break;
+        case 'ROLE_ADMIN':
+          this.router.navigateByUrl('/register/recruiter');
+          break;
+        default:
+          // alert("El usuario no tiene un rol en estos momentos")
+          break;
+      }
 
+    }
+
+
+
+ 
+  }
 
 
 

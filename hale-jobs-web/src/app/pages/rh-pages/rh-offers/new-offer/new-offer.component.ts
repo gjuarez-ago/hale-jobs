@@ -551,7 +551,6 @@ export class NewOfferComponent implements OnInit {
     if ((item = 'A')) {
       return 'Mostrar';
     }
-
     return 'No mostrar';
   }
 

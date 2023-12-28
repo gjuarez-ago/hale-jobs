@@ -101,7 +101,7 @@
             <nz-form-label  nzFor="surnames"> Lugar de trabajo </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
               <nz-select class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Lugar de trabajo" formControlName="typeOfJob" >
-                <nz-option *ngFor="let item of listTypeOfJob" [nzLabel]="item.valor" [nzValue]="item.valor"></nz-option>                
+                <nz-option *ngFor="let item of listTypeOfJob" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>                
               </nz-select>        
             </nz-form-control>
           </nz-form-item>
@@ -132,7 +132,7 @@
           <nz-space>
 
 
-            <button *nzSpaceItem type="button" (click)="generateExcel()" nz-button
+            <button *nzSpaceItem type="button" (click)="cleanFilters()" nz-button
               class="button-red">
               <i nz-icon nzType="clear"></i>
               Limpiar filtros
@@ -167,14 +167,33 @@
   </form>
   <br />
 
+  <div class="form-inline">
+    <div class="pagination-content">
+      <nz-pagination
+        [nzPageSize]="pageSize"
+        [nzPageIndex]="current"
+        [nzTotal]="total"
+        (nzPageSizeChange)="changePageSize($event)"
+        (nzPageIndexChange)="changeCurrentPage($event)"
+        id="demo"
+      ></nz-pagination>
+    </div>
+
+    <div class="text-co">
+      <span class="mr-md-auto"> {{ totalElementByPage }} coincidencias </span>
+    </div>
+  </div>
+
 
   <div class="card-content">
     <div *ngFor="let item of data" class="card-description">
       <div class="card-title">
-        <p class="pa-s"> {{item.title}} - {{item.workPlace}}</p>
+        <p class="pa-st"> {{item.title}}</p>
       </div>
       <div class="salary">
-        {{ item.rangeAmount.valor }}
+        <b> 
+          {{ item.rangeAmount.valor }}
+        </b>
       </div>
 
       <div class="salary">
@@ -182,25 +201,28 @@
       </div>
 
       <div class="tags">
-        <nz-tag nzColor="success">
+        <nz-tag nzColor="{{getUrgencyColor(item.urgency)}}">
           <i nz-icon nzType="check-circle"></i>
-          <span>{{item.urgency}}</span>
+          <span>{{getUrgency(item.urgency)}}</span>
         </nz-tag>
       </div>
 
      
-      <div class="category">
-        {{item.levelStudy.valor}} <br/> {{item.subcategory.valor}}
+      <div class="salary">
+          <b> {{item.subcategory.valor}} </b>
       </div>
-      <div class="date-published">
-        <p> Hace 1 semana</p>
+      <div class="salary">
+        <p> 
+          <b> Vigencia:  </b><br>
+ {{item.vencimiento |date:"medium" }}
+        </p>
       </div>
       
       <div class="button-super">
         <nz-space>
-          <button *nzSpaceItem (click)="openViewModal()" nz-button class="button-blue pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
-          <button *nzSpaceItem  routerLink="/dashboard/update-offer/{{ item.consecutive }}" nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-          <button *nzSpaceItem (click)="showDeleteModal(item.consecutive)" nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+          <button *nzSpaceItem (click)="openViewModal(item)" nz-button class="button-white pd-1"><i nz-icon nzType="eye" nzTheme="outline"></i></button>
+          <button *nzSpaceItem  routerLink="/dashboard/update-offer/{{ item.id }}" nz-button class="button-blue pd-1"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          <button *nzSpaceItem (click)="showDeleteModal(item.id)" nz-button class="button-red pd-1"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
         </nz-space>
       </div>
     </div>
@@ -245,115 +267,114 @@
 [nzWidth]="1000"
 [(nzVisible)]="visibleModal" nzTitle="Detalle de la oferta" (nzOnCancel)="closeViewModal()">
   <ng-container *nzModalContent>
-    <nz-tabset>
-      <nz-tab [nzTitle]="titleTemplate1">
-        
-        <ng-template #titleTemplate1>
-          <span nz-icon [nzType]="'info-circle'"></span>
-           Información de la ofertas
-        </ng-template>
-
-        <nz-descriptions nzTitle="Java Developer" nzBordered>
-          <nz-descriptions-item nzTitle="Categoria">Cloud Database</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Compañia">Prepaid</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Tipo de pago">YES</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Tipo de trabajo">2018-04-24 18:00:00</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Lugar de trabajo" [nzSpan]="2">
-            2018-04-24 18:00:00 To 2019-04-24 18:00:00
-          </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Urgencia" [nzSpan]="3">
-            <nz-badge nzStatus="processing" nzText="Running"></nz-badge>
-          </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Salario">$80.00</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Mostrar salario">$20.00</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Mostrar compañia">$60.00</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Descripción"  [nzSpan]="3">
-            Data disk type: MongoDB
-            Database version: 3.4
-            Package: dds.mongo.mid
-            Storage space: 10 GB
-            Replication_factor:3Region: East China 1
-          </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Beneficios"  [nzSpan]="3">
-              <ul>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-              
-              </ul>
-            </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Actividades"  [nzSpan]="3">
-              <ul>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-              
-              </ul>
-            </nz-descriptions-item>
-
-            <nz-descriptions-item nzTitle="Habilidades"  [nzSpan]="3">
-              <ul>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-                  <li> Actividad Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto error inventore corporis esse. Ex eos  </li>
-              
-              </ul>
-            </nz-descriptions-item>
-
-        </nz-descriptions>
-
-        </nz-tab>
-
-        <nz-tab [nzTitle]="titleTemplate2">
-        
-          <ng-template #titleTemplate2>
+    <nz-spin [nzSpinning]="isLoadingViewDetail">
+      <nz-tabset>
+        <nz-tab [nzTitle]="titleTemplate1">
+          
+          <ng-template #titleTemplate1>
             <span nz-icon [nzType]="'info-circle'"></span>
-            Postulaciones
+             Información de la ofertas
           </ng-template>
+  
+          <nz-descriptions nzTitle="{{offer && offer.title}}" nzBordered>
+            
+            <nz-descriptions-item nzTitle="Compañia" [nzSpan]="3">
+              {{ offer && offer.company.name}}
+            </nz-descriptions-item>
+            
+            <nz-descriptions-item nzTitle="Categoria" [nzSpan]="3">
+              {{ offer && offer.category.valor}} - {{ offer && offer.subcategory.valor}} 
+            </nz-descriptions-item>
+        
+            <nz-descriptions-item nzTitle="Tipo de trabajo" [nzSpan]="2">
+              {{ offer && getWorkPlace(offer.workPlace)}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Lugar de trabajo" [nzSpan]="2">
+              {{ offer && offer.typeOfJob.valor}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Urgencia" [nzSpan]="2">
+              <nz-badge nzStatus="processing" nzText="{{offer && getUrgency(offer.urgency)}}"></nz-badge>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Salario" [nzSpan]="2">
+              {{ offer && offer.rangeAmount.valor}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Mostrar salario" [nzSpan]="2">
+              {{ offer && showValues(offer.showSalary)}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Mostrar compañia" [nzSpan]="2">
+              {{ offer && showValues(offer.showCompany)}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Descripción"  [nzSpan]="3">
+              {{ offer && offer.description}}
+            </nz-descriptions-item>
+            
+              <nz-descriptions-item nzTitle="Actividades"  [nzSpan]="3">
+                <ul>
+                  <li *ngFor="let e of offer.mainActivities"> {{e}} </li>
+                </ul>
+              </nz-descriptions-item>
+  
+              <nz-descriptions-item nzTitle="Habilidades"  [nzSpan]="3">
+                <ul>
+                    <li *ngFor="let e of offer.skills"> {{e}} </li>
+                </ul>
+              </nz-descriptions-item>
 
-          <nz-list nzItemLayout="horizontal" [nzLoading]="'true'">
-            <nz-list-item *ngFor="let item of listOfData">
-              <nz-list-item-meta
-                nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
-              >
-                <nz-list-item-meta-title>
-                  <a href="https://ng.ant.design">{{ item.name }}</a>
-                </nz-list-item-meta-title>
-              </nz-list-item-meta>
-            </nz-list-item>
-
-            <ul>
-              <nz-list-item-action><a >edit</a></nz-list-item-action>
-              <nz-list-item-action><a>more</a></nz-list-item-action>
-            </ul>
-
-            <nz-list-empty *ngIf="listOfData.length === 0"></nz-list-empty>
-          </nz-list>
+              <nz-descriptions-item nzTitle="Beneficios"  [nzSpan]="3">
+                <ul>
+                    <li *ngFor="let e of offer.benefits"> {{e}}  </li>
+                  
+                </ul>
+              </nz-descriptions-item>
+  
+          </nz-descriptions>
   
           </nz-tab>
-
+  
+          <nz-tab [nzTitle]="titleTemplate2">
           
-          <nz-tab [nzTitle]="titleTemplate3">
-        
-            <ng-template #titleTemplate3>
+            <ng-template #titleTemplate2>
               <span nz-icon [nzType]="'info-circle'"></span>
-              Quejas y sugerencias
+              Postulaciones
             </ng-template>
+  
+            <nz-list nzItemLayout="horizontal" [nzLoading]="'true'">
+              <nz-list-item *ngFor="let item of listOfData">
+                <nz-list-item-meta
+                  nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                  nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                >
+                  <nz-list-item-meta-title>
+                    <a href="https://ng.ant.design">{{ item.name }}</a>
+                  </nz-list-item-meta-title>
+                </nz-list-item-meta>
+              </nz-list-item>
+  
+              <ul>
+                <nz-list-item-action><a >edit</a></nz-list-item-action>
+                <nz-list-item-action><a>more</a></nz-list-item-action>
+              </ul>
+  
+              <nz-list-empty *ngIf="listOfData.length === 0"></nz-list-empty>
+            </nz-list>
     
-            Content of Tab Pane 1</nz-tab>
-
+            </nz-tab>
+  
             
-    </nz-tabset>
+            <nz-tab [nzTitle]="titleTemplate3">
+          
+              <ng-template #titleTemplate3>
+                <span nz-icon [nzType]="'info-circle'"></span>
+                Quejas y sugerencias
+              </ng-template>
+      
+              Content of Tab Pane 1</nz-tab>
+  
+              
+      </nz-tabset>
+    </nz-spin>
+   
+ 
   </ng-container>
 
 

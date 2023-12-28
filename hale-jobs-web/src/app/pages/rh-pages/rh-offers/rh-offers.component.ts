@@ -24,7 +24,7 @@ export class RhOffersComponent implements OnInit {
   public selectedValue : any;
 
   // * Variables de la tabla
-  public pageSize: number = 5;
+  public pageSize: number = 10;
   public current: number = 1;
   public subscriptions: Subscription[] = [];
   public total: number = 0;
@@ -63,6 +63,7 @@ export class RhOffersComponent implements OnInit {
   // * Variables para realizar el filtrado
   public validateForm!: FormGroup;
   offer: any;
+  isLoadingViewDetail: boolean = false;
 
   constructor(
     private genericService : GenericService,
@@ -107,6 +108,19 @@ export class RhOffersComponent implements OnInit {
 
     this.loader();
    
+  }
+
+  public cleanFilters() {
+    this.validateForm = this.fb.group({
+      title: [""],
+      subcategory: [""],
+      urgency: [""],
+      levelStudy: [""],
+      workPlace: [""],
+      status: ['0'],
+      typeOfJob: [""],
+      rangeAmount: [""]
+    });
   }
 
 
@@ -156,10 +170,10 @@ export class RhOffersComponent implements OnInit {
       .subscribe(
         (response: any) => {
 
-          console.log(response);
-          
+          this.data = response.content;
+          this.total = response.totalElements;
+          this.totalElementByPage = response.numberOfElements;
 
-          this.data = response;
           this.isLoadingGeneral = false;
           this.isLoadingTable = false;
           this.loader();
@@ -172,9 +186,17 @@ export class RhOffersComponent implements OnInit {
           this.ngxSpinner.hide();
         }
       )
-  );
-    
+  )}
 
+  
+  changePageSize($event: number): void {
+    this.pageSize = $event;
+    this.getOffers();
+  }
+
+  changeCurrentPage($event: number): void {
+    this.current = $event;
+    this.getOffers();
   }
 
 
@@ -210,19 +232,42 @@ export class RhOffersComponent implements OnInit {
   closeEditDrawer() { this.visibleEditDrawer = false;}
 
 
-  openViewModal() { this.visibleModal = true; }
+  openViewModal(item: any) { 
+    this.getOfferById(item.id);
+    this.visibleModal = true; 
+  }
+
   closeViewModal() {this.visibleModal = false; }
 
-  showDeleteModal(consecutive: any): void {
+  showDeleteModal(offer: any): void {
     this.confirmDeleteModal = this.modal.confirm({
       nzTitle: '¿Seguro que deseas eliminar esta oferta?',
-      nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
-      nzOnOk: () =>
-        new Promise((resolve, reject) => {
-          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log('Oops errors!'))
+      nzContent: 'Al ser eliminada esta oferta, no podra ser visible para los candidatos dentro de la busqueda general, mas sin embargo si dentro de tus ofertas con estatus "cerrada".',
+      nzOnOk: () => this.deleteOffer(offer)
     });
 }
+
+
+public deleteOffer(id: any) {
+  this.isLoadingGeneral = true;
+  this.subscriptions.push(
+    this.offerService
+      .deleteOffer(id, this.userId)
+      .subscribe(
+        (response: any) => {
+          this.isLoadingGeneral = false;
+          this.getOffers();
+          this.message.create('success', "Oferta eliminada correctamente");
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+  );
+
+}
+
 
 public getSubcategories() {
   this.isLoadingGeneral = true;
@@ -297,17 +342,19 @@ public getTypeOfJob() {
 }
 
 public getOfferById(id : any) {
-  this.isLoadingGeneral = true;
+  this.isLoadingViewDetail = true;
   this.ngxSpinner.show();
   this.subscriptions.push(
     this.offerService.findOfferById(id).subscribe(
       (response: any) => {
         this.offer = response;
-        this.isLoadingGeneral = false;
+        this.isLoadingViewDetail = false;
         this.ngxSpinner.hide();  
+        console.log(response);
+        
       },
       (errorResponse: HttpErrorResponse) => {
-        this.isLoadingGeneral = false;
+        this.isLoadingViewDetail = false;
         this.ngxSpinner.hide();
         this.message.create('error', errorResponse.error.message);
       }
@@ -336,7 +383,11 @@ getOffers() {
       })
       .subscribe(
         (response: any) => {
-          this.data = response;
+
+          this.data = response.content;
+          this.total = response.totalElements;
+          this.totalElementByPage = response.numberOfElements;
+
           this.isLoadingTable = false;
           this.isLoadingGeneral = false;
         },
@@ -349,11 +400,52 @@ getOffers() {
   );
 }
 
+public getUrgencyColor(item: any): string {
+  let urgency = [
+    { value: 'error', id: 'A' },
+    { value: 'warning', id: 'B' },
+    { value: 'processing', id: 'C' },
+  ];
+  let index: any = urgency.find((e: any) => e.id == item);
+  return index.value;
+}
+
 createMessage(type: string, message: string): void {
   this.message.create(type, message);
 }
 
+public showValues(item: any): string {
+  if ((item = 'A')) {
+    return 'Mostrar';
+  }
+  return 'No mostrar';
 }
+
+
+public getWorkPlace(item: any): string {
+  let works = [
+    { value: 'Jornada Completa', id: 'A' },
+    { value: 'Media jornada', id: 'B' },
+    { value: 'Pasantias', id: 'C' },
+    { value: 'Por proyecto', id: 'D' },
+  ];
+  let index: any = works.find((e: any) => e.id == item);
+  return index.value;
+}
+
+public getUrgency(item: any): string {
+  let urgency = [
+    { value: 'Urgente', id: 'A' },
+    { value: 'Moderada', id: 'B' },
+    { value: 'Baja', id: 'C' },
+  ];
+  let index: any = urgency.find((e: any) => e.id == item);
+  return index.value;
+}}
+
+
+
+
 
 
 interface Person {

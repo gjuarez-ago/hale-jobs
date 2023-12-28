@@ -21,12 +21,13 @@
 }
 
 
-.alert-a {
-}
 
 .list {
     text-align: right;
     padding: 30px 40px 10px 20px;
+}
+.size-box-a {
+    margin: 10px 18px;
 }
 
 ul {
@@ -259,7 +260,7 @@ nz-form-item.personal-form-control {
 
 .add-certificate {
     width:100%;
-    margin: 10px 0px;
+    margin: 10px 10px;
 }
 
 nz-form-item.personal-form-control nz-form-control {
