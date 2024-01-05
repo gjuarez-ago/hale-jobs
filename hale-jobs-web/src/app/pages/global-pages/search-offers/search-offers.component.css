@@ -33,12 +33,17 @@ input.search {
  }
 
  .more-filters {
-  padding: 5px 10px;
+  padding: 5px 0px;
   display: flex;
+  justify-content: space-between;
   /* background-color: #3f2804; */
  }
 
+ .input-text-select {
+  width: 100%;
+ }
  .element {
+  width: 16%;
   margin: 0px 10px 0px 10px;
  }
 
@@ -175,13 +180,21 @@ flex-direction: column;
   border-right: 5px solid #f5ad40;
   border-radius: 10px;
   transition: box-shadow 1s;
+}
 
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .card:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 
+p {
+  margin: 0px;
+  padding: 0px;
 }
 
 
@@ -207,21 +220,37 @@ flex-direction: column;
 
 .points li {
   margin: 0px 10px;
-  text-decoration: none;
-  
+  text-decoration: none;  
+}
+.date-published {
+  margin: 0px 0px;
+  padding: 0px;
+}
+
+.description {
+  margin: 10px 0px;
 }
 
 .company-and-place  {
-  margin: 5px 0px;
+  margin: 0px 0px;
+  padding: 0px;
   display: flex;
   align-items: flex-start;
   font-weight: 700;
 }
 
 .tags {
-  margin: 0px 0px 8px 0px
+  margin: 10px 0px 8px 0px
 }
 
+
+.form-inline 
+{
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 20px 0px 50px 0px;
+}
 
 
 .ad {

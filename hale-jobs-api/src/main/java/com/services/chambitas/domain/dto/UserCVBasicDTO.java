@@ -11,6 +11,6 @@ public class UserCVBasicDTO {
 	
 	private String jobTitle;
 	
-	private double salary;
+	private Long salary;
 
 }

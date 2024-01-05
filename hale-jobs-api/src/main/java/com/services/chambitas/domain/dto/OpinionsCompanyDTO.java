@@ -19,5 +19,7 @@ public class OpinionsCompanyDTO {
 	
 	private Long userId;
 	
+	private double rating;
+	
 	
 }

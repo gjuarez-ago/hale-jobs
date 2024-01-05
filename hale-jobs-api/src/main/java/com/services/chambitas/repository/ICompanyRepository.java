@@ -18,8 +18,8 @@ public interface ICompanyRepository extends JpaRepository<Company, Long>{
 	 
 	Company findCompanyByRFC(String rfc);
 	 
-    @Query(value = "SELECT c FROM Company c WHERE c.regBorrado = 0")
-	Page<Company> getCompaniesGlobal(Pageable pageable);
+    @Query(value = "SELECT c FROM Company c WHERE c.name LIKE %:name% AND c.regBorrado = 0")
+	Page<Company> getCompaniesGlobal(@Param(value = "name") String name, Pageable pageable);
     
     @Query(value = "SELECT c FROM Company c WHERE c.ownerId = :ownerId AND c.regBorrado = 0")
 	List<Company> getCompaniesByUser(@Param(value = "ownerId") Long ownerId);

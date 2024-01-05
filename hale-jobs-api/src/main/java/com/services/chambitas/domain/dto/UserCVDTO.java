@@ -26,7 +26,7 @@ public class UserCVDTO {
 	
 	private Long city;
 	
-	private double salary;
+	private Long salary;
 
 	private List<String> skills;
 	

@@ -129,7 +129,6 @@ public class Offer implements Serializable {
 	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private JobSubcategory subcategory;
 	
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private Date regDateCreated;
 
 	@JsonProperty(access = Access.WRITE_ONLY)

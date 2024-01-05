@@ -46,8 +46,22 @@ export class OfferService {
     return this.http.post<Offer>(`${this.url}/offer/report-offer?category=${category}&comments=${comments}&offerId=${offerId}&userId=${userId}`, {})
   }
 
-  public searchOffersWEB(keyword: string, page: number = 0, pageSize: number = 10): Observable<Offer> {
-    return this.http.get<Offer>(`${this.url}/offer/search-offers-w?keyword=${keyword}&page=${page}&pageSize=${pageSize}`)
+  public searchOffersWEB(pagination : any): Observable<any> {
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        category: pagination.category,
+        subcategory: pagination.subcategory,
+        title: pagination.title,
+        urgency: pagination.urgency,
+        typeJob: pagination.typeOfJob,
+        rangeAmount: pagination.rangeAmount,
+        state: pagination.state
+      }
+    });
+
+    return this.http.get<any>(`${this.url}/offer/search-offers-w`, {params: params})
   }
 
   public selectPostulate(amountAcepted: string, offerId: string, userId: string): Observable<Offer> {
@@ -73,6 +87,20 @@ export class OfferService {
     });
 
     return this.http.get<any>(`${this.url}/offer/view-offer-w`,{params: params})
+  }
+
+  
+  public getOfferByCompany(pagination : any): Observable<any> {
+
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        company: pagination.company
+      }
+    });
+
+    return this.http.get<any>(`${this.url}/offer/search-offers-company`,{params: params})
   }
 
 }

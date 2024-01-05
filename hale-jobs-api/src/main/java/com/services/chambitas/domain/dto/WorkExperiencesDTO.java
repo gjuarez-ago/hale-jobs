@@ -1,7 +1,5 @@
 package com.services.chambitas.domain.dto;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -13,13 +11,13 @@ public class WorkExperiencesDTO {
 	
 	private String description;
 	
-	private Date begins;
+	private String begins;
 	
-	private Date ends;
+	private String ends;
 	
 	private String[] skills;
 	
-	private boolean currentlyWork;
+	private boolean worked;
 	
 
 }

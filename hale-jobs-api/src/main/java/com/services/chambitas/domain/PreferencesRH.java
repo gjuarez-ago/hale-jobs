@@ -35,6 +35,8 @@ public class PreferencesRH implements Serializable{
 	
     @Column(columnDefinition="LONGBLOB") 
 	private String[] areasSpecialidad;
+    
+    private Long userId;
 
 	//Areas de especialidad []
 	//Actitudes blandas que buscas en tus candidatos []

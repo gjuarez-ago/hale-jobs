@@ -50,14 +50,14 @@ public class OfferController {
    
    // Eliminar oferta
 	@DeleteMapping("/delete/{offerId}/{userId}")
-	public ResponseEntity<Offer> deleteOffer(@PathVariable("offerId") String offerId, @PathVariable("userId") Long userId) throws GenericException  {
+	public ResponseEntity<Offer> deleteOffer(@PathVariable("offerId") Long offerId, @PathVariable("userId") Long userId) throws GenericException  {
 		Offer response = service.deleteOfferById(offerId, userId);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
    // Buscar oferta por ID
    @GetMapping("/find/{offerId}")
-   public ResponseEntity<Offer> findOfferById(@PathVariable("offerId") String offerId) throws GenericException  {
+   public ResponseEntity<Offer> findOfferById(@PathVariable("offerId") Long offerId) throws GenericException  {
 		Offer response = service.findOfferById(offerId);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
    }
@@ -65,7 +65,7 @@ public class OfferController {
    // Reportar oferta
    @PostMapping("/report-offer")
    public ResponseEntity<Offer> reportOffer(@RequestBody ReportOfferDTO request) throws GenericException  {
-		Offer response = service.reportOffer(request.getCategory(), request.getComments(), request.getCategory(), request.getUserId());
+		Offer response = service.reportOffer(request.getOfferId(), request.getComments(), request.getCategory(), request.getUserId());
 	    return new ResponseEntity<>(response , HttpStatus.OK);
    }
    
@@ -91,7 +91,7 @@ public class OfferController {
    
    // Mostrar ofertas WEB
    @GetMapping("/view-offer-w")
-	public ResponseEntity<List<Offer>> getAllOffersByUserWEB(
+	public ResponseEntity<Page<Offer>> getAllOffersByUserWEB(
 		@RequestParam("user") Long userId,
 		@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
@@ -104,7 +104,7 @@ public class OfferController {
 		@RequestParam(value = "rangeAmount", required = false, defaultValue = "") String rangeAmount,
 		@RequestParam(value = "typeJob", required = false, defaultValue = "") String typeJob
         ) {
-		List<Offer> response = service.getAllOfferByUserWEB(userId, title,subcategory, rangeAmount,urgency ,  workPlace,levelStudy, typeJob, status);
+	   Page<Offer> response = service.getAllOfferByUserWEB(userId, title,subcategory, rangeAmount,urgency ,  workPlace,levelStudy, typeJob, status, pageNo, pageSize);
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}	
 		
@@ -115,13 +115,30 @@ public class OfferController {
 		return new ResponseEntity<>(response , HttpStatus.OK);
    }
 	
+   
    // Buscador de ofertas en la WEB
    @GetMapping("/search-offers-w")
-  	public ResponseEntity<Page<Offer>> searchOffersWEB(@RequestParam("keyword") String keyword,
+  	public ResponseEntity<Page<Offer>> searchOffersWEB(
   			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+  			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+  			@RequestParam(value = "category", required = false, defaultValue = "1") Long category,
+  			@RequestParam(value = "subcategory", required = false, defaultValue = "") String subcategory,
+  			@RequestParam(value = "title", required = false, defaultValue = "") String title, 
+  			@RequestParam(value = "state", required = false, defaultValue = "") String state,
+  			@RequestParam(value = "urgency", required = false, defaultValue = "") String urgency,
+  			@RequestParam(value = "rangeAmount", required = false, defaultValue = "") String rangeAmount,
+  			@RequestParam(value = "typeJob", required = false, defaultValue = "") String typeJob) {
   		
-  		Page<Offer> response = service.findOfferGeneralWEB(keyword, pageNo, pageSize);
+  		Page<Offer> response = service.findOfferGeneralWEB(title, category, subcategory, rangeAmount, state,typeJob, rangeAmount, pageNo, pageSize);
+  		return new ResponseEntity<>(response , HttpStatus.OK);
+  	}	
+   
+   @GetMapping("/search-offers-company")
+  	public ResponseEntity<Page<Offer>> searchOffersWEB(
+  			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+  			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+  			@RequestParam(value = "company", required = true) Long company) {
+  		Page<Offer> response = service.getAllOfferByCompany(company, pageNo, pageSize);
   		return new ResponseEntity<>(response , HttpStatus.OK);
   	}	
 		

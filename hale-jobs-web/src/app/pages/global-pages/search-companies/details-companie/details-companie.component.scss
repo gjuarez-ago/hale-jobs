@@ -5,6 +5,15 @@
 
 }
 
+.content-img {
+    margin: 0px 0px 5px 0px;
+}
+
+.content-img img{
+    width: 100%;
+    height: auto;
+}
+
 .logo {
     display: block;
     margin: auto;
@@ -35,13 +44,29 @@ p.pd-4 {
 
 .offer-content {
     cursor: pointer;
-    margin: 14px 0px;
+    margin: 14px 5px;
     padding: 10px 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 2px 5px -1px;
     background-color: rgb(251, 251, 251);
     border-right: 5px solid #f5ad40;
     border-radius: 10px;
     transition: box-shadow 1s;
+}
+
+.sizebox{ 
+    margin: 10px 0px;
+}
+
+a {
+    color: black;
+}
+
+.form-inline 
+{
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 20px 0px 50px 0px;
 }
 
 .card {

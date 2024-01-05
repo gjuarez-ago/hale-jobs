@@ -87,11 +87,9 @@ export class AuthService {
 
   public isUserLoggedIn(): boolean {
     this.loadToken();
-    console.log(this.token);
 
 
     if (this.token != null && this.token !== '') {
-      console.log(this.jwtHelper.decodeToken(this.token).sub);
       if (this.jwtHelper.decodeToken(this.token).sub != null) {
         if (!this.jwtHelper.isTokenExpired(this.token)) {
           this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;

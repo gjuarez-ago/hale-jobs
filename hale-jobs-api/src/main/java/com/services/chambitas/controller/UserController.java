@@ -9,9 +9,7 @@ import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -153,7 +150,7 @@ public class UserController {
 			return new ResponseEntity<>(response, HttpStatus.OK);	
 		}
 	    
-	    @PutMapping("/update-profile-image")
+	    @PostMapping("/update-profile-image")
 	    public ResponseEntity<User> updateProfile(@RequestParam(value = "username") String username, @RequestParam(value = "image") MultipartFile image) throws MessagingException, EmailNotFoundException, IOException, UsernameExistException {
 	    	User response = userService.updateProfileImage(image, username);
 			return new ResponseEntity<>(response, HttpStatus.OK);	

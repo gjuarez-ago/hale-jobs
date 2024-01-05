@@ -28,7 +28,8 @@ export class CvProfileComponent implements OnInit {
 
   public userInformationOriginal : any;
   public userInformation : any;
-
+  public checkedWork : any = false;
+  public checkedSchool : any = false;
 
   //VARIABLES DE INFORMACIÓN DE USUARIO ------------------------------------------
 
@@ -48,36 +49,22 @@ export class CvProfileComponent implements OnInit {
   public listWorkExperiences : any = [];
   public loadingListWorkExperiences = false;
 
-
-  public listSkills : any = [];
-  public listSkillsEdit : any = [];
-  public isLoadingSkillsSave : boolean = false;
-
-
   public workExperienceEdit : any;
   public isLoadingWorkExperience : boolean = false;
 
 
-  public listSchools : any;
-  public listCertifications : any;
+  public listSkills : any = [];
+  public listSkillsEdit : any = [];
+  public isLoadingSkillsSave : boolean = false;
+  public visibleAddSkills = false;
+
+  public listSchools : any = [];
+  public listCertifications : any = [];
   public certificationEdit : any;
   public schoolEdit : any; 
+  public isLoadingSchoolEdit = false;
 
 
-  public skills: any = [
-    {
-      idSkill: 1,
-      skillName: 'DESARROLLO WEB'
-    },
-    {
-      idSkill: 2,
-      skillName: 'DESARROLLO MOVIL'
-    },
-    {
-      idSkill: 3,
-      skillName: 'TESTER'
-    },
-  ]
   
 
 
@@ -89,88 +76,47 @@ export class CvProfileComponent implements OnInit {
 
   //VARIABLES EXPERIENCIA USUARIO ------------------------------------------------------
 
-  public idExperienceProfessional = 0;
-
-
 
   registerRecruiterExperienceProfessionalForm = new FormGroup({
     job: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
     company: new FormControl(null, Validators.required),
     skills: new FormControl(null, Validators.required),
     begins: new FormControl(null, Validators.required),
-    ends: new FormControl(null, Validators.required),
+    ends: new FormControl(null),
+    checked: new FormControl(null),
     description: new FormControl(null, [Validators.required, Validators.minLength(50)]),
   });
 
   //VARIABLES HABILIDADES USUARIO ----------------------------------------------------------
-  public visibleAddSkills = false;
-
-  public skillsTemporary: any = [];
-  
-  public schools: any = [
-    {
-      idSchool: 1,
-      schoolName: 'Universidad Autónoma del Carmen'
-    },
-    {
-      idSchool: 2,
-      schoolName: 'Universidad Mesoamericana de San Agustín'
-    },
-    {
-      idSchool: 3,
-      schoolName: 'EDUCREA'
-    },
-  ]
-
-  public levelSchool: any = [
-    {
-      idLevel: 1,
-      levelName: 'Universitario - No titulado en Tecnologías de Información'
-    },
-    {
-      idLevel: 2,
-      levelName: 'Universitario - Titulado'
-    },
-    {
-      idLevel: 3,
-      levelName: 'CARRERA TÉCNICA'
-    },
-  ]
-
   skillsForm = new FormGroup({
     skills: new FormControl([], Validators.required),
   });
 
   //VARIABLES EDUCACION DE USUARIO ----------------------------------------------------------
   public visibleAddEducation = false;
-  public idEducationUser = 0;
+  public visibleEditEducation = false;
 
-  public educationUser: any = [];
-
-  EducationUserForm = new FormGroup({
-    nameSchool: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
-    levelSchool: new FormControl(null, Validators.required),
-    startDate: new FormControl(null, Validators.required),
-    endDate: new FormControl(null, Validators.required),
+  educationUserForm = new FormGroup({
+    name: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+    type: new FormControl(null, [Validators.required]),
+    schoolName: new FormControl(null, [Validators.required, Validators.minLength(5)]),
+    begins: new FormControl(null, [Validators.required]),
+    ends: new FormControl(null),
+    checked: new FormControl(false),
   });
 
   //VARIABLES CERTIFICACIÓN DE USUARIO ----------------------------------------------------------
   public visibleAddCertificate = false;
-  public idCertificateUser = 0;
+  public visibleEditCertificate = false;
+  public isLoadingCertificate = false;
 
-  public certificateUserArray: any = [{
-    nameCertificate: 'Universidad Autónoma del Carmen',
-    levelCertificate: 'Universitario - No titulado en Tecnologías de Información',
-    startDate: new Date(),
-    endDate: new Date(),
-  }];
 
-  CertificateUserForm = new FormGroup({
-    nameCertificate: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
-    levelCertificate: new FormControl(null, Validators.required),
-    startDate: new FormControl(null, Validators.required),
-    endDate: new FormControl(null, Validators.required),
+  certificateUserForm = new FormGroup({
+    name: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
+    url: new FormControl(null, Validators.required),
+    description: new FormControl(null, Validators.required),
   });
+  public listRangeAmount: any = [];
 
   constructor(
     private modalService: NzModalService,
@@ -187,14 +133,17 @@ export class CvProfileComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
-      this.getCurrentUser();
-      this.getStates();
+      
+      // this.getStates();
       this.getLevelOfStudy();
       this.getSubcategories();  
       this.getWorkExperiencesByUser();
       this.getskillsByUser();
       this.getSchoolsByUser();
       this.getCertificationsByUser();
+      this.getCurrentUser(this.user);
+      this.getRangeAmount();
+      
     } else {
       this.router.navigateByUrl("/auth/login");
     }
@@ -202,15 +151,32 @@ export class CvProfileComponent implements OnInit {
   }
 
   // Servicios API
-  getCurrentUser() {
+  getCurrentUser(user : any) {
     this.ngxSpinner.show();
     this.isLoadingGeneral = true;
-    this.authenticationService.getCurrentUser("bicosind@gmail.com").subscribe(
+    this.authenticationService.getCurrentUser(user.username).subscribe(
       (response: any) => {
+        
+       this.userInformationOriginal = response;
 
+        this.isLoadingGeneral = false;  
+        this.ngxSpinner.hide();     
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
+        this.isLoadingGeneral = false;
+        this.ngxSpinner.hide();     
+        
+      }
+    )
+  }
+
+  getUpdateUser() {
+    this.ngxSpinner.show();
+    this.isLoadingGeneral = true;
+    this.authenticationService.getCurrentUser(this.user?.username).subscribe(
+      (response: any) => {        
        this.userInformation = response;
-       this.userInformationOriginal = this.userInformation;
-
         this.isLoadingGeneral = false;  
         this.ngxSpinner.hide();     
       },
@@ -226,7 +192,7 @@ export class CvProfileComponent implements OnInit {
   getWorkExperiencesByUser() {
     this.loadingListWorkExperiences = true;
     this.ngxSpinner.show();
-    this.cvService.workExperiencesByUser(1).subscribe(
+    this.cvService.workExperiencesByUser(this.userId).subscribe(
       (response: any) => {  
         this.listWorkExperiences = response;
         this.loadingListWorkExperiences = false;
@@ -246,8 +212,14 @@ export class CvProfileComponent implements OnInit {
     this.cvService.workExperiencesById(id).subscribe(
       (response: any) => {
   
+        if(response.worked) {
+          response.ends = undefined;
+        }
+        
         console.log(response);
         this.workExperienceEdit = response;
+        
+
         this.isLoadingWorkExperience = false;       
       },
       (errorResponse: HttpErrorResponse) => {
@@ -258,15 +230,34 @@ export class CvProfileComponent implements OnInit {
   }
 
 
+public getRangeAmount() {
+  this.isLoadingGeneral = true;
+  this.subcriptions.push(
+    this.genericService
+      .getAllRangeAmount()
+      .subscribe(
+        (response: any) => {
+          this.listRangeAmount = response;
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+  );
+}
+
+
   getskillsByUser() {
     this.isLoadingGeneral = true;
-    this.cvService.getSkillsByUser(1).subscribe(
+    this.cvService.getSkillsByUser(this.userId).subscribe(
       (response: any) => {
        this.listSkills = [];
        this.listSkillsEdit = [];
        response.forEach((prop: any, key: any) => {
           this.listSkills.push(prop.value)   
-        }); 
+       }); 
 
         
         this.isLoadingGeneral = false;       
@@ -282,7 +273,7 @@ export class CvProfileComponent implements OnInit {
 
   getSchoolsByUser() {
     this.isLoadingGeneral = true;
-    this.cvService.getSchoolsByUser(1).subscribe(
+    this.cvService.getSchoolsByUser(this.userId).subscribe(
       (response: any) => {
        this.listSchools = response;
         this.isLoadingGeneral = false;       
@@ -310,7 +301,7 @@ export class CvProfileComponent implements OnInit {
 
   getCertificationsByUser() {
     this.isLoadingGeneral = true;
-    this.cvService.getCertificationsByUser(1).subscribe(
+    this.cvService.getCertificationsByUser(this.userId).subscribe(
       (response: any) => {
        this.listCertifications = response;
         this.isLoadingGeneral = false;       
@@ -322,9 +313,9 @@ export class CvProfileComponent implements OnInit {
     )
   }
 
-  getCertificationById() {
+  getCertificationById(id : any) {
     this.isLoadingGeneral = true;
-    this.genericService.getAllStates().subscribe(
+    this.cvService.getCertificationById(id).subscribe(
       (response: any) => {
        this.certificationEdit = response;
         this.isLoadingGeneral = false;       
@@ -433,10 +424,11 @@ export class CvProfileComponent implements OnInit {
 
   showModalInfoUser(): void {
     this.visibleInfoPersonal = true;
+    this.getUpdateUser();
   }
 
   closeModalInfoUser() {
-    this.visibleInfoPersonal = true;
+    this.visibleInfoPersonal = false;
   }
 
 
@@ -464,11 +456,11 @@ export class CvProfileComponent implements OnInit {
     let data = this.userInfoPersonalForm.value;
     this.ngxSpinner.show();
 
-    this.cvService.updateCVBasic({...data, username: "bicosind@gmail.com"}).subscribe(
+    this.cvService.updateCVBasic({...data, username: this.user?.username}).subscribe(
       (response: any) => {
        console.log(response);
         
-       this.getCurrentUser();
+       this.getCurrentUser(this.user);
         this.visibleInfoPersonal = false;
         this.isLoadingGeneral=false;
         this.ngxSpinner.hide();
@@ -498,10 +490,34 @@ export class CvProfileComponent implements OnInit {
       return;
     } 
 
-
     let form = this.registerRecruiterExperienceProfessionalForm.value;    
 
-    this.cvService.addWorkExperience({...form, userId: this.userId}).subscribe(
+    let f1 = new Date(form.begins);
+    let f2 = new Date(form.ends);
+
+    if(f2 < f1 && !this.checkedWork){
+      this.message.create("info", 'La fecha de inicio no debe ser mayor a la de termino');
+      return;
+    }
+    
+    
+    if((form.ends == null || form.ends == undefined) && !this.checkedWork) {
+      this.message.create("info", 'Es necesario agregar la fecha de termino');
+      return;
+    }
+
+    let data = {
+      "job": form.job,
+      "company": form.company,
+      "skills": form.skills,
+      "begins": form.begins,
+      "ends": form.checked ?  'NA' : form.ends,
+      "worked": form.checked ? true : false,
+      "description": form.description,
+      "userId": this.userId
+  }
+
+    this.cvService.addWorkExperience(data).subscribe(
       (response: any) => {  
         console.log(response);
         this.getWorkExperiencesByUser();
@@ -529,12 +545,41 @@ export class CvProfileComponent implements OnInit {
       return;
     }
 
-    this.isLoadingWorkExperience = true;
-
-
     let form = this.registerRecruiterExperienceProfessionalForm.value;
 
-    this.cvService.updateExperienceByUser(this.workExperienceEdit.id,form).subscribe(
+    
+    let f1 = new Date(form.begins);
+    let f2 = new Date(form.ends);
+
+    if(f2 < f1 && !this.workExperienceEdit.worked){
+      this.message.create("info", 'La fecha de inicio no debe ser mayor a la de termino');
+      return;
+    }
+    
+    
+    if((form.ends == null || form.ends == undefined) && !this.workExperienceEdit.worked) {
+      this.message.create("info", 'Es necesario agregar la fecha de termino');
+      return;
+    }
+
+    let data = {
+      "job": form.job,
+      "company": form.company,
+      "skills": form.skills,
+      "begins": form.begins,
+      "ends": form.checked ?  'NA' : form.ends,
+      "worked": form.checked ? true : false,
+      "description": form.description,
+      "userId": this.userId
+  }
+
+  console.log(data);
+  
+
+  this.isLoadingWorkExperience = true;
+
+
+    this.cvService.updateExperienceByUser(this.workExperienceEdit.id,data).subscribe(
       (response: any) => {  
         console.log(response);
         this.getWorkExperiencesByUser();
@@ -577,6 +622,7 @@ export class CvProfileComponent implements OnInit {
   }
 
   deleteExperienceUser(): void {
+ 
     this.modalService.confirm({
       nzTitle: `Eliminar experiencia "${this.workExperienceEdit.job}"`,
       nzContent: '¿Seguro que deseas eliminar la siguiente experiencia de trabajo?',
@@ -590,7 +636,6 @@ export class CvProfileComponent implements OnInit {
           (response: any) => {  
             console.log(response);
             this.getWorkExperiencesByUser();
-            this.listWorkExperiences = response;
             this.isLoadingWorkExperience = false;     
             this.visibleEditExperience = false;  
           },
@@ -630,6 +675,9 @@ export class CvProfileComponent implements OnInit {
     this.isLoadingSkillsSave = true;
     this.ngxSpinner.show();
 
+    console.log(form);
+    
+
       
     this.cvService.addSkills({userId: this.userId, skills: form.skills}).subscribe(
       (response: any) => {  
@@ -653,6 +701,8 @@ export class CvProfileComponent implements OnInit {
     this.isLoadingGeneral = true;
     this.cvService.getSkillsByUser(this.userId).subscribe(
       (response: any) => {
+
+        this.listSkillsEdit = [];
        response.forEach((prop: any, key: any) => {
           this.listSkillsEdit.push(prop.value)   
         });         
@@ -672,84 +722,303 @@ export class CvProfileComponent implements OnInit {
 
   //FUNCIONES DE EDUCACION USUARIO -------------------------------------------------------
 
-  showModalEducation(index: any = 'NO_EDIT'): void {
-   
+  showModalEducation(e : any, type : any): void { 
+    if(type == 'ADD') {
+      this.visibleAddEducation =true;
+    }else {
+      this.getEducationById(e.id);
+      this.visibleEditEducation =true;
+    }
+  }
+
+  closeModalEducation(type : any): void { 
+
+    this.schoolEdit = undefined;
+
+    if(type == 'ADD') {
+      this.visibleAddEducation =false;
+    }else {
+      this.visibleEditEducation =false;
+    }
   }
 
   deleteEducationUser(): void {
-
+    this.ngxSpinner.show();
+    this.cvService.deleteSchoolById(this.schoolEdit.id).subscribe(
+      (response: any) => {  
+        this.getSchoolsByUser();
+        this.ngxSpinner.hide();    
+        this.visibleEditEducation = false;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+        this.ngxSpinner.hide();    
+      }
+    )
    
 
   }
 
   saveEducationUser(): void {
-    if (this.EducationUserForm.valid) {
-      this.educationUser.push(this.EducationUserForm.value);
-      this.visibleAddEducation = false;
-      this.EducationUserForm.reset()
-    } else {
-      Object.values(this.EducationUserForm.controls).forEach(control => {
+    if (!this.educationUserForm.valid) {
+
+      Object.values(this.educationUserForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+      return;
+    } 
+
+    let form = this.educationUserForm.value;
+
+    let f1 = new Date(form.begins);
+    let f2 = new Date(form.ends);
+
+    if(f2 < f1 && !this.checkedSchool){
+      this.message.create("info", 'La fecha de inicio no debe ser mayor a la de termino');
+      return;
     }
+
+    if((form.ends == null || form.ends == undefined) && !this.checkedSchool) {
+      this.message.create("warning", 'Es necesario agregar la fecha de termino');
+      return;
+    }
+
+    let data = {
+      "name": form.name,
+      "type": form.type,
+      "schoolName": form.schoolName,
+      "begins": form.begins,
+      "ends": this.checkedSchool ? 'NA' : form.ends,
+      "worked": this.checkedSchool ? true : false,
+      "userId": this.userId
+   };
+
+   this.isLoadingSchoolEdit = true;
+   
+   this.cvService.addSchoolExperience(data).subscribe(
+    (response: any) => {  
+      console.log(response);
+      this.getSchoolsByUser();
+      this.isLoadingSchoolEdit = false;     
+      this.visibleAddEducation = false;
+    this.educationUserForm.reset()
+    },
+    (errorResponse: HttpErrorResponse) => {
+      this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+      this.isLoadingSchoolEdit = false;
+    }
+  )
+
+    
+
+
   }
 
-  EditEducationUser(): void {
-    if (this.EducationUserForm.valid) {
-      this.educationUser[this.idEducationUser] = this.EducationUserForm.value;
-      this.visibleAddEducation = false;
-      this.EducationUserForm.reset()
-    } else {
-      Object.values(this.EducationUserForm.controls).forEach(control => {
+
+
+
+
+  editEducationUser(): void {
+    if (!this.educationUserForm.valid) {
+      Object.values(this.educationUserForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+    } 
+      
+
+    let form = this.educationUserForm.value;
+
+    let f1 = new Date(form.begins);
+    let f2 = new Date(form.ends);
+
+    if(f2 < f1 && !this.schoolEdit.worked){
+      this.message.create("info", 'La fecha de inicio no debe ser mayor a la de termino');
+      return;
     }
+
+    if((form.ends == null || form.ends == undefined) && !this.schoolEdit.worked) {
+      this.message.create("warning", 'Es necesario agregar la fecha de termino');
+      return;
+    }
+
+    let data = {
+      "name": form.name,
+      "type": form.type,
+      "schoolName": form.schoolName,
+      "begins": form.begins,
+      "ends": this.schoolEdit.worked ? 'NA' : form.ends,
+      "worked": this.schoolEdit.worked ? true : false,
+      "userId": this.userId
+   };
+
+   this.isLoadingSchoolEdit = true;
+
+   this.cvService.updateEducationById(this.schoolEdit.id, data).subscribe(
+    (response: any) => {  
+      console.log(response);
+      this.getSchoolsByUser();
+      this.isLoadingSchoolEdit = false;     
+      this.visibleEditEducation = false;  
+      this.educationUserForm.reset()
+    },
+    (errorResponse: HttpErrorResponse) => {
+      this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+      this.isLoadingSchoolEdit = false;
+    }
+  )
+}
+
+
+  public getEducationById(id : any) {
+    this.isLoadingSchoolEdit = true;
+    this.cvService.getSchoolsById(id).subscribe(
+      (response: any) => {
+        
+        this.schoolEdit = response;
+        
+        if(response.worked) {
+          response.ends = undefined;
+        }        
+        this.isLoadingSchoolEdit = false;       
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+        this.isLoadingSchoolEdit = false;
+      }
+    )
+
   }
 
   //FUNCIONES DE CERTIFICADOS USUARIO -------------------------------------------------------
 
-  showModalCertificate(index: any = 'NO_EDIT'): void {
-    
+  showModalCertificate(e : any, type : any): void {  
+    if(type == "ADD") {
+       this.visibleAddCertificate = true;
+    }else {
+       this.visibleEditCertificate = true;
+       this.getCertificationById(e.id);
+    }
   }
 
+   closeModalCertificate(type : any) {
+    if(type == "ADD") {
+      this.visibleAddCertificate = false;
+    }else {
+      this.visibleEditCertificate = false;
+
+    }
+   }
+
   deleteCertificateUser(): void {
+     
+    this.modalService.confirm({
+      nzTitle: `Eliminar experiencia "${this.certificationEdit.job}"`,
+      nzContent: '¿Seguro que deseas eliminar la siguiente experiencia de trabajo?',
+      nzOkText: 'Eliminar',
+      nzCancelText: 'Cerrar',
+      nzOnOk: () =>{
+
+        this.isLoadingWorkExperience = true;     
+        
+        this.cvService.deleteCertification(this.certificationEdit.id).subscribe(
+          (response: any) => {  
+            console.log(response);
+            this.getCertificationsByUser();
+            this.isLoadingWorkExperience = false;     
+            this.visibleEditExperience = false;  
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+            this.isLoadingWorkExperience = false;
+          }
+        )
+
+      }
+    });
 
   }
 
   saveCertificateUser(): void {
-    if (this.CertificateUserForm.valid) {
-      this.certificateUserArray.push(this.CertificateUserForm.value);
-      this.visibleAddCertificate = false;
-      this.CertificateUserForm.reset()
-    } else {
-      Object.values(this.CertificateUserForm.controls).forEach(control => {
+    if (!this.certificateUserForm.valid) {
+      Object.values(this.certificateUserForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+      return;
+    } 
+
+    let form = this.certificateUserForm.value;
+
+    let data = {
+      "description": form.description,
+      "name": form.name,
+      "url": form.url,
+      "userId": this.userId
     }
+
+    this.isLoadingCertificate = true;
+
+    this.cvService.addCertification(data).subscribe(
+      (response: any) => {  
+        this.getCertificationsByUser();
+        this.isLoadingCertificate = false;     
+        this.visibleAddCertificate = false;  
+        this.certificateUserForm.reset()
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+        this.isLoadingCertificate = false;
+      }
+    )
+
+
   }
 
-  EditCertificateUser(): void {
-    if (this.CertificateUserForm.valid) {
-      this.certificateUserArray[this.idCertificateUser] = this.CertificateUserForm.value;
-      this.visibleAddCertificate = false;
-      this.CertificateUserForm.reset()
-    } else {
-      Object.values(this.CertificateUserForm.controls).forEach(control => {
+  editCertificateUser(): void {
+    
+    if (!this.certificateUserForm.valid) {
+      Object.values(this.certificateUserForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+      return;
     }
+
+    let form = this.certificateUserForm.value;
+
+    let data = {
+      "description": form.description,
+      "name": form.name,
+      "url": form.url,
+      "userId": this.userId
+    }
+
+    this.isLoadingCertificate = true;
+
+    this.cvService.updateCertification(this.certificationEdit.id, data).subscribe(
+      (response: any) => {  
+        this.getCertificationsByUser();
+        this.isLoadingCertificate = false;     
+        this.visibleEditCertificate = false;  
+        this.certificateUserForm.reset()
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+        this.isLoadingCertificate = false;
+      }
+    )
+
+
   }
 
 

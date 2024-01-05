@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +16,7 @@ export class HomeComponent implements OnInit {
 
 
   radioValue = 'A';
-
-
   selectedValue = null;
-
-
   searchForm! : FormGroup;
   
   images = [
@@ -35,7 +32,8 @@ export class HomeComponent implements OnInit {
     private modal: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService
+    private ngxSpinner: NgxSpinnerService,
+    private searchService : SearchService,
 
   ) { 
 
@@ -52,17 +50,35 @@ export class HomeComponent implements OnInit {
 
   public submitForm() {
 
-    for (const i in this.searchForm.controls) {
-      if (this.searchForm.controls.hasOwnProperty(i)) {
-        this.searchForm.controls[i].markAsDirty();
-        this.searchForm.controls[i].updateValueAndValidity();
-      }
-    }
+   
   
     if (!this.searchForm.valid) {
-      // this.createMessage('warning', 'Es necesario llenar todos los campos!');
+      for (const i in this.searchForm.controls) {
+        if (this.searchForm.controls.hasOwnProperty(i)) {
+          this.searchForm.controls[i].markAsDirty();
+          this.searchForm.controls[i].updateValueAndValidity();
+        }
+      }
       return;
     }
+
+    let form = this.searchForm.value;
+
+
+    this.searchService.search({
+      title: form.value,
+      subcategory: null,
+      urgency: null,
+      category: 1,
+      typeOfJob: null,
+      rangeAmount: null,
+      state: '',
+    });
+
+    this.router.navigate(['/search']);
+
+
+
 
   }
 

@@ -9,11 +9,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -67,9 +69,7 @@ public class User {
 
 	private String country;
 	 
-	private Long city;
-	
-	private String state;
+
 
 	//Puedes iniciar labores de inmediato
     private boolean publicProfile;
@@ -82,12 +82,22 @@ public class User {
     private String aboutMe;
     
     private String jobTitle;
-    
-    private double salary;
-    
+
+	// La compañia de la persona
+	@ManyToOne(optional = true, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private CityINEGI city;
+	
+	// La compañia de la persona
+	@ManyToOne(optional = true, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private StateINEGI state;
+	
+	@ManyToOne(optional = true, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private RangeAmount salary;
+	
+	@ManyToOne(optional = true, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private TypeOfJob modalidadTrabajo;
+	
     private Long companyId;
-    
-    private Long modalidadTrabajo;
     
     private String relocated;
     

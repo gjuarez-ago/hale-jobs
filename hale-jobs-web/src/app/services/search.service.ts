@@ -7,12 +7,20 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SearchService {
-  
+
   public key : any = {};
-  public keyword = new BehaviorSubject<any>({}); 
+  public keyword = new BehaviorSubject<any>({});  
+  
+  constructor() { }
 
-  private readonly url: string = `${environment.apiUrl}`
-
-  constructor(private readonly http: HttpClient) { }
+  getKeyword(){
+    return this.keyword.asObservable();
+  }
+  
+  search(k: any) {
+     this.key = k;
+     this.keyword.next(this.key);
+  }
+  
 
 }

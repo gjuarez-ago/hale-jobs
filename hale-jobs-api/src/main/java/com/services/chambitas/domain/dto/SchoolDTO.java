@@ -15,5 +15,7 @@ public class SchoolDTO {
 	private String begins;
 	
 	private String ends;		
-		
+	
+	private boolean worked;
+	
 }

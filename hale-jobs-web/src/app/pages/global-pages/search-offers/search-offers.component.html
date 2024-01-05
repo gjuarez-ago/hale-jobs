@@ -1,17 +1,12 @@
 <div class="body-content">
-
-
-    
   <div class="box inputs-box">
-
-     <form action="">
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" class="login-form" (ngSubmit)="filterSubmit()">
       <div class="search-filter">
-
           <div class="one input">
               <nz-form-item class="input-content">
                   <nz-form-control nzErrorTip="Correo electrónico no válido">
                     <nz-input-group nzPrefixIcon="search">
-                      <input [nzSize]="'large'" type="email" nz-input placeholder="¿Qué trabajo estas buscando?" />
+                      <input [nzSize]="'large'" type="text" [ngModel]="this.key && this.key.title" formControlName="title" nz-input placeholder="¿Qué trabajo estas buscando?"  />
                     </nz-input-group>
                   </nz-form-control>
                 </nz-form-item>
@@ -19,18 +14,16 @@
 
           <div class="two input">
               <nz-form-item class="input-content">
-                  <nz-form-control nzErrorTip="Correo electrónico no válido">
-                    <nz-select class="search" nzShowSearch nzAllowClear nzPlaceHolder="¿En que estado estas buscando?" [(ngModel)]="selectedValue">
-                      <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                      <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                      <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                  <nz-form-control>
+                    <nz-select class="search" formControlName="state" nzShowSearch nzAllowClear nzPlaceHolder="¿En que estado estas buscando?">
+                      <nz-option *ngFor="let item of listStates" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
           </div>
 
           <div class="three input">
-            <button type="button"  nz-button nzType="primary" [nzSize]="'default'" nzBlock nzShape="round">
+            <button type="submit"  nz-button nzType="primary" [nzSize]="'default'" nzBlock nzShape="round">
               <i nz-icon nzType="search"></i>
               Realizar busqueda</button>
 
@@ -42,52 +35,43 @@
       <div class="more-filters">
 
         <div class="element">
-            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
-              <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-              <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-              <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-            </nz-select>
+          <nz-select class="input-text-select" formControlName="urgency"  nzShowSearch nzAllowClear nzPlaceHolder="Urgencia de contratación" formControlName="urgency">
+            <nz-option nzLabel="Contratación urgente" nzValue="A"></nz-option>
+            <nz-option nzLabel="Moderada" nzValue="B"></nz-option>
+            <nz-option nzLabel="Baja" nzValue="C"></nz-option>
+          </nz-select>    
         </div>
 
         
         <div class="element">
-            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
-              <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-              <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-              <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-            </nz-select>
+          <nz-select class="input-text-select" formControlName="typeOfJob" nzShowSearch nzAllowClear nzPlaceHolder="Lugar de trabajo" formControlName="typeOfJob" >
+            <nz-option *ngFor="let item of listTypeOfJob" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>                
+          </nz-select>   
 
         </div>
 
         <div class="element">
-          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
-            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-          </nz-select>
+            <nz-select class="input-text-select" nzShowSearch nzAllowClear nzPlaceHolder="Rango salarial" formControlName="rangeAmount">
+              <nz-option *ngFor="let item of listRangeAmount" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>                
+            </nz-select> 
         </div>
 
         <div class="element">
-          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
-            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-          </nz-select>
+          <nz-select class="input-text-select"  [nzDisabled]="diabled" formControlName="category" nzShowSearch nzAllowClear nzPlaceHolder="Categoría" [ngModel]="categorySelected"  formControlName="category">
+            <nz-option *ngFor="let item of listCategories" [nzLabel]="item.valor" [nzValue]="item.id"></nz-option>
+          </nz-select>  
         </div>
-
+        
         <div class="element">
-          <button type="button"  nz-button nzType="primary" [nzSize]="'default'" nzShape="round">
+          <nz-select class="input-text-select" formControlName="subcategory" nzShowSearch nzAllowClear nzPlaceHolder="Subcategoría"  formControlName="subcategory">
+            <nz-option *ngFor="let item of listSubcategory" [nzLabel]="item.valor" [nzValue]="item.valor"></nz-option>
+          </nz-select>  
+        </div>
+      
+        <div class="element">
+          <button type="button" (click)="resetFilter()"  nz-button nzType="primary" [nzSize]="'default'" nzShape="round">
             <i nz-icon nzType="clear"></i>
-            Limpiar filtros</button>
-        </div>
-
-        
-        <div class="element">
-          <button type="button"  nz-button nzType="primary" [nzSize]="'default'" nzShape="round">
-            <i nz-icon nzType="plus"></i>
-            Mas filtros</button>
-
-
+            </button>
         </div>
 
 
@@ -114,59 +98,44 @@
 
             <div class="stats-filters">
 
-              <div class="total"> 200 resultados encontrados</div>
+              <div class="total"> {{total}} resultados encontrados</div>
 
               <div class="order-by">
                 <!-- <label class="label-s"> Ordenar por </label> -->
-                <nz-select ngModel="lucy">
-                  <nz-option nzValue="jack" nzLabel="Fecha"></nz-option>
-                  <nz-option nzValue="lucy" nzLabel="Relevancia"></nz-option>
+                <nz-select [ngModel]="selectedValue">
+                  <nz-option nzValue="A" nzLabel="Más reciente"></nz-option>
+                  <!-- <nz-option nzValue="B" nzLabel="Már urgentes"></nz-option> -->
                 </nz-select>
               </div>
-
             </div>
 
-            <a routerLink="/view-job/1" target="_blank">
-            <div class="card"  >
-
+            <div class="card" *ngFor="let item of offers" >
+              <a routerLink="/view-job/{{item.id}}" target="_blank">
               <div class="card-title"> 
-                <h2> Java Developer </h2> 
+                <h2> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> {{item.title}} </h2> 
 
-                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
+                <nz-tag [nzColor]="'magenta'">{{getUrgency(item.urgency)}} </nz-tag>
               
               </div>
 
 
                <div class="salary">
-               $10,000.00 MX a  $20,000.00
+                {{item.rangeAmount.valor}} 
                </div> 
 
                <div class="salary">
-                Posición Remota
+                {{item.typeOfJob.valor}} - {{getWorkPlace(item.workPlace)}}
                 </div> 
 
-              <div class="points-key">
-
-                <!-- <h3> Te ofrece: </h3> -->
-
-                <!-- <ul class="points">
-                  <li> Capacitación pagada </li>
-                  
-                  <li> Vales de despensa </li>
-                  <li> Fondo de ahorro </li>
-                  <li>Vacaciones </li>
-
-                </ul> -->
-              </div>
 
               <div class="tags">
                 <nz-tag nzColor="success">
                   <i nz-icon nzType="check-circle"></i>
-                  <span>Cumples con los requisitos del perfil</span>
+                  <span>{{item.category.valor}}</span>
                 </nz-tag>
 
                   
-                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
+                <nz-tag [nzColor]="'volcano'">{{item.subcategory.valor}}</nz-tag>
               
               </div>
 
@@ -174,278 +143,40 @@
 
                 <h3> Descripción de la vacante: </h3>
 
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
-                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
-              </div>
+                <p>
+                  {{item.description}}
+                </p>
+                </div>
 
 
               <div class="company-and-place">
-                 
-                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
-            
+                 <p> {{item.company.name}} - {{item.state.valor}}, {{item.city.valor}}</p> 
               </div>
-
-              <div class="category">
-                Tecnologias de la información , Desarrollo de software
-               
-
-              </div>
-
-
-
               <div class="date-published">
-                <p> Hace 1 semana</p>
+                <p> {{getDays(item.regDateCreated)}}</p>
               </div>
 
+          
 
-              
+             
 
-              
-
-
-
-            </div>
-          </a>
-
-            <div class="card">
-
-              <div class="card-title"> 
-                <h2> Java Developer </h2> 
-
-                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
-              
-              </div>
-
-
-               <div class="salary">
-               $10,000.00 MX a  $20,000.00
-               </div> 
-
-               <div class="salary">
-                Posición Remota
-                </div> 
-
-              <div class="points-key">
-
-                <!-- <h3> Te ofrece: </h3> -->
-<!-- 
-                <ul class="points">
-                  <li> Capacitación pagada </li>
-                  
-                  <li> Vales de despensa </li>
-                  <li> Fondo de ahorro </li>
-                  <li>Vacaciones </li>
-
-                </ul> -->
-              </div>
-
-              <div class="tags">
-                <nz-tag nzColor="success">
-                  <i nz-icon nzType="check-circle"></i>
-                  <span>Cumples con los requisitos del perfil</span>
-                </nz-tag>
-
-                  
-                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
-              
-              </div>
-
-              <div class="description">
-
-                <h3> Descripción de la vacante: </h3>
-
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
-                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
-              </div>
-
-
-              <div class="company-and-place">
-                 
-                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
-            
-              </div>
-
-              <div class="category">
-                Tecnologias de la información , Desarrollo de software
-               
-
-              </div>
-
-
-
-              <div class="date-published">
-                <p> Hace 1 semana</p>
-              </div>
-
-
-              
-
-              
-
-
-
-            </div>
-
-            <div class="card">
-
-              <div class="card-title"> 
-                <h2> Java Developer </h2> 
-
-                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
-              
-              </div>
-
-
-               <div class="salary">
-               $10,000.00 MX a  $20,000.00
-               </div> 
-
-               <div class="salary">
-                Posición Remota
-                </div> 
-
-              <div class="points-key">
-
-                <h3> Te ofrece: </h3>
-
-                <ul class="points">
-                  <li> Capacitación pagada </li>
-                  
-                  <li> Vales de despensa </li>
-                  <li> Fondo de ahorro </li>
-                  <li>Vacaciones </li>
-
-                </ul>
-              </div>
-
-              <div class="tags">
-                <nz-tag nzColor="success">
-                  <i nz-icon nzType="check-circle"></i>
-                  <span>Cumples con los requisitos del perfil</span>
-                </nz-tag>
-
-                  
-                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
-              
-              </div>
-
-              <div class="description">
-
-                <h3> Descripción de la vacante: </h3>
-
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
-                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
-              </div>
-
-
-              <div class="company-and-place">
-                 
-                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
-            
-              </div>
-
-              <div class="category">
-                Tecnologias de la información , Desarrollo de software
-               
-
-              </div>
-
-
-
-              <div class="date-published">
-                <p> Hace 1 semana</p>
-              </div>
-
-
-              
-
-              
-
-
-
-            </div>
-
-            <div class="card">
-
-              <div class="card-title"> 
-                <h2> Java Developer </h2> 
-
-                <nz-tag [nzColor]="'magenta'">Solicita personal urgentemente </nz-tag>
-              
-              </div>
-
-
-               <div class="salary">
-               $10,000.00 MX a  $20,000.00
-               </div> 
-
-               <div class="salary">
-                Posición Remota
-                </div> 
-
-              <div class="points-key">
-
-                <h3> Te ofrece: </h3>
-
-                <ul class="points">
-                  <li> Capacitación pagada </li>
-                  
-                  <li> Vales de despensa </li>
-                  <li> Fondo de ahorro </li>
-                  <li>Vacaciones </li>
-
-                </ul>
-              </div>
-
-              <div class="tags">
-                <nz-tag nzColor="success">
-                  <i nz-icon nzType="check-circle"></i>
-                  <span>Cumples con los requisitos del perfil</span>
-                </nz-tag>
-
-                  
-                <nz-tag [nzColor]="'volcano'">magenta</nz-tag>
-              
-              </div>
-
-              <div class="description">
-
-                <h3> Descripción de la vacante: </h3>
-
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. lsl Lorem ipsum dolor sit amet
-                 consectetur adipisicing elit. lslLorem ipsum dolor sit amet consectetur adipisicing elit. lsl
-              </div>
-
-
-              <div class="company-and-place">
-                 
-                 <p> Oracle Inc.  México, Toluca  (Remoto)</p> 
-            
-              </div>
-
-              <div class="category">
-                Tecnologias de la información , Desarrollo de software
-               
-
-              </div>
-
-
-
-              <div class="date-published">
-                <p> Hace 1 semana</p>
-              </div>
-
-
-              
-
-              
-
-
-
+            </a>
             </div>
 
 
-
+            <div class="form-inline">
+              <div class="pagination-content">
+                <nz-pagination
+                  [nzPageSize]="pageSize"
+                  [nzPageIndex]="current"
+                  [nzTotal]="total"
+                  (nzPageSizeChange)="changePageSize($event)"
+                  (nzPageIndexChange)="changeCurrentPage($event)"
+                  id="demo"
+                ></nz-pagination>
+              </div>
+            </div>
+         
 
           </div>
 

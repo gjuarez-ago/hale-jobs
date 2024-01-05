@@ -14,8 +14,13 @@ export class CVUserService {
 
   constructor(private readonly http: HttpClient) { }
 
-   public updateImage(image : FormData): Observable<User> {
-    return this.http.post<User>(`${this.url}/user/update-profile-imagen`, image);
+   public updateImage(image : File, user : any): Observable<User> {
+    
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("username", user);
+    
+    return this.http.post<User>(`${this.url}/user/update-profile-image`, formData);
   }
 
   public updateCVBasic(image : any): Observable<User> {
@@ -30,12 +35,12 @@ export class CVUserService {
     return this.http.post<User>(`${this.url}/user/change-visibility`, data);
   }
 
-  public workExperiencesByUser(user : any): Observable<WorkExperiences> {
-    return this.http.get<WorkExperiences>(`${this.url}/work-experiences/get-by-user?userId=${user}`);
+  public workExperiencesByUser(user : any): Observable<any> {
+    return this.http.get<any>(`${this.url}/work-experiences/get-by-user?userId=${user}`);
   }
 
-  public workExperiencesById(user : any): Observable<WorkExperiences> {
-    return this.http.get<WorkExperiences>(`${this.url}/work-experiences/find/${user}`);
+  public workExperiencesById(user : any): Observable<any> {
+    return this.http.get<any>(`${this.url}/work-experiences/find/${user}`);
   }
 
   public deleteExperiencesById(workExperienceId : any): Observable<WorkExperiences> {
@@ -54,29 +59,33 @@ export class CVUserService {
     return this.http.get<WorkExperiences>(`${this.url}/skills/get-by-user?userId=${user}`);
   }
 
-  public deleteSkillsByUser(user : any): Observable<WorkExperiences> {
-    return this.http.delete<WorkExperiences>(`${this.url}/skills/delete/${user}`);
+  public deleteSkillsByUser(user : any): Observable<any> {
+    return this.http.delete<any>(`${this.url}/skills/delete/${user}`);
   }
 
-  public addSkills(skill : any): Observable<WorkExperiences> {
-    return this.http.post<WorkExperiences>(`${this.url}/skills/create`, skill);
+  public addSkills(skill : any): Observable<any> {
+    return this.http.post<any>(`${this.url}/skills/create`, skill);
   }
 
-  public getSchoolsByUser(user : any): Observable<WorkExperiences> {
-    return this.http.get<WorkExperiences>(`${this.url}/school/get-by-user?userId=${1}`);
+  public getSchoolsByUser(user : any): Observable<any> {
+    return this.http.get<any>(`${this.url}/school/get-by-user?userId=${user}`);
   }
 
-  public getSchoolsById(schoolId : any): Observable<WorkExperiences> {
-    return this.http.get<WorkExperiences>(`${this.url}/school/find/${schoolId}`);
+  public getSchoolsById(schoolId : any): Observable<any> {
+    return this.http.get<any>(`${this.url}/school/find/${schoolId}`);
   }
 
   public addSchoolExperience(school : any): Observable<any> {
     return this.http.post<any>(`${this.url}/school/create`, school);
   }
 
-  public deleteSchoolExperience(id : any): Observable<any> {
+  public deleteSchoolById(id : any): Observable<any> {
     return this.http.delete<any>(`${this.url}/school/delete/${id}`);
   }
+
+  public updateEducationById(id:any, data : any): Observable<any> {
+    return this.http.post<any>(`${this.url}/school/update/${id}`, data);
+  }  
 
   public getLanguajesAll(id: any): Observable<any> {
     return this.http.get<any>(`${this.url}/language/get-by-user?userId=${id}`);

@@ -43,11 +43,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.services.chambitas.domain.CityINEGI;
 import com.services.chambitas.domain.Permission;
 import com.services.chambitas.domain.PreferencesRH;
 import com.services.chambitas.domain.PreferencesUser;
+import com.services.chambitas.domain.RangeAmount;
 import com.services.chambitas.domain.School;
 import com.services.chambitas.domain.Skills;
+import com.services.chambitas.domain.StateINEGI;
+import com.services.chambitas.domain.TypeOfJob;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.UserPrincipal;
 import com.services.chambitas.domain.WorkExperiences;
@@ -64,10 +68,14 @@ import com.services.chambitas.exception.domain.EmailNotFoundException;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.UserNotFoundException;
 import com.services.chambitas.exception.domain.UsernameExistException;
+import com.services.chambitas.repository.ICityRepository;
 import com.services.chambitas.repository.IPreferencesRHRepository;
 import com.services.chambitas.repository.IPreferencesUserRepository;
+import com.services.chambitas.repository.IRangeAmountRepository;
 import com.services.chambitas.repository.ISchoolRepository;
 import com.services.chambitas.repository.ISkillsRepository;
+import com.services.chambitas.repository.IStateRepository;
+import com.services.chambitas.repository.ITypeOfJobRepository;
 import com.services.chambitas.repository.IUserRepository;
 import com.services.chambitas.repository.IWorkExperiencesRepository;
 import com.services.chambitas.service.IUserService;
@@ -88,13 +96,20 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
     private LoginAttemptService loginAttemptService;
     private EmailService emailService;
-    
+	
     private IPreferencesRHRepository preRHRepository;
     private IPreferencesUserRepository preUserRepository;
 
+    private ICityRepository cityRepository;
+    private IStateRepository stateRepository;
+	private ITypeOfJobRepository typeOfJobRepository;
+	
+	private IRangeAmountRepository rangeAmountRepository;
+	
+    
     @Autowired
     public UserServiceImpl(IUserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttemptService loginAttemptService, EmailService emailService, IWorkExperiencesRepository workExperiencesRepository, ISchoolRepository schoolRepository,
-    ISkillsRepository skillRepository, IPreferencesUserRepository preUserRepository, IPreferencesRHRepository preRHRepository) {
+    ISkillsRepository skillRepository, IPreferencesUserRepository preUserRepository, IPreferencesRHRepository preRHRepository, ICityRepository cityRepository,IStateRepository stateRepository, IRangeAmountRepository rangeAmountRepository,ITypeOfJobRepository typeOfJobRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.loginAttemptService = loginAttemptService;
@@ -104,7 +119,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         this.skillRepository = skillRepository;
         this.preRHRepository = preRHRepository;
         this.preUserRepository = preUserRepository;
-        
+        this.cityRepository = cityRepository;
+        this.stateRepository = stateRepository;
+        this.rangeAmountRepository = rangeAmountRepository;
+        this.typeOfJobRepository = typeOfJobRepository;
     }
 
 	@Override
@@ -167,18 +185,23 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public User createCVCompany(UserRHCVDTO request) throws GenericException, UserNotFoundException {
 		
+		CityINEGI city = existCity(request.getCity());
+		StateINEGI state = existState(request.getState());
+		TypeOfJob typeJob = existTypeJob(1L);
+
 		User user = validateUpdateUsername(request.getUsername());
 
 		user.setGender(request.getGender());
 	    user.setDateOfBirth(request.getDateOfBirth());
 	    user.setNumberPhone(request.getNumberPhone());
-	    user.setSalary(0);
+	    user.setSalary(null);
 	    user.setAboutMe(request.getAboutMe());
-	    user.setState(request.getState());
-	    user.setCity(request.getCity());
+	    user.setState(state);
+	    user.setCity(city);
+	    
 	    user.setJobTitle(request.getJobTitle());
 	    user.setPublicProfile(false);
-	    user.setModalidadTrabajo(1L);
+	    user.setModalidadTrabajo(typeJob);
 	    user.setFindJob("no");
 	    user.setRelocated("no");
 	    user.setBecomeRapidly(false);
@@ -190,7 +213,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	    preRH.setActitudesBlandas(request.getActitudesBlandas());
 	    preRH.setActitudesTecnicas(request.getActitudesBlandas());
 	    preRH.setAreasSpecialidad(request.getAreasSpecialidad());
-	    
+	    preRH.setUserId(user.getId());
+
 	    preRHRepository.save(preRH);
 	    userRepository.save(user);		
 		
@@ -200,18 +224,25 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public User createCVUser(UserCVDTO request) throws UserNotFoundException, GenericException {
 		
+		
+		
+		CityINEGI city = existCity(request.getCity());
+		StateINEGI state = existState(request.getState());
+		TypeOfJob typeJob = existTypeJob(request.getModalidadTrabajo());
+		RangeAmount rangeAmount = existRangeAmount(request.getSalary());
+
 		User user = validateUpdateUsername(request.getUsername());
 		
         // Basic data		
 		user.setGender(request.getGender());
 	    user.setDateOfBirth(request.getDateOfBirth());
 	    user.setNumberPhone(request.getNumberPhone());
-	    user.setSalary(request.getSalary());
+	    user.setSalary(rangeAmount);
 	    user.setAboutMe(request.getAboutMe());
-	    user.setState(request.getState());
-	    user.setCity(request.getCity());
+	    user.setState(state);
+	    user.setCity(city);
 	    user.setJobTitle(request.getJobTitle());
-	    user.setModalidadTrabajo(request.getModalidadTrabajo());
+	    user.setModalidadTrabajo(typeJob);
 	    user.setFindJob(request.getFindJob());
 	    user.setRelocated(request.getRelocated());
 
@@ -237,6 +268,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	    	r.setSchoolName(e.getSchoolName());
 	    	r.setType(e.getType());
 	    	r.setUserId(user.getId());
+	    	r.setWorked(e.isWorked());
 	    	schoolRepository.save(r);	    	
 	    }
 	   
@@ -253,6 +285,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	        e.setJob(wex.getJob());
 	        e.setSkills(wex.getSkills());
 	        e.setUserId(user.getId());
+	        e.setWorked(wex.isWorked());
 	    
 	        workExperiencesRepository.save(e);
 	    }
@@ -262,6 +295,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	    
 	    preUser.setFindJobs(request.getFindJobs());
 	    preUser.setLearnSkills(request.getLearnSkills());
+	    preUser.setUserId(user.getId());
 	    
 	    preUserRepository.save(preUser);
 	    userRepository.save(user);		
@@ -274,6 +308,11 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public User updateCVPrincipal(UserCVPrincipalDTO request) throws UserNotFoundException, GenericException {
 		
+		
+		CityINEGI city = existCity(request.getCity());
+		StateINEGI state = existState(request.getState());
+		TypeOfJob typeJob = existTypeJob(3L);
+
 		User user = validateUpdateUsername(request.getUsername());
 		
 		user.setNames(request.getName());
@@ -283,11 +322,11 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
 		user.setNumberPhone(request.getNumberPhone());	
 		user.setEmail(request.getEmail());
-		user.setState(request.getState());
-		user.setCity(request.getCity());
+		user.setState(state);
+		user.setCity(city);
 		user.setDateOfBirth(request.getDateOfBirth());
 		user.setRelocated(request.getRelocated());
-		user.setModalidadTrabajo(request.getModalidadTrabajo());
+		user.setModalidadTrabajo(typeJob);
 		user.setNumberPhone(request.getNumberPhone());
 		user.setGender(request.getGender());
 
@@ -300,12 +339,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	public User updateCVBasic(UserCVBasicDTO request)  throws UserNotFoundException, GenericException {
 		
 		User user = validateUpdateUsername(request.getUsername());
-		
-		user.setSalary(request.getSalary());
+		RangeAmount rangeAmount = existRangeAmount(request.getSalary());
+
+		user.setSalary(rangeAmount);
 		user.setAboutMe(request.getAboutMe());
 		user.setJobTitle(request.getJobTitle());
-	
-	    
+		    
 	    userRepository.save(user);		
 		
 		return user;
@@ -445,6 +484,16 @@ public User changeVisibility(VisibilityDTO request) throws UserNotFoundException
     userRepository.save(user);		
 	return user;
 }
+
+private RangeAmount existRangeAmount(Long id) throws GenericException {
+	RangeAmount response = rangeAmountRepository.findRangeAmountById(id);
+	
+	if(response == null) {
+		throw new GenericException("No hemos encontrado el rango de sueldo!");
+	}
+	
+	return response;
+}
 	
 //	
 //	private User validateRfc(String rfc) throws GenericException {
@@ -469,6 +518,28 @@ public User changeVisibility(VisibilityDTO request) throws UserNotFoundException
 			}
 		  
 		return currentUser;
+	}
+	
+	
+	private CityINEGI existCity(Long id) throws GenericException {
+		CityINEGI response = cityRepository.findCityINEGIById(id);
+		
+		if(response == null) {
+			throw new GenericException("No hemos encontrado la ciudad!");
+		}
+		
+		return response;
+	}
+	
+	
+	private StateINEGI existState(String id) throws GenericException {
+		StateINEGI response = stateRepository.findStateINEGIByClave(id);
+		
+		if(response == null) {
+			throw new GenericException("No hemos encontrado el estado!");
+		}
+		
+		return response;
 	}
 	
 	
@@ -512,6 +583,16 @@ public User changeVisibility(VisibilityDTO request) throws UserNotFoundException
             loginAttemptService.evictUserFromLoginAttemptCache(user.getUsername());
         }
     }
+    
+	private TypeOfJob existTypeJob(Long clave) throws GenericException {
+		TypeOfJob element = typeOfJobRepository.findTypeOfJobById(clave);
+		
+		if(element == null) {
+			throw new GenericException("No se encontro el recurso");
+		}
+		
+		return element;
+	}
 
 
 	

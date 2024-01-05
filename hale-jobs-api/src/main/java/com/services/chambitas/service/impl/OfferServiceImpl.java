@@ -195,7 +195,7 @@ public class OfferServiceImpl implements IOfferService{
 	}
 
 	@Override
-	public Offer deleteOfferById(String id, Long userId) throws GenericException {
+	public Offer deleteOfferById(Long id, Long userId) throws GenericException {
 		
 		Offer element = exisOffer(id);
 		
@@ -209,13 +209,13 @@ public class OfferServiceImpl implements IOfferService{
 	}
 
 	@Override
-	public Offer findOfferById(String id) throws GenericException {
+	public Offer findOfferById(Long id) throws GenericException {
 		Offer element = exisOffer(id);
 		return element;
 	}
 
 	@Override
-	public Offer reportOffer(String id, String comment, String category, Long userId) throws GenericException {
+	public Offer reportOffer(Long id, String comment, String category, Long userId) throws GenericException {
 		
 		Offer offer = exisOffer(id);
 		User user = existUser(userId);
@@ -245,11 +245,9 @@ public class OfferServiceImpl implements IOfferService{
 	}
 
 	@Override
-	public List<Offer> getAllOfferByUserWEB(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob, int status) {
-//		Pageable pageable = PageRequest.of(pageNo, pageSize); 	
-		List<Offer> response = offerRepository.findOfferByUserWEB(userId, title, subcategory, rangeAmount, urgency, workPlace , levelStudy,typeJob, status);
-		
-		System.err.println(response.size());
+	public Page<Offer> getAllOfferByUserWEB(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob, int status, int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize); 	
+		Page<Offer> response = offerRepository.findOfferByUserWEB(userId, title, subcategory, rangeAmount, urgency, workPlace , levelStudy,typeJob, status, pageable);		
 		return response;	
 	}
 
@@ -258,12 +256,7 @@ public class OfferServiceImpl implements IOfferService{
 		return offerRepository.findOfferGeneralMovil(keyword);
 	}
 
-	@Override
-	public Page<Offer> findOfferGeneralWEB(String keyword, int pageNo, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNo, pageSize);   
-		Page<Offer> response = offerRepository.findOfferGeneralWEB(keyword, pageable);
-		return response;	
-	}
+
 
 	@Override
 	public Page<Offer> getAllOfferByAdmin(String keyword,int pageNo, int pageSize) {
@@ -298,8 +291,8 @@ public class OfferServiceImpl implements IOfferService{
 		return user;
 	}
 	
-	private Offer exisOffer(String consecutive) throws GenericException {
-		Offer offer = offerRepository.findOfferByConsecutive(consecutive);
+	private Offer exisOffer(Long id) throws GenericException {
+		Offer offer = offerRepository.findOfferById(id);
 		if(offer ==  null) {throw new GenericException("No se encontro la oferta");}
 		return offer;
 	}
@@ -407,6 +400,20 @@ public class OfferServiceImpl implements IOfferService{
 		if(lastElement >= 10000000 && lastElement < 100000000) {consecutive = "10"  + lastElement;}
 		if(lastElement >= 100000000 && lastElement < 1000000000) {consecutive = "1"  + lastElement;}
 		return consecutive;
+	}
+
+	@Override
+	public Page<Offer> findOfferGeneralWEB(String title, Long category,String subcategory,String rangeAmount, String state, String typeJob, String urgency, int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize);   
+		Page<Offer> response = offerRepository.findOfferGeneralWEB(title, category,subcategory,rangeAmount, state, typeJob, urgency, pageable);
+		return response;
+	}
+
+	@Override
+	public Page<Offer> getAllOfferByCompany(Long company, int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize);   
+		Page<Offer> response = offerRepository.getOffersByCompany(company, pageable);
+		return response;
 	}
 	
 	

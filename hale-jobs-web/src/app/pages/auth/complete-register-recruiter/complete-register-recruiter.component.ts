@@ -126,7 +126,7 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
     if (this.registerRecruiterSection3Form.valid) {
       this.registerRecruiterForm.get('dateOfBirth')?.setValue(formatDate(this.registerRecruiterForm.get('dateOfBirth')?.value, 'yyyy-dd-MM', this.locale ))
 
-      const formData = {...this.registerRecruiterForm.value, ...this.registerRecruiterSection2Form.value, ...this.registerRecruiterSection3Form.value, username: "bicosind@gmail.com"}
+      const formData = {...this.registerRecruiterForm.value, ...this.registerRecruiterSection2Form.value, ...this.registerRecruiterSection3Form.value, username: this.user?.username}
 
       
       this.isLoadingGeneral = true;

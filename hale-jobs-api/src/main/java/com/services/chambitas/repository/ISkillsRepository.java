@@ -21,7 +21,7 @@ public interface ISkillsRepository extends JpaRepository<Skills, Long> {
 	List<Skills> findSkillsByUserId(Long user);
 	
 	@Modifying
-	@Query(value = "delete skills where user_id = :id",nativeQuery = true)
+	@Query(value = "DELETE FROM skills WHERE user_id = :id",nativeQuery = true)
 	int deleteSkillsByUser(@Param("id") Long id);
 
 }

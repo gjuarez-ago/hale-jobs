@@ -3,10 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/models/core/user.model';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { CVUserService } from 'src/app/services/cv-user.service';
@@ -20,7 +18,7 @@ import { GenericService } from 'src/app/services/generic.service';
 export class MyProfileComponent implements OnInit {
 
  
-  public user: User| undefined;
+  public user: any;
   public userId : any;
   public isLoadingGeneral = false;
   public subcriptions: Subscription[] = [];
@@ -39,7 +37,8 @@ export class MyProfileComponent implements OnInit {
 
   public previewVisible: boolean = false;
   public previewImage!: string | ArrayBuffer | null;
-  public imgLoad: any;
+  public imgLoad!: File;
+  userInformationOriginal: any;
 
 
   constructor(
@@ -93,12 +92,28 @@ export class MyProfileComponent implements OnInit {
   // Servicios API
   getCurrentUser() {
     this.isLoadingGeneral = true;
-    this.authenticationService.getCurrentUser("bicosind@gmail.com").subscribe(
+    this.authenticationService.getCurrentUser(this.user?.username).subscribe(
       (response: any) => {
        this.userInformation = response;
        this.previewImage = response.profileImageUrl == null ? 'https://thumbs.dreamstime.com/z/no-user-profile-picture-24185395.jpg' : response.profileImageUrl;
        console.log(response);
         
+        this.isLoadingGeneral = false;       
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
+        this.isLoadingGeneral = false;
+      }
+    )
+  }
+
+  getUpdateUser() {
+    this.isLoadingGeneral = true;
+    this.authenticationService.getCurrentUser(this.user?.username).subscribe(
+      (response: any) => {
+       this.userInformationOriginal = response;    
+       this.userInformationOriginal.city.id = response.city.id;
+    
         this.isLoadingGeneral = false;       
       },
       (errorResponse: HttpErrorResponse) => {
@@ -154,7 +169,6 @@ export class MyProfileComponent implements OnInit {
     this.isLoadingGeneral = true;
     this.genericService.getAllCities(p).subscribe(
       (response: any) => {
-       console.log(response);
         this.listCities = response.map((prop: any, key: any) => {
           return {
             ...prop,
@@ -190,7 +204,7 @@ export class MyProfileComponent implements OnInit {
     let data = this.userForm.value;
 
     this.isLoadingGeneral = true;
-    this.cvService.updateCVPrincipal({...data, username: "bicosind@gmail.com"}).subscribe(
+    this.cvService.updateCVPrincipal({...data, username: this.user?.username}).subscribe(
       (response: any) => {        
         this.getCurrentUser();
         this.message.create("success", 'Información actualizada correctamente!');
@@ -206,6 +220,19 @@ export class MyProfileComponent implements OnInit {
     )
    }
 
+
+   getGender(value :any) {
+    
+    let arra = [
+      { value: 'NE', id: 'S/C' },
+      { value: 'Mujer', id: 'M' },
+      { value: 'Hombre', id: 'H' },
+    ];
+    let index: any = arra.find((e: any) => e.id == value);
+    return index.value;
+
+
+   }
    
 changePublicProfile(value : any) {
 
@@ -230,6 +257,7 @@ changePublicProfile(value : any) {
 
   public open(): void {
     this.visible = true;
+    this.getUpdateUser();
   }
 
   public close(): void {
@@ -260,14 +288,16 @@ changePublicProfile(value : any) {
   }
 
   
-  provinceChange(value : any): void {
+  provinceChange(value:any): void {
     if(value) {
       this.getCities(value);
     }else {
       this.listCities = [];
-      this.userInformation.city = undefined;
+      if(this.userInformation) {
+        this.userInformation.city.id = undefined;
+      }
+
     }
-    // this.registerRecruiterForm.get('idCity')?.reset()
   }
 
 
@@ -285,8 +315,26 @@ changePublicProfile(value : any) {
     }
 
     this.imgLoad = event.target.files[0];
+    const img = event.target.files[0];
     this.previewImage  = await getBase64(this.imgLoad);
     this.previewVisible = true;
+
+    this.cvService.updateImage(this.imgLoad, this.user.username).subscribe(
+      (response: any) => {        
+        this.isLoadingGeneral = false;
+        this.ngxSpinner.hide();
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido al cambiar la imagen de perfil');
+        this.ngxSpinner.hide();
+        this.isLoadingGeneral = false;
+      }
+    )
+    
+
+
+
+
   }
 
   redirect(data: any) {

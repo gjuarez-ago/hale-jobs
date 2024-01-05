@@ -50,7 +50,9 @@ public class SchoolServiceImpl implements ISchoolService{
 		element.setEnds(request.getEnds());
 		element.setName(request.getName());
 		element.setType(request.getType());
+		element.setSchoolName(request.getSchoolName());
 		element.setUserId(request.getUserId());
+		element.setWorked(request.isWorked());
 		
 		repository.save(element);
 		
@@ -66,7 +68,9 @@ public class SchoolServiceImpl implements ISchoolService{
 		element.setEnds(request.getEnds());
 		element.setName(request.getName());
 		element.setType(request.getType());
-		
+		element.setSchoolName(request.getSchoolName());
+		element.setWorked(request.isWorked());
+
 		repository.save(element);
 
 		return element;

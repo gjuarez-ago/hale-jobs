@@ -1,7 +1,6 @@
 package com.services.chambitas.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,9 +36,9 @@ public class WorkExperiences implements Serializable{
 	@Column
 	private String description;
 	
-	private Date begins;
+	private String begins;
 	
-	private Date ends;
+	private String ends;
 	
 	private boolean currentlyWork;
 	
@@ -47,5 +46,7 @@ public class WorkExperiences implements Serializable{
 	private String[] skills;
 	
 	private Long userId;
+	
+	private boolean worked;
 	
 }

@@ -58,12 +58,12 @@ public class SwaggerConfig {
 
 	 private ApiInfo metaData() {
 	        return new ApiInfoBuilder()
-	                .title("AGO Consultores API ")
-	                .description("Ago consultores")
+	                .title("HALE JOBS API ")
+	                .description("Hale Jobs S.A.S")
 	                .version("1.1.0")
 	                .license("Apache 2.0")
 	                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
-	                .contact(new Contact("support.team@agoconsultores.com.mx", "AGO Consultores","agoconsultores@agoconsultores.com.mx"))
+	                .contact(new Contact("support.team@hale-jobs.com.mx", "AGO Consultores","agoconsultores@agoconsultores.com.mx"))
 	                .build();
 	 }
 	   

@@ -39,4 +39,6 @@ public class School implements Serializable{
 	
 	private Long userId;
 	
+	private boolean worked;
+	
 }

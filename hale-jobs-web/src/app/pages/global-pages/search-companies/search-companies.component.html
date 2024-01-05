@@ -8,14 +8,13 @@
                     <div id="search-heading">
                         <h1>Busqueda de empresas</h1>
                     </div>
-                    <form id="search-form" class="flex-inline">
-                        <input id="search-input" type="text" autocomplete="off" tabindex="1" autocapitalize="off" autocorrect="off" name="search-query" placeholder="Escribe el nombre de la empresa" />
-                        <input id="search-clear" class="" type="button" tabindex="3" value="×">
-                        <button class="btn-curve" role="button">Buscar </button>
+                    <form id="search-form" class="flex-inline" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                        <input id="search-input" type="text" autocomplete="off" tabindex="1" autocapitalize="off" autocorrect="off"  formControlName="name"  placeholder="Escribe el nombre de la empresa" />
+                        <button type="button" class="btn-curve" role="button">Buscar </button>
                     </form>
 
                     <div class="labels_content">
-                        <div class="labels"><a href="#">A</a></div>
+                        <!-- <div class="labels"><a href="#">A</a></div>
                         <div class="labels"><a href="#">B</a></div>
                         <div class="labels"><a href="#">C</a></div>
                         <div class="labels"><a href="#">D</a></div>
@@ -39,8 +38,8 @@
                         <div class="labels"><a href="#">W</a></div>
                         <div class="labels"><a href="#">X</a></div>
                         <div class="labels"><a href="#">Y</a></div>
-                        <div class="labels"><a href="#">Z</a></div>
-                        <!-- <div class="results_num">1,400 resultados</div> -->
+                        <div class="labels"><a href="#">Z</a></div> -->
+                        <div class="results_num"> {{totalElementByPage}} resultados</div>
                     </div>
 
                 </header>
@@ -59,112 +58,38 @@
 
     <div class="list">
 
-      <a routerLink="/companies/1" routerLinkActive="active" target="_blank">
-        <div class="img-user-content">
+    
+        <div class="img-user-content" *ngFor="let item of companies">
+          <a routerLink="/companies/{{item.id}}" routerLinkActive="active" target="_blank">
           <div class="card card-user-edit box">
               <div class="content">
                 <div class="content-img">
-                    <img src="https://cdn.iconscout.com/icon/free/png-256/free-hsbc-282802.png" alt="" />            
+                    <img src="{{item.imageURL}}" alt="" />            
                 </div>
-                <strong>HSBC México</strong>        
-                <p><nz-rate [ngModel]="3.5"></nz-rate> </p>
-                <i><i nz-icon nzType="fire" nzTheme="outline"></i> 30 Opiniones</i>
+                <strong>{{item.name}}</strong>        
+                <p><nz-rate [nzDisabled]="true"	 [ngModel]="item.qualification"></nz-rate> </p>
+                <i><i nz-icon nzType="fire" nzTheme="outline"></i> {{item.sizeCompany}}</i>
                 <nz-tag class="bade" [nzColor]="'green'">Contratando</nz-tag>
               </div>
             </div>
-        </div>
-      </a>
-      
-
-        <div class="img-user-content">
-            <div class="card card-user-edit box">
-                <div class="content">
-                  <div class="content-img">
-                      <img src="https://mantra.mx/files/media/image/view_21985d44d96e16b99e6274da425c6780.png" alt="" />            
-                  </div>
-                  <strong>HSBC México</strong>        
-                  <p><nz-rate [ngModel]="3.5"></nz-rate> </p>
-                  <i><i nz-icon nzType="fire" nzTheme="outline"></i> 30 Opiniones</i>
-                  <nz-tag class="bade" [nzColor]="'green'">Contratando</nz-tag>
-                </div>
-              </div>
+          </a>
           </div>
-
-          <div class="img-user-content">
-            <div class="card card-user-edit box">
-                <div class="content">
-                  <div class="content-img">
-                      <img src="https://1000marcas.net/wp-content/uploads/2021/06/Accenture-logo.png" alt="" />            
-                  </div>
-                  <strong>HSBC México</strong>        
-                  <p><nz-rate [ngModel]="3.5"></nz-rate> </p>
-                  <i><i nz-icon nzType="fire" nzTheme="outline"></i> 30 Opiniones</i>
-                  <nz-tag class="bade" [nzColor]="'green'">Contratando</nz-tag>
-                </div>
-              </div>
-          </div>
-
-          <div class="img-user-content">
-            <div class="card card-user-edit box">
-                <div class="content">
-                  <div class="content-img">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/LUXOFT_DXC_logo_rgb_blue_2019.png" alt="" />            
-                  </div>
-                  <strong>HSBC México</strong>        
-                  <p><nz-rate [ngModel]="3.5"></nz-rate> </p>
-                  <i><i nz-icon nzType="fire" nzTheme="outline"></i> 30 Opiniones</i>
-                  <nz-tag class="bade" [nzColor]="'green'">Contratando</nz-tag>
-                </div>
-              </div>
-          </div>
-
-          <div class="img-user-content">
-            <div class="card card-user-edit box">
-                <div class="content">
-                  <div class="content-img">
-                      <img src="https://nuvei.com/wp-content/uploads/2021/06/santander-mexico.png" alt="" />            
-                  </div>
-                  <strong>HSBC México</strong>        
-                  <p><nz-rate [ngModel]="3.5"></nz-rate> </p>
-                  <i><i nz-icon nzType="fire" nzTheme="outline"></i> 30 Opiniones</i>
-                  <nz-tag class="bade" [nzColor]="'green'">Contratando</nz-tag>
-                </div>
-              </div>
-          </div>
-
-          <div class="img-user-content">
-            <div class="card card-user-edit box">
-                <div class="content">
-                  <div class="content-img">
-                      <img src="https://pbs.twimg.com/profile_images/1544587535568994304/7TVysKXJ_400x400.png" alt="" />            
-                  </div>
-                  <strong>HSBC México</strong>        
-                  <p><nz-rate [ngModel]="3.5"></nz-rate> </p>
-                  <i><i nz-icon nzType="fire" nzTheme="outline"></i> 30 Opiniones</i>
-                  <nz-tag class="bade" [nzColor]="'green'">Contratando</nz-tag>
-                </div>
-              </div>
-          </div>
-
-          <div class="img-user-content">
-            <div class="card card-user-edit box">
-                <div class="content">
-                  <div class="content-img">
-                      <img src="https://www.nttdata.com/global/en/-/media/assets/images/sns_share.png?rev=5931365452bb42a2bf20c749a7ffc2b0" alt="" />            
-                  </div>
-                  <strong>HSBC México</strong>        
-                  <p><nz-rate [ngModel]="3.5"></nz-rate> </p>
-                  <i><i nz-icon nzType="fire" nzTheme="outline"></i> 30 Opiniones</i>
-                  <nz-tag class="bade" [nzColor]="'green'">Contratando</nz-tag>
-                </div>
-              </div>
-          </div>
-
-    
-        
-
-
     </div>
+
+    <div class="form-inline">
+        <div class="pagination-content">
+          <nz-pagination
+            [nzPageSize]="pageSize"
+            [nzPageIndex]="current"
+            [nzTotal]="total"
+            (nzPageSizeChange)="changePageSize($event)"
+            (nzPageIndexChange)="changeCurrentPage($event)"
+            id="demo"
+          ></nz-pagination>
+        </div>
+    
+       
+      </div>
 
 
 

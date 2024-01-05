@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class OfferEditDTO {
 	
-	String offerId;
+	private Long offerId;
 	
 	// Titulo de la vacante
 	private String title;

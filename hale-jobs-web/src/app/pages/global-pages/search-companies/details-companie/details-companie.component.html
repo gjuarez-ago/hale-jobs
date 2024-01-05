@@ -3,22 +3,26 @@
     <nz-card class="companie">
       <div >
         <div class="content-img">
-          <img src="https://cdn.iconscout.com/icon/free/png-256/free-hsbc-282802.png" alt="" width="200px" />            
+          <img src="{{currentElement && currentElement.imageURL}}" alt="" />            
         </div>
 
         <div >
-          <h1>HSBC México</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui eius, reiciendis iusto saepe illum ipsa,
-            laborum maiores et nemo ipsum perspiciatis iure debitis vitae itaque, voluptatum quas. Iusto, numquam
-            voluptatibus.</p>
+          <h1>{{currentElement && currentElement.name}}</h1>
+          <p>
+            {{currentElement && currentElement.description}}
+          </p>
         </div>
       </div>
     </nz-card>
     <nz-card style="margin-top: .5rem">
       <div>
         <div class="comment-header" nz-col nzSpan="24">
-          <h4 class="pd-a">Alberto Ramirez Vazquez</h4>
-          <p class="pd-a">Subdirector de Area</p>
+          <h4 class="pd-a">
+            {{currentElement && currentElement.category}}
+          </h4>
+          <p class="pd-a">
+            {{currentElement && currentElement.sizeCompany}}
+          </p>
         </div>
 
       
@@ -26,11 +30,11 @@
 
         <div class="alala">
           <div class="rate-title">
-            <nz-rate [ngModel]="'4'" ></nz-rate>
+            <nz-rate  [nzDisabled]="true" [ngModel]="rating" ></nz-rate>
           </div>
 
           <div>
-            <button nz-button nzType="dashed" nzDanger>Calificar</button>
+            <button (click)="showModalAddModal()" nz-button nzType="dashed" nzDanger>Calificar</button>
           </div>
         </div>
 
@@ -52,34 +56,49 @@
             Empleos
           </ng-template>
 
-          <div class="offer-content">
-            <h3> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
-            <h4> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
+          <div class="offer-content" *ngFor="let item of offers">
+            <a routerLink="/view-job/{{item.id}}" target="_blank">
+           
+            <h3> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> {{item.title}} </h3>
+            <h4> <i nz-icon nzType="flag" nzTheme="outline"></i> {{item.city.valor}}, {{item.state.valor}} ({{item.typeOfJob.valor}}) -  <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> {{item.rangeAmount.valor}}  </h4>
   
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quae earum asperiores ad molestias. Illum, suscipit ut est deleniti, laudantium quia voluptas fuga, iste error fugiat necessitatibus eaque. Sint, officia.
+              {{item.description}}
             </p>
+
+            <div class="tags">
+              <nz-tag nzColor="success">
+                <i nz-icon nzType="check-circle"></i>
+                <span>{{item.category.valor}}</span>
+              </nz-tag>
+
+                
+              <nz-tag [nzColor]="'volcano'">{{item.subcategory.valor}}</nz-tag>
+              <nz-tag [nzColor]="'magenta'">{{getUrgency(item.urgency)}} </nz-tag>
+
+            </div>
+
+            </a>
+          </div>
+
+          <div class="form-inline">
+            <div class="pagination-content">
+              <nz-pagination
+                [nzPageSize]="pageSizeO"
+                [nzPageIndex]="currentO"
+                [nzTotal]="totalO"
+                (nzPageSizeChange)="changePageSizeO($event)"
+                (nzPageIndexChange)="changeCurrentPageO($event)"
+                id="demo"
+              ></nz-pagination>
+            </div>
           </div>
 
           
-          <div class="offer-content">
-            <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
-            <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
-  
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quae earum asperiores ad molestias. Illum, suscipit ut est deleniti, laudantium quia voluptas fuga, iste error fugiat necessitatibus eaque. Sint, officia.
-            </p>
-          </div>
+        
 
           
-          <div class="offer-content">
-            <h3> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
-            <h4> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
-  
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quae earum asperiores ad molestias. Illum, suscipit ut est deleniti, laudantium quia voluptas fuga, iste error fugiat necessitatibus eaque. Sint, officia.
-            </p>
-          </div>
+       
 
 
         </nz-tab>
@@ -95,31 +114,31 @@
             Comentarios
           </ng-template>
 
-          <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+          <nz-list [nzDataSource]="opinions" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
             <ng-template #item let-item>
-              <nz-comment [nzAuthor]="item" [nzDatetime]="item">
+              <nz-comment [nzAuthor]="item.title">
                 <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item"></nz-avatar>
                 <nz-comment-content>
-                  <p>{{ item }}</p>
+                  <p>{{ item.opinion }}</p>
                 </nz-comment-content>
                 <nz-comment-action>
 
                   <div nz-col class="rates" >
                     <div class="rate">
                     <span  class="ant-rate-text"> Cultura </span>
-                    <nz-rate [ngModel]="'4'" ></nz-rate>
+                    <nz-rate  [nzDisabled]="true" [ngModel]="item.culture" ></nz-rate>
                     </div>
       
                     
                     <div class="rate">
                       <span  class="ant-rate-text"> Sueldo </span>
-                      <nz-rate [ngModel]="'4'" ></nz-rate>
+                      <nz-rate [nzDisabled]="true" [ngModel]="item.rangeAmountQ" ></nz-rate>
                       </div>
       
                       
                     <div class="rate">
-                      <span  class="ant-rate-text"> Ambiente laboral </span>
-                      <nz-rate [ngModel]="'4'" ></nz-rate>
+                      <span  class="ant-rate-text"> Oportunidades </span>
+                      <nz-rate [nzDisabled]="true" [ngModel]="item.oportunities" ></nz-rate>
                       </div>
       
                  
@@ -131,6 +150,18 @@
             </ng-template>
           </nz-list>
 
+          <div class="form-inline">
+            <div class="pagination-content">
+              <nz-pagination
+                [nzPageSize]="pageSizeOp"
+                [nzPageIndex]="currentOp"
+                [nzTotal]="totalOp"
+                (nzPageSizeChange)="changePageSizeOp($event)"
+                (nzPageIndexChange)="changeCurrentPageOp($event)"
+                id="demo"
+              ></nz-pagination>
+            </div>
+          </div>
 
       
         </nz-tab>
@@ -144,29 +175,23 @@
           <div class="content-resume">
                <h2> Resumen </h2>
                <p>
-                NTT DATA is a top 10 global IT services provider, headquartered in Tokyo and operating in more than 50 countries. 
-
-For us, work is not only for technological innovation, it is about connecting people to create better solutions for everyday life. 
-
-NTT DATA offers an advanced portfolio of consulting, application, business process, cloud, and infrastructure services to businesses and governments worldwide.
-
-Our roots cross continents and cultures, dating back five decades. Since the foundation of NTT DATA , we have made sustainable business growth through our DNA to be people-oriented. Through our long-term perspective, we hope to make a big difference in this world by getting the small things right. This pedigree yields a characteristic unique to NTT DATA​: the opportunity for a global brand with the creative energy and enthusiasm of an entrepreneur.
-               </p>
+                {{currentElement && currentElement.description}}  
+              </p>
 
                <h3>Sitio web</h3>
-               <p>
-                <a href=""> http://www.nttdata.com </a>
-               </p>
-               
+                <a href="{{currentElement && currentElement.urlSite}}" >  {{currentElement && currentElement.urlSite}} </a>
+              
+              <div class="sizebox"></div>
+
                <h3>Tamaño de la empresa</h3>
                <p>
-                +10.001 empleados
+                {{currentElement && currentElement.sizeCompany}}
                </p>
 
                <h3> Campo de especialización </h3>
                <p>
-                Advisory Services, Application Development and Management, Enterprise Application Services, Business Intelligence and Analytics, Infrastructure Services, Outsourcing Services, SAP Solutions, Oracle Solutions, Cloud Solutions, System Integration, Digital Transformation y IT Service
-               </p>
+                {{currentElement && currentElement.category}}
+              </p>
 
           </div>
         </nz-tab>
@@ -174,3 +199,115 @@ Our roots cross continents and cultures, dating back five decades. Since the fou
     </nz-card>
   </div>
 </div>
+
+
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="isVisibleAdd"
+  nzTitle="Califica la empresa"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="modalFooter"
+>
+  <ng-container *nzModalContent>
+    <div class="mod">
+      <form
+        #f="ngForm"
+        id="ngForm"
+        nz-form
+        [formGroup]="validateForm"
+        (ngSubmit)="saveOpinion()"
+        class="login-form"
+        [nzLayout]="'vertical'"
+      >
+        <nz-spin [nzSpinning]="isLoadingReview">
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired> Titulo </nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <input
+                    nz-input
+                    formControlName="title"
+                    placeholder="Escribe el titulo"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+        
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired>¿Que opinias acerca de la empresa?</nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <textarea
+                    nz-input
+                    formControlName="opinion"
+                    placeholder="¿Que te ha parecido el producto?"
+                    [nzAutosize]="{ minRows: 4, maxRows: 4 }"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired>
+                  Oportunidades de crecimiento
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <nz-rate nz-input formControlName="oportunities"></nz-rate>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          
+
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired>
+                  ¿Qué tal el salario?
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <nz-rate nz-input formControlName="rangeAmountQ"></nz-rate>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          
+
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired>
+                  ¿Cómo calificas la cultura de la empresa?
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <nz-rate nz-input formControlName="culture"></nz-rate>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          
+        </nz-spin>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cerrar</button>
+    <button
+      nz-button
+      nzType="primary"
+      form="ngForm"
+      nz-button
+      [nzLoading]="isLoadingReview"
+    >
+      Comentar
+    </button>
+  </ng-template>
+</nz-modal>

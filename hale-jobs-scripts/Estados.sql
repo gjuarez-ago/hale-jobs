@@ -32,3 +32,5 @@ INSERT INTO stateinegi(clave,valor,country) VALUES ('TMS','Tamaulipas','MX');
 INSERT INTO stateinegi(clave,valor,country) VALUES ('VER','Veracruz','MX');
 INSERT INTO stateinegi(clave,valor,country) VALUES ('YUC','Yucatan','MX');
 INSERT INTO stateinegi(clave,valor,country) VALUES ('ZAC','Zacatecas','MX');
+
+INSERT INTO countries(clave,valor) VALUES ('MX','México');

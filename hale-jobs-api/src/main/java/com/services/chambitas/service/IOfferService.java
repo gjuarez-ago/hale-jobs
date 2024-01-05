@@ -3,6 +3,7 @@ package com.services.chambitas.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.services.chambitas.domain.Offer;
@@ -17,20 +18,22 @@ public interface IOfferService {
 	
 	Offer editOffer(OfferEditDTO request) throws GenericException;	
 	
-	Offer deleteOfferById(String id, Long userId) throws GenericException;
+	Offer deleteOfferById(Long id, Long userId) throws GenericException;
 		
-	Offer findOfferById(String id) throws GenericException;	
+	Offer findOfferById(Long id) throws GenericException;	
 	
-	Offer reportOffer(String id, String comment, String category, Long userId) throws GenericException;
+	Offer reportOffer(Long id, String comment, String category, Long userId) throws GenericException;
 		
 	List<Offer> getAllOfferByUserMovil(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob,int status);
 	
-	List<Offer> getAllOfferByUserWEB(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob,int status);
+	Page<Offer> getAllOfferByUserWEB(Long userId, String title, String subcategory, String rangeAmount, String urgency, String workPlace,String levelStudy, String typeJob,int status, int pageNo, int pageSize);
 	
 	List<Offer> findOfferGeneralMovil(String keyword);
 
-	Page<Offer> findOfferGeneralWEB(String keyword, int pageNo, int pageSize);
+	Page<Offer> findOfferGeneralWEB(String title, Long category,String subcategory,String rangeAmount, String state, String typeJob, String urgency, int pageNo, int pageSize);
 	
 	Page<Offer> getAllOfferByAdmin(String keyword,int pageNo, int pageSize);
+	
+	Page<Offer> getAllOfferByCompany(Long company,int pageNo, int pageSize);
 	
 }

@@ -52,6 +52,7 @@ public class WorkExperiencesServiceImpl implements IWorkExperiencesService{
 		element.setJob(request.getJob());
 		element.setUserId(request.getUserId());
 		element.setSkills(request.getSkills());
+		element.setWorked(request.isWorked());
 		
 		repository.save(element);
 		
@@ -70,7 +71,8 @@ public class WorkExperiencesServiceImpl implements IWorkExperiencesService{
 		element.setEnds(request.getEnds());
 		element.setJob(request.getJob());
 		element.setSkills(request.getSkills());
-		
+		element.setWorked(request.isWorked());
+
 		repository.save(element);
 
 		return element;

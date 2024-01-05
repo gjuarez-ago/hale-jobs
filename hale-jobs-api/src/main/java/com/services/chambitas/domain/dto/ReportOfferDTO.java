@@ -11,7 +11,7 @@ public class ReportOfferDTO {
 	
 	private String comments;
 	
-	private String offerId;
+	private Long offerId;
 	
 	private Long userId;
 

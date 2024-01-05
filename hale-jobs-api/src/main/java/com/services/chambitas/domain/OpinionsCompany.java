@@ -1,6 +1,7 @@
 package com.services.chambitas.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,6 +45,9 @@ public class OpinionsCompany implements Serializable {
 	
 	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Company company;
+	
+	private Date regDateCreated;
+ 
 	
 	
 }

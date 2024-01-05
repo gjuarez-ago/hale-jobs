@@ -32,5 +32,7 @@ public class PreferencesUser implements Serializable{
 	
     @Column(columnDefinition="LONGBLOB") 
 	private String[] learnSkills;
+    
+    private Long userId;
 	
 }

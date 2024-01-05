@@ -1,5 +1,7 @@
 package com.services.chambitas.service.impl;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class OpinionsCompanyServiceImpl implements IOpinionsCompanyService{
 	public OpinionsCompany createOpinionsCompany(OpinionsCompanyDTO request) throws GenericException {
 		
 		Company company = existCompany(request.getCompany());
-		existOpinionByUser(request.getUserId(), request.getCompany());
+		existOpinionByUser( request.getUserId(), request.getCompany());
 		OpinionsCompany element = new OpinionsCompany();
 		
 		element.setCompany(company);
@@ -41,7 +43,10 @@ public class OpinionsCompanyServiceImpl implements IOpinionsCompanyService{
 		element.setOportunities(request.getCulture());
 		element.setTitle(request.getTitle());
 		element.setUserId(request.getUserId());
+		element.setRegDateCreated(new Date());
+		company.setQualification(request.getRating());
 		
+		companyRepository.save(company);
 		repository.save(element);
 		
 		return element;
@@ -94,7 +99,7 @@ public class OpinionsCompanyServiceImpl implements IOpinionsCompanyService{
 
 	private OpinionsCompany existOpinionByUser(Long userId, Long company) throws GenericException {
 	     
-		OpinionsCompany response = repository.findOpinionByUserAndCompany(userId, company);
+		OpinionsCompany response = repository.findOpinionByUserAndCompany(company, userId);
 		
 		if(response != null) {
 			throw new GenericException("Ya has hecho un comentario a esta empresa.");

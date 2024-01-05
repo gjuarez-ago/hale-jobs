@@ -89,7 +89,7 @@ public class CompanyServiceImpl implements ICompanyService{
 	@Override
 	public Page<Company> getCompaniesGlobal(String keyword, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
-		Page<Company> response = repository.getCompaniesGlobal(pageable);
+		Page<Company> response = repository.getCompaniesGlobal(keyword, pageable);
 		return response;	
 	}
 	

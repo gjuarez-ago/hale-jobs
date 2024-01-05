@@ -96,6 +96,7 @@ public class SkillsServiceImpl implements ISkillsService{
 	public List<Skills> updateSkillsByUser(SkillsDTO request) {
 		
 		repository.deleteSkillsByUser(request.getUserId());
+		
 		List<Skills> s = new ArrayList<>();
 		
 		for(String skill : request.getSkills()) {

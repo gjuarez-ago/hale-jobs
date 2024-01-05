@@ -325,8 +325,8 @@ export class CompleteRegisterUserComponent implements OnInit {
         "type": form.type,
         "schoolName": form.schoolName,
         "begins": form.begins,
-        "ends": form.checked ? 'Actual' : form.ends,
-        "checked": form.checked ? true : false
+        "ends": form.checked ? 'NA' : form.ends,
+        "worked": form.checked ? true : false
     };
 
       
@@ -373,8 +373,8 @@ export class CompleteRegisterUserComponent implements OnInit {
         "company": form.company,
         "skills": form.skills,
         "begins": form.begins,
-        "ends": form.checked ?  'Actual' : form.ends,
-        "checked": form.checked ? true : false,
+        "ends": form.checked ?  'NA' : form.ends,
+        "worked": form.checked ? true : false,
         "description": form.description
     }
       
@@ -402,7 +402,7 @@ export class CompleteRegisterUserComponent implements OnInit {
          ...this.registerRecruiterCVSection3Form.value, 
          schools: this.certificatesUser,
          experiences: this.experiencesWorkUser,
-         username: "bicosind@gmail.com" }
+         username: this.user?.username }
 
       // console.log(this.registerRecruiterForm.value);
       // console.log(this.registerRecruiterSection2Form.value);
