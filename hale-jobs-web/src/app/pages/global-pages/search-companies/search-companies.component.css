@@ -340,6 +340,11 @@ Material colors:
 	margin: 10px 0px 100px 0px;
    }
 
+   nz-empty {
+    margin: 60px 0px 0px 0px;
+}
+
+
 .box {
 	position: relative;
 	min-width: 100%;

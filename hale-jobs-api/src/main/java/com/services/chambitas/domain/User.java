@@ -69,8 +69,6 @@ public class User {
 
 	private String country;
 	 
-
-
 	//Puedes iniciar labores de inmediato
     private boolean publicProfile;
     

@@ -16,25 +16,25 @@ public interface IPostulatesByOfferService {
 	PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException;
 	
 	// Editar postulación
-	PostulatesOffer changeStatus(String id, PostulateByOfferDTO request) throws GenericException;
+	PostulatesOffer changeStatus(Long id, PostulateByOfferDTO request) throws GenericException;
 	
 	// Eliminar postulación
-	PostulatesOffer deletePostulation(String id, Long userId) throws GenericException;
+	PostulatesOffer deletePostulation(Long id, Long userId) throws GenericException;
 	
 	// Buscar postulación por ID
-	PostulatesOffer findPostulationById(String id) throws GenericException;
+	PostulatesOffer findPostulationById(Long id) throws GenericException;
 	
 	// Buscar postulaciones por usuario movil
 	List<PostulatesOffer> getPostulatesByUserIdM(Long userId);
 	
 	// Buscar postulaciones por usuario web
-	Page<PostulatesOffer> getPostulatesByUserIdW(Long userId,  int pageNo, int pageSize);
+	Page<PostulatesOffer> getPostulatesByUserIdW(String keyword, Long userId,  int pageNo, int pageSize);
 
 	// Buscar postulaciones por oferta movil
 	List<PostulatesOffer> getAllPostulatesByOfferM(Long offerId);
 	
 	// Buscar postulaciones por oferta web
-	Page<PostulatesOffer> getAllPostulatesByOfferW(Long offerId, int pageNo, int pageSize);
+	Page<PostulatesOffer> getAllPostulatesByOfferW(String key, Long offerId, int pageNo, int pageSize);
 	
 	// Visualizar todas las postulaciones por administrador
 	Page<PostulatesOffer> getAllPostulatesAdmin(String keyword,  int pageNo, int pageSize);

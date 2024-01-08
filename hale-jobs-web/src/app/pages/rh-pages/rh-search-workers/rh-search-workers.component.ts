@@ -7,6 +7,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { WorkersService } from 'src/app/services/workers.service';
 
 @Component({
   selector: 'app-rh-search-workers',
@@ -16,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RhSearchWorkersComponent implements OnInit {
 
    // * Variables de la tabla
+   public data : any[] = [];
    public pageSize: number = 10;
    public current: number = 1;
    public subscriptions : Subscription[] = [];
@@ -50,7 +52,8 @@ export class RhSearchWorkersComponent implements OnInit {
     private modal: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService  
+    private ngxSpinner: NgxSpinnerService,
+    private userService : WorkersService
   ) {
 
     this.validateForm = this.fb.group({
@@ -66,6 +69,43 @@ export class RhSearchWorkersComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+
+
+
+  public getUsersPaginate() {
+
+    this.isLoadingTable = true;
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.userService
+        .getAllOffersByUserWEB({
+          pageNo: this.current - 1,
+          pageSize: this.pageSize,
+          city: this.validateForm.value["city"] ? this.validateForm.value["city"] : '',
+          jobTitle: this.validateForm.value["jobTitle"] ? this.validateForm.value["jobTitle"] : '',
+          mod:  this.validateForm.value["mod"] ? this.validateForm.value["mod"] : '',
+          salary:  this.validateForm.value["salary"] ? this.validateForm.value["salary"] : '',
+          speciality:  this.validateForm.value["speciality"] ?  this.validateForm.value["speciality"] : '',
+          state:  this.validateForm.value["state"] ? this.validateForm.value["state"] : '',
+        })
+        .subscribe(
+          (response: any) => {
+  
+            this.data = response.content;
+            this.total = response.totalElements;
+            this.totalElementByPage = response.numberOfElements;
+  
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
+    );
   }
 
   submitForm(): void {

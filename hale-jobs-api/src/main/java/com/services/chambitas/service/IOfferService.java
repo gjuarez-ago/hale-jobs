@@ -3,7 +3,6 @@ package com.services.chambitas.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.services.chambitas.domain.Offer;
@@ -36,4 +35,5 @@ public interface IOfferService {
 	
 	Page<Offer> getAllOfferByCompany(Long company,int pageNo, int pageSize);
 	
+	Page<Offer> getOffersByCopy(String keyword, Long user, int pageNo, int pageSize);
 }

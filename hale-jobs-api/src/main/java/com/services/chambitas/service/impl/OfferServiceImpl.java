@@ -415,6 +415,13 @@ public class OfferServiceImpl implements IOfferService{
 		Page<Offer> response = offerRepository.getOffersByCompany(company, pageable);
 		return response;
 	}
+
+	@Override
+	public Page<Offer> getOffersByCopy(String keyword, Long user, int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize);   
+		Page<Offer> response = offerRepository.getOffersByCopy(keyword, user, pageable);
+		return response;
+	}
 	
 	
 

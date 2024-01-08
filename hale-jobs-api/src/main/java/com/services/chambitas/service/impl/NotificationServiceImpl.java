@@ -82,9 +82,9 @@ public class NotificationServiceImpl implements INotificationService{
 	}
 
 	@Override
-	public Page<Notification> getAllNotificationsByUserWEB(String userId, int pageNo, int pageSize) {
+	public Page<Notification> getAllNotificationsByUserWEB(String email,String title, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
-		Page<Notification> response = notificationRepository.findNotificationByUserWEB(userId, pageable);
+		Page<Notification> response = notificationRepository.findNotificationByUserWEB(email, title, pageable);
 		return response;
 	}
 

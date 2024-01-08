@@ -16,7 +16,6 @@ import { GenericService } from 'src/app/services/generic.service';
   styleUrls: ['./my-profile.component.css']
 })
 export class MyProfileComponent implements OnInit {
-
  
   public user: any;
   public userId : any;
@@ -96,7 +95,6 @@ export class MyProfileComponent implements OnInit {
       (response: any) => {
        this.userInformation = response;
        this.previewImage = response.profileImageUrl == null ? 'https://thumbs.dreamstime.com/z/no-user-profile-picture-24185395.jpg' : response.profileImageUrl;
-       console.log(response);
         
         this.isLoadingGeneral = false;       
       },
@@ -128,7 +126,7 @@ export class MyProfileComponent implements OnInit {
     this.isLoadingGeneral = true;
     this.genericService.getAllStates().subscribe(
       (response: any) => {
-       console.log(response);
+      
         this.listStates = response.map((prop: any, key: any) => {
           return {
             ...prop,
@@ -148,7 +146,7 @@ export class MyProfileComponent implements OnInit {
     this.isLoadingGeneral = true;
     this.genericService.getAllTypeOfJobs().subscribe(
       (response: any) => {
-       console.log(response);
+      
         this.listModwork = response.map((prop: any, key: any) => {
           return {
             ...prop,
@@ -230,9 +228,9 @@ export class MyProfileComponent implements OnInit {
     ];
     let index: any = arra.find((e: any) => e.id == value);
     return index.value;
-
-
    }
+
+   
    
 changePublicProfile(value : any) {
 

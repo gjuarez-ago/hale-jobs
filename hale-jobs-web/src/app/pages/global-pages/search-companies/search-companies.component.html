@@ -74,6 +74,25 @@
             </div>
           </a>
           </div>
+
+          <nz-empty
+          [hidden]="companies.length > 0"
+          nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+          [nzNotFoundContent]="contentTpl"
+          [nzNotFoundFooter]="footerTpl"
+          >
+          <ng-template #contentTpl>
+            <span>
+              No existe ninguna vacante en este momento
+              <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
+            </span>
+          </ng-template>
+          <ng-template #footerTpl>
+            <!-- <button nz-button nzType="primary" (click)="navigate()"> Buscar </button> -->
+          </ng-template>
+         </nz-empty>
+
+
     </div>
 
     <div class="form-inline">

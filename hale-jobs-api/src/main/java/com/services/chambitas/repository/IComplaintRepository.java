@@ -18,9 +18,8 @@ public interface IComplaintRepository extends JpaRepository<Complaints, Long>{
 	@Query(value = "SELECT * FROM complaints AS po WHERE po.user_id = :userId AND po.offer_id = :offerId",nativeQuery = true)
 	Complaints findComplaintsByUserAndOffer(@Param("userId") Long userId, @Param("offerId") Long offerId);
 	
-	@Query(value = "SELECT * FROM complaints AS po WHERE po.offer_id = :offerId",nativeQuery = true)
-	Page<Complaints> findComplaintsByOffer(@Param("offerId") Long offerId,  Pageable pageable);
-	
+	@Query(value = "SELECT p FROM Complaints p JOIN p.offer o WHERE p.title LIKE %:keyword% AND o.id = :offer AND o.status = 0 ORDER BY p.regDateCreated ASC")
+	Page<Complaints> findComplaintsByOffer(@Param("keyword") String keyword, @Param("offer") Long offerId,  Pageable pageable);
 	
 }
 

@@ -15,7 +15,4 @@ public class ComplaintDTO {
 
 	private String offer;
 	
-	// 1: user 2 : company 3: other
-	private int type;
-	
 }

@@ -15,7 +15,7 @@
           <div class="two input">
               <nz-form-item class="input-content">
                   <nz-form-control>
-                    <nz-select class="search" formControlName="state" nzShowSearch nzAllowClear nzPlaceHolder="¿En que estado estas buscando?">
+                    <nz-select class="search" formControlName="state" nzShowSearch nzAllowClear [ngModel]="this.key && this.key.state" nzPlaceHolder="¿En que estado estas buscando?">
                       <nz-option *ngFor="let item of listStates" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>
                     </nz-select>
                   </nz-form-control>
@@ -63,7 +63,7 @@
         </div>
         
         <div class="element">
-          <nz-select class="input-text-select" formControlName="subcategory" nzShowSearch nzAllowClear nzPlaceHolder="Subcategoría"  formControlName="subcategory">
+          <nz-select class="input-text-select" formControlName="subcategory" nzShowSearch nzAllowClear nzPlaceHolder="Subcategoría"  [ngModel]="this.key && this.key.subcategory"  formControlName="subcategory">
             <nz-option *ngFor="let item of listSubcategory" [nzLabel]="item.valor" [nzValue]="item.valor"></nz-option>
           </nz-select>  
         </div>
@@ -110,7 +110,7 @@
             </div>
 
             <div class="card" *ngFor="let item of offers" >
-              <a routerLink="/view-job/{{item.id}}" target="_blank">
+              <a (click)="navigateViewJob(item)">
               <div class="card-title"> 
                 <h2> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> {{item.title}} </h2> 
 
@@ -177,6 +177,23 @@
               </div>
             </div>
          
+
+            <nz-empty
+            [hidden]="offers.length > 0"
+            nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+            [nzNotFoundContent]="contentTpl"
+            [nzNotFoundFooter]="footerTpl"
+            >
+            <ng-template #contentTpl>
+              <span>
+                No hemos encontrado ofertas, 
+                <!-- <a routerLink="/search">¿Deseas comenzar a buscar?</a> -->
+              </span>
+            </ng-template>
+            <ng-template #footerTpl>
+              <!-- <button nz-button nzType="primary" routerLink="/search" > Buscar </button> -->
+            </ng-template>
+           </nz-empty>
 
           </div>
 

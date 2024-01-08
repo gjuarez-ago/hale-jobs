@@ -8,6 +8,34 @@
     margin: 0px 2px 0px 0px;
 }
 
+.btn-green {
+    background-color: green !important;
+    border-color: white !important;
+    color: white !important;
+}
+
+
+
+.btn-selected{ 
+    background-color: green;
+    border-color: white;
+}
+
+.btn-not-seleted {
+    background-color: rgb(105, 1, 1);
+    border-color: white;
+}
+
+.filters {
+    padding: 0px 0px 10px 0px;
+    margin: 0px 0px 10px;
+}
+
+.btn-color {
+    color: black;
+}
+
+
 .advanced {
     width: 80%;
     margin:20px auto;

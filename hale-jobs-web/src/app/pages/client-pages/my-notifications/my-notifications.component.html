@@ -48,16 +48,13 @@
        
         <nz-form-item>
           <nz-form-control>
-            <button nz-button nzType="primary" [disabled]="!searchForm.valid">Realizar busqueda</button>
+            <button nz-button nzShape="round" nzType="primary" [disabled]="!searchForm.valid">Realizar busqueda</button>
           </nz-form-control>
         </nz-form-item>
       </form>
 
     </div>
 
-    <div class="pagination">
-      <nz-pagination [nzSize]="'small'" [nzPageIndex]="1" [nzTotal]="50"></nz-pagination> 
-    </div>
 
 
 
@@ -99,7 +96,25 @@
       
       
         </nz-list-item>
-        <nz-list-empty *ngIf="data.length === 0"></nz-list-empty>
+
+
+        <nz-empty
+        [hidden]="data.length > 0"
+        nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+        [nzNotFoundContent]="contentTpl"
+        [nzNotFoundFooter]="footerTpl"
+        >
+        <ng-template #contentTpl>
+          <span>
+            No existe ninguna notificación en este momento
+            <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
+          </span>
+        </ng-template>
+        <ng-template #footerTpl>
+          <!-- <button nz-button nzType="primary" (click)="navigate()"> Buscar </button> -->
+        </ng-template>
+       </nz-empty>
+
       </nz-list>      
     </div>
 

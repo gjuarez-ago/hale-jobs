@@ -18,6 +18,8 @@ import { GenericService } from 'src/app/services/generic.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 
+
+
 @Component({
   selector: 'app-new-offer',
   templateUrl: './new-offer.component.html',
@@ -28,6 +30,13 @@ export class NewOfferComponent implements OnInit {
   public subscriptions: Subscription[] = [];
   public user: User | undefined;
   public userId: any;
+
+  public listOffers : any[] = [];
+  public pageSize: number = 10;
+  public current: number = 1;
+  public total: number = 0;
+  public totalElementByPage = 0;
+  public isLoadingTable = false;
 
   // * Variables para agregar un usuario
   public createForm!: FormGroup;
@@ -60,6 +69,13 @@ export class NewOfferComponent implements OnInit {
   public citySelected: any;
   public stateSelected: any = null;
 
+  public isVisibleDuplicate = false; 
+  public findOfferForm !: FormGroup;
+  public isLoadingPostulates: boolean = false;
+  public elementCopy: any;
+  public offer: any;
+
+
   constructor(
     private clipboard: Clipboard,
     private companyService: CompanyService,
@@ -86,6 +102,10 @@ export class NewOfferComponent implements OnInit {
       city: [null, [Validators.required]],
       showCompany: ['A'],
       showSalary: ['A'],
+    });
+
+    this.findOfferForm = this.fb.group({
+      keyword: ['']
     });
 
     this.addFormBeneficts = this.fb.group({
@@ -132,6 +152,7 @@ export class NewOfferComponent implements OnInit {
       this.getTypeOfJob();
       this.getSubcategories();
       this.getStates();
+      this.getOffers();
     } else {
       this.router.navigateByUrl('/auth/login');
     }
@@ -292,7 +313,6 @@ export class NewOfferComponent implements OnInit {
     });
 
     this.addFormActivities.reset();
-    console.log(this.listActivities);
   }
 
   addHabilities() {
@@ -314,7 +334,6 @@ export class NewOfferComponent implements OnInit {
     });
     this.addFormHabilities.reset();
 
-    console.log(this.listHabilities);
   }
 
   addBeneficts() {
@@ -536,7 +555,159 @@ export class NewOfferComponent implements OnInit {
     return p;
   }
 
+  public showModalCopy() {
+    this.isVisibleDuplicate = true;
+  }
+
+  public closeModalCopy() {
+    this.isVisibleDuplicate = false;
+    this.elementCopy = undefined;
+    this.listOffers.map((e : any) => e.status = false);
+  }
+
+
+  public copyOffer() {
+    this.getOfferById();
+  }
+
+  public submitFormCopy() {
+    
+
+    let form = this.findOfferForm.value;
+
+    this.ngxSpinner.show();
+    this.isLoadingPostulates = true;
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.offerService
+        .getOffers({
+          pageNo: this.current - 1,
+          pageSize: this.pageSize,
+          userId: this.userId,
+          keyword: form.keyword,
+        })
+        .subscribe(
+          (response: any) => {
+            this.listOffers = response.content.map((prop: any, key: any) => {
+              return {
+                ...prop,
+                status: false,
+                key: key + 1,
+              };
+            });            this.total = response.totalElements;
+            this.totalElementByPage = response.numberOfElements;
+            this.isLoadingGeneral = false;
+            this.isLoadingPostulates = false;
+            this.loader();
+         
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingPostulates = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+            this.ngxSpinner.hide();
+          }
+        )
+    )
+
+  }
+
+
+  public getOfferById() {
+    this.isLoadingGeneral = true;
+    this.ngxSpinner.show();
+    this.subscriptions.push(
+      this.offerService.findOfferById(this.elementCopy.id).subscribe(
+        (response: any) => {
+
+          this.offer = response;
+          this.isLoadingGeneral = false;
+          this.ngxSpinner.hide();
+          this.closeModalCopy();
+          this.citySelected = response.city.id;
+          this.listActivities = response.mainActivities.map((prop: any, key: any) => {return {value: prop,key: key + 1}}); 
+          this.listBeneficts = response.benefits.map((prop: any, key: any) => {return {value: prop,key: key + 1}}); 
+          this.listHabilities = response.skills.map((prop: any, key: any) => {return {value: prop,key: key + 1}}); 
+        
+          
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.ngxSpinner.hide();
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+    );
+  }
+
+  getOffers(): void {
+
+    this.ngxSpinner.show();
+    this.isLoadingPostulates = true;
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.offerService
+        .getOffers({
+          pageNo: this.current - 1,
+          pageSize: this.pageSize,
+          userId: this.userId,
+          keyword: this.findOfferForm.value["keyword"],
+        })
+        .subscribe(
+          (response: any) => {
+
+            console.log(response);
+            
+            this.listOffers = response.content.map((prop: any, key: any) => {
+              return {
+                ...prop,
+                status: false,
+                key: key + 1,
+              };
+            });
+            
+            this.total = response.totalElements;
+            this.totalElementByPage = response.numberOfElements;
+            this.isLoadingGeneral = false;
+            this.isLoadingPostulates = false;
+            this.loader();
+         
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingPostulates = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+            this.ngxSpinner.hide();
+          }
+        )
+    )
+  }
   
+  changePageSize($event: number) : void {
+    this.pageSize = $event;
+    this.getOffers();
+  }
+
+   changeCurrentPage($event: number) : void {
+    this.current = $event;
+    this.getOffers();
+   }
+
+
+
+
+
+
+   public seledtedCopy(data : any) {
+
+    console.log(data);
+
+    this.elementCopy = data;
+    this.listOffers.map((e : any) => e.status = false);
+    data.status = true;
+
+   }
+
   public getUrgency(item: any): string {
     let urgency = [
       { value: 'Urgente', id: 'A' },
@@ -552,6 +723,14 @@ export class NewOfferComponent implements OnInit {
       return 'Mostrar';
     }
     return 'No mostrar';
+  }
+
+  public loader() {
+    this.ngxSpinner.show();
+
+    setTimeout(() => {
+      this.ngxSpinner.hide();
+    }, 800);
   }
 
   createMessage(type: string, message: string): void {

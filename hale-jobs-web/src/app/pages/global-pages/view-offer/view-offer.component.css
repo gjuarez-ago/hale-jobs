@@ -90,14 +90,23 @@ img {
 }
 
 .card-postulate {
-  width: 28%;
+  width: 28%;  
+  border-radius: 20px !important;
+}
+
+.btn-wi {
+  width: 80%;
+}
+.card-footer {
+  border-radius: 20px !important;
+
 }
 
 nz-card {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 2px 5px -1px;
-  border-radius: 20px !important;
   border-right: 5px solid #f5ad40;
   border-top: 5px solid #f5ad40;
+  border-radius: 20px !important;
 
 }
 

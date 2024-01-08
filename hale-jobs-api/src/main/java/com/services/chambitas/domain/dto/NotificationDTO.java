@@ -11,7 +11,7 @@ public class NotificationDTO {
 
 	private String typeAD;
 	
-	private String[] emailDestination;
+	private String emailDestination;
 	
 	private String sendBy;
 	

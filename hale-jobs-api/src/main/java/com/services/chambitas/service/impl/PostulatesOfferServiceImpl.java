@@ -2,6 +2,7 @@ package com.services.chambitas.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -11,11 +12,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.services.chambitas.domain.Notification;
 import com.services.chambitas.domain.Offer;
 import com.services.chambitas.domain.PostulatesOffer;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.dto.PostulateByOfferDTO;
 import com.services.chambitas.exception.domain.GenericException;
+import com.services.chambitas.repository.INotificationRepository;
 import com.services.chambitas.repository.IOfferRepository;
 import com.services.chambitas.repository.IPostulatesOfferRepository;
 import com.services.chambitas.repository.IUserRepository;
@@ -34,6 +37,11 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	@Autowired 
 	private IOfferRepository offerRepository;
 	
+	
+	@Autowired 
+	private INotificationRepository noticationRespository;
+	
+	
 	@Override
 	public PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException {
 		
@@ -47,6 +55,7 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		element.setOffer(offer);
 		element.setUser(user);
 		element.setStatus(0);
+		element.setCompleted(false);
 		element.setComments(request.getComments());
 		
 		element.setRegBorrado(0);
@@ -59,20 +68,35 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	}
 
 	@Override
-	public PostulatesOffer changeStatus(String id, PostulateByOfferDTO request) throws GenericException {
+	public PostulatesOffer changeStatus(Long id, PostulateByOfferDTO request) throws GenericException {
 		
 		PostulatesOffer element =  existPostulatesOffer(id);
+		User user =  existUser(request.getUserId());
+
+		String r = "";
 		
 		element.setStatus(request.getStatus());
 		element.setRegDateUpdated(new Date());
 		element.setRegUpdateBy(request.getUserId());
+		element.setCompleted(true);
 		
-		postulatesOfferRepository.save(element);
+		if(request.getStatus() == 1) {
+		  r = "¡Felicides!. Han decidido continuar el proceso contigo, por lo que te recomendamos estar pendiente a tus medios de comunicación que indicaste en tu CV";	
+		}
+		
+		if(request.getStatus() == 2) {
+		r = "Lo sentimos, pero al parecer han decidido no continuar el proceso contigo, te pedimos no te desanimes y te agradecemos formar parte de este proceso, te recomendamos buscar mas ofertas dentro de nuestro portal.";	
+		}
+
+		
+		postulatesOfferRepository.save(element);	
+		createNotication("Se ha registrado un cambio en tu postulación", r, element.getUser().getUsername(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
+
 		return element;
 	}
 
 	@Override
-	public PostulatesOffer deletePostulation(String id, Long userId) throws GenericException {
+	public PostulatesOffer deletePostulation(Long id, Long userId) throws GenericException {
 		PostulatesOffer element =  existPostulatesOffer(id);
 		element.setRegBorrado(1);
 		postulatesOfferRepository.save(element);
@@ -80,7 +104,7 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	}
 
 	@Override
-	public PostulatesOffer findPostulationById(String id) throws GenericException {
+	public PostulatesOffer findPostulationById(Long id) throws GenericException {
 		PostulatesOffer element =  existPostulatesOffer(id);
 		return element;
 	}
@@ -92,9 +116,9 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	}
 
 	@Override
-	public Page<PostulatesOffer> getPostulatesByUserIdW(Long userId, int pageNo, int pageSize) {
+	public Page<PostulatesOffer> getPostulatesByUserIdW(String keyword, Long userId, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize); 
-		Page<PostulatesOffer> list = postulatesOfferRepository.findPostulatesByUserWEB(userId, pageable); 
+		Page<PostulatesOffer> list = postulatesOfferRepository.findPostulatesByUserWEB(keyword, userId, pageable); 
 		return list;
 	}
 
@@ -105,9 +129,9 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	}
 
 	@Override
-	public Page<PostulatesOffer> getAllPostulatesByOfferW(Long offerId, int pageNo, int pageSize) {
+	public Page<PostulatesOffer> getAllPostulatesByOfferW(String keyword,Long offerId,  int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize); 
-		Page<PostulatesOffer> list = postulatesOfferRepository.findPostulatesByOfferWEB(offerId, pageable); 
+		Page<PostulatesOffer> list = postulatesOfferRepository.findPostulatesByOfferWEB(keyword, offerId, pageable); 
 		return list;
 	}
 
@@ -121,7 +145,7 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	
 	
 	// Privates methods
-	private PostulatesOffer existPostulatesOffer(String consecutive) throws GenericException {
+	private PostulatesOffer existPostulatesOffer(Long consecutive) throws GenericException {
 		
 		PostulatesOffer postulate = postulatesOfferRepository.findPostulateById(consecutive);
 		
@@ -151,8 +175,8 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		return user;
 	}
 	
-	private Offer exisOffer(String consecutive) throws GenericException {
-		Offer offer = offerRepository.findOfferByConsecutive(consecutive);
+	private Offer exisOffer(Long consecutive) throws GenericException {
+		Offer offer = offerRepository.findOfferById(consecutive);
 		if(offer ==  null) {throw new GenericException("No se encontro la oferta");}
 		return offer;
 	}
@@ -173,6 +197,23 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		if(lastElement >= 10000000 && lastElement < 100000000) {consecutive = "10"  + lastElement;}
 		if(lastElement >= 100000000 && lastElement < 1000000000) {consecutive = "1"  + lastElement;}
 		return consecutive;
+	}
+	
+	private Notification createNotication(String title, String message, String emailDest, String sendBy, Long offer, Long user, String typeAd) {
+		
+		UUID uuid=UUID.randomUUID();   
+		
+		Notification n = new Notification();
+		n.setConsecutive(uuid.toString());
+		n.setContent(message);
+		n.setEmailDestination(emailDest);
+		n.setOfferId(offer);
+		n.setSendBy(sendBy);
+		n.setTitle(title);
+		n.setTypeAD(typeAd);
+		n.setUserId(user);
+		noticationRespository.save(n);
+		return n;
 	}
 	
 }

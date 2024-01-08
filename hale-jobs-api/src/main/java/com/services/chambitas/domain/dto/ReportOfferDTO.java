@@ -1,10 +1,11 @@
 package com.services.chambitas.domain.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * 
+ */
 @Data
-@AllArgsConstructor
 public class ReportOfferDTO {
 	
 	private String category;
@@ -14,5 +15,6 @@ public class ReportOfferDTO {
 	private Long offerId;
 	
 	private Long userId;
+
 
 }

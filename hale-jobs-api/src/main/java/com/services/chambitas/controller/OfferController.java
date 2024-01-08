@@ -141,6 +141,16 @@ public class OfferController {
   		Page<Offer> response = service.getAllOfferByCompany(company, pageNo, pageSize);
   		return new ResponseEntity<>(response , HttpStatus.OK);
   	}	
+   
+   @GetMapping("/search-offers-copy")
+  	public ResponseEntity<Page<Offer>> searchOffersWEB(
+  			@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
+  			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+  			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+  			@RequestParam(value = "userId", required = true) Long user) {
+  		Page<Offer> response = service.getOffersByCopy(keyword, user, pageNo, pageSize);
+  		return new ResponseEntity<>(response , HttpStatus.OK);
+  	}	
 		
    // Mostrar ofertas administrador
    @GetMapping("/view-admin")

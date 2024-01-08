@@ -33,7 +33,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.google.common.util.concurrent.Service;
 import com.services.chambitas.domain.Permission;
+import com.services.chambitas.domain.TypeOfPayment;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.UserPrincipal;
 import com.services.chambitas.domain.dto.LoginDTO;
@@ -195,6 +197,21 @@ public class UserController {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 
+		@GetMapping("/search-rh")
+		public ResponseEntity<Page<User>> searchByFiltersWEB(
+				@RequestParam(value = "state", defaultValue = "", required = false) String state,
+				@RequestParam(value = "city", defaultValue = "", required = false) String city,
+				@RequestParam(value = "salary", defaultValue = "", required = false) String salary,
+				@RequestParam(value = "jobTitle", defaultValue = "", required = false) String jobTitle,
+				@RequestParam(value = "mod", defaultValue = "", required = false) String modalidadTrabajo,
+				@RequestParam(value = "speciality", defaultValue = "", required = false) String especialidad,
+				@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+				@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+
+			Page<User> response = userService.searchByFiltersWEB(city,state,salary,  jobTitle,  modalidadTrabajo, pageNo, pageSize);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+		
 	    private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
 	        return new ResponseEntity<>(new HttpResponse(httpStatus.value(), httpStatus, httpStatus.getReasonPhrase().toUpperCase(),
 	                message), httpStatus);

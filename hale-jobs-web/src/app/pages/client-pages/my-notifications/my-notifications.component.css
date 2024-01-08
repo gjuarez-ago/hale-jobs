@@ -15,6 +15,10 @@ nz-list-item {
     align-items: flex-end;
 }
 
+nz-empty {
+    padding: 40px 0px;
+}
+
 
 
    input {

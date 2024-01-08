@@ -22,7 +22,7 @@ public interface INotificationService {
 	
 	List<Notification> getAllNotificationsByUserMovil(String userId);
 	
-	Page<Notification> getAllNotificationsByUserWEB(String userId, int pageNo, int pageSize);
+	Page<Notification> getAllNotificationsByUserWEB(String userId, String title, int pageNo, int pageSize);
 	
 	Page<Notification> getAllNotificationByAdmin(int pageNo, int pageSize);	
 

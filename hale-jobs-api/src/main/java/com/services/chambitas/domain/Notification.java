@@ -33,13 +33,14 @@ public class Notification implements Serializable{
 
 	private String content;
 
+	// 1 : Aviso oferta // 2: Aceptación // 3 : Aceptación  // 
 	private String typeAD;
 	
-	private String[] emailDestination;
+	private String emailDestination;
 	
 	private String sendBy;
 		
-	private String offerId;
+	private Long offerId;
 	
 	private Long userId;
 

@@ -5,12 +5,13 @@ import lombok.Data;
 @Data
 public class PostulateByOfferDTO {
 
-	private String offerId;
+	private Long offerId;
 
 	private Long userId;
 	
 	private String comments;
 			
 	private int status;
+	
 		
 }

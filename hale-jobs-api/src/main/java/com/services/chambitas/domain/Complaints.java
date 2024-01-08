@@ -41,6 +41,9 @@ public class Complaints implements Serializable {
 	@Lob
 	private String comments;
 	
+	@Lob
+	private String response;
+	
 	private String status;
 	
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -49,10 +52,6 @@ public class Complaints implements Serializable {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Offer offer;
 	
-	// 1: user 2 : company 3: other
-	private int type;
-	
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private Date regDateCreated;
 
 	@JsonProperty(access = Access.WRITE_ONLY)

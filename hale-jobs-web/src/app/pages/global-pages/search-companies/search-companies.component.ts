@@ -137,8 +137,7 @@ export class SearchCompaniesComponent implements OnInit  {
       ).subscribe(
         (response: any) => {
 
-          console.log(response);
-          
+                    
           this.temp = response.content;
           this.companies = response.content;
           this.total = response.totalElements;

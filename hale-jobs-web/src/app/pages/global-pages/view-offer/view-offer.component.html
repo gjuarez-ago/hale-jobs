@@ -113,19 +113,26 @@
              [nzAvatar]="avatarTemplate"
            ></nz-card-meta>
          </nz-card>
-         <ng-template #avatarTemplate>
-           <!-- <nz-avatar nzSrc="{{currentElement && currentElement.company.imageURL}}"></nz-avatar> -->
+         <div class="card-footer">
+          <ng-template #avatarTemplate>
+            <!-- <nz-avatar nzSrc="{{currentElement && currentElement.company.imageURL}}"></nz-avatar> -->
+          </ng-template>
+          <ng-template #coverTemplate>
+            <img alt="example" src="{{currentElement && currentElement.company.imageURL}}" />
+          </ng-template>
+          <ng-template #actionSetting>
+            <button  (click)="showModalOffer()" nz-button nzType="default" class="button-blue btn-wi">
+              <i  nz-icon nzType="appstore-add" nzTheme="outline"></i> 
+            </button>
          </ng-template>
-         <ng-template #coverTemplate>
-           <img alt="example" src="{{currentElement && currentElement.company.imageURL}}" />
+       
+          <ng-template #actionEllipsis>
+            
+            <button (click)="showModalComplaint()" nz-button nzType="default" class="button-red btn-wi">
+              <i  nz-icon nzType="warning" nzTheme="outline"></i>
+            </button>
          </ng-template>
-         <ng-template #actionSetting>
-          <i nz-icon nzType="appstore-add" nzTheme="outline"></i>
-        </ng-template>
-      
-         <ng-template #actionEllipsis>
-          <i nz-icon nzType="warning" nzTheme="outline"></i>
-        </ng-template>
+         </div>
 
        </div>
 
@@ -134,12 +141,143 @@
       </div>
 
 
-
-
   </div>
-
-
-
-
-
 </div>
+
+
+
+
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="isVisibleAdd"
+  nzTitle="Queja hacia la oferta"
+  (nzOnCancel)="closeComplaintModal()"
+  [nzFooter]="modalFooter"
+>
+  <ng-container *nzModalContent>
+    <div class="mod">
+      <form
+        #f="ngForm"
+        id="ngForm"
+        nz-form
+        [formGroup]="complaintForm"
+        (ngSubmit)="submitComplaintForm()"
+        class="login-form"
+        [nzLayout]="'vertical'"
+      >
+        <nz-spin [nzSpinning]="isLoadingReview">
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired> Titulo </nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <input
+                    nz-input
+                    formControlName="category"
+                    placeholder="Escribe el titulo"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+        
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired>¿Cuál incoveniente encontraste en esta oferta?</nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <textarea
+                    nz-input
+                    formControlName="comments"
+                    placeholder="Describe tu queja"
+                    [nzAutosize]="{ minRows: 4, maxRows: 4 }"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          
+
+        
+          
+        </nz-spin>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="closeComplaintModal()">Cerrar</button>
+    <button
+      nz-button
+      nzType="primary"
+      form="ngForm"
+      nz-button
+      [nzLoading]="isLoadingReview"
+    >
+      Comentar
+    </button>
+  </ng-template>
+</nz-modal>
+
+
+
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="isVisibleAddPostulate"
+  nzTitle="Postulate a la siguiente oferta"
+  (nzOnCancel)="closeOfferPostulate()"
+  [nzFooter]="modalFooter1"
+>
+  <ng-container *nzModalContent>
+    <div class="mod">
+      <form
+        #g="ngForm"
+        id="ngForm"
+        nz-form
+        [formGroup]="postulateForm"
+        (ngSubmit)="submitPostulateForm()"
+        class="login-form"
+        [nzLayout]="'vertical'"
+      >
+        <nz-spin [nzSpinning]="isLoadingReview">
+       
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired>¿En que horario y día nos podemos comunicar contigo?</nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido">
+                  <textarea
+                    nz-input
+                    formControlName="comments"
+                    placeholder="En que horario te gustaria ser contacto y si gustas el por que deberias ser seleccionado para esta vacante."
+                    [nzAutosize]="{ minRows: 4, maxRows: 4 }"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          
+
+        
+          
+        </nz-spin>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter1>
+    <button nz-button nzType="default" (click)="closeOfferPostulate()">Cerrar</button>
+    <button
+      nz-button
+      nzType="primary"
+      form="ngForm"
+      nz-button
+      [nzLoading]="isLoadingReview"
+    >
+      Comentar
+    </button>
+  </ng-template>
+</nz-modal>

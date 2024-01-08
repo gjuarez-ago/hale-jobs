@@ -20,9 +20,12 @@ public interface INotificationRepository extends JpaRepository<Notification, Lon
    @Query(value = "SELECT n.* FROM notification AS n WHERE n.email_destination = :email AND n.reg_borrado = 0",nativeQuery = true)
    List<Notification> findNotificationByUserMovil(@Param("email") String email);
    
-   @Query(value = "SELECT n.* FROM notification AS n WHERE n.email_destination = :email AND n.reg_borrado = 0",nativeQuery = true)
-   Page<Notification> findNotificationByUserWEB(@Param("email") String email, Pageable pageable);
+   @Query(value = "SELECT o FROM Notification o WHERE o.emailDestination = :email AND o.title LIKE %:title%")
+   Page<Notification> findNotificationByUserWEB(@Param("email") String email,@Param("title") String title, Pageable pageable);
    
+   @Query(value = "SELECT o FROM Notification o WHERE o.sendBy = :email AND o.title LIKE %:title%")
+   Page<Notification> findNotificationBySendUserWEB(@Param("email") String email,@Param("title") String title, Pageable pageable);
+      
    @Query(value = "SELECT n.* FROM notification AS n WHERE n.reg_borrado = 0",nativeQuery = true)
    Page<Notification> findNotificationByAdmin(Pageable pageable);
    

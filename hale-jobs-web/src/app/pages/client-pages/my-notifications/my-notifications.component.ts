@@ -24,21 +24,15 @@ export class MyNotificationsComponent implements OnInit {
   public isLoadingGeneral = false;
 
   public loading = false;
+
+  
+  public data : any = [];
+  public pageSize: number = 10;
+  public current: number = 1;
+  public total: number = 0;
+  public totalElementByPage = 0;
+  public isLoadingTable = false;
  
-  data = [
-    {
-      title: 'Ant Design Title 1'
-    },
-    {
-      title: 'Ant Design Title 2'
-    },
-    {
-      title: 'Ant Design Title 3'
-    },
-    {
-      title: 'Ant Design Title 4'
-    }
-  ];
   listNotifications: any = [];
 
   change(): void {
@@ -105,7 +99,7 @@ export class MyNotificationsComponent implements OnInit {
     this.isLoadingGeneral = true;
     this.cvService.getNotificationsByUser(this.userId).subscribe(
       (response: any) => {
-       console.log(response);
+       
         this.listNotifications = response.map((prop: any, key: any) => {
           return {
             ...prop,

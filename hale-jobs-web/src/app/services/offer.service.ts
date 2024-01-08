@@ -42,9 +42,44 @@ export class OfferService {
     return this.http.get<any>(`${this.url}/offer/find/${offerId}`)
   }
 
-  public reportOffer(category: string, comments: string, offerId: string, userId: string): Observable<Offer> {
-    return this.http.post<Offer>(`${this.url}/offer/report-offer?category=${category}&comments=${comments}&offerId=${offerId}&userId=${userId}`, {})
+  public reportOffer(data : any): Observable<Offer> {
+    return this.http.post<Offer>(`${this.url}/offer/report-offer`, data)
   }
+
+  public postulate(data : any): Observable<Offer> {
+    return this.http.post<Offer>(`${this.url}/postulates/create`, data)
+  }
+
+  public getPostulationsByOffer(pagination  : any): Observable<any> {
+
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        offerId: pagination.offerId,
+        keyword: pagination.keyword,
+      }
+    });
+
+    return this.http.get<any>(`${this.url}/postulates/postulates-by-offer-w`, {params: params});
+  }
+
+  public getComplaintsByOffer(pagination  : any): Observable<any> {
+    
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        offerId: pagination.offerId,
+        keyword: pagination.keyword,
+      }
+    });
+
+    return this.http.get<any>(`${this.url}/complaint/view-complaints-by-offer`, {params: params});
+  }
+
+
+
 
   public searchOffersWEB(pagination : any): Observable<any> {
     const params = new HttpParams({
@@ -62,10 +97,6 @@ export class OfferService {
     });
 
     return this.http.get<any>(`${this.url}/offer/search-offers-w`, {params: params})
-  }
-
-  public selectPostulate(amountAcepted: string, offerId: string, userId: string): Observable<Offer> {
-    return this.http.post<Offer>(`${this.url}/offer/select-postulate?amountAcepted=${amountAcepted}&offerId=${offerId}&userId=${userId}`, {})
   }
 
   public getAllOffersByUserWEB(pagination : PaginationOffer): Observable<any> {
@@ -89,8 +120,21 @@ export class OfferService {
     return this.http.get<any>(`${this.url}/offer/view-offer-w`,{params: params})
   }
 
+  public getOffers(pagination : any) : Observable<any> {
+
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        keyword: pagination.keyword,
+        userId: pagination.userId
+      }
+    });
+
+    return this.http.get<any>(`${this.url}/offer/search-offers-copy`,{params: params})
+  }
   
-  public getOfferByCompany(pagination : any): Observable<any> {
+  public getOfferByCompany(pagination : any) : Observable<any> {
 
     const params = new HttpParams({
       fromObject: {
@@ -102,5 +146,20 @@ export class OfferService {
 
     return this.http.get<any>(`${this.url}/offer/search-offers-company`,{params: params})
   }
+
+  public selectPostulate(id : any,data : any): Observable<Offer> {
+    return this.http.post<Offer>(`${this.url}/postulates/change-status/${id}`, data)
+  }
+  
+  public responseComplaint(data : any): Observable<Offer> {
+    return this.http.post<Offer>(`${this.url}/postulates/response-complaint`, data)
+  }
+
+  public messageUSerPostulate(data : any): Observable<Offer> {
+    return this.http.post<Offer>(`${this.url}/postulates/message-user`, data)
+  }
+
+
+
 
 }

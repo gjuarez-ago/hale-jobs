@@ -213,7 +213,6 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
   }
 
   doneSteps(): void {
-    console.log('done');
   }
 
   changeContentSteps(): void {
@@ -263,7 +262,6 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllStates().subscribe(
         (response: any) => {
-         console.log(response);
           this.listStates = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -284,7 +282,6 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllCities(p).subscribe(
         (response: any) => {
-         console.log(response);
           this.listCities = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -304,7 +301,6 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllSubcategoriesByCategory().subscribe(
         (response: any) => {
-         console.log(response);
           this.listSubcategories = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -325,7 +321,7 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllTypeOfLevelStudy().subscribe(
         (response: any) => {
-         console.log(response);
+         
           this.levelStudies = response.map((prop: any, key: any) => {
             return {
               ...prop,

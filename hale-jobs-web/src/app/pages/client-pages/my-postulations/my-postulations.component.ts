@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
@@ -13,116 +12,161 @@ import { CVUserService } from 'src/app/services/cv-user.service';
 @Component({
   selector: 'app-my-postulations',
   templateUrl: './my-postulations.component.html',
-  styleUrls: ['./my-postulations.component.css']
+  styleUrls: ['./my-postulations.component.css'],
 })
 export class MyPostulationsComponent implements OnInit {
-
-
-  public user: User| undefined;
-  public userId !: number;
+  
+  public user: User | undefined;
+  public userId!: number;
   public subscriptions: Subscription[] = [];
   public isLoadingGeneral = false;
 
-  public data : any = [];
+  public data: any = [];
   public pageSize: number = 10;
   public current: number = 1;
   public total: number = 0;
   public totalElementByPage = 0;
   public isLoadingTable = false;
 
-  listOfData: Person[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
-
- public searchForm!: FormGroup;
- public listPostulations : any; 
+  public searchForm!: FormGroup;
+  public listPostulations: any;
 
   submitForm(): void {
-    console.log('submit', this.searchForm.value);
+    let form = this.searchForm.value;
+
+    this.isLoadingGeneral = true;
+    this.cvService
+      .getPostulationsByUser({
+        userId: this.userId,
+        keyword: form.keyword ? form.keyword : '',
+        pageSize: this.pageSize,
+        pageNo: this.current - 1,
+      })
+      .subscribe(
+        (response: any) => {
+          this.listPostulations = response.content;
+          this.total = response.totalElements;
+          this.totalElementByPage = response.numberOfElements;
+          this.isLoadingTable = false;
+          this.ngxSpinner.hide();
+
+          console.log(this.listPostulations);
+
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.ngxSpinner.hide();
+          this.message.create(
+            'error',
+            'Ha ocurrido un error al recuperar las postulaciones'
+          );
+          this.isLoadingGeneral = false;
+        }
+      );
   }
 
   constructor(
-    private cvService : CVUserService,
+    private cvService: CVUserService,
     private authenticationService: AuthService,
     private fb: FormBuilder,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService 
+    private ngxSpinner: NgxSpinnerService
   ) {
     this.searchForm = this.fb.group({
-      keyword: [null, [Validators.required]],
+      keyword: [''],
     });
-
   }
 
   ngOnInit(): void {
-    
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
+      this.getPostulations();
     } else {
-      this.router.navigateByUrl("/auth/login");
+      this.router.navigateByUrl('/auth/login');
     }
-
-
   }
 
-   
   getPostulations() {
     this.isLoadingGeneral = true;
-    this.cvService.getPostulationsByUser({user: this.userId, pageSize: this.pageSize, pageNumber : this.current}).subscribe(
-      (response: any) => {
-       console.log(response);
-        this.listPostulations = response.map((prop: any, key: any) => {
-          return {
-            ...prop,
-            key: key + 1,
-          };
-        }); 
-        this.isLoadingGeneral = false;       
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
-        this.isLoadingGeneral = false;
-      }
-    )
-  }
+    this.cvService
+      .getPostulationsByUser({
+        userId: this.userId,
+        keyword: this.searchForm.value[''] ? this.searchForm.value[''] : '',
+        pageSize: this.pageSize,
+        pageNo: this.current - 1,
+      })
+      .subscribe(
+        (response: any) => {
+          this.listPostulations = response.content;
+          this.total = response.totalElements;
+          this.totalElementByPage = response.numberOfElements;
+          this.isLoadingTable = false;
+          this.ngxSpinner.hide();
 
+          console.log(this.listPostulations);
+
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.ngxSpinner.hide();
+          this.message.create(
+            'error',
+            'Ha ocurrido un error al recuperar las postulaciones'
+          );
+          this.isLoadingGeneral = false;
+        }
+      );
+  }
 
   removePostulation() {
     this.isLoadingGeneral = true;
     this.cvService.deletePostulationsByUser(1).subscribe(
       (response: any) => {
-       console.log(response);
-        this.message.create("success", 'Ya no formas parte de este proceso!');
-        this.isLoadingGeneral = false;       
+        this.message.create('success', 'Ya no formas parte de este proceso!');
+        this.isLoadingGeneral = false;
       },
       (errorResponse: HttpErrorResponse) => {
-        this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al recuperar los estados'
+        );
         this.isLoadingGeneral = false;
       }
-    )
+    );
   }
 
-}
+  changePageSize($event: number): void {
+    this.pageSize = $event;
+    this.getPostulations();
+  }
 
+  changeCurrentPage($event: number): void {
+    this.current = $event;
+    this.getPostulations();
+  }
+
+  getStatus(item: any) {
+    let stautusList = [
+      { value: 'Pendiente', id: 0 },
+      { value: 'Seleccionado', id: 1 },
+      { value: 'No Seleccionado', id: 2 },
+    ];
+    let index: any = stautusList.find((e: any) => e.id == item);
+    return index.value;
+  }
+
+  getStatusColor(item: any) {
+    let stautusList = [
+      { value: 'Primary', id: 0 },
+      { value: 'Success', id: 1 },
+      { value: 'Danger', id: 2 },
+    ];
+    let index: any = stautusList.find((e: any) => e.id == item);
+    return index.value;
+  }
+}
 
 interface Person {
   key: string;

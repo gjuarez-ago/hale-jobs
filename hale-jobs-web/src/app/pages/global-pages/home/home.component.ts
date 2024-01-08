@@ -5,25 +5,19 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
+import { HistoryService } from 'src/app/services/history.service';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
-
-  radioValue = 'A';
-  selectedValue = null;
-  searchForm! : FormGroup;
   
-  images = [
-    {path: 'http://www.carmen.gob.mx/_boletines/efecto%20boletines/images/584_grande.jpeg'},
-    {path: 'https://images.pexels.com/photos/12383337/pexels-photo-12383337.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-
-];
+  
+  public searchForm!: FormGroup;
+  public listOffers : any = [];
 
 
   constructor(
@@ -33,25 +27,22 @@ export class HomeComponent implements OnInit {
     private message: NzMessageService,
     private router: Router,
     private ngxSpinner: NgxSpinnerService,
-    private searchService : SearchService,
-
-  ) { 
-
-    
+    private searchService: SearchService,
+    private historyService: HistoryService
+  ) {
     this.searchForm = this.fb.group({
       value: [null, [Validators.required]],
     });
-
-
   }
 
   ngOnInit(): void {
+    
+    this.historyService.setProduct(JSON.parse(localStorage.getItem('MyProducts_History') || '[]'));
+    this.getProducts();
+
   }
 
   public submitForm() {
-
-   
-  
     if (!this.searchForm.valid) {
       for (const i in this.searchForm.controls) {
         if (this.searchForm.controls.hasOwnProperty(i)) {
@@ -64,7 +55,6 @@ export class HomeComponent implements OnInit {
 
     let form = this.searchForm.value;
 
-
     this.searchService.search({
       title: form.value,
       subcategory: null,
@@ -76,19 +66,56 @@ export class HomeComponent implements OnInit {
     });
 
     this.router.navigate(['/search']);
-
-
-
-
   }
 
-}
+  public searchByKeyword(key : any) {
+    this.searchService.search({
+      title: key,
+      subcategory: null,
+      urgency: null,
+      category: 1,
+      typeOfJob: null,
+      rangeAmount: null,
+      state: '',
+    });
 
+    this.router.navigate(['/search']);
+    
+  }
 
+  public searchByCategory(key : any) {
+    this.searchService.search({
+      title: '',
+      subcategory: key,
+      urgency: null,
+      category: null,
+      typeOfJob: null,
+      rangeAmount: null,
+      state: '',
+    });
 
+    this.router.navigate(['/search']);
+    
+  }
 
-interface Option {
-  label: string;
-  value: string;
-  age: number;
+  public searchByState(key : any) {
+    this.searchService.search({
+      title: '',
+      subcategory: null,
+      urgency: null,
+      category: null,
+      typeOfJob: null,
+      rangeAmount: null,
+      state: key,
+    });
+
+    this.router.navigate(['/search']);
+    
+  }
+
+  public getProducts() {
+    this.historyService.getProducts().subscribe((res) => {
+      this.listOffers = res.slice(0, 5);
+    });
+  }
 }

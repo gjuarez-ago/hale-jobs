@@ -44,8 +44,14 @@ public class PostulatesOffer implements Serializable{
 	private Offer offer;
 	
 	private int status;
+
+	private boolean completed;
 	
+	@Column(columnDefinition = "TEXT")
 	private String comments;
+	
+	@Column(columnDefinition = "TEXT")
+	private String response;
 
 	private Date regDateCreated;
 	

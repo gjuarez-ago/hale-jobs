@@ -81,6 +81,24 @@
             </a>
           </div>
 
+          
+          <nz-empty
+          [hidden]="offers.length > 0"
+          nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+          [nzNotFoundContent]="contentTpl"
+          [nzNotFoundFooter]="footerTpl"
+          >
+          <ng-template #contentTpl>
+            <span>
+              No existe ninguna vacante en este momento
+              <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
+            </span>
+          </ng-template>
+          <ng-template #footerTpl>
+            <!-- <button nz-button nzType="primary" (click)="navigate()"> Buscar </button> -->
+          </ng-template>
+         </nz-empty>
+
           <div class="form-inline">
             <div class="pagination-content">
               <nz-pagination
@@ -114,7 +132,7 @@
             Comentarios
           </ng-template>
 
-          <nz-list [nzDataSource]="opinions" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+          <nz-list [nzNoResult]="contentTplp" [nzDataSource]="opinions" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
             <ng-template #item let-item>
               <nz-comment [nzAuthor]="item.title">
                 <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item"></nz-avatar>
@@ -156,8 +174,8 @@
                 [nzPageSize]="pageSizeOp"
                 [nzPageIndex]="currentOp"
                 [nzTotal]="totalOp"
-                (nzPageSizeChange)="changePageSizeOp($event)"
-                (nzPageIndexChange)="changeCurrentPageOp($event)"
+                (nzPageSizeChange)="changePageSizeO($event)"
+                (nzPageIndexChange)="changeCurrentPageO($event)"
                 id="demo"
               ></nz-pagination>
             </div>
@@ -311,3 +329,24 @@
     </button>
   </ng-template>
 </nz-modal>
+
+
+<ng-template #contentTplp>
+  <nz-empty
+  [hidden]="offers.length > 0"
+  nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+  [nzNotFoundContent]="contentTpl"
+  [nzNotFoundFooter]="footerTpl"
+  >
+  <ng-template #contentTpl1>
+    <span>
+      No existe ningún comentario hasta el momento
+      <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
+    </span>
+  </ng-template>
+  <ng-template #footerTpl1>
+    <!-- <button nz-button nzType="primary" (click)="navigate()"> Buscar </button> -->
+  </ng-template>
+ </nz-empty>
+  
+</ng-template>

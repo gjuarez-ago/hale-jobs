@@ -334,28 +334,98 @@
           <nz-tab [nzTitle]="titleTemplate2">
           
             <ng-template #titleTemplate2>
-              <span nz-icon [nzType]="'info-circle'"></span>
-              Postulaciones
+              <i nz-icon nzType="book" nzTheme="outline"></i>
+            Postulaciones
             </ng-template>
   
-            <nz-list nzItemLayout="horizontal" [nzLoading]="'true'">
-              <nz-list-item *ngFor="let item of listOfData">
+            <nz-list nzItemLayout="horizontal" [nzLoading]="isLoadingPostulates">
+              <nz-list-item *ngFor="let item of dataPs">
                 <nz-list-item-meta
-                  nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  nzAvatar="{{sanitazerURL(item.user.profileImageUrl)}}"
+                  nzDescription="{{item.comments}}"
                 >
                   <nz-list-item-meta-title>
-                    <a href="https://ng.ant.design">{{ item.name }}</a>
+                    <div class="flex">
+                      <div class="element">
+                        <a>{{ item.user.surnames }}</a>
+                      </div>
+
+                      <div class="element">
+                        <nz-space>
+
+                          <div class="space">
+                            <nz-tag *ngIf="item.status == 1" nzColor="success"> Seleccionado </nz-tag>
+                            <nz-tag *ngIf="item.status == 2" nzColor="error"> No seleccionado </nz-tag>
+                          
+                          </div>
+                       
+                          <div class="space" *nzSpaceItem>
+                            <nz-select *ngIf="item.status == 0" [(ngModel)]="item.valueSelected">
+                              <nz-option [nzValue]="1" nzLabel="Seleccionar"></nz-option>
+                              <nz-option [nzValue]="2" nzLabel="Rechazar"></nz-option>
+                              <nz-option [nzValue]="0" nzLabel="Pendiente" nzDisabled></nz-option>
+                            </nz-select>
+                          </div>
+
+                          <div *nzSpaceItem  class="space">
+                            <button (click)="changeStatusPostulate(item)" [disabled]="item.valueSelected == 0"  *ngIf="item.status == 0" nz-button class="btn-green" nzType="primary" nzShape="circle">
+                              <span  nz-icon nzType="send" nzTheme="outline"></span>
+                             </button>
+                          </div>
+                          
+                           <div *nzSpaceItem  class="space">
+                            <button *ngIf="item.status == 0" (click)="showModalMessagePostulate()" nz-button nzType="primary" nzShape="circle">
+                              <span nz-icon nzType="mail" nzTheme="outline"></span>                          
+                            </button>
+  
+                           </div>
+                          
+                        
+                    
+                        </nz-space>
+                      </div>
+
+                    </div>
                   </nz-list-item-meta-title>
+                  
                 </nz-list-item-meta>
               </nz-list-item>
   
-              <ul>
-                <nz-list-item-action><a >edit</a></nz-list-item-action>
-                <nz-list-item-action><a>more</a></nz-list-item-action>
-              </ul>
+              <div class="form-inline">
+                <div class="pagination-content">
+                  <nz-pagination
+                    [nzPageSize]="pageSizePs"
+                    [nzPageIndex]="currentPs"
+                    [nzTotal]="totalPs"
+                    (nzPageSizeChange)="changePageSizePs($event)"
+                    (nzPageIndexChange)="changeCurrentPagePs($event)"
+                    id="demo"
+                  ></nz-pagination>
+                </div>
+            
+               
+              </div>
+
+              <br>
+
+              <nz-empty
+              [hidden]="dataPs.length > 0"
+              nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+              [nzNotFoundContent]="contentTpl"
+              [nzNotFoundFooter]="footerTpl"
+              >
+              <ng-template #contentTpl>
+                <span>
+                  Aun no se ha postulado nadie aún
+                  <!-- <a routerLink="/search">¿Deseas comenzar a buscar?</a> -->
+                </span>
+              </ng-template>
+              <ng-template #footerTpl>
+                <!-- <button nz-button nzType="primary" routerLink="/search" > Buscar </button> -->
+              </ng-template>
+             </nz-empty>
   
-              <nz-list-empty *ngIf="listOfData.length === 0"></nz-list-empty>
+
             </nz-list>
     
             </nz-tab>
@@ -364,11 +434,75 @@
             <nz-tab [nzTitle]="titleTemplate3">
           
               <ng-template #titleTemplate3>
-                <span nz-icon [nzType]="'info-circle'"></span>
+                <i nz-icon nzType="file-protect" nzTheme="outline"></i>
                 Quejas y sugerencias
               </ng-template>
       
-              Content of Tab Pane 1</nz-tab>
+            
+              <nz-list nzItemLayout="horizontal" [nzLoading]="isLoadingPostulates">
+                <nz-list-item *ngFor="let item of dataC">
+                  <nz-list-item-meta
+                  nzAvatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrbkK5L2pzoJpQgvTgwYZlBQigM0rsd2kC8oW3lk-7tQ&s"
+                    nzDescription="{{item.title}}"
+                  >
+                    <nz-list-item-meta-title>
+                      <div class="flex">
+                        <div class="element">
+                          <a>{{ item.comments }}</a>
+                        </div>
+  
+                        <div class="element">
+                          <!-- <nz-space>
+                         
+                            <button *nzSpaceItem nz-button nzType="primary" nzShape="circle">
+                              <span nz-icon nzType="comment" nzTheme="outline"></span>
+                            </button>
+                          </nz-space> -->
+                        </div>
+  
+                      </div>
+                    </nz-list-item-meta-title>
+                    
+                  </nz-list-item-meta>
+                </nz-list-item>
+
+                <div class="form-inline">
+                  <div class="pagination-content">
+                    <nz-pagination
+                      [nzPageSize]="pageSizeC"
+                      [nzPageIndex]="currentC"
+                      [nzTotal]="totalC"
+                      (nzPageSizeChange)="changePageSizeC($event)"
+                      (nzPageIndexChange)="changeCurrentPageC($event)"
+                      id="demo"
+                    ></nz-pagination>
+                  </div>
+
+                </div>
+                <br>
+
+                
+                <nz-empty
+                [hidden]="dataC.length > 0"
+                nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+                [nzNotFoundContent]="contentTpl"
+                [nzNotFoundFooter]="footerTpl"
+                >
+                <ng-template #contentTpl>
+                  <span>
+                    Sin quejas :)
+                    <!-- <a routerLink="/search">¿Deseas comenzar a buscar?</a> -->
+                  </span>
+                </ng-template>
+                <ng-template #footerTpl>
+                  <!-- <button nz-button nzType="primary" routerLink="/search" > Buscar </button> -->
+                </ng-template>
+               </nz-empty>
+    
+              </nz-list>
+      
+            
+            </nz-tab>
   
               
       </nz-tabset>
@@ -385,3 +519,60 @@
 
 </nz-modal>
 
+
+
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="visiblePsStatusOffer"
+  nzTitle="Envia un mensaje a tu prospecto"
+  (nzOnCancel)="closeModalMessagePostulate()"
+  [nzFooter]="modalFooter"
+>
+  <ng-container *nzModalContent>
+    <div class="mod">
+      <form
+        #f="ngForm"
+        id="ngForm"
+        nz-form
+        [formGroup]="psResponseEmailForm"
+        (ngSubmit)="submitResponsePostulate()"
+        class="login-form"
+        [nzLayout]="'vertical'"
+      >
+        <nz-spin [nzSpinning]="isLoadingResponse">
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired>¿Que te gustaria decirle?</nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido - Max: 250 Carácteres">
+                  <textarea
+                    nz-input
+                    formControlName="comments"
+                    placeholder="Dentro de este apartado puedes enviar un meet y horario en caso de haber acordado o bien solicitar mas información."
+                    [nzAutosize]="{ minRows: 4, maxRows: 8 }"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+    
+          
+        </nz-spin>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="closeModalMessagePostulate()">Cerrar</button>
+    <button
+      nz-button
+      nzType="primary"
+      form="ngForm"
+      nz-button
+      [nzLoading]="isLoadingResponse"
+    >
+      Enviar mensaje
+    </button>
+  </ng-template>
+</nz-modal>

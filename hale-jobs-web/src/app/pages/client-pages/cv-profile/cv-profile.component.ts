@@ -216,7 +216,7 @@ export class CvProfileComponent implements OnInit {
           response.ends = undefined;
         }
         
-        console.log(response);
+       
         this.workExperienceEdit = response;
         
 
@@ -390,7 +390,7 @@ public getRangeAmount() {
     this.isLoadingGeneral = true;
     this.genericService.getAllTypeOfLevelStudy().subscribe(
       (response: any) => {
-       console.log(response);
+      
         this.levelStudies = response.map((prop: any, key: any) => {
           return {
             ...prop,
@@ -458,7 +458,7 @@ public getRangeAmount() {
 
     this.cvService.updateCVBasic({...data, username: this.user?.username}).subscribe(
       (response: any) => {
-       console.log(response);
+      
         
        this.getCurrentUser(this.user);
         this.visibleInfoPersonal = false;
@@ -519,7 +519,7 @@ public getRangeAmount() {
 
     this.cvService.addWorkExperience(data).subscribe(
       (response: any) => {  
-        console.log(response);
+       
         this.getWorkExperiencesByUser();
         this.isLoadingWorkExperience = false;     
         this.visibleAddExperience = false;  
@@ -581,7 +581,7 @@ public getRangeAmount() {
 
     this.cvService.updateExperienceByUser(this.workExperienceEdit.id,data).subscribe(
       (response: any) => {  
-        console.log(response);
+       
         this.getWorkExperiencesByUser();
         this.isLoadingWorkExperience = false;     
         this.visibleEditExperience = false;  
@@ -634,7 +634,7 @@ public getRangeAmount() {
         
         this.cvService.deleteExperiencesById(this.workExperienceEdit.id).subscribe(
           (response: any) => {  
-            console.log(response);
+           
             this.getWorkExperiencesByUser();
             this.isLoadingWorkExperience = false;     
             this.visibleEditExperience = false;  
@@ -681,7 +681,7 @@ public getRangeAmount() {
       
     this.cvService.addSkills({userId: this.userId, skills: form.skills}).subscribe(
       (response: any) => {  
-        console.log(response);
+       
         this.getskillsByUser();
         this.isLoadingSkillsSave = false;     
         this.visibleAddSkills = false;  
@@ -800,7 +800,7 @@ public getRangeAmount() {
    
    this.cvService.addSchoolExperience(data).subscribe(
     (response: any) => {  
-      console.log(response);
+     
       this.getSchoolsByUser();
       this.isLoadingSchoolEdit = false;     
       this.visibleAddEducation = false;
@@ -861,7 +861,7 @@ public getRangeAmount() {
 
    this.cvService.updateEducationById(this.schoolEdit.id, data).subscribe(
     (response: any) => {  
-      console.log(response);
+     
       this.getSchoolsByUser();
       this.isLoadingSchoolEdit = false;     
       this.visibleEditEducation = false;  
@@ -928,7 +928,7 @@ public getRangeAmount() {
         
         this.cvService.deleteCertification(this.certificationEdit.id).subscribe(
           (response: any) => {  
-            console.log(response);
+           
             this.getCertificationsByUser();
             this.isLoadingWorkExperience = false;     
             this.visibleEditExperience = false;  

@@ -473,7 +473,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllStates().subscribe(
         (response: any) => {
-         console.log(response);
+         
           this.listStates = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -512,7 +512,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllCities(p).subscribe(
         (response: any) => {
-         console.log(response);
+        
           this.listCities = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -532,7 +532,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllSubcategoriesByCategory().subscribe(
         (response: any) => {
-         console.log(response);
+        
           this.listSubcategories = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -552,7 +552,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllTypeOfLevelStudy().subscribe(
         (response: any) => {
-         console.log(response);
+        
           this.levelStudies = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -572,7 +572,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllTypeOfJobs().subscribe(
         (response: any) => {
-         console.log(response);
+        
           this.listTypeOfJobs = response.map((prop: any, key: any) => {
             return {
               ...prop,
@@ -592,7 +592,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.isLoadingGeneral = true;
       this.genericService.getAllTypeOfJobs().subscribe(
         (response: any) => {
-         console.log(response);
+        
           this.listModwork = response.map((prop: any, key: any) => {
             return {
               ...prop,

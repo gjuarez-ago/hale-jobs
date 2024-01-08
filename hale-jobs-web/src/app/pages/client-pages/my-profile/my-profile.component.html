@@ -74,7 +74,7 @@
         </div>
 
         <strong>{{userInformation && userInformation.surnames}}</strong>
-        <p>{{userInformation && userInformation.jobTitle}}</p>
+        <p>{{userInformation && userInformation.modalidadTrabajo.valor}}</p>
 
      
         <!-- <div class="btn">
@@ -89,10 +89,10 @@
                 <i nz-icon nzType="aim"></i>
                 <span>{{userInformation && userInformation.city.valor}}, {{userInformation && userInformation.state.valor}}</span>
               </nz-tag>
-              <nz-tag class="ap" *nzSpaceItem nzColor="#093b85">
+              <!-- <nz-tag class="ap" *nzSpaceItem nzColor="#093b85">
                 <i nz-icon nzType="team"></i>
                 <span>{{userInformation && getGender(userInformation.gender)}}</span>
-              </nz-tag>
+              </nz-tag> -->
 
               <nz-tag class="ap ap-edit" *nzSpaceItem (click)="open()">
                 <i nz-icon nzType="edit"></i>
@@ -166,7 +166,7 @@
             <button class="button-22" role="button" routerLink="/profile/cv">
               <nz-space>
                 <i nz-icon nzType="idcard" nzTheme="outline" *nzSpaceItem></i>
-                <div class="" *nzSpaceItem>Mi CV </div>
+                <div class="" *nzSpaceItem> CV </div>
               </nz-space>
             </button>
           </div>
@@ -176,7 +176,7 @@
             <button class="button-22" role="button" routerLink="/profile/my-postulations">
               <nz-space>
                 <i nz-icon nzType="audit" nzTheme="outline" *nzSpaceItem></i>
-                <div class="" *nzSpaceItem>Mis postulaciones </div>
+                <div class="" *nzSpaceItem>Postulaciones </div>
               </nz-space>
 
             </button>
@@ -197,10 +197,10 @@
 
 
           <div class="button-element">
-            <button class="button-23" role="button">
+            <button class="button-23" role="button" routerLink="/search">
               <nz-space>
                 <i nz-icon nzType="search" nzTheme="outline" *nzSpaceItem></i>
-                <div class="" *nzSpaceItem>Buscar empleo </div>
+                <!-- <div class="" *nzSpaceItem>Buscar empleo </div> -->
               </nz-space>
             </button>
           </div>

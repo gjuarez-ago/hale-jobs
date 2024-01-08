@@ -63,7 +63,6 @@ public class ComplaintServiceImpl implements IComplaintService{
 		element.setRegDateCreated(new Date());
 		element.setStatus(request.getStatus());
 		element.setTitle(request.getTitle());
-		element.setType(request.getType());
 		element.setUser(user);
 	
 		repository.save(element);
@@ -80,9 +79,9 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 	
 	@Override
-	public Page<Complaints> getAllComplaintsOfferByOffer(Long offerId, int pageNo, int pageSize) {
+	public Page<Complaints> getAllComplaintsOfferByOffer(String keyword, Long offerId, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
-		Page<Complaints> response = repository.findComplaintsByOffer(offerId, pageable);
+		Page<Complaints> response = repository.findComplaintsByOffer(keyword, offerId, pageable);
 		return response;
 	}
 	

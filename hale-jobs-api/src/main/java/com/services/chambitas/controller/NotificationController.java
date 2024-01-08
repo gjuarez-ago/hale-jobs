@@ -65,11 +65,13 @@ public class NotificationController {
 	
 	// Ver notificaciones por usuario WEB
 	@GetMapping("/view-by-user-web")
-	public ResponseEntity<Page<Notification>> getAllNotificationsByUser(@RequestParam("keyword") String keyword,
+	public ResponseEntity<Page<Notification>> getAllNotificationsByUser(
+			@RequestParam("email") String emailDestination,
+			@RequestParam(value = "title",defaultValue = "", required = false) String title,
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
 		
-		Page<Notification> response = service.getAllNotificationsByUserWEB(keyword, pageNo, pageSize);
+		Page<Notification> response = service.getAllNotificationsByUserWEB(emailDestination,title, pageNo, pageSize);
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}	
 	

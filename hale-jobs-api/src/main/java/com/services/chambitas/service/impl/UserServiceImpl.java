@@ -594,6 +594,14 @@ private RangeAmount existRangeAmount(Long id) throws GenericException {
 		return element;
 	}
 
+	@Override
+	public Page<User> searchByFiltersWEB(String city, String state, String salary, String job, String mod, int pageNo,
+			int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize);   
+		Page<User> response = userRepository.searchByFiltersWEB(city, state, salary, job, mod, pageable);
+		return response;
+	}
+
 
 	
 	

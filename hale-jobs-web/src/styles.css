@@ -202,14 +202,13 @@ li.ant-menu-item.ant-menu-item-selected {
 
 .button-blue:disabled { 
   cursor: not-allowed;
-  background: rgba(171, 185, 245, 0.08);
-  color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(37, 37, 37, 0.1);
+  color: #000000;
 }
 
 .button-blue span {
   margin: 0px 9px 0px 0px;
 }
-
 
 /* Button RED */
 

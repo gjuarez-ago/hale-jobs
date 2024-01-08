@@ -6,6 +6,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,6 +57,8 @@ public interface IUserService {
 	    User updatePermissionsByUsername(String username, List<Permission> permissions);
 	    
 	    List<Permission> findPermissionsByUsername(String username);
+	    
+	    Page<User> searchByFiltersWEB(String city,String state,String salary, String job, String mod, int pageNo, int pageSize);
 	   
 	
 }

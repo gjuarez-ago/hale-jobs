@@ -29,7 +29,7 @@
   </div> -->
 
 
-  <div class="filters">
+  <!-- <div class="filters">
     <form nz-form [nzLayout]="'inline'" [formGroup]="searchForm" (ngSubmit)="submitForm()">
         <nz-form-item>
           <nz-form-control>
@@ -45,32 +45,29 @@
           </nz-form-control>
         </nz-form-item>
       </form>
-  </div>
+  </div> -->
 
 
-  <div class="table">
-
-    <nz-table #basicTable [nzData]="listOfData">
+  <div *ngIf="listOffers.length > 0" >
+    <table id="customers">
         <thead>
           <tr>
             <th>Nombre</th>
             <th>Fecha</th>
-            <th>Compañia</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of basicTable.data">
-            <td>{{ data.name }}</td>
-            <td>{{ data.age }}</td>
-            <td>{{ data.address }}</td>
+          <tr *ngFor="let data of listOffers">
+            <td>{{ data.title }}</td>
+            <td>{{ data.company.name }}</td>
             <td>
               <nz-space>
-                <button *nzSpaceItem nz-button nzType="primary" nzShape="circle">
+                <button  routerLink="/view-job/{{data.id}}"  *nzSpaceItem nz-button nzType="primary" nzShape="circle">
                   <i nz-icon nzType="eye" nzTheme="outline"></i>
                 </button>
 
-                <button *nzSpaceItem nz-button nzType="primary" nzDanger nzShape="circle">
+                <button (click)="deleteFavorite(data)" *nzSpaceItem nz-button nzType="primary" nzDanger nzShape="circle">
                   <i nz-icon nzType="delete" nzTheme="outline"></i>
                 </button>
 
@@ -78,10 +75,30 @@
             </td>
           </tr>
         </tbody>
-      </nz-table>
-
-
+      </table>
   </div>
+
+  <div class="table">
+    
+  <nz-empty
+  [hidden]="listOffers.length > 0"
+  nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+  [nzNotFoundContent]="contentTpl"
+  [nzNotFoundFooter]="footerTpl"
+  >
+  <ng-template #contentTpl>
+    <span>
+      Aun no tienes historial, 
+      <a routerLink="/search">¿Deseas comenzar a buscar?</a>
+    </span>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button nzType="primary" routerLink="/search" > Buscar </button>
+  </ng-template>
+ </nz-empty>
+  </div>
+
+
 </div>
     </nz-page-header-content>
   </nz-page-header>

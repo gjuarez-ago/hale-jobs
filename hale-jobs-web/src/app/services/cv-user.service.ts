@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
@@ -127,9 +127,21 @@ export class CVUserService {
     return this.http.delete<any>(`${this.url}/certification/delete/${id}`);
   }
 
-  public getPostulationsByUser(params : any): Observable<any> {
-    return this.http.get<any>(`${this.url}/postulates/get-by-user?userId=${params}`);
+  public getPostulationsByUser(pagination  : any): Observable<any> {
+
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        userId: pagination.userId,
+        keyword: pagination.keyword,
+      }
+    });
+
+
+    return this.http.get<any>(`${this.url}/postulates/postulates-by-user-w`, {params: params});
   }
+
 
   public deletePostulationsByUser(id: any): Observable<any> {
     return this.http.get<any>(`${this.url}/postulates/delete/${id}`);

@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { GenericService } from 'src/app/services/generic.service';
+import { HistoryService } from 'src/app/services/history.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { SearchService } from 'src/app/services/search.service';
 
@@ -60,6 +61,7 @@ export class SearchOffersComponent implements OnInit {
     private ngxSpinner: NgxSpinnerService,
     private searchService : SearchService,
     private offerService : OfferService,
+    private historyService : HistoryService,
   ) { }
 
   ngOnInit(): void {
@@ -159,7 +161,6 @@ export class SearchOffersComponent implements OnInit {
   }
 
   changePageSize($event: number) : void {
-    console.log("Change page size: "  + $event);
     this.pageSize = $event;
     this.getListPaginate();
   }
@@ -361,6 +362,16 @@ public getTypeOfJob() {
     let index: any = urgency.find((e: any) => e.id == item);
     return index.value;
   }  
+
+  public navigateViewJob(element : any) {
+    this.historyService.addtoFavorites(element);
+
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/view-job/${element.id}`]));
+       window.open('#' + url, '_blank');
+
+       
+  }
 
 
   public getDays(fecha :any) {

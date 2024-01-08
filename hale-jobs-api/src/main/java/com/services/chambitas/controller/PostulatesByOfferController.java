@@ -21,7 +21,7 @@ import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.service.IPostulatesByOfferService;
 
 @RestController
-@RequestMapping(path = {"/postulates-by-offer"})
+@RequestMapping(path = {"/postulates"})
 public class PostulatesByOfferController {
 
 	@Autowired
@@ -34,19 +34,19 @@ public class PostulatesByOfferController {
 	}
 	
 	@PostMapping("/change-status/{key}")
-	public ResponseEntity<PostulatesOffer> editPostulation(@PathVariable("key") String id,@RequestBody PostulateByOfferDTO request) throws GenericException {
+	public ResponseEntity<PostulatesOffer> editPostulation(@PathVariable("key") Long id,@RequestBody PostulateByOfferDTO request) throws GenericException {
 		PostulatesOffer response = service.changeStatus(id, request);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{key}/{user}")
-	public ResponseEntity<PostulatesOffer> editPostulation(@PathVariable("key") String id, @PathVariable("user") Long userId) throws GenericException {
+	public ResponseEntity<PostulatesOffer> editPostulation(@PathVariable("key") Long id, @PathVariable("user") Long userId) throws GenericException {
 		PostulatesOffer response = service.deletePostulation(id, userId);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
 	@GetMapping("/find/{key}")
-	public ResponseEntity<PostulatesOffer> findPostulation(@PathVariable("key") String id) throws GenericException {
+	public ResponseEntity<PostulatesOffer> findPostulation(@PathVariable("key") Long id) throws GenericException {
 		PostulatesOffer response = service.findPostulationById(id);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
@@ -60,9 +60,10 @@ public class PostulatesByOfferController {
 	@GetMapping("/postulates-by-user-w")
 	public ResponseEntity<Page<PostulatesOffer>> getAllPostulatesByUser(@RequestParam("userId") Long userId,
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
 		
-		Page<PostulatesOffer> response = service.getPostulatesByUserIdW(userId, pageNo, pageSize);
+		Page<PostulatesOffer> response = service.getPostulatesByUserIdW(keyword, userId, pageNo, pageSize);
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}	
 
@@ -75,9 +76,9 @@ public class PostulatesByOfferController {
 	@GetMapping("/postulates-by-offer-w")
 	public ResponseEntity<Page<PostulatesOffer>> getAllPostulatesByOfferW(@RequestParam("offerId") Long offerId,
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-		
-		Page<PostulatesOffer> response = service.getAllPostulatesByOfferW(offerId, pageNo, pageSize);
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
+		Page<PostulatesOffer> response = service.getAllPostulatesByOfferW(keyword,offerId, pageNo, pageSize);
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}	
 	

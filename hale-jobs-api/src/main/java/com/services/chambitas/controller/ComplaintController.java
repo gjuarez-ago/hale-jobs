@@ -42,10 +42,12 @@ public class ComplaintController {
 	}
 
 	@GetMapping("/view-complaints-by-offer")
-	public ResponseEntity<Page<Complaints>> getAllComplaintsOfferByOffer(@RequestParam("offer") Long offerId,
+	public ResponseEntity<Page<Complaints>> getAllComplaintsOfferByOffer(
+			@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
+			@RequestParam("offerId") Long offerId,
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-		Page<Complaints> response = service.getAllComplaintsOfferByOffer(offerId, pageNo, pageSize);
+		Page<Complaints> response = service.getAllComplaintsOfferByOffer(keyword, offerId, pageNo, pageSize);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

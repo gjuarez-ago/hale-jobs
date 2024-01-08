@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { HistoryService } from 'src/app/services/history.service';
 
 @Component({
   selector: 'app-my-history',
@@ -55,7 +56,8 @@ export class MyHistoryComponent implements OnInit {
     private fb: FormBuilder,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService 
+    private ngxSpinner: NgxSpinnerService,
+    private historyService : HistoryService,
   ) {
     this.searchForm = this.fb.group({
       keyword: [null, [Validators.required]],
@@ -66,19 +68,38 @@ export class MyHistoryComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
+      this.historyService.setProduct(JSON.parse(localStorage.getItem('MyProducts_History') || '[]'));
+    
+      this.getProducts();
+
+    
+
     } else {
       this.router.navigateByUrl("/auth/login");
     }
   }
 
+  public deleteFavorite(item : any) {
+    this.listOffers.map((a:any, index:any)=>{
+      if(item.id == a.id){
+        console.log(item);
+        this.listOffers.splice(index,1);
+      }
+    });
 
-  getOffersByHistory(){
-    
+    console.log(this.listOffers);
+
+
+    this.historyService.removeItem(item);
+    this.getProducts();
   }
 
-
-
-
+  public getProducts() {
+    this.historyService.getProducts()
+    .subscribe(res=>{
+      this.listOffers = res;
+    });
+  }
 
 }
 

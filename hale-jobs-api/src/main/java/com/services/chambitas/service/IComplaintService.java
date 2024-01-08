@@ -14,7 +14,7 @@ public interface IComplaintService {
 	  
 	  Page<Complaints> getAllComplaintsOfferByUserRH(Long userId,int pageNo, int pageSize);
 	  
-	  Page<Complaints> getAllComplaintsOfferByOffer(Long offerId,int pageNo, int pageSize);
+	  Page<Complaints> getAllComplaintsOfferByOffer(String keyword, Long offerId,int pageNo, int pageSize);
 	  	  
 	  Complaints createComplaint(ComplaintDTO request) throws GenericException;
 	  

@@ -57,20 +57,20 @@
 
 
         <div class="list-card-history">
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
-          <div class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Java Developer</div>
+          <div (click)="searchByKeyword('Ingeniero de software')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Ingeniero de software </div>
+          <div (click)="searchByKeyword('Administrador de cambios')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i>  Administrador de cambios </div>
+          <div (click)="searchByKeyword('Desarrollador de software')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Desarrollador de software </div>
+          <div (click)="searchByKeyword(' Ingeniero DevOps')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i>  Ingeniero DevOps</div>
+          <div (click)="searchByKeyword('Ingeniero de software')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Ingeniero .Net</div>
+          <div (click)="searchByKeyword('Ingeniero .Net')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Ingeniero de datos </div>
+          <div (click)="searchByKeyword('Desarrollador Java')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i>  Desarrollador Java</div>
+          <div (click)="searchByKeyword('Analista de datos')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Analista de datos</div>
+          <div (click)="searchByKeyword('Analista de negocios')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Analista de negocios</div>
+          <div (click)="searchByKeyword('Gerente de Proyecto')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Gerente de Proyecto </div>
+          <div (click)="searchByKeyword('Desarrollador python')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Desarrollador python</div>
+          <div (click)="searchByKeyword('Desarrolador web')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Desarrolador web </div>
+          <div (click)="searchByKeyword('Desarrolador móvil')" class="card-s"><i nz-icon nzType="search" nzTheme="outline"></i> Desarrolador móvil </div>
         </div>
-
       </div>
 
 
@@ -94,38 +94,52 @@
 
       <div class="wrapper">
         <div class="page_categories">
-          <div class="fighting_games gallery">           
-              <h1>UX/UI </h1>
+         
+          <div (click)="searchByCategory('Big Data')" class="sports_games gallery">
+            <h1><i class="fas fa-futbol"></i> Big Data </h1>
           </div>
-          <div class="sports_games gallery">
-            <h1><i class="fas fa-futbol"></i> UX/UI </h1>
-          </div>
-          <div class="girls_games gallery">
+          <div (click)="searchByCategory('Desarrollo Móvil')" class="girls_games gallery">
             <h1><i class="fab fa-gitlab"></i> Desarrollo Móvil </h1>
           </div>
-          <div class="racing_games gallery">
+          <div (click)="searchByCategory('Desarrollo WEB')" class="racing_games gallery">
             <h1><i class="fas fa-flag-checkered"></i> Desarrollo WEB</h1>
           </div>
-          <div class="shooting_games gallery">
-            <h1><i class="fas fa-fighter-jet"></i> Project Management </h1>
+          <div (click)="searchByCategory('Administración de proyectos')" class="shooting_games gallery">
+            <h1><i class="fas fa-fighter-jet"></i> Administración de proyectos </h1>
           </div>
-          <div class="fighting_games gallery">           
-            <h1>UX/UI </h1>
+          <div (click)="searchByCategory('Machine Learning e inteligencia artificial')" class="fighting_games gallery">           
+            <h1> Machine Learning </h1>
         </div>
-        <div class="sports_games gallery">
-          <h1><i class="fas fa-futbol"></i> UX/UI </h1>
+        <div (click)="searchByCategory('Soporte técnico')" class="sports_games gallery">
+          <h1><i class="fas fa-futbol"></i> Soporte técnico </h1>
         </div>
-        <div class="girls_games gallery">
-          <h1><i class="fab fa-gitlab"></i> Desarrollo Móvil </h1>
+        <div (click)="searchByCategory('Base de datos')" class="girls_games gallery">
+          <h1><i class="fab fa-gitlab"></i> Base de datos </h1>
         </div>
-        <div class="racing_games gallery">
-          <h1><i class="fas fa-flag-checkered"></i> Desarrollo WEB</h1>
+        <div (click)="searchByCategory('QA - Control de calidad')" class="racing_games gallery">
+          <h1><i class="fas fa-flag-checkered"></i> QA (Control de calidad) </h1>
         </div>
-        <div class="shooting_games gallery">
-          <h1><i class="fas fa-fighter-jet"></i> Project Management </h1>
+        <div (click)="searchByCategory('Business Intelligence (BI)')" class="shooting_games gallery">
+          <h1><i class="fas fa-fighter-jet"></i> Business Intelligence (BI) </h1>
         </div>
-          <div class="RBG_games gallery">
-            <h1><i class="fab fa-accusoft"></i> Diseño grafico </h1>
+          <div (click)="searchByCategory('Redes y telecomunicaciones')" class="RBG_games gallery">
+            <h1><i class="fab fa-accusoft"></i> Redes y telecomunicaciones </h1>
+          </div>
+
+          <div (click)="searchByCategory('Capacitación en TI')" class="girls_games gallery">
+            <h1><i class="fab fa-gitlab"></i> Capacitación en TI </h1>
+          </div>
+          <div (click)="searchByCategory('Desarrollo de Software')" class="racing_games gallery">
+            <h1><i class="fas fa-flag-checkered"></i> Desarrollo de Software </h1>
+          </div>
+          <div (click)="searchByCategory('Ofimática e informatica')" class="shooting_games gallery">
+            <h1><i class="fas fa-fighter-jet"></i> Ofimática </h1>
+          </div>
+            <div (click)="searchByCategory('SAP ERP(Sistemas, Aplicaciones y Productos)')" class="RBG_games gallery">
+              <h1><i class="fab fa-accusoft"></i> SAP ERP </h1>
+            </div>
+            <div (click)="searchByCategory('UX-UI')"  class="fighting_games gallery">           
+              <h1>UX/UI </h1>
           </div>
         </div>
 
@@ -140,32 +154,11 @@
       </h1>
 
       <div class="alala">
-        <div class="offer-content">
-          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
-          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
-
-         
+        <div class="offer-content"  routerLink="/view-job/{{item.id}}" *ngFor="let item of listOffers">
+          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> {{item.title}} </h3>
+          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> {{item.city.valor}}, {{item.state.valor}} - {{item.typeOfJob.valor}} - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> {{item.rangeAmount.valor}}  </h4>
         </div>
 
-        <div class="offer-content">
-          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
-          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
-
-         </div>
-
-        <div class="offer-content">
-          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
-          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
-
-         
-        </div>
-
-        <div class="offer-content">
-          <h3 class="pd-a">  <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Java Developer </h3>
-          <h4 class="pd-a"> <i nz-icon nzType="flag" nzTheme="outline"></i> Ciudad de México, México (Remoto) - <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> $20,000 - <i nz-icon nzType="home" nzTheme="outline"></i> Tipo de pago mensual </h4>
-
-        
-        </div>
       </div>
     </div>
 
@@ -328,8 +321,6 @@
           </div>
         </div>
 
-
-
         <div class="card-container">
           <div class="card-image">
             <img
@@ -394,9 +385,11 @@
 
     <div class="team-section">
 
-       <h1 class="title-apa">Busquedas recomendadas </h1>
+       <h1 class="title-apa">Busquedas por estado </h1>
 
-      <p class="apa">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo repudiandae nihil rem qui quibusdam eum beatae</p>
+      <p class="apa">
+        Encuentra las ofertas mas relevantes de acuerdo al estado.
+      </p>
 
 
 
@@ -407,67 +400,56 @@
         <div class="list-found">
 
           <div class="list-content">
-            <p> Top puestos </p>
+            <!-- <p> Top puestos </p> -->
             <ul>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li (click)="searchByState('AGS')"> Ofertas en Aguascalientes </li>
+              <li (click)="searchByState('BC')"> Ofertas en Baja California </li>
+              <li (click)="searchByState('BCS')"> Ofertas en Baja California Sur </li>
+              <li (click)="searchByState('CHI')"> Ofertas en Chihuahua </li>
+              <li (click)="searchByState('CHS')"> Ofertas en Chiapas </li>
+              <li (click)="searchByState('CMP')"> Ofertas en Campeche </li>
+              <li (click)="searchByState('CMX')"> Ofertas en Ciudad De Mexico </li>
+              <li (click)="searchByState('COA')"> Ofertas en Coahuila </li>
+              <li (click)="searchByState('COL')"> Ofertas en Colima </li>
+              <li (click)="searchByState('DGO')"> Ofertas en Durango </li>
             </ul>
           </div>
 
           <div class="list-content">
-            <p> Top categorias </p>
+            <!-- <p> Top categorias </p> -->
             <ul>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-              <li><a href="#"> empleos en ciudad de mexico</a></li>
-            
+              <li (click)="searchByState('GRO')"> Ofertas en Guerrero </li>
+              <li (click)="searchByState('GTO')"> Ofertas en Guanajuato </li>
+              <li (click)="searchByState('HGO')">Ofertas en Hidalgo </li>
+              <li (click)="searchByState('JAL')"> Ofertas en Jalisco </li>
+              <li (click)="searchByState('MCH')"> Ofertas en Michoacan </li>
+              <li (click)="searchByState('MEX')"> Ofertas en Estado De Mexico</li>
+              <li (click)="searchByState('MOR')"> Ofertas en Morelos </li>
+              <li (click)="searchByState('NAY')"> Ofertas en Nayarit </li>
+              <li (click)="searchByState('NL')"> Ofertas en Nuevo Leon </li>
+              <li (click)="searchByState('OAX')"> Ofertas en Oaxaca </li>
+              <li (click)="searchByState('PUE')"> Ofertas en Puebla </li>      
             </ul>
           </div>
 
           <div class="list-content">
-            <p> Top regiones </p>
+            <!-- <p> Top regiones </p> -->
             <ul>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
+              <li (click)="searchByState('QR')"> Ofertas en Quintana Roo </li>
+              <li (click)="searchByState('QRO')"> Ofertas en Queretaro </li>
+              <li (click)="searchByState('SIN')"> Ofertas en Sinaloa </li>
+              <li (click)="searchByState('SLP')"> Ofertas en San Luis Potosi </li>
+              <li (click)="searchByState('SON')"> Ofertas en Sonora </li>
+              <li (click)="searchByState('TAB')"> Ofertas en Tabasco </li>
+              <li (click)="searchByState('TLX')"> Ofertas en Tlaxcala </li>
+              <li (click)="searchByState('TMS')"> Ofertas en Tamaulipas </li>
+              <li (click)="searchByState('VER')"> Ofertas en Veracruz </li>
+              <li (click)="searchByState('YUC')"> Ofertas en Yucatan </li>
+              <li (click)="searchByState('ZAC')"> Ofertas en Zacatecas </li>
             </ul>
           </div>
 
-          <div class="list-content">
-            <p> Top Categorias </p>
-            <ul>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-              <li><a href="#"> Trabajos en HSBC </a></li>
-            </ul>
-          </div>
+        
 
         </div>
 
