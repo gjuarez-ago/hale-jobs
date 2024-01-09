@@ -20,7 +20,7 @@ public interface IPostulatesOfferRepository extends JpaRepository<PostulatesOffe
 	 @Query(value = "SELECT po.* FROM postulates_offer AS po WHERE po.user_id = :userId AND po.reg_borrado = 0",nativeQuery = true)
 	 List<PostulatesOffer> findPostulatesByUserMovil(@Param("userId") Long userId);
 	 
-	 @Query(value = "SELECT p FROM PostulatesOffer p JOIN p.offer o JOIN p.user u WHERE o.title LIKE %:keyword% AND p.status = 0 AND u.id = :user AND o.status = 0 AND p.regBorrado = 0")
+	 @Query(value = "SELECT p FROM PostulatesOffer p JOIN p.offer o JOIN p.user u WHERE o.title LIKE %:keyword% AND u.id = :user AND o.status = 0 AND p.regBorrado = 0")
 	 Page<PostulatesOffer> findPostulatesByUserWEB(@Param("keyword") String title,@Param("user") Long userId, Pageable pageable);
 	 
 	 @Query(value = "SELECT po.* FROM postulates_offer AS po WHERE po.offer_id = :offerId AND po.reg_borrado = 0",nativeQuery = true)

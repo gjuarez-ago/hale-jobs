@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.services.chambitas.domain.Notification;
 import com.services.chambitas.domain.PostulatesOffer;
 import com.services.chambitas.domain.dto.PostulateByOfferDTO;
 import com.services.chambitas.exception.domain.GenericException;
@@ -14,6 +15,8 @@ public interface IPostulatesByOfferService {
 	
 	// Postularme a una oferta
 	PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException;
+	
+	Notification messagePostulate(PostulateByOfferDTO request) throws GenericException;
 	
 	// Editar postulación
 	PostulatesOffer changeStatus(Long id, PostulateByOfferDTO request) throws GenericException;

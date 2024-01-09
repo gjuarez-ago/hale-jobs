@@ -568,26 +568,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       )
     }
 
-    getTypeOfJobs() {
-      this.isLoadingGeneral = true;
-      this.genericService.getAllTypeOfJobs().subscribe(
-        (response: any) => {
-        
-          this.listTypeOfJobs = response.map((prop: any, key: any) => {
-            return {
-              ...prop,
-              key: key + 1,
-            };
-          });        
-          this.isLoadingGeneral=false;
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
-          this.isLoadingGeneral=false;
-        }
-      )
-    }
-
+  
     getModWorks() {
       this.isLoadingGeneral = true;
       this.genericService.getAllTypeOfJobs().subscribe(
@@ -609,20 +590,7 @@ export class CompleteRegisterUserComponent implements OnInit {
     }
 
 
-    public modalityWork: any = [
-      {
-        id: 1,
-        name: 'PRESENCIAL'
-      },
-      {
-        id: 2,
-        name: 'REMOTO'
-      },
-      {
-        id: 3,
-        name: 'AMBOS'
-      },
-    ]
+  
   
   
     public technicalAttitudes: any = [

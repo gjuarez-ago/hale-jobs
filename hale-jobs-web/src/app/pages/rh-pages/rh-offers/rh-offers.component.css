@@ -17,6 +17,14 @@
     color: white !important;
 }
 
+
+.form-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto;
+  }
+
 .btn-red {
     background-color: rgb(241, 5, 1) !important;
     border-color: white !important;

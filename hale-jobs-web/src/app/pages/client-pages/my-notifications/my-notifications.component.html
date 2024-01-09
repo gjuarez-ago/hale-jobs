@@ -97,6 +97,19 @@
       
         </nz-list-item>
 
+        <div class="form-inline">
+          <div class="pagination-content">
+            <nz-pagination
+              [nzPageSize]="pageSize"
+              [nzPageIndex]="current"
+              [nzTotal]="total"
+              (nzPageSizeChange)="changePageSize($event)"
+              (nzPageIndexChange)="changeCurrentPage($event)"
+              id="demo"
+            ></nz-pagination>
+          </div>
+        </div>
+
 
         <nz-empty
         [hidden]="data.length > 0"

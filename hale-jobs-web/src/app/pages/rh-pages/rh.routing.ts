@@ -30,6 +30,7 @@ import { NewOfferComponent } from './rh-offers/new-offer/new-offer.component';
 import { NewCompanyComponent } from './rh-company/new-company/new-company.component';
 import { UpdateCompanyComponent } from './rh-company/update-company/update-company.component';
 import { UpdateOfferComponent } from './rh-offers/update-offer/update-offer.component';
+import { ViewProfileComponent } from './rh-search-workers/view-profile/view-profile.component';
 
 const routes: Routes = [
     {
@@ -44,7 +45,7 @@ const routes: Routes = [
           { path: "update-company/:id", component: UpdateCompanyComponent },
 
           { path: "search-workers", component: RhSearchWorkersComponent },
-          { path: "view-worker/:id", component: RhDashboardComponent },
+          { path: "view-worker/:id", component: ViewProfileComponent },
           { path: "my-contacts", component: RhContactBookComponent },
           { path: "complaints", component: RhComplaintsComponent },
           { path: "my-notifications", component: RhNotificationsComponent },

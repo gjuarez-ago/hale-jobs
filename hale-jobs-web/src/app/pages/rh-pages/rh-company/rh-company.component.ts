@@ -53,7 +53,6 @@ export class RhCompanyComponent implements OnInit {
     private ngxSpinner: NgxSpinnerService
   ) {
 
-
     this.validateForm = this.fb.group({
       name: [''],
       rfc: [''],
@@ -120,8 +119,10 @@ export class RhCompanyComponent implements OnInit {
           this.ngxSpinner.hide();
         }
       )
-  );
-  
+  )}
+
+  public navigateCreate() {
+      this.router.navigateByUrl('/dashboard/new-company');
   }
 
   getListPaginate(): void {

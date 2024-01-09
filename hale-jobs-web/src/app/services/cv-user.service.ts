@@ -147,8 +147,17 @@ export class CVUserService {
     return this.http.get<any>(`${this.url}/postulates/delete/${id}`);
   }
 
-  public getNotificationsByUser(params: any): Observable<any> {
-    return this.http.get<any>(`${this.url}/notification/get-by-user?userId=${params}`);
+  public getNotificationsByUser(pagination: any): Observable<any> {
+
+    const params = new HttpParams({
+      fromObject: {
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize,
+        email: pagination.email,
+      }
+    });
+
+    return this.http.get<any>(`${this.url}/notification/view-by-user-web`,{params: params});
   }
 
   public getNotificationsById(id: any): Observable<any> {

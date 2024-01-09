@@ -173,6 +173,27 @@
         </nz-space>
       </nz-card>
     </div>
+
+    
+    <div class="form-inline">
+    <nz-empty
+    [hidden]="data.length > 0"
+    nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+    [nzNotFoundContent]="contentTpl"
+    [nzNotFoundFooter]="footerTpl"
+    >
+    <ng-template #contentTpl>
+      <span>
+        Aun no has creado ninguna empresa.
+      </span>
+    </ng-template>
+    <ng-template #footerTpl>
+      <button nz-button nzType="primary" (click)="navigateCreate()" > Crear empresa </button>
+    </ng-template>
+   </nz-empty>
+    </div>
+
+
   </div>
 </nz-spin>
 

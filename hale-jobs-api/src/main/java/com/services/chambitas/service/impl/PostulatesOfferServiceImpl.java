@@ -37,10 +37,8 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	@Autowired 
 	private IOfferRepository offerRepository;
 	
-	
 	@Autowired 
 	private INotificationRepository noticationRespository;
-	
 	
 	@Override
 	public PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException {
@@ -214,6 +212,28 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		n.setUserId(user);
 		noticationRespository.save(n);
 		return n;
+	}
+
+	@Override
+	public Notification messagePostulate(PostulateByOfferDTO request) throws GenericException {
+		
+		Offer offer = exisOffer(request.getOfferId());
+		User user =  existUser(request.getUserId());
+
+	    UUID uuid=UUID.randomUUID();   
+		
+		Notification n = new Notification();
+		n.setConsecutive(uuid.toString());
+		n.setContent(request.getComments());
+		n.setEmailDestination(user.getUsername());
+		n.setOfferId(request.getOfferId());
+		n.setSendBy(user.getUsername());
+		n.setTitle("Un reclutador tiene un mensaje para ti relacionado a la siguiente oferta: " + offer.getTitle());
+		n.setTypeAD("MENSAJE");
+		n.setUserId(request.getUserId());
+		noticationRespository.save(n);
+		
+		return null;
 	}
 	
 }

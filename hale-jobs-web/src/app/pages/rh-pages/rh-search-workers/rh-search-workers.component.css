@@ -11,6 +11,10 @@
     padding: 30px 0px 10px 0px;
   }
   
+  nz-empty {
+    padding: 40px 0px;
+    margin: 0 auto;
+  }
   
   .add {
     display: flex;
@@ -167,8 +171,9 @@
   
    .box {
     position: relative;
-    min-width: 300px;
-    width: 300px;
+    min-width: 350px;
+    max-width: 350px;
+    width: 350px;
     background-color: #fff;
     box-shadow: 2px 3px 30px rgba(0, 0, 0, 0.05);
     display: flex;
@@ -292,3 +297,7 @@
     transition: all ease 0.5s;
   }
   
+  
+ .p-s{
+  overflow-wrap: break-word;
+}

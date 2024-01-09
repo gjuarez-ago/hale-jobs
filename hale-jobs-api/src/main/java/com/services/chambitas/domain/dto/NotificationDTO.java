@@ -5,8 +5,6 @@ import lombok.Data;
 @Data
 public class NotificationDTO {
 
-	private String title;
-
 	private String content;
 
 	private String typeAD;
@@ -15,10 +13,10 @@ public class NotificationDTO {
 	
 	private String sendBy;
 	
-	private String relatedRequest;
+	private String title;
 
-	private String regCreatedBy;
-	
-	private String regUpdateBy;
+	private Long userId;
+
+	private Long offerId;
 	
 }

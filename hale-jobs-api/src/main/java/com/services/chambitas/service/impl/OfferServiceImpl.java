@@ -35,6 +35,7 @@ import com.services.chambitas.repository.ICountriesRepository;
 import com.services.chambitas.repository.IJobCategoryRepository;
 import com.services.chambitas.repository.IJobSubcategoryRepository;
 import com.services.chambitas.repository.ILevelStudyRepository;
+import com.services.chambitas.repository.INotificationRepository;
 import com.services.chambitas.repository.IOfferRepository;
 import com.services.chambitas.repository.IRangeAmountRepository;
 import com.services.chambitas.repository.IStateRepository;
@@ -86,6 +87,10 @@ public class OfferServiceImpl implements IOfferService{
 	
 	@Autowired
 	private IRangeAmountRepository rangeAmountRepository;
+	
+	@Autowired
+	private INotificationRepository notificationRepository;
+	
 	
 	@Override
 	public Offer createOffer(OfferDTO request) throws GenericException {

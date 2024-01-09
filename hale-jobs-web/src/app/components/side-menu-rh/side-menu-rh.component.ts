@@ -23,7 +23,7 @@ export class SideMenuRh implements OnInit {
   ngOnInit(): void {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
-      this.redirect(this.user);
+      // this.redirect(this.user);
     } else {
       this.router.navigateByUrl('/auth/login');
     }

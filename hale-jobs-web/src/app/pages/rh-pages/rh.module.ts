@@ -39,6 +39,7 @@ import { NewOfferComponent } from './rh-offers/new-offer/new-offer.component';
 import { NewCompanyComponent } from './rh-company/new-company/new-company.component';
 import { UpdateCompanyComponent } from './rh-company/update-company/update-company.component';
 import { UpdateOfferComponent } from './rh-offers/update-offer/update-offer.component';
+import { ViewProfileComponent } from './rh-search-workers/view-profile/view-profile.component';
 
 const welcomeComponents: any = [
   SideMenuRh,
@@ -71,6 +72,8 @@ const welcomeComponents: any = [
   AdminTypeOfPaymentsComponent,
   UpdateCompanyComponent,
   UpdateOfferComponent, 
+  ViewProfileComponent,
+
 ]
 
 @NgModule({

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.services.chambitas.domain.Notification;
 import com.services.chambitas.domain.PostulatesOffer;
 import com.services.chambitas.domain.dto.PostulateByOfferDTO;
 import com.services.chambitas.exception.domain.GenericException;
@@ -32,6 +33,13 @@ public class PostulatesByOfferController {
 		PostulatesOffer response = service.createPostulation(request);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
+	
+	@PostMapping("/message-user")
+	public ResponseEntity<Notification> messagePostulate(@RequestBody PostulateByOfferDTO request) throws GenericException {
+		Notification response = service.messagePostulate(request);
+	    return new ResponseEntity<>(response , HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("/change-status/{key}")
 	public ResponseEntity<PostulatesOffer> editPostulation(@PathVariable("key") Long id,@RequestBody PostulateByOfferDTO request) throws GenericException {

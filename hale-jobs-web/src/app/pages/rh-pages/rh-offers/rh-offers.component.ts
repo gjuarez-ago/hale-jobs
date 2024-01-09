@@ -14,14 +14,12 @@ import { OfferService } from 'src/app/services/offer.service';
 @Component({
   selector: 'app-rh-offers',
   templateUrl: './rh-offers.component.html',
-  styleUrls: ['./rh-offers.component.css']
+  styleUrls: ['./rh-offers.component.css'],
 })
 export class RhOffersComponent implements OnInit {
-
-
   confirmDeleteModal?: NzModalRef; // For testing by now
 
-  public selectedValue : any;
+  public selectedValue: any;
 
   // * Variables de la tabla
   public pageSize: number = 10;
@@ -43,8 +41,8 @@ export class RhOffersComponent implements OnInit {
   public totalElementByPageC = 0;
   public dataC: any[] = [];
 
-  public user: User| undefined;
-  public userId : any;
+  public user: User | undefined;
+  public userId: any;
 
   //  public data : Content[] = [];
   //  public temp : Content[] = [];
@@ -55,22 +53,22 @@ export class RhOffersComponent implements OnInit {
   public visibleModal = false;
   public isLoadingModal = false;
 
-  // * Variables genericas  
+  // * Variables genericas
   public isLoadingGeneral = false;
   public dateFormat = 'yyyy/MM/dd';
-  public statusOffer = "0";
+  public statusOffer = '0';
 
-  public listSubcategory : any = [];
-  public listLevelStudy : any = [];
-  public listRangeAmount : any = [];
-  public listTypeOfJob : any = [];
+  public listSubcategory: any = [];
+  public listLevelStudy: any = [];
+  public listRangeAmount: any = [];
+  public listTypeOfJob: any = [];
 
   // * Variables para editar un usuario
   @ViewChild('e') editNgForm: NgForm | undefined;
   public editForm!: FormGroup;
   public visibleEditDrawer = false;
   public isLoadingEditDrawer = false;
-  public currentUsername: string | undefined = ''
+  public currentUsername: string | undefined = '';
 
   // * Variables para realizar el filtrado
   public validateForm!: FormGroup;
@@ -78,47 +76,59 @@ export class RhOffersComponent implements OnInit {
   isLoadingViewDetail: boolean = false;
   isLoadingPostulates: boolean = false;
 
-  public visiblePsEmail : boolean = false;
-  public visiblePsStatusOffer : boolean = false;
-  public visibleResponseComplaint : boolean = false;
+  public visiblePsEmail: boolean = false;
+  public visiblePsStatusOffer: boolean = false;
+  public visibleResponseComplaint: boolean = false;
 
-  public psResponseEmailForm! : FormGroup;
-  public responseComplaintForm! : FormGroup; 
+  public psResponseEmailForm!: FormGroup;
+  public responseComplaintForm!: FormGroup;
   isLoadingResponse: boolean = false;
-
+  postulateP: any;
 
   constructor(
-    private genericService : GenericService,
+    private genericService: GenericService,
     private authenticationService: AuthService,
-    private offerService : OfferService,
+    private offerService: OfferService,
     private fb: FormBuilder,
     private modal: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService  
+    private ngxSpinner: NgxSpinnerService
   ) {
-
     this.isLoadingGeneral = false;
 
     this.validateForm = this.fb.group({
-      title: [""],
-      subcategory: [""],
-      urgency: [""],
-      levelStudy: [""],
-      workPlace: [""],
+      title: [''],
+      subcategory: [''],
+      urgency: [''],
+      levelStudy: [''],
+      workPlace: [''],
       status: [0],
-      typeOfJob: [""],
-      rangeAmount: [""]
+      typeOfJob: [''],
+      rangeAmount: [''],
     });
 
     this.psResponseEmailForm = this.fb.group({
-      comments: ["", [Validators.required, Validators.maxLength(250), Validators.minLength(10)]],
+      comments: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(250),
+          Validators.minLength(10),
+        ],
+      ],
     });
 
     this.responseComplaintForm = this.fb.group({
-      comments: ["", [Validators.required, Validators.maxLength(250), Validators.minLength(10)]],
+      comments: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(250),
+          Validators.minLength(10),
+        ],
+      ],
     });
-
   }
 
   ngOnInit(): void {
@@ -131,25 +141,25 @@ export class RhOffersComponent implements OnInit {
       this.getTypeOfJob();
       this.getSubcategories();
     } else {
-      this.router.navigateByUrl("/auth/login");
+      this.router.navigateByUrl('/auth/login');
     }
 
-    this.loader();   
+    this.loader();
   }
 
   public cleanFilters() {
     this.validateForm = this.fb.group({
-      title: [""],
-      subcategory: [""],
-      urgency: [""],
-      levelStudy: [""],
-      workPlace: [""],
+      title: [''],
+      subcategory: [''],
+      urgency: [''],
+      levelStudy: [''],
+      workPlace: [''],
       status: ['0'],
-      typeOfJob: [""],
-      rangeAmount: [""]
+      typeOfJob: [''],
+      rangeAmount: [''],
     });
   }
-  
+
   public loader() {
     this.ngxSpinner.show();
 
@@ -159,60 +169,57 @@ export class RhOffersComponent implements OnInit {
   }
 
   submitForm(): void {
-
     for (const i in this.validateForm.controls) {
       if (this.validateForm.controls.hasOwnProperty(i)) {
         this.validateForm.controls[i].markAsDirty();
         this.validateForm.controls[i].updateValueAndValidity();
       }
     }
-  
+
     if (!this.validateForm.valid) {
       this.createMessage('warning', 'Es necesario llenar todos los campos!');
       return;
     }
-  
 
     this.ngxSpinner.show();
-  let form = this.validateForm.value;
+    let form = this.validateForm.value;
 
-  this.isLoadingTable = true;
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.offerService
-      .getAllOffersByUserWEB({
-        pageNo: this.current - 1,
-        pageSize: this.pageSize,
-        user: this.userId,
-        subcategory: form.subcategory ? form.subcategory : '',
-        title:  form.title ? form.title : '',
-        status:  form.status ,
-        urgency:  form.urgency ? form.urgency : '',
-        workPlace:  form.workPlace ? form.workPlace : '',
-        levelStudy:  form.levelStudy ? form.levelStudy : '',
-        typeOfJob: form.typeOfJob ? form.typeOfJob : '',
-        rangeAmount: form.rangeAmount ? form.rangeAmount : '',
-      })
-      .subscribe(
-        (response: any) => {
+    this.isLoadingTable = true;
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.offerService
+        .getAllOffersByUserWEB({
+          pageNo: this.current - 1,
+          pageSize: this.pageSize,
+          user: this.userId,
+          subcategory: form.subcategory ? form.subcategory : '',
+          title: form.title ? form.title : '',
+          status: form.status,
+          urgency: form.urgency ? form.urgency : '',
+          workPlace: form.workPlace ? form.workPlace : '',
+          levelStudy: form.levelStudy ? form.levelStudy : '',
+          typeOfJob: form.typeOfJob ? form.typeOfJob : '',
+          rangeAmount: form.rangeAmount ? form.rangeAmount : '',
+        })
+        .subscribe(
+          (response: any) => {
+            this.data = response.content;
+            this.total = response.totalElements;
+            this.totalElementByPage = response.numberOfElements;
 
-          this.data = response.content;
-          this.total = response.totalElements;
-          this.totalElementByPage = response.numberOfElements;
-
-          this.isLoadingGeneral = false;
-          this.isLoadingTable = false;
-          this.loader();
-       
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.isLoadingTable = false;
-          this.isLoadingGeneral = false;
-          this.message.create('error', errorResponse.error.message);
-          this.ngxSpinner.hide();
-        }
-      )
-  )}
+            this.isLoadingGeneral = false;
+            this.isLoadingTable = false;
+            this.loader();
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+            this.ngxSpinner.hide();
+          }
+        )
+    );
+  }
 
   changePageSize($event: number): void {
     this.pageSize = $event;
@@ -224,50 +231,47 @@ export class RhOffersComponent implements OnInit {
     this.getOffers();
   }
 
+  public navigateCreate() {
+    this.router.navigateByUrl('/dashboard/new-offer');
+  }
 
-  
-
-
-  
   getPostulatesByOffer(): void {
+    this.ngxSpinner.show();
+    this.isLoadingPostulates = true;
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.offerService
+        .getPostulationsByOffer({
+          pageNo: this.currentPs - 1,
+          pageSize: this.pageSizePs,
+          offerId: this.offer.id,
+          keyword: '',
+        })
+        .subscribe(
+          (response: any) => {
+            this.dataPs = response.content.map((prop: any, key: any) => {
+              return {
+                ...prop,
+                valueSelected: 0,
+              };
+            });
 
-  this.ngxSpinner.show();
-  this.isLoadingPostulates = true;
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.offerService
-      .getPostulationsByOffer({
-        pageNo: this.currentPs - 1,
-        pageSize: this.pageSizePs,
-        offerId: this.offer.id,
-        keyword: '',
-      })
-      .subscribe(
-        (response: any) => {
-          this.dataPs = response.content.map((prop: any, key: any) => {
-            return {
-              ...prop,
-              valueSelected: 0,
-            };
-          }); ;
-          
-          this.totalPs = response.totalElements;
-          this.totalElementByPagePs = response.numberOfElements;
-          this.isLoadingGeneral = false;
-          this.isLoadingPostulates = false;
-          this.loader();
-       
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.isLoadingPostulates = false;
-          this.isLoadingGeneral = false;
-          this.message.create('error', errorResponse.error.message);
-          this.ngxSpinner.hide();
-        }
-      )
-  )}
+            this.totalPs = response.totalElements;
+            this.totalElementByPagePs = response.numberOfElements;
+            this.isLoadingGeneral = false;
+            this.isLoadingPostulates = false;
+            this.loader();
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingPostulates = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+            this.ngxSpinner.hide();
+          }
+        )
+    );
+  }
 
-  
   changePageSizePs($event: number): void {
     this.pageSizePs = $event;
     this.getPostulatesByOffer();
@@ -278,10 +282,6 @@ export class RhOffersComponent implements OnInit {
     this.getPostulatesByOffer();
   }
 
-
-
-
-    
   getComplaintsByOffer(): void {
     this.ngxSpinner.show();
     this.isLoadingTable = true;
@@ -302,7 +302,6 @@ export class RhOffersComponent implements OnInit {
             this.isLoadingGeneral = false;
             this.isLoadingTable = false;
             this.loader();
-         
           },
           (errorResponse: HttpErrorResponse) => {
             this.isLoadingTable = false;
@@ -311,10 +310,9 @@ export class RhOffersComponent implements OnInit {
             this.ngxSpinner.hide();
           }
         )
-    )}
+    );
+  }
 
-  
-    
   changePageSizeC($event: number): void {
     this.pageSizeC = $event;
     this.getComplaintsByOffer();
@@ -325,68 +323,62 @@ export class RhOffersComponent implements OnInit {
     this.getComplaintsByOffer();
   }
 
+  openCreateDrawer() {}
 
-  
-
-  openCreateDrawer() { }
-
-  openEditDrawer() { this.visibleEditDrawer = true; }
-  closeEditDrawer() { this.visibleEditDrawer = false;}
-
-
-  openViewModal(item: any) { 
-    this.getOfferById(item.id);
-    this.visibleModal = true; 
+  openEditDrawer() {
+    this.visibleEditDrawer = true;
+  }
+  closeEditDrawer() {
+    this.visibleEditDrawer = false;
   }
 
+  openViewModal(item: any) {
+    this.getOfferById(item.id);
+    this.visibleModal = true;
+  }
 
-  public sanitazerURL(value : any){ 
-    if(value) {
+  public sanitazerURL(value: any) {
+    if (value) {
       return value;
     }
 
-    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrbkK5L2pzoJpQgvTgwYZlBQigM0rsd2kC8oW3lk-7tQ&s"
-
+    return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrbkK5L2pzoJpQgvTgwYZlBQigM0rsd2kC8oW3lk-7tQ&s';
   }
 
-  closeViewModal() {this.visibleModal = false; }
+  closeViewModal() {
+    this.visibleModal = false;
+  }
 
   showDeleteModal(offer: any): void {
     this.confirmDeleteModal = this.modal.confirm({
       nzTitle: '¿Seguro que deseas eliminar esta oferta?',
-      nzContent: 'Al ser eliminada esta oferta, no podra ser visible para los candidatos dentro de la busqueda general, mas sin embargo si dentro de tus ofertas con estatus "cerrada".',
-      nzOnOk: () => this.deleteOffer(offer)
+      nzContent:
+        'Al ser eliminada esta oferta, no podra ser visible para los candidatos dentro de la busqueda general, mas sin embargo si dentro de tus ofertas con estatus "cerrada".',
+      nzOnOk: () => this.deleteOffer(offer),
     });
-}
+  }
 
-
-public deleteOffer(id: any) {
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.offerService
-      .deleteOffer(id, this.userId)
-      .subscribe(
+  public deleteOffer(id: any) {
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.offerService.deleteOffer(id, this.userId).subscribe(
         (response: any) => {
           this.isLoadingGeneral = false;
           this.getOffers();
-          this.message.create('success', "Oferta eliminada correctamente");
+          this.message.create('success', 'Oferta eliminada correctamente');
         },
         (errorResponse: HttpErrorResponse) => {
           this.isLoadingGeneral = false;
           this.message.create('error', errorResponse.error.message);
         }
       )
-  );
+    );
+  }
 
-}
-
-
-public getSubcategories() {
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.genericService
-      .getAllSubcategoriesByCategory()
-      .subscribe(
+  public getSubcategories() {
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.genericService.getAllSubcategoriesByCategory().subscribe(
         (response: any) => {
           this.listSubcategory = response;
           this.isLoadingGeneral = false;
@@ -396,15 +388,13 @@ public getSubcategories() {
           this.message.create('error', errorResponse.error.message);
         }
       )
-  );
-}
+    );
+  }
 
-public getRangeAmount() {
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.genericService
-      .getAllRangeAmount()
-      .subscribe(
+  public getRangeAmount() {
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.genericService.getAllRangeAmount().subscribe(
         (response: any) => {
           this.listRangeAmount = response;
           this.isLoadingGeneral = false;
@@ -414,15 +404,13 @@ public getRangeAmount() {
           this.message.create('error', errorResponse.error.message);
         }
       )
-  );
-}
+    );
+  }
 
-public getLevelStudy() {
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.genericService
-      .getAllTypeOfLevelStudy()
-      .subscribe(
+  public getLevelStudy() {
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.genericService.getAllTypeOfLevelStudy().subscribe(
         (response: any) => {
           this.listLevelStudy = response;
           this.isLoadingGeneral = false;
@@ -432,15 +420,13 @@ public getLevelStudy() {
           this.message.create('error', errorResponse.error.message);
         }
       )
-  );
-}
+    );
+  }
 
-public getTypeOfJob() {
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.genericService
-      .getAllTypeOfJobs()
-      .subscribe(
+  public getTypeOfJob() {
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.genericService.getAllTypeOfJobs().subscribe(
         (response: any) => {
           this.listTypeOfJob = response;
           this.isLoadingGeneral = false;
@@ -450,253 +436,253 @@ public getTypeOfJob() {
           this.message.create('error', errorResponse.error.message);
         }
       )
-  );
-}
+    );
+  }
 
-public getOfferById(id : any) {
-  this.isLoadingViewDetail = true;
-  this.ngxSpinner.show();
-  this.subscriptions.push(
-    this.offerService.findOfferById(id).subscribe(
-      (response: any) => {
-        this.offer = response;
-        this.isLoadingViewDetail = false;        
-        this.getPostulatesByOffer();
-        this.getComplaintsByOffer();
-        this.ngxSpinner.hide();  
-
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.isLoadingViewDetail = false;
-        this.ngxSpinner.hide();
-        this.message.create('error', errorResponse.error.message);
-      }
-    )
-  );
-}
-  
-
-getOffers() {
-  this.isLoadingTable = true;
-  this.isLoadingGeneral = true;
-  this.subscriptions.push(
-    this.offerService
-      .getAllOffersByUserWEB({
-        pageNo: this.current - 1,
-        pageSize: this.pageSize,
-        user: this.userId,
-        subcategory: this.validateForm.value["subcategory"] ? this.validateForm.value["subcategory"] : '',
-        title:  this.validateForm.value["title"] ? this.validateForm.value["title"] : '',
-        status:  this.validateForm.value["status"],
-        urgency:  this.validateForm.value["urgency"] ?  this.validateForm.value["urgency"] : '',
-        workPlace:  this.validateForm.value["workPlace"] ? this.validateForm.value["workPlace"] : '',
-        levelStudy:  this.validateForm.value["levelStudy"] ?  this.validateForm.value["levelStudy"] : '',
-        typeOfJob: this.validateForm.value["typeOfJob"] ? this.validateForm.value["typeOfJob"] : '',
-        rangeAmount: this.validateForm.value["rangeAmount"] ? this.validateForm.value["rangeAmount"] : '',
-      })
-      .subscribe(
+  public getOfferById(id: any) {
+    this.isLoadingViewDetail = true;
+    this.ngxSpinner.show();
+    this.subscriptions.push(
+      this.offerService.findOfferById(id).subscribe(
         (response: any) => {
-
-          this.data = response.content;
-          this.total = response.totalElements;
-          this.totalElementByPage = response.numberOfElements;
-
-          this.isLoadingTable = false;
-          this.isLoadingGeneral = false;
+          this.offer = response;
+          this.isLoadingViewDetail = false;
+          this.getPostulatesByOffer();
+          this.getComplaintsByOffer();
+          this.ngxSpinner.hide();
         },
         (errorResponse: HttpErrorResponse) => {
-          this.isLoadingTable = false;
-          this.isLoadingGeneral = false;
+          this.isLoadingViewDetail = false;
+          this.ngxSpinner.hide();
           this.message.create('error', errorResponse.error.message);
         }
       )
-  );
-}
+    );
+  }
 
-sendStatusPostulate(data : any): void {
-  this.modal.warning({
-    nzTitle: '¿Seguro que deseas responder?',
-    // nzContent: 'Bla bla ...',
-    nzOkText: 'OK',
-    nzCancelText: 'Cancelar',
-    nzOnOk: () => {
-      this.changeStatusPostulate(data);
-    },
-  });
-}
+  getOffers() {
+    this.isLoadingTable = true;
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.offerService
+        .getAllOffersByUserWEB({
+          pageNo: this.current - 1,
+          pageSize: this.pageSize,
+          user: this.userId,
+          subcategory: this.validateForm.value['subcategory']
+            ? this.validateForm.value['subcategory']
+            : '',
+          title: this.validateForm.value['title']
+            ? this.validateForm.value['title']
+            : '',
+          status: this.validateForm.value['status'],
+          urgency: this.validateForm.value['urgency']
+            ? this.validateForm.value['urgency']
+            : '',
+          workPlace: this.validateForm.value['workPlace']
+            ? this.validateForm.value['workPlace']
+            : '',
+          levelStudy: this.validateForm.value['levelStudy']
+            ? this.validateForm.value['levelStudy']
+            : '',
+          typeOfJob: this.validateForm.value['typeOfJob']
+            ? this.validateForm.value['typeOfJob']
+            : '',
+          rangeAmount: this.validateForm.value['rangeAmount']
+            ? this.validateForm.value['rangeAmount']
+            : '',
+        })
+        .subscribe(
+          (response: any) => {
+            this.data = response.content;
+            this.total = response.totalElements;
+            this.totalElementByPage = response.numberOfElements;
 
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.isLoadingTable = false;
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
+    );
+  }
 
-public changeStatusPostulate(e : any) {    
- 
-  let data = {
-    "status": e.valueSelected,
-    "userId": this.userId
-  };
- 
-  console.log(e);
-  
-  this.ngxSpinner.show();
-  this.subscriptions.push(
-    this.offerService.selectPostulate(e.id ,data).subscribe(
-      (response: any) => {
-        this.isLoadingViewDetail = false;        
-        this.getPostulatesByOffer();
-        this.getComplaintsByOffer();
-        this.ngxSpinner.hide();  
-        this.message.create('success', "Cambio de estatus realizado correctamente 😃");
+  sendStatusPostulate(data: any): void {
+    this.modal.warning({
+      nzTitle: '¿Seguro que deseas responder?',
+      // nzContent: 'Bla bla ...',
+      nzOkText: 'OK',
+      nzCancelText: 'Cancelar',
+      nzOnOk: () => {
+        this.changeStatusPostulate(data);
       },
-      (errorResponse: HttpErrorResponse) => {
-        this.isLoadingViewDetail = false;
-        this.ngxSpinner.hide();
-        this.message.create('error', errorResponse.error.message);
+    });
+  }
+
+  public changeStatusPostulate(e: any) {
+    let data = {
+      status: e.valueSelected,
+      userId: this.userId,
+    };
+
+    console.log(e);
+
+    this.ngxSpinner.show();
+    this.subscriptions.push(
+      this.offerService.selectPostulate(e.id, data).subscribe(
+        (response: any) => {
+          this.isLoadingViewDetail = false;
+          this.getPostulatesByOffer();
+          this.getComplaintsByOffer();
+          this.ngxSpinner.hide();
+          this.message.create(
+            'success',
+            'Cambio de estatus realizado correctamente 😃'
+          );
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingViewDetail = false;
+          this.ngxSpinner.hide();
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+    );
+  }
+
+  public showModalMessagePostulate(item: any) {
+    console.log(item);
+    this.visiblePsStatusOffer = true;
+    this.postulateP = item;
+  }
+
+  public closeModalMessagePostulate() {
+    this.visiblePsStatusOffer = false;
+    this.postulateP = undefined;
+  }
+
+  public submitResponsePostulate() {
+    if (!this.psResponseEmailForm.valid) {
+      for (const i in this.psResponseEmailForm.controls) {
+        if (this.psResponseEmailForm.controls.hasOwnProperty(i)) {
+          this.psResponseEmailForm.controls[i].markAsDirty();
+          this.psResponseEmailForm.controls[i].updateValueAndValidity();
+        }
       }
-    )
-  );
-
- }
-
-public showModalMessagePostulate() {
-  this.visiblePsStatusOffer = true;
-}
-
-public closeModalMessagePostulate() {
-  this.visiblePsStatusOffer = true;
-}
-
- public submitResponsePostulate() {    
-  
-  if (!this.psResponseEmailForm.valid) {
-    for (const i in this.psResponseEmailForm.controls) {
-      if (this.psResponseEmailForm.controls.hasOwnProperty(i)) {
-        this.psResponseEmailForm.controls[i].markAsDirty();
-        this.psResponseEmailForm.controls[i].updateValueAndValidity();
-      }
+      this.createMessage('warning', 'Es necesario llenar todos los campos!');
+      return;
     }
-    this.createMessage('warning', 'Es necesario llenar todos los campos!');
-    return;
+
+    this.isLoadingResponse = true;
+    let form = this.psResponseEmailForm.value;
+
+    this.ngxSpinner.show();
+    this.subscriptions.push(
+      this.offerService.messageUSerPostulate({ ...form, offerId: this.postulateP.offer.id, status: 0, userId: this.postulateP.user.id }).subscribe(
+        (response: any) => {
+          this.getPostulatesByOffer();
+          this.getComplaintsByOffer();
+          this.ngxSpinner.hide();
+          this.closeModalMessagePostulate();
+          this.createMessage('success', 'Mensaje enviado :)');
+
+          this.isLoadingResponse = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.ngxSpinner.hide();
+          this.isLoadingResponse = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+    );
   }
-   
-  this.isLoadingResponse = true;
-  let form = this.psResponseEmailForm.value;
 
-  this.ngxSpinner.show();
-  this.subscriptions.push(
-    this.offerService.messageUSerPostulate({...form}).subscribe(
-      (response: any) => {
-        this.getPostulatesByOffer();
-        this.getComplaintsByOffer();
-        this.ngxSpinner.hide();  
-        this.isLoadingResponse = true;
+  public showModalResponseComplaint() {
+    this.visibleResponseComplaint = true;
+  }
 
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.ngxSpinner.hide();
-        this.isLoadingResponse = true;
-        this.message.create('error', errorResponse.error.message);
+  public closeModalResponseComplaint() {
+    this.visibleResponseComplaint = false;
+  }
+
+  public submitResponseComplaint() {
+    if (!this.responseComplaintForm.valid) {
+      for (const i in this.responseComplaintForm.controls) {
+        if (this.responseComplaintForm.controls.hasOwnProperty(i)) {
+          this.responseComplaintForm.controls[i].markAsDirty();
+          this.responseComplaintForm.controls[i].updateValueAndValidity();
+        }
       }
-    )
-  );
-
- }
-
-
-
- public showModalResponseComplaint() {
-  this.visibleResponseComplaint = true;
- }
-
- 
- public closeModalResponseComplaint() {
-  this.visibleResponseComplaint = false;
- }
-
- public submitResponseComplaint() {
-      
-  if (!this.responseComplaintForm.valid) {
-    for (const i in this.responseComplaintForm.controls) {
-      if (this.responseComplaintForm.controls.hasOwnProperty(i)) {
-        this.responseComplaintForm.controls[i].markAsDirty();
-        this.responseComplaintForm.controls[i].updateValueAndValidity();
-      }
+      this.createMessage('warning', 'Es necesario llenar todos los campos!');
+      return;
     }
-    this.createMessage('warning', 'Es necesario llenar todos los campos!');
-    return;
+
+    this.isLoadingResponse = true;
+    let form = this.responseComplaintForm.value;
+
+    this.ngxSpinner.show();
+    this.subscriptions.push(
+      this.offerService.responseComplaint({ ...form }).subscribe(
+        (response: any) => {
+          this.offer = response;
+          this.getPostulatesByOffer();
+          this.getComplaintsByOffer();
+          this.ngxSpinner.hide();
+          this.isLoadingResponse = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.ngxSpinner.hide();
+          this.isLoadingResponse = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+    );
   }
-  
-  this.isLoadingResponse = true;
-  let form = this.responseComplaintForm.value;
 
-  this.ngxSpinner.show();
-  this.subscriptions.push(
-    this.offerService.responseComplaint({...form}).subscribe(
-      (response: any) => {
-        this.offer = response;
-        this.getPostulatesByOffer();
-        this.getComplaintsByOffer();
-        this.ngxSpinner.hide();  
-        this.isLoadingResponse = false;
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.ngxSpinner.hide();
-        this.isLoadingResponse = false;
-        this.message.create('error', errorResponse.error.message);
-      }
-    )
-  );
-
-
- }
-
-
-public getUrgencyColor(item: any): string {
-  let urgency = [
-    { value: 'error', id: 'A' },
-    { value: 'warning', id: 'B' },
-    { value: 'processing', id: 'C' },
-  ];
-  let index: any = urgency.find((e: any) => e.id == item);
-  return index.value;
-}
-
-createMessage(type: string, message: string): void {
-  this.message.create(type, message);
-}
-
-public showValues(item: any): string {
-  if ((item = 'A')) {
-    return 'Mostrar';
+  public getUrgencyColor(item: any): string {
+    let urgency = [
+      { value: 'error', id: 'A' },
+      { value: 'warning', id: 'B' },
+      { value: 'processing', id: 'C' },
+    ];
+    let index: any = urgency.find((e: any) => e.id == item);
+    return index.value;
   }
-  return 'No mostrar';
+
+  createMessage(type: string, message: string): void {
+    this.message.create(type, message);
+  }
+
+  public showValues(item: any): string {
+    if ((item = 'A')) {
+      return 'Mostrar';
+    }
+    return 'No mostrar';
+  }
+
+  public getWorkPlace(item: any): string {
+    let works = [
+      { value: 'Jornada Completa', id: 'A' },
+      { value: 'Media jornada', id: 'B' },
+      { value: 'Pasantias', id: 'C' },
+      { value: 'Por proyecto', id: 'D' },
+    ];
+    let index: any = works.find((e: any) => e.id == item);
+    return index.value;
+  }
+
+  public getUrgency(item: any): string {
+    let urgency = [
+      { value: 'Urgente', id: 'A' },
+      { value: 'Moderada', id: 'B' },
+      { value: 'Baja', id: 'C' },
+    ];
+    let index: any = urgency.find((e: any) => e.id == item);
+    return index.value;
+  }
 }
-
-
-public getWorkPlace(item: any): string {
-  let works = [
-    { value: 'Jornada Completa', id: 'A' },
-    { value: 'Media jornada', id: 'B' },
-    { value: 'Pasantias', id: 'C' },
-    { value: 'Por proyecto', id: 'D' },
-  ];
-  let index: any = works.find((e: any) => e.id == item);
-  return index.value;
-}
-
-public getUrgency(item: any): string {
-  let urgency = [
-    { value: 'Urgente', id: 'A' },
-    { value: 'Moderada', id: 'B' },
-    { value: 'Baja', id: 'C' },
-  ];
-  let index: any = urgency.find((e: any) => e.id == item);
-  return index.value;
-}}
-
-
-
-
-
-
-
 
 interface Person {
   key: string;
