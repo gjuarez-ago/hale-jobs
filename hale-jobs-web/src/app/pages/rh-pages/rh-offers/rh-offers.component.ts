@@ -168,6 +168,13 @@ export class RhOffersComponent implements OnInit {
     }, 800);
   }
 
+  public navigateViewJob(element : any) {    
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/dashboard/view-worker/${element.username}`]));
+       window.open('#' + url, '_blank');        
+  }
+
+  
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       if (this.validateForm.controls.hasOwnProperty(i)) {

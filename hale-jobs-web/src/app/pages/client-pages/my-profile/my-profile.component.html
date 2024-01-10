@@ -8,30 +8,52 @@
     <ul class="nav-links">
       <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
       <!-- <li><a href="#">Home</a></li> -->
-      <li><a href="#">Empresas</a></li>
-      <li>
-        <a href="#" class="desktop-item">¿Buscas trabajo?</a>
+      <li><a class="btn-gray" routerLink="/companies">                
+         <!-- <i nz-icon nzType="search" nzTheme="outline" ></i> -->
+         Empresas</a></li>
+      <!-- <li>
+        <a href="#" class="desktop-item">Dudas</a>
         <input type="checkbox" id="showDrop">
-        <label for="showDrop" class="mobile-item">¿Buscas trabajo?</label>
+        <label for="showDrop" class="mobile-item">Dudas</label>
         <ul class="drop-menu">
-          <li><a href="#">Crear CV</a></li>
           <li><a href="#">Acerca de</a></li>
           <li><a href="#">Soporte</a></li>
           <li><a href="#">T&C</a></li>
         </ul>
-      </li>
+      </li> -->
   
-      <li><a class="btn-profile" (click)="onLogOut()">Cerrar sesión</a></li>
+      <li><a class="btn-login" routerLink="/search">         
+                <!-- <i nz-icon nzType="search" nzTheme="outline" ></i> -->
+        Buscar ofertas</a></li>
+        <li><a class="btn-profile" (click)="onLogOut()">
+          <i nz-icon nzType="logout" nzTheme="outline"></i>
+        </a></li>
+      
     </ul>
-
 
     <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
   </div>
 
   <div class="ad">
-    <p> <img
-        src="https://static.vecteezy.com/system/resources/previews/002/450/296/original/illustration-of-mexico-flag-free-vector.jpg"
-        alt="mexico" width="50px" /> </p>
+
+    <div class="flex">
+      <div class="element">
+        <!-- <img
+      src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg"
+      alt="colombia" width="50px" /> -->
+
+      <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Bandera_de_M%C3%A9xico_%281934-1968%29.png/1024px-Bandera_de_M%C3%A9xico_%281934-1968%29.png"
+      alt="mexico" width="60px" />
+
+      </div>
+      <div class="element">
+        <p>  
+          México
+        </p>
+      </div>
+    </div>
+    
   </div>
 
 
@@ -195,15 +217,6 @@
           </div>
 
 
-
-          <div class="button-element">
-            <button class="button-23" role="button" routerLink="/search">
-              <nz-space>
-                <i nz-icon nzType="search" nzTheme="outline" *nzSpaceItem></i>
-                <!-- <div class="" *nzSpaceItem>Buscar empleo </div> -->
-              </nz-space>
-            </button>
-          </div>
 
 
         </div>

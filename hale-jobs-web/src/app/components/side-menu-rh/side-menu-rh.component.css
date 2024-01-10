@@ -10,6 +10,35 @@
   height: auto;
 }
 
+.list-ot {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  margin:10px auto 0px auto;
+  width: 95%;
+
+}
+
+.btn-red {
+  margin: 0px 10px 0px 10px;
+  background-color: red;
+  border-color: black;
+  cursor: pointer;
+}
+
+.list-ot .element {
+  padding: 4px;
+  cursor: pointer;
+  margin: 0px 20px;
+}
+
+.list-ot .element p{
+margin: 0px;
+padding: 0px;
+}
+
 .header-menu {
   background-color: #fff;
   line-height: 64px;

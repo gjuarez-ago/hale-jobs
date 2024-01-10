@@ -14,11 +14,11 @@ public interface INotificationService {
 		
 	Notification createNotification(NotificationDTO request);
 	
-	Notification editNotificationById(String id, NotificationDTO request) throws GenericException;
+	Notification editNotificationById(Long id, NotificationDTO request) throws GenericException;
 	
-	Notification deleteNotification(String id) throws GenericException;
+	Notification deleteNotification(Long id) throws GenericException;
 	
-	Notification findNotificationById(String id) throws GenericException;
+	Notification findNotificationById(Long id) throws GenericException;
 	
 	List<Notification> getAllNotificationsByUserMovil(String userId);
 	

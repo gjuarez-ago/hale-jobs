@@ -44,6 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.services.chambitas.domain.CityINEGI;
+import com.services.chambitas.domain.Notification;
 import com.services.chambitas.domain.Permission;
 import com.services.chambitas.domain.PreferencesRH;
 import com.services.chambitas.domain.PreferencesUser;
@@ -69,6 +70,7 @@ import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.UserNotFoundException;
 import com.services.chambitas.exception.domain.UsernameExistException;
 import com.services.chambitas.repository.ICityRepository;
+import com.services.chambitas.repository.INotificationRepository;
 import com.services.chambitas.repository.IPreferencesRHRepository;
 import com.services.chambitas.repository.IPreferencesUserRepository;
 import com.services.chambitas.repository.IRangeAmountRepository;
@@ -78,6 +80,7 @@ import com.services.chambitas.repository.IStateRepository;
 import com.services.chambitas.repository.ITypeOfJobRepository;
 import com.services.chambitas.repository.IUserRepository;
 import com.services.chambitas.repository.IWorkExperiencesRepository;
+import com.services.chambitas.service.IPostulatesByOfferService;
 import com.services.chambitas.service.IUserService;
 import com.services.chambitas.utility.EmailService;
 import com.services.chambitas.utility.LoginAttemptService;
@@ -104,12 +107,17 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     private IStateRepository stateRepository;
 	private ITypeOfJobRepository typeOfJobRepository;
 	
+	private IPostulatesByOfferService postulateService;
+	
+	private INotificationRepository notificationRepository;
+	
 	private IRangeAmountRepository rangeAmountRepository;
 	
     
     @Autowired
     public UserServiceImpl(IUserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttemptService loginAttemptService, EmailService emailService, IWorkExperiencesRepository workExperiencesRepository, ISchoolRepository schoolRepository,
-    ISkillsRepository skillRepository, IPreferencesUserRepository preUserRepository, IPreferencesRHRepository preRHRepository, ICityRepository cityRepository,IStateRepository stateRepository, IRangeAmountRepository rangeAmountRepository,ITypeOfJobRepository typeOfJobRepository) {
+    ISkillsRepository skillRepository, IPreferencesUserRepository preUserRepository, IPreferencesRHRepository preRHRepository, ICityRepository cityRepository,IStateRepository stateRepository, IRangeAmountRepository rangeAmountRepository,ITypeOfJobRepository typeOfJobRepository, IPostulatesByOfferService postulateService,
+    INotificationRepository notificationRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.loginAttemptService = loginAttemptService;
@@ -122,7 +130,9 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         this.cityRepository = cityRepository;
         this.stateRepository = stateRepository;
         this.rangeAmountRepository = rangeAmountRepository;
+        this.postulateService = postulateService;
         this.typeOfJobRepository = typeOfJobRepository;
+        this.notificationRepository = notificationRepository;
     }
 
 	@Override
@@ -223,7 +233,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
 	@Override
 	public User createCVUser(UserCVDTO request) throws UserNotFoundException, GenericException {
-		
 		
 		
 		CityINEGI city = existCity(request.getCity());
@@ -429,7 +438,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public User desactiveProfile(String currentUsername) throws UserNotFoundException {
 		User element = validateUpdateUsername(currentUsername);
-		element.setActive(false);		
+		List<Notification> notifications = notificationRepository.findNotificationByUserMovil(currentUsername);		
+		notificationRepository.deleteAll(notifications);
+		element.setActive(false);	
+		element.setRegBorrado(1);
+		element.setPublicProfile(false);
+		
 		return element;
 	}
 

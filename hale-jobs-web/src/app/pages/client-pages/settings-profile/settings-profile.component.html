@@ -17,113 +17,51 @@
 
 
     <div class="ls">
-    <nz-tabset>
-        <nz-tab  [nzTitle]="titleTemplate">
-          <ng-template #titleTemplate>
-            <span nz-icon [nzType]="'setting'"></span>
-             Mi cuenta
-          </ng-template>
-         
-          
-          <div class="settings-profile">
 
 
-            <div class="b">
+      <ng-template #titleTemplate>
+        <span nz-icon [nzType]="'setting'"></span>
+         Mi cuenta
+      </ng-template>
+     
+      
+      <div class="settings-profile">
 
 
-                <div class="btn-opt">
-
-                    <p class="descripcion">
-                        Si continúas con este proceso tu cuenta y tu CV serán eliminados y no podrás recuperarlos. 
-                    </p>
-
-                    <div class="button-s">
-                        <button nz-button nzType="primary" nzBlock nzDanger>Eliminar cuenta</button>
-                    </div>
+        <div class="b">
 
 
+            <div class="btn-opt">
+                <p class="descripcion">
+                    Si continúas con este proceso tu cuenta sera desactivada, se retirarán tus postulaciones, historial y notificaciones; en caso de querer volver a formar parte de la comunidad te solicitamos enviarnos un correo a help@hale-jobs.com.mx 
+                </p>
+
+                <div class="button-s">
+                    <button (click)="showDeleteModal()" nz-button nzType="primary" nzBlock nzDanger>Desactivar perfil</button>
                 </div>
-
             </div>
-
-
-          
-
-
-          </div>
-
-          <div class="links">
-
-
-            <div class="link-a">
-                <a href="http://"> Aviso de privacidad </a>
-            </div>
-
-            
-            <div class="link-a">
-                <a href="http://"> Terminos y condiciones </a>
-            </div>
-
 
         </div>
 
 
+      
 
 
-        </nz-tab>
+      </div>
 
-        <nz-tab  [nzTitle]="titleTemplate1">
-            <ng-template #titleTemplate1>
-              <span nz-icon [nzType]="'lock'"></span>
-              Cambiar contraseña
-            </ng-template>
-            
+      <div class="links">
 
-            <h3>Cambiar contraseña</h3>
 
-            <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-                <nz-form-item>
-                  <nz-form-control nzErrorTip="Please input your username!">
-                    <label> Escribe la contraseña actual: </label>
-                    <nz-input-group nzPrefixIcon="lock">
-                      <input type="password" nz-input formControlName="userName" placeholder="Username" />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-
-                <nz-form-item>
-                  <nz-form-control nzErrorTip="Please input your Password!">
-                    <label> Contraseña nueva: </label>
-                    <nz-input-group nzPrefixIcon="lock">
-                      <input type="password" nz-input formControlName="password" placeholder="Password" />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Please input your Password!">
-                        <label> Confirmar contraseña: </label>
-                      <nz-input-group nzPrefixIcon="lock">
-                        <input type="password" nz-input formControlName="password" placeholder="Password" />
-                      </nz-input-group>
-                    </nz-form-control>
-                </nz-form-item>
-                
-                  
-
-                <button type="button" nz-button
-                class="button-blue">
-                <i nz-icon nzType="save"></i>
-                Cambiar contraseña
-              </button>
-              </form>
-            
+        <div class="link-a">
+            <a href="http://"> Aviso de privacidad </a>
+        </div>
+        <div class="link-a">
+            <a href="http://"> Terminos y condiciones </a>
+        </div>
+    </div>
 
 
 
-        </nz-tab>
-
-    </nz-tabset>
    </div>
 
 

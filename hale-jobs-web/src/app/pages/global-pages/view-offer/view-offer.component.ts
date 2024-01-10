@@ -65,11 +65,11 @@ export class ViewOfferComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
-      this.offerId = this.actRoute.snapshot.params.id;
-      this.getOfferById(this.offerId);
-    } else {
-      this.router.navigateByUrl("/auth/login");
     }
+
+    this.offerId = this.actRoute.snapshot.params.id;
+    this.getOfferById(this.offerId);
+
   }
 
   public onBack() {
@@ -117,7 +117,15 @@ export class ViewOfferComponent implements OnInit {
 
 
   public showModalOffer() {
-    this.isVisibleAddPostulate = true;
+
+    if (!this.authenticationService.isUserLoggedIn()) {
+      this.createNotification('warning', 'Es necesario iniciar sesión para poder postularte');
+      this.router.navigateByUrl("/auth/login");
+      return;
+    }else {
+      this.isVisibleAddPostulate = true;
+    }
+
   }
 
   public closeOfferPostulate() {
@@ -125,7 +133,13 @@ export class ViewOfferComponent implements OnInit {
   }
 
   public showModalComplaint() {
+    if (!this.authenticationService.isUserLoggedIn()) {
+      this.createNotification('warning', 'Es necesario iniciar sesión para poder levantar una queja o sugerencia');
+      this.router.navigateByUrl("/auth/login");
+      return;
+    }else {
     this.isVisibleAdd = true;
+    }
   }
   public closeComplaintModal() {
     this.isVisibleAdd = false;
@@ -211,6 +225,7 @@ var diff = fechaFin - fechaIni;
       return;
     }
 
+
     let form = this.postulateForm.value;
 
     this.isLoadingReview = true;
@@ -247,9 +262,9 @@ var diff = fechaFin - fechaIni;
   createNotification(type: string, message: string): void {
     this.notification.create(
       type,
-      'Upps!',
-      `${message}`,
-      { nzPlacement: 'bottomLeft' }
+      'Importante!',
+      `${message} 🫠`,
+      { nzPlacement: 'topLeft' }
     );
   }
 

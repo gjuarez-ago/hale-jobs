@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -32,6 +33,7 @@ export class ViewProfileComponent implements OnInit {
   public listCertifications : any = [];
   
 
+
   public loadingListWorkExperiences = false;
   styleSheet: string = '';
 
@@ -42,13 +44,19 @@ export class ViewProfileComponent implements OnInit {
     private genericService : GenericService,
     private authenticationService: AuthService,
     private message: NzMessageService,
+    private fb: FormBuilder,
     private router: Router,
     private actRoute: ActivatedRoute,
     private ngxSpinner: NgxSpinnerService,
     private http : HttpClient,
     private readonly meta: Meta,
     private readonly title: Title,   
-  ) { }
+  ) {
+
+    
+
+
+   }
 
   ngOnInit(): void {
 
@@ -176,12 +184,9 @@ export class ViewProfileComponent implements OnInit {
   printWindow.document.write(`<html lang="en"><head><style> ${this.styleSheet} </style> </head><body></body>${printArea?.innerHTML}</html>`);
   printWindow.document.close();
   printWindow.document.close();
-
   // printWindow.focus();
   printWindow.document.title = this.userInformation.username;
   printWindow.print();
-
-  
  }
 
 

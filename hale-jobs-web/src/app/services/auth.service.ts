@@ -39,6 +39,12 @@ export class AuthService {
     return this.http.post<CustomHttpRespone>(`${this.host}/user/reset-password`, form);
   }
 
+  
+  // * Reset password
+  public desactivateProfile(username: any): Observable<CustomHttpRespone> {
+    return this.http.delete<CustomHttpRespone>(`${this.host}/user/desactivate-profile/${username}`);
+  }
+
   // Register Recruiter
   public registerCompany(data : any): Observable<User> {
     return this.http.post<User>(`${this.host}/user/create-cv-company`, data);

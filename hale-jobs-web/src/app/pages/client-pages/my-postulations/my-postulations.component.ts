@@ -160,8 +160,8 @@ export class MyPostulationsComponent implements OnInit {
   getStatusColor(item: any) {
     let stautusList = [
       { value: 'Primary', id: 0 },
-      { value: 'Success', id: 1 },
-      { value: 'Danger', id: 2 },
+      { value: 'success', id: 1 },
+      { value: 'danger', id: 2 },
     ];
     let index: any = stautusList.find((e: any) => e.id == item);
     return index.value;

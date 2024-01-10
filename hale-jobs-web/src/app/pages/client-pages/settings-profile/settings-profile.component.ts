@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
@@ -15,6 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SettingsProfileComponent implements OnInit {
 
+  confirmDeleteModal?: NzModalRef; // For testing by now
 
   public user: User| undefined;
   public userId !: number;
@@ -36,18 +38,17 @@ export class SettingsProfileComponent implements OnInit {
     private modal: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService 
+    private ngxSpinner: NgxSpinnerService,
+    
   ) {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
+      currentPassword: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      remember: [true]
+      newPassword: [null, [Validators.required]]
     });
   }
 
-
-  ngOnInit(): void {
-    
+  ngOnInit(): void {    
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
@@ -56,6 +57,14 @@ export class SettingsProfileComponent implements OnInit {
     }
   }
 
+  showDeleteModal(): void {
+    this.confirmDeleteModal = this.modal.confirm({
+      nzTitle: '¿Seguro que deseas desactivar tu cuenta?',
+      nzContent:
+        'Si continúas con este proceso tu cuenta sera desactivada, se retirarán tus postulaciones, historial y notificaciones; en caso de querer volver a formar parte de la comunidad te solicitamos enviarnos un correo a help@hale-jobs.com.mx',
+      nzOnOk: () => this.desactivateProfile(),
+    });
+  }
   
   submitForm(): void {
     if (this.validateForm.valid) {
@@ -70,4 +79,26 @@ export class SettingsProfileComponent implements OnInit {
     }
   }
 
+  public desactivateProfile() {
+    this.authenticationService.desactivateProfile(this.user?.username).subscribe(
+      (response: any) => {  
+        this.onLogOut();
+        this.createMessage("success", "Perfil desactivado correctamente 😀");
+        this.isLoadingGeneral = false;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Problemas al desactivar el perfil');
+        this.isLoadingGeneral = false;
+      }
+    )
+  }
+
+  public onLogOut(): void {
+    this.authenticationService.logOut();
+    this.router.navigate(['auth/login']);
+  }
+
+  createMessage(type: string, message: string): void {
+    this.message.create(type, message);
+  }
 }

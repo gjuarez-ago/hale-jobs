@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { GenericService } from 'src/app/services/generic.service';
+import { OfferService } from 'src/app/services/offer.service';
 import { WorkersService } from 'src/app/services/workers.service';
 
 @Component({
@@ -54,6 +55,16 @@ export class RhSearchWorkersComponent implements OnInit {
   citySelected: any;
   stateSelected : any;
 
+  listOffers : any[] = [];
+
+
+
+  public psResponseEmailForm!: FormGroup;
+  public visiblePsStatusOffer: boolean = false;
+  postulateP: any;
+  isLoadingResponse: boolean = false;;
+
+
   constructor(
     private authenticationService: AuthService,
     private fb: FormBuilder,
@@ -62,6 +73,7 @@ export class RhSearchWorkersComponent implements OnInit {
     private router: Router,
     private ngxSpinner: NgxSpinnerService,
     private userService: WorkersService,
+    private offerService : OfferService,
     private genericService : GenericService,
     private readonly title: Title,   
 
@@ -74,6 +86,25 @@ export class RhSearchWorkersComponent implements OnInit {
       salary: [null],
       mod: [null],
     });
+
+    this.psResponseEmailForm = this.fb.group({
+      comments: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(250),
+          Validators.minLength(10),
+        ],
+      ],
+      offer: [
+        '',
+        [
+          Validators.required
+        ],
+      ],
+    });
+
+    
   }
 
   ngOnInit(): void {
@@ -85,6 +116,7 @@ export class RhSearchWorkersComponent implements OnInit {
       this.getRangeAmount();
       this.getModWorks();
       this.getUsersPaginate();
+      this.getOffers();
       this.title.setTitle("Busqueda de personal")
 
 
@@ -182,12 +214,12 @@ export class RhSearchWorkersComponent implements OnInit {
         .getAllOffersByUserWEB({
           pageNo: this.current - 1,
           pageSize: this.pageSize,
-          city: form.city,
-          jobTitle: form.jobTitle,
-          mod: form.mod,
-          salary: form.salary,
-          findJob: form.findJob,
-          state: form.city,
+          city: form.city ? form.city : '',
+          jobTitle: form.jobTitle ? form.jobTitle : '',
+          mod: form.mod ? form.mod : '',
+          salary: form.salary ? form.salary : '',
+          findJob: form.findJob ? form.findJob : '',
+          state: form.state ? form.state : '',
         })
         .subscribe(
           (response: any) => {
@@ -214,30 +246,8 @@ export class RhSearchWorkersComponent implements OnInit {
        window.open('#' + url, '_blank');        
   }
 
-  listOfData: Person[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-    },
-  ];
 
-  generateExcel() {}
 
-  openCreateDrawer() {}
 
   createMessage(type: string, message: string): void {
     this.message.create(type, message);
@@ -336,6 +346,73 @@ export class RhSearchWorkersComponent implements OnInit {
       }
     )
   }
+
+  getOffers() {
+    this.isLoadingGeneral = true;
+    this.offerService.getOfferByUserId(this.userId).subscribe(
+      (response: any) => {
+      
+        this.listOffers = response.map((prop: any, key: any) => {
+          return {
+            ...prop,
+            key: key + 1,
+          };
+        }); 
+        this.isLoadingGeneral = false;       
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar las ofertas');
+        this.isLoadingGeneral = false;
+      }
+    )
+  }
+
+
+  
+  public showModalMessagePostulate(item: any) {
+    this.visiblePsStatusOffer = true;
+    this.postulateP = item;
+  }
+
+  public closeModalMessagePostulate() {
+    this.visiblePsStatusOffer = false;
+    this.postulateP = undefined;
+  }
+
+  public submitResponsePostulate() {
+    if (!this.psResponseEmailForm.valid) {
+      for (const i in this.psResponseEmailForm.controls) {
+        if (this.psResponseEmailForm.controls.hasOwnProperty(i)) {
+          this.psResponseEmailForm.controls[i].markAsDirty();
+          this.psResponseEmailForm.controls[i].updateValueAndValidity();
+        }
+      }
+      this.createMessage('warning', 'Es necesario llenar todos los campos!');
+      return;
+    }
+
+    this.isLoadingResponse = true;
+    let form = this.psResponseEmailForm.value;
+
+    this.ngxSpinner.show();
+    this.subscriptions.push(
+      this.offerService.messageUSerPostulate({ ...form, offerId: form.offer, status: 0, userId: this.postulateP.id }).subscribe(
+        (response: any) => {
+          this.ngxSpinner.hide();
+          this.closeModalMessagePostulate();
+          this.createMessage('success', 'Mensaje enviado :)');
+
+          this.isLoadingResponse = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.ngxSpinner.hide();
+          this.isLoadingResponse = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+    );
+  }
+
 
   public getImage(e : any) {
 

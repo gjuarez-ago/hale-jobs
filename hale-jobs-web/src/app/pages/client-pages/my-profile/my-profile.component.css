@@ -1,4 +1,8 @@
-
+*{  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;}
+  
 
    .content-profile {
     width: 90%;
@@ -266,7 +270,7 @@
 
 
 .logo-img {
-  width: 170px;
+  width: 150px;
  }
 
 nav{
@@ -277,11 +281,9 @@ nav{
   background: #000000;
 }
 nav .wrapper{
-  position: relative;
   max-width: 1300px;
   padding: 0px 30px;
   height: 95px;
-  line-height: 70px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -319,6 +321,9 @@ nav .wrapper{
   background: #3A3B3C;
 }
 
+.btn-gray {
+  background: #515152;
+}
 
 .nav-links li a.btn-profile {
   color: #fa004b;
@@ -571,13 +576,25 @@ nav input{
 
 
 .ad{
-  background-color: rgb(255, 174, 0);
-  margin: 0px;
+  background-color: rgb(59, 59, 59);
   padding: 10px;
-  color: rgb(0, 0, 0);
-  text-align: center;
-  font-size: 20px;
+}
+
+
+
+.ad .flex {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: flex-start;
+}
+
+.ad .flex p {
+  color: white;
+  font-size: 1.6em;
   font-weight: bold;
+  margin: 0px 10px;
+  padding: 0px 30px 0px 0px;
+
 }
 
 nz-tag.ap {

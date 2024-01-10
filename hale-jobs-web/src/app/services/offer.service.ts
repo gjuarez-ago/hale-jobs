@@ -159,7 +159,8 @@ export class OfferService {
     return this.http.post<Offer>(`${this.url}/postulates/message-user`, data)
   }
 
-
-
+  public getOfferByUserId(id : any): Observable<Offer> {
+    return this.http.get<Offer>(`${this.url}/offer/find-by-user/${id}`)
+  }
 
 }

@@ -71,7 +71,7 @@ export class MyNotificationsComponent implements OnInit {
     private ngxSpinner: NgxSpinnerService
   ) {
     this.searchForm = this.fb.group({
-      keyword: [null, [Validators.required]],
+      title: [null],
     });
   }
 
@@ -92,6 +92,7 @@ export class MyNotificationsComponent implements OnInit {
         email: this.user?.username,
         pageSize: this.pageSize,
         pageNo: this.current - 1,
+        title: this.searchForm.value["title"] ? this.searchForm.value["title"] : ''
       })
       .subscribe(
         (response: any) => {
@@ -120,12 +121,77 @@ export class MyNotificationsComponent implements OnInit {
     this.getNotifications();
   }
 
+  public navigateViewJob(id : any) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/view-job/${id}`]));
+       window.open('#' + url, '_blank');
+  }
+
+
+
   changeCurrentPage($event: number): void {
     this.current = $event;
     this.getNotifications();
   }
 
   submitForm(): void {
-    console.log('submit', this.searchForm.value);
+    let form = this.searchForm.value;
+
+    this.isLoadingGeneral = true;
+    this.cvService
+      .getNotificationsByUser({
+        email: this.user?.username,
+        pageSize: this.pageSize,
+        pageNo: this.current - 1,
+        title: form.title ? form.title : ''
+      })
+      .subscribe(
+        (response: any) => {
+          this.data = response.content;
+          this.total = response.totalElements;
+          this.totalElementByPage = response.numberOfElements;
+          this.isLoadingTable = false;
+          this.ngxSpinner.hide();
+
+          console.log(this.data);
+
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create(
+            'error',
+            'Ha ocurrido un error al realizar la busqueda'
+          );
+          this.isLoadingGeneral = false;
+        }
+      );
+  }
+
+
+  public deleteNotification(id : any) {
+
+    this.isLoadingGeneral = true;
+    this.cvService
+      .deleteNotification(id)
+      .subscribe(
+        (response: any) => {
+          this.message.create(
+            'success',
+            'Notificación eliminada correctamente!'
+          );
+          this.getNotifications();
+          this.ngxSpinner.hide();
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.message.create(
+            'error',
+            'Ha ocurrido un error al realizar la busqueda'
+          );
+          this.isLoadingGeneral = false;
+        }
+      );
+
+
   }
 }

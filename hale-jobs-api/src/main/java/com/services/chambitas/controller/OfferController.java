@@ -1,5 +1,7 @@
 package com.services.chambitas.controller;
 
+import static org.springframework.http.HttpStatus.OK;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import com.services.chambitas.domain.dto.OfferEditDTO;
 import com.services.chambitas.domain.dto.ReportOfferDTO;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.NotAnImageFileException;
+import com.services.chambitas.exception.domain.UserNotFoundException;
 import com.services.chambitas.service.IOfferService;
 
 @RestController
@@ -60,6 +63,12 @@ public class OfferController {
    public ResponseEntity<Offer> findOfferById(@PathVariable("offerId") Long offerId) throws GenericException  {
 		Offer response = service.findOfferById(offerId);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
+   }
+   
+   @GetMapping("/find-by-user/{userId}")
+   public ResponseEntity<List<Offer>> getBYUser(@PathVariable("userId") Long userId) throws UserNotFoundException {
+       List<Offer> user = service.getOffersBySelect(userId);
+       return new ResponseEntity<>(user, OK);
    }
    
    // Reportar oferta

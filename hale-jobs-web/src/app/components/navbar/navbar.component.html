@@ -9,7 +9,7 @@
         <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
         <!-- <li><a href="#">Home</a></li> -->
         <li><a href="#">Soy reclutador</a></li>
-        <li><a href="#">¿Buscas trabajo?</a></li>
+        <!-- <li><a href="#">¿Buscas trabajo?</a></li> -->
         <!-- <li>
           <a href="#" class="desktop-item">Herramientas</a>
           <input type="checkbox" id="showMega">
@@ -51,6 +51,9 @@
         </li> -->
         <li *ngIf="!user"><a class="btn-login" routerLink="/auth/login">Iniciar sesión</a></li>
         <li *ngIf="user"><a class="btn-login" (click)="toGoMyProfile()">Mi perfil</a></li>
+        <li *ngIf="user" (click)="onLogOut()"><a class="btn-profile" >
+          <i nz-icon nzType="logout" nzTheme="outline"></i></a></li>
+
       </ul>
 
       
@@ -58,15 +61,19 @@
     </div>
 
     <div class="ad">
-      <!-- <p> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/200px-Flag_of_Colombia.svg.png" alt="mexico"  width="50px"/> </p>     -->
-
-      <p> <img src="https://static.vecteezy.com/system/resources/previews/002/450/296/original/illustration-of-mexico-flag-free-vector.jpg" alt="mexico"  width="50px"/> </p>    
+      <div class="flex">
+        <div class="element">
+          <img
+        src="https://static.vecteezy.com/system/resources/previews/002/450/296/original/illustration-of-mexico-flag-free-vector.jpg"
+        alt="mexico" width="50px" />
+        </div>
+        <div class="element">
+          <p>  México
+          </p>
+        </div>
+      </div>
     </div>
   </nav>
 
-
-
 <router-outlet></router-outlet>
-
-
 <app-footer></app-footer>

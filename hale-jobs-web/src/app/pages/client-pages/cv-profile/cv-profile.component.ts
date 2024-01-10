@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -117,6 +117,7 @@ export class CvProfileComponent implements OnInit {
     description: new FormControl(null, Validators.required),
   });
   public listRangeAmount: any = [];
+  styleSheet: string = '';
 
   constructor(
     private modalService: NzModalService,
@@ -125,7 +126,8 @@ export class CvProfileComponent implements OnInit {
     private authenticationService: AuthService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService 
+    private ngxSpinner: NgxSpinnerService ,
+    private http:HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -147,6 +149,13 @@ export class CvProfileComponent implements OnInit {
     } else {
       this.router.navigateByUrl("/auth/login");
     }
+
+    this.http.get('../../../assets/styles/print-pdf.css', {responseType: 'text'}).subscribe(
+      styleSheet => {
+        this.styleSheet = styleSheet;
+      }
+    )
+
 
   }
 
@@ -1160,6 +1169,19 @@ public getRangeAmount() {
     },
   ];
 
+
+  public printPDF() {
+    const printArea : HTMLElement | null = document.getElementById('pdf-2');
+    // node?.appendChild(printArea!);
+  
+    const printWindow = window.open("", "PRINT-PDF")!;
+    // printWindow.document.write(`<html lang="en"><head></head><body></body>${printArea?.innerHTML}</html>`);
+    printWindow.document.write(`<html lang="en"><head><style> ${this.styleSheet} </style> </head><body></body>${printArea?.innerHTML}</html>`);
+    printWindow.document.close();
+    // printWindow.focus();
+    printWindow.document.title = this.userInformationOriginal.username;
+    printWindow.print();
+   }
 
 
 

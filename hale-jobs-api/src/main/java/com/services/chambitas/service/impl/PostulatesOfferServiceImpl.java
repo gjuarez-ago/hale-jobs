@@ -210,6 +210,7 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		n.setTitle(title);
 		n.setTypeAD(typeAd);
 		n.setUserId(user);
+		n.setStatus(1);
 		noticationRespository.save(n);
 		return n;
 	}
@@ -231,6 +232,7 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		n.setTitle("Un reclutador tiene un mensaje para ti relacionado a la siguiente oferta: " + offer.getTitle());
 		n.setTypeAD("MENSAJE");
 		n.setUserId(request.getUserId());
+		n.setStatus(0);
 		noticationRespository.save(n);
 		
 		return null;

@@ -36,4 +36,7 @@ public interface IOfferService {
 	Page<Offer> getAllOfferByCompany(Long company,int pageNo, int pageSize);
 	
 	Page<Offer> getOffersByCopy(String keyword, Long user, int pageNo, int pageSize);
+
+	List<Offer> getOffersBySelect(Long userId);
+
 }

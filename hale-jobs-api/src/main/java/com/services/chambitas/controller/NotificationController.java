@@ -37,21 +37,21 @@ public class NotificationController {
 	
 	// Editar notificación
 	@PutMapping("/edit/{key}")
-	public ResponseEntity<Notification> editNotification(@PathVariable("key") String id,@RequestBody NotificationDTO request) throws GenericException {
+	public ResponseEntity<Notification> editNotification(@PathVariable("key") Long id,@RequestBody NotificationDTO request) throws GenericException {
 		Notification response = service.editNotificationById(id, request);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
 	// Eliminar notificación
 	@DeleteMapping("/delete/{key}")
-	public ResponseEntity<Notification> deleteNotification(@PathVariable("key") String id) throws GenericException {
+	public ResponseEntity<Notification> deleteNotification(@PathVariable("key") Long id) throws GenericException {
 		Notification response = service.deleteNotification(id);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
 	// Visualizar notificación
 	@GetMapping("/find/{key}")
-	public ResponseEntity<Notification> findNotificationById(@PathVariable("key") String id) throws GenericException {
+	public ResponseEntity<Notification> findNotificationById(@PathVariable("key") Long id) throws GenericException {
 		Notification response = service.findNotificationById(id);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}

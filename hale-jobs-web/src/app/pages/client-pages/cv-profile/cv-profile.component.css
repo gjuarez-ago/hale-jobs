@@ -23,6 +23,7 @@
     background-color: #8b8784;
    }
 
+ 
    .content-information {
     width: 70%;
     /* padding: 50px; */
@@ -59,6 +60,7 @@
     /* margin: 40px 100px 200px; */
     width: 100%;
     background: #fff;
+    cursor: pointer;
     border-radius: 5px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     z-index: 1;
@@ -840,8 +842,9 @@ nz-form-label {
 }
 
 .card-exp {
+  cursor: pointer;
   padding: 20px;
-  margin: 5px 0px;
+  margin: 10px 0px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
@@ -867,6 +870,7 @@ nz-form-label {
 
 .skill-list {
 
+  cursor: pointer;
   display: flex;
   justify-content: initial;
   flex-wrap: wrap;
@@ -888,6 +892,7 @@ nz-form-label {
 }
 
 .card-edu {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -899,6 +904,7 @@ nz-form-label {
 
 
 .card-edus {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -909,6 +915,7 @@ nz-form-label {
 }
 
 .card-eduss {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -933,6 +940,11 @@ nz-form-label {
   flex-direction: column;
 }
 
+.card-user {
+  width: 100%;
+  cursor: pointer;
+}
+
 .flex-principal {
   display: flex;
   margin-top: 10px;
@@ -940,11 +952,14 @@ nz-form-label {
 }
 
  .p-s{
-  width: 100%;
   margin:0px 0px;
   padding: 0px 40px 0px 0px;
   font-size: 1.0em;
-  overflow-wrap: break-word;
+  overflow-wrap: break-word !important;
+}
+
+.body {
+  display: none;
 }
 
 .span-small {
@@ -960,7 +975,9 @@ i.icon-edit-i {
 
 
 .card {
+  max-width: 100%;
   padding: 5px;
+  cursor: pointer;
 }
 
 
@@ -973,7 +990,6 @@ i.icon-edit-i {
 
 .we {
   width: 100%;
-  overflow-wrap: break-word;
 }
 
 .info {

@@ -45,14 +45,14 @@ public class NotificationServiceImpl implements INotificationService{
 	}
 
 	@Override
-	public Notification editNotificationById(String id, NotificationDTO request) throws GenericException {
+	public Notification editNotificationById(Long id, NotificationDTO request) throws GenericException {
 		
 		Notification element = existNotification(id);
 		
 		element.setTitle(request.getTitle());
 		element.setContent(request.getContent());
 		element.setEmailDestination(request.getEmailDestination());
-		element.setTypeAD(id);
+		element.setTypeAD("A");
 		
 		notificationRepository.save(element);
 		
@@ -61,16 +61,15 @@ public class NotificationServiceImpl implements INotificationService{
 	}
 
 	@Override
-	public Notification deleteNotification(String id) throws GenericException {
+	public Notification deleteNotification(Long id) throws GenericException {
 		
 		Notification element = existNotification(id);
-		notificationRepository.deleteById(element.getId());
+		element.setRegBorrado(1);
 		return element;
 	}
 
 	@Override
-	public Notification findNotificationById(String id) throws GenericException {
-	
+	public Notification findNotificationById(Long id) throws GenericException {
 		Notification element = existNotification(id);
 		return element;
 	}
@@ -96,7 +95,7 @@ public class NotificationServiceImpl implements INotificationService{
 	}
 	
 	// Private methods
-	private Notification existNotification(String id) throws GenericException {
+	private Notification existNotification(Long id) throws GenericException {
 		
 		Notification element = notificationRepository.findNotificationById(id);
 		if(element == null) {

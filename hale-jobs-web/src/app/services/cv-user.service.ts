@@ -154,6 +154,7 @@ export class CVUserService {
         pageNo: pagination.pageNo,
         pageSize: pagination.pageSize,
         email: pagination.email,
+        title: pagination.title
       }
     });
 
@@ -164,6 +165,10 @@ export class CVUserService {
     return this.http.get<any>(`${this.url}/notification/find/${id}`);
   }
 
+  public deleteNotification(id: any): Observable<any> {
+    return this.http.delete<any>(`${this.url}/notification/delete/${id}`);
+  }
+
   public deleteAccount(userId: any): Observable<any> {
     return this.http.get<any>(`${this.url}/user/delete/${userId}`);
   }
@@ -171,5 +176,7 @@ export class CVUserService {
   public changePassword(id: any, data : any): Observable<any> {
     return this.http.get<any>(`${this.url}/user/change-password/${id}`, data);
   }
+
+
   
 }

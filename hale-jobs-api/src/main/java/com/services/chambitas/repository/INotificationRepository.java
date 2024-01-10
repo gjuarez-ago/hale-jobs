@@ -14,16 +14,16 @@ public interface INotificationRepository extends JpaRepository<Notification, Lon
 	
    Notification findNotificationByConsecutive(String consecutive);
    
-   @Query(value = "SELECT n.* FROM notification AS n WHERE n.consecutive = :consecutive AND n.reg_borrado = 0",nativeQuery = true)
-   Notification findNotificationById(@Param("consecutive") String consecutive); 
+   @Query(value = "SELECT n.* FROM notification AS n WHERE n.id = :consecutive",nativeQuery = true)
+   Notification findNotificationById(@Param("consecutive") Long id); 
    
    @Query(value = "SELECT n.* FROM notification AS n WHERE n.email_destination = :email AND n.reg_borrado = 0",nativeQuery = true)
    List<Notification> findNotificationByUserMovil(@Param("email") String email);
    
-   @Query(value = "SELECT o FROM Notification o WHERE o.emailDestination = :email AND o.title LIKE %:title%")
+   @Query(value = "SELECT o FROM Notification o WHERE o.emailDestination = :email AND o.title LIKE %:title% AND regBorrado = 0")
    Page<Notification> findNotificationByUserWEB(@Param("email") String email,@Param("title") String title, Pageable pageable);
    
-   @Query(value = "SELECT o FROM Notification o WHERE o.sendBy = :email AND o.title LIKE %:title%")
+   @Query(value = "SELECT o FROM Notification o WHERE o.sendBy = :email AND o.title LIKE %:title% AND regBorrado = 0")
    Page<Notification> findNotificationBySendUserWEB(@Param("email") String email,@Param("title") String title, Pageable pageable);
       
    @Query(value = "SELECT n.* FROM notification AS n WHERE n.reg_borrado = 0",nativeQuery = true)

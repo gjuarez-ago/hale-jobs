@@ -23,10 +23,42 @@
           <span class="dark"> Dashboard </span>
       </li>
 
-      <nz-avatar (click)="info()"  class="avatar" [nzSize]="42" nzText="GJ"></nz-avatar>
+      <nz-avatar class="avatar" [nzSize]="42" nzText="GJ"></nz-avatar>
+      <nz-avatar (click)="info()" class="btn-red" [nzSize]="42" [nzIcon]="'logout'"></nz-avatar>
+
+
+     
+
     </ul>
     
+    
+
   </nz-header>
+
+  
+  <div class="list-ot">
+
+    <div class="element">
+      <p> 
+        <span nz-icon nzType="notification" nzTheme="outline"></span>
+        Notificaciones </p>
+    </div>
+
+    <div class="element">
+      <p> 
+        <span nz-icon nzType="setting" nzTheme="outline"></span>
+        Ajustes </p>
+    </div>
+
+    <div class="element">
+      <p>
+        <span nz-icon nzType="history" nzTheme="outline"></span>
+        Historial </p>
+    </div>
+
+
+  </div>
+
   <nz-layout>
     <!-- <nz-sider nzWidth="250px" nzTheme="light" [(nzCollapsed)]="isCollapsed" nzCollapsible>
       <ul nz-menu nzMode="inline" class="sider-menu">
@@ -92,3 +124,5 @@
     </nz-layout>
   </nz-layout>
 </nz-layout>
+
+

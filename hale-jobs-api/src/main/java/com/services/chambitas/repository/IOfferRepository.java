@@ -38,6 +38,9 @@ public interface IOfferRepository extends JpaRepository<Offer, Long>{
 	@Query(value = "SELECT o FROM Offer o JOIN o.user u WHERE o.status = 0 AND u.id = :user AND o.title LIKE %:title% AND o.regBorrado = 0 ORDER BY o.regDateCreated ASC")
  	Page<Offer> getOffersByCopy(@Param("title") String keyword,@Param("user") Long user,Pageable pageable);
 	
+	@Query(value = "SELECT o FROM Offer o JOIN o.user u WHERE o.status = 0 AND u.id = :user AND o.regBorrado = 0 ORDER BY o.regDateCreated ASC")
+ 	List<Offer> getOffersBySelect(@Param("user") Long user);
+	
 	// Consulta para que el administrador pueda ver las solicitudes.
 	@Query(value = "SELECT o.* FROM offer AS o WHERE o.user_id = :title AND o.reg_borrado = 0",nativeQuery = true)
  	Page<Offer> findOfferAdmin(@Param("title") String title, Pageable pageable);

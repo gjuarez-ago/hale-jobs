@@ -76,11 +76,10 @@ export class DetailsCompanieComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
-      this.companyId = this.actRoute.snapshot.params.id;
-      this.getCopmanyById(this.companyId);
-    } else {
-      this.router.navigateByUrl('/auth/login');
-    }
+    } 
+
+    this.companyId = this.actRoute.snapshot.params.id;
+    this.getCopmanyById(this.companyId);
   }
 
   getCopmanyById(id: any) {
@@ -239,7 +238,14 @@ export class DetailsCompanieComponent implements OnInit {
   }
 
   showModalAddModal() {
-    this.isVisibleAdd = true;
+    if (!this.authenticationService.isUserLoggedIn()) {
+      this.createNotification('warning', 'Es necesario iniciar sesión para poder postularte');
+      this.router.navigateByUrl("/auth/login");
+      return;
+    }else {
+      this.isVisibleAdd = true;
+    }
+
   }
 
   calculateRating( ) {
@@ -271,5 +277,14 @@ export class DetailsCompanieComponent implements OnInit {
     ];
     let index: any = urgency.find((e: any) => e.id == item);
     return index.value;
+  }
+
+  createNotification(type: string, message: string): void {
+    this.notification.create(
+      type,
+      'Importante!',
+      `${message} 🫠`,
+      { nzPlacement: 'topLeft' }
+    );
   }
 }

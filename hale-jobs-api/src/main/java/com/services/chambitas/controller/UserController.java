@@ -33,9 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.google.common.util.concurrent.Service;
 import com.services.chambitas.domain.Permission;
-import com.services.chambitas.domain.TypeOfPayment;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.UserPrincipal;
 import com.services.chambitas.domain.dto.LoginDTO;
@@ -135,6 +133,8 @@ public class UserController {
 	        User user = userService.findUserByUsername(username);
 	        return new ResponseEntity<>(user, OK);
 	    }
+
+	
 
 	    @GetMapping("/list")
 	    public ResponseEntity<List<User>> getAllUsers() {

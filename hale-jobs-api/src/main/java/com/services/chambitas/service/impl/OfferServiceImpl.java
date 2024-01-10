@@ -427,6 +427,12 @@ public class OfferServiceImpl implements IOfferService{
 		Page<Offer> response = offerRepository.getOffersByCopy(keyword, user, pageable);
 		return response;
 	}
+
+	@Override
+	public List<Offer> getOffersBySelect(Long userId) {
+		List<Offer> response = offerRepository.getOffersBySelect(userId);
+		return response;
+	}
 	
 	
 

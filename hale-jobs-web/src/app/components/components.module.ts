@@ -4,6 +4,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { PrintCvComponent } from './print-cv/print-cv.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { PrintCvComponent } from './print-cv/print-cv.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    NzIconModule
   ],
   exports: [
     PrintCvComponent,
