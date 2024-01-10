@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { GenericService } from 'src/app/services/generic.service';
+import { HistoryService } from 'src/app/services/history.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { WorkersService } from 'src/app/services/workers.service';
 
@@ -54,7 +55,7 @@ export class RhSearchWorkersComponent implements OnInit {
   public listCities: any[] = [];
   citySelected: any;
   stateSelected : any;
-
+  public isLoadingResponse = false;
   listOffers : any[] = [];
 
 
@@ -62,8 +63,6 @@ export class RhSearchWorkersComponent implements OnInit {
   public psResponseEmailForm!: FormGroup;
   public visiblePsStatusOffer: boolean = false;
   postulateP: any;
-  isLoadingResponse: boolean = false;;
-
 
   constructor(
     private authenticationService: AuthService,
@@ -76,6 +75,7 @@ export class RhSearchWorkersComponent implements OnInit {
     private offerService : OfferService,
     private genericService : GenericService,
     private readonly title: Title,   
+    private historyService : HistoryService
 
   ) {
     this.validateForm = this.fb.group({
@@ -240,11 +240,15 @@ export class RhSearchWorkersComponent implements OnInit {
     );
   }
 
-  public navigateViewJob(element : any) {    
+  public navigateViewJob(element : any) {   
+    this.historyService.addchange(element);
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/dashboard/view-worker/${element.username}`]));
        window.open('#' + url, '_blank');        
   }
+
+
+
 
 
 

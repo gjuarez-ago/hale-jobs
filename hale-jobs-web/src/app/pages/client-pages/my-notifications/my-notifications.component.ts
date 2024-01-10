@@ -167,9 +167,7 @@ export class MyNotificationsComponent implements OnInit {
       );
   }
 
-
   public deleteNotification(id : any) {
-
     this.isLoadingGeneral = true;
     this.cvService
       .deleteNotification(id)

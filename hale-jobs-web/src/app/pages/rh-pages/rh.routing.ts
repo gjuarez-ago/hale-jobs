@@ -35,6 +35,7 @@ import { ViewProfileComponent } from './rh-search-workers/view-profile/view-prof
 const routes: Routes = [
     {
         path: 'dashboard', component: SideMenuRh, children: [
+          
           { path: "my-statistics", component: RhDashboardComponent },
           { path: "my-offers", component: RhOffersComponent},
           { path: "new-offer", component: NewOfferComponent },

@@ -69,11 +69,7 @@ export class MyHistoryComponent implements OnInit {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
       this.historyService.setProduct(JSON.parse(localStorage.getItem('MyProducts_History') || '[]'));
-    
       this.getProducts();
-
-    
-
     } else {
       this.router.navigateByUrl("/auth/login");
     }

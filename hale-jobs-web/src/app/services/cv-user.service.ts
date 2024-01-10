@@ -177,6 +177,15 @@ export class CVUserService {
     return this.http.get<any>(`${this.url}/user/change-password/${id}`, data);
   }
 
+  
+  public getPreferencesRH(id: any): Observable<any> {
+    return this.http.get<any>(`${this.url}/user/find-pre-rh/${id}`);
+  }
+
+  public updatePreferencesRH(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/user/update-pre-rh`, data);
+  }
+
 
   
 }
