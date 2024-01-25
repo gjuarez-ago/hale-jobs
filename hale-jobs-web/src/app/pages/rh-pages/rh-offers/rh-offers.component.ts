@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { CompanyService } from 'src/app/services/company.service';
 import { GenericService } from 'src/app/services/generic.service';
 import { OfferService } from 'src/app/services/offer.service';
 
@@ -84,8 +85,10 @@ export class RhOffersComponent implements OnInit {
   public responseComplaintForm!: FormGroup;
   isLoadingResponse: boolean = false;
   postulateP: any;
+  public listCompanies: any[] = [];
 
   constructor(
+    private companyService: CompanyService,
     private genericService: GenericService,
     private authenticationService: AuthService,
     private offerService: OfferService,
@@ -140,6 +143,7 @@ export class RhOffersComponent implements OnInit {
       this.getRangeAmount();
       this.getTypeOfJob();
       this.getSubcategories();
+      this.getCompaniesByUser(this.userId);
     } else {
       this.router.navigateByUrl('/auth/login');
     }
@@ -239,7 +243,13 @@ export class RhOffersComponent implements OnInit {
   }
 
   public navigateCreate() {
-    this.router.navigateByUrl('/dashboard/new-offer');
+    
+    if(this.listCompanies.length == 0 && this.data.length == 0) {
+      this.router.navigateByUrl('/dashboard/new-company');
+    }else {
+      this.router.navigateByUrl('/dashboard/new-offer');
+    }
+
   }
 
   getPostulatesByOffer(): void {
@@ -287,6 +297,24 @@ export class RhOffersComponent implements OnInit {
   changeCurrentPagePs($event: number): void {
     this.currentPs = $event;
     this.getPostulatesByOffer();
+  }
+
+  
+  public getCompaniesByUser(ele: any) {
+  
+    this.isLoadingGeneral = true;
+    this.subscriptions.push(
+      this.companyService.getCompaniesByOwnerWP(ele).subscribe(
+        (response: any) => {
+          this.listCompanies = response;
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
+    );
   }
 
   getComplaintsByOffer(): void {

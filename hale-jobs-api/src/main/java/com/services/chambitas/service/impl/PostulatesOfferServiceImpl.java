@@ -61,6 +61,8 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		element.setRegDateCreated(new Date());
 		
 		postulatesOfferRepository.save(element);
+		createNotication("Se ha registrado un cambio en tu oferta " + offer.getTitle(), "El usuario " + user.getUsername() + " se ha postulado a tu vacante " + offer.getTitle(), offer.getUser().getEmail(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
+
 		
 		return element;
 	}
@@ -88,7 +90,7 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 
 		
 		postulatesOfferRepository.save(element);	
-		createNotication("Se ha registrado un cambio en tu postulación", r, element.getUser().getUsername(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
+		createNotication("Se ha registrado un cambio en tu postulación '" + element.getOffer().getTitle() + "'", r, element.getUser().getUsername(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
 
 		return element;
 	}
@@ -197,6 +199,8 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		return consecutive;
 	}
 	
+	
+	
 	private Notification createNotication(String title, String message, String emailDest, String sendBy, Long offer, Long user, String typeAd) {
 		
 		UUID uuid=UUID.randomUUID();   
@@ -208,9 +212,11 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		n.setOfferId(offer);
 		n.setSendBy(sendBy);
 		n.setTitle(title);
-		n.setTypeAD(typeAd);
+		n.setTypeAD("OFERTAS");
 		n.setUserId(user);
-		n.setStatus(1);
+		n.setRegBorrado(0);
+		n.setRegDateCreated(new Date());
+		n.setStatus(0);
 		noticationRespository.save(n);
 		return n;
 	}
@@ -231,6 +237,8 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		n.setSendBy(user.getUsername());
 		n.setTitle("Un reclutador tiene un mensaje para ti relacionado a la siguiente oferta: " + offer.getTitle());
 		n.setTypeAD("MENSAJE");
+		n.setRegBorrado(0);
+		n.setRegDateCreated(new Date());
 		n.setUserId(request.getUserId());
 		n.setStatus(0);
 		noticationRespository.save(n);

@@ -123,6 +123,19 @@ public class NotificationServiceImpl implements INotificationService{
 		if(lastElement >= 100000000 && lastElement < 1000000000) {consecutive = "1"  + lastElement;}
 		return consecutive;
 	}
+
+	@Override
+	public List<Notification> changeStatusAD(String username) {
+		List<Notification> list = notificationRepository.findNotificationByUserMovil(username);
+
+		for (Notification notification : list) {
+			notification.setStatus(2);			
+		}
+		
+		notificationRepository.saveAll(list);
+		return list;
+	}
+	
 	
 	
 	

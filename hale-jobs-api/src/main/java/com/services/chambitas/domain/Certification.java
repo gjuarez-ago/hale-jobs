@@ -32,7 +32,7 @@ public class Certification implements Serializable {
 	
 	private String url;
 
-	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 	private Long userId;

@@ -25,5 +25,7 @@ public interface INotificationService {
 	Page<Notification> getAllNotificationsByUserWEB(String userId, String title, int pageNo, int pageSize);
 	
 	Page<Notification> getAllNotificationByAdmin(int pageNo, int pageSize);	
-
+	
+	List<Notification> changeStatusAD(String username);	
+	
 }

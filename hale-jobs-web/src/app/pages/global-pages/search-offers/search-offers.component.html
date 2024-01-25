@@ -98,7 +98,7 @@
 
             <div class="stats-filters">
 
-              <div class="total"> {{total}} resultados encontrados</div>
+              <div class="total"> {{total}} vacantes encontradas</div>
 
               <div class="order-by">
                 <!-- <label class="label-s"> Ordenar por </label> -->
@@ -114,7 +114,7 @@
               <div class="card-title"> 
                 <h2> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> {{item.title}} </h2> 
 
-                <nz-tag [nzColor]="'magenta'">{{getUrgency(item.urgency)}} </nz-tag>
+                <nz-tag nzColor="{{getUrgencyColor(item.urgency)}}" >{{getUrgency(item.urgency)}} </nz-tag>
               
               </div>
 
@@ -129,8 +129,8 @@
 
 
               <div class="tags">
-                <nz-tag nzColor="success">
-                  <i nz-icon nzType="check-circle"></i>
+                <nz-tag nzColor="geekblue">
+                  <span nz-icon nzType="appstore" nzTheme="outline"></span>
                   <span>{{item.category.valor}}</span>
                 </nz-tag>
 
@@ -157,6 +157,11 @@
               </div>
 
           
+              <div class="view">
+                <nz-tag [nzColor]="'#87d068'"> 
+                  <i nz-icon nzType="check-circle"></i>
+                  Ya te has postulado </nz-tag>
+              </div>
 
              
 

@@ -121,14 +121,14 @@
             <img alt="example" src="{{currentElement && currentElement.company.imageURL}}" />
           </ng-template>
           <ng-template #actionSetting>
-            <button  (click)="showModalOffer()" nz-button nzType="default" class="button-blue btn-wi">
+            <button [disabled]="role == 'ROLE_HR'"  (click)="showModalOffer()" nz-button nzType="default" class="button-blue btn-wi">
               <i  nz-icon nzType="appstore-add" nzTheme="outline"></i> 
             </button>
          </ng-template>
        
           <ng-template #actionEllipsis>
             
-            <button (click)="showModalComplaint()" nz-button nzType="default" class="button-red btn-wi">
+            <button [disabled]="role == 'ROLE_HR'" (click)="showModalComplaint()" nz-button nzType="default" class="button-red btn-wi">
               <i  nz-icon nzType="warning" nzTheme="outline"></i>
             </button>
          </ng-template>

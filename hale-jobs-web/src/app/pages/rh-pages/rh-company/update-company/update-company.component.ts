@@ -350,7 +350,7 @@ export class UpdateCompanyComponent implements OnInit {
 
     this.companyService.updateCompany(this.currentElement.id,this.userId, formData).subscribe(
       (response: any) => {
-        this.message.create("success", 'Empresa creada correctamente!');
+        this.message.create("success", 'Empresa actualizada correctamente!');
         this.isLoadingGeneral=false;
         this.ngxSpinner.hide();
         this.imgLoad = undefined;
@@ -372,9 +372,7 @@ export class UpdateCompanyComponent implements OnInit {
 
     this.companyService.getCompanyById(id).subscribe(
       (response: any) => {
-
         this.currentElement = response;
-        this.message.create("success", 'Empresa creada correctamente!');
         this.imgLoad = undefined;
         this.previewImage = response.imageURL;
         this.isLoadingGeneral=false;

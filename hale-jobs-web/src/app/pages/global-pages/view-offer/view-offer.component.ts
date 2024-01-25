@@ -32,7 +32,7 @@ export class ViewOfferComponent implements OnInit {
   isLoadingReview: boolean = false;
   isVisibleAdd: boolean = false;
   isVisibleAddPostulate: boolean = false;
-
+  public role : any = "";
   
   constructor(
     private readonly meta: Meta,
@@ -65,6 +65,7 @@ export class ViewOfferComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
+      this.role = this.user.role;
     }
 
     this.offerId = this.actRoute.snapshot.params.id;

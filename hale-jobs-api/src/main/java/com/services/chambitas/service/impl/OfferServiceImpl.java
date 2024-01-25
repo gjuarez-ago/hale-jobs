@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.services.chambitas.domain.CityINEGI;
@@ -27,6 +28,7 @@ import com.services.chambitas.domain.TypeOfPayment;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.dto.OfferDTO;
 import com.services.chambitas.domain.dto.OfferEditDTO;
+import com.services.chambitas.domain.response.ChartsDashboardResponse;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.repository.ICityRepository;
 import com.services.chambitas.repository.ICompanyRepository;
@@ -90,6 +92,10 @@ public class OfferServiceImpl implements IOfferService{
 	
 	@Autowired
 	private INotificationRepository notificationRepository;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
 	
 	
 	@Override
@@ -167,7 +173,7 @@ public class OfferServiceImpl implements IOfferService{
 		RangeAmount rangeAmount = existRangeAmount(request.getRangeAmount());
 		JobSubcategory subcategory = existSubcategory(request.getSubcategory());
 		
-		   element.setConsecutive(generateConsecutive());
+		    element.setConsecutive(generateConsecutive());
 	        element.setTitle(request.getTitle());
 	        element.setBenefits(request.getBenefits());
 	        element.setCategory(category);
@@ -432,6 +438,12 @@ public class OfferServiceImpl implements IOfferService{
 	public List<Offer> getOffersBySelect(Long userId) {
 		List<Offer> response = offerRepository.getOffersBySelect(userId);
 		return response;
+	}
+
+	@Override
+	public List<ChartsDashboardResponse> getDashboard() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

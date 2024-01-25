@@ -45,6 +45,7 @@
                       class="input-text"
                       nzSize="large"
                       nz-input
+                      [minlength]="5" [maxlength]="100"
                       placeholder="Escribe el titulo de la oferta"
                       formControlName="title"
                       [ngModel]="offer && offer.title"
@@ -93,7 +94,7 @@
                       nzSize="large"
                       nzShowSearch
                       nzAllowClear
-                      nzPlaceHolder="Subcategoría"
+                      nzPlaceHolder="Empresa"
                       formControlName="company"
                       [ngModel]="offer && offer.company.id"
                     >
@@ -324,9 +325,10 @@
                     Descripción de la oferta
                   </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido!">
-                    <nz-textarea-count [nzMaxCharacterCount]="200">
+                    <nz-textarea-count [nzMaxCharacterCount]="500">
                       <textarea
                         rows="10"
+                        [minlength]="10" [maxlength]="500"
                         nz-input
                         [ngModel]="offer && offer.description"
                         formControlName="description"

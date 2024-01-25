@@ -243,7 +243,7 @@ export class RhSearchWorkersComponent implements OnInit {
   public navigateViewJob(element : any) {   
     this.historyService.addchange(element);
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/view-worker/${element.username}`]));
+      this.router.createUrlTree([`/dashboard/view-worker/${element.id}`]));
        window.open('#' + url, '_blank');        
   }
 

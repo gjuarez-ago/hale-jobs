@@ -53,6 +53,7 @@
                       class="input-text"
                       nzSize="large"
                       nz-input
+                      [minlength]="5" [maxlength]="100"
                       placeholder="Escribe el titulo de la oferta"
                       formControlName="title"
                       [ngModel]="offer && offer.title"
@@ -90,7 +91,7 @@
          
                     <nz-select 
                     [ngModel]="offer && offer.company.id"
-                    class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Subcategoría"  formControlName="company">
+                    class="input-text-select" nzSize="large" nzShowSearch nzAllowClear nzPlaceHolder="Empresa"  formControlName="company">
                       <nz-option *ngFor="let item of listCompanies" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
                     </nz-select>  
 
@@ -219,9 +220,10 @@
             <div nz-col class="gutter-row" [nzSpan]="8">
               <div class="inner-box">
                 <nz-form-item class="input-content">
-                  <nz-form-label nzSize="large" nzFor="surnames"> Estado </nz-form-label>
+                  <nz-form-label  nzFor="surnames"> Estado </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
                     <nz-select
+                    nzSize="large"
                       [ngModel]="offer && offer.state.clave"
                       nzShowSearch
                       nzAllowClear
@@ -333,13 +335,15 @@
                     Descripción de la oferta
                   </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido!">
-                    <nz-textarea-count [nzMaxCharacterCount]="200">
+                    <nz-textarea-count [nzMaxCharacterCount]="500">
                       <textarea
+                      [minlength]="5" [maxlength]="500"
+
                         [ngModel]="offer && offer.description"
                         rows="10"
                         nz-input
                         formControlName="description"
-                        placeholder="Cuentanos un poco de lo que haces día a día, que disfrustas y disgusta de tu trabajo, pero sobre todo cuentanos lo que consideres que te podriamos ayudar a mejorar tu experiencia."
+                        placeholder="Descripción acerca de la oferta..............................."
                       ></textarea>
                     </nz-textarea-count>
                   </nz-form-control>
@@ -666,7 +670,7 @@
           <nz-form-item>
             <nz-form-control>
               <nz-input-group nzPrefixIcon="one-to-one">
-                <input formControlName="keyword" nz-input placeholder="Buscar oferta por titulo" />
+                <input formControlName="keyword" nz-input placeholder="Buscar oferta por titulo"  />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>

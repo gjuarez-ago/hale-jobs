@@ -281,9 +281,18 @@ nz-date-picker  {
     margin: 0px 0px 0px 30px;
   }
   
-  nz-avatar {
-    margin-right: 30px;
+  
+.btn-red {
+    margin: 0px 10px 0px 10px;
+    background-color: red;
+    border-color: black;
     cursor: pointer;
+  }
+
+  nz-avatar {
+    margin-right: 0px;
+    cursor: pointer;
+    background-color: rgb(3, 55, 79);
   }
   
   nz-header {

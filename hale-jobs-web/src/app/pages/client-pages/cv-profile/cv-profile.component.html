@@ -2,8 +2,25 @@
   <nz-page-header-title> 📑 MI CV</nz-page-header-title>
   <nz-page-header-extra>
     <nz-space>
-      <button (click)="printPDF()" *nzSpaceItem nz-button>Generar CV (PDF)</button>
+      <button class="btn-red" (click)="printPDF()"  nzShape="round" *nzSpaceItem nz-button>
+        <span nz-icon nzType="file-done" nzTheme="outline"></span>
+        Generar CV (PDF)</button>
     </nz-space>
+
+    <nz-space>
+      <button class="btn-green" (click)="printPDF()" nzShape="round" *nzSpaceItem nz-button>
+        <span nz-icon nzType="upload" nzTheme="outline"></span>
+        Subir CV </button>
+    </nz-space>
+
+    <nz-space>
+      <button class="btn-yellow" (click)="downLoadCV()" nzShape="round" *nzSpaceItem nz-button>
+        <span nz-icon nzType="download" nzTheme="outline"></span>
+         </button>
+    </nz-space>
+
+
+
   </nz-page-header-extra>
   <nz-page-header-content>
     <div class="header-exp">
@@ -253,6 +270,65 @@
         <nz-empty></nz-empty>
       </div>
     </div>
+
+
+    <div class="education">
+      <div class="header-exp">
+        <div class="title">
+          Habilidades lingüísticas <span class="span-small"> (presiona para editar) </span>
+        </div>
+
+        <div class="button-add">
+          <button nz-button (click)="showModalLanguaje('', 'ADD')">
+            <i nz-icon nzType="plus"></i> Agregar
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="listLanguajes.length > 0">
+        <div
+          class="education-content"
+          *ngFor="let education of listLanguajes; index as i"
+        >
+          <div class="card-edu" (click)="showModalEducation(education, 'EDIT')">
+            <div class="info">
+              <div class="title-edu">
+                <p>
+                  <strong> {{ education.name }} </strong>
+                </p>
+              </div>
+              <div class="title-date">
+                <span>
+                  {{ education.begins | date : "MMM, y" }} -
+                  {{
+                    education.worked
+                      ? "Cursando"
+                      : (education.ends | date : "MMM,y")
+                  }}
+                </span>
+              </div>
+              <div class="status">
+                {{ education.schoolName }} - {{ education.type }}
+              </div>
+            </div>
+
+            <div class="icon-edit">
+              <i
+                nz-icon
+                nzType="edit"
+                class="icon-edit-i"
+                nzTheme="outline"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-edus" *ngIf="listLanguajes.length == 0">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+
 
     <!-- </form> -->
   </nz-page-header-content>
@@ -1106,23 +1182,29 @@
   </ng-container>
 
   <ng-template #footerCertificate>
-    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
-      <div nz-col class="gutter-row" [nzSpan]="6">
-        <button class="button-red pd-1" nz-button (click)="closeModalCertificate('ADD')">
+    <div class="flex-xap">
+      <nz-space class="pd-1">
+        <button
+          *nzSpaceItem
+          nzShape="round"
+          nzDanger
+          nz-button
+          (click)="closeModalCertificate('ADD')"
+        >
           Cerrar
         </button>
-      </div>
-      <div nz-col class="gutter-row" [nzSpan]="6">
         <button
-          class="button-blue pd-1"
+          *nzSpaceItem
+          nzShape="round"
+          nzType="primary"
           nz-button
           (click)="saveCertificateUser()"
         >
-          Guardar
+          Agregar certificado
         </button>
-      </div>
-     
+      </nz-space>
     </div>
+
   </ng-template>
 </nz-drawer>
 
@@ -1193,8 +1275,6 @@
   </ng-container>
 
   <ng-template #footerCertificate1>
-
-
     <div class="flex-xap">
       <nz-space class="pd-1">
         <button
@@ -1231,6 +1311,173 @@
     </div>
   </ng-template>
 </nz-drawer>
+
+
+
+<!-- Modal LANGUAJES -->
+
+<nz-drawer
+  [nzVisible]="visibleAddLanguaje"
+  nzPlacement="right"
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzWidth]="520"
+  nzTitle="Agregar Habilidad lingüística"
+  [nzFooter]="footerLanguaje"
+  (nzOnClose)="closeModalLanguaje('ADD')"
+>
+  <ng-container *nzDrawerContent>
+    <form nz-form [formGroup]="languajeForm" class="form-preferences">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Selecciona un idioma</nz-form-label>
+          <nz-select
+          nzShowSearch nzAllowClear 
+          nzPlaceHolder="Selecciona una opción"
+          id="skills"
+          formControlName="name"
+        >
+          <nz-option
+            *ngFor="let skill of languajesSelect"
+            [nzLabel]="skill.name"
+            [nzValue]="skill.key"
+          ></nz-option
+        ></nz-select>
+
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Nivel de dominio</nz-form-label>
+          <nz-select
+          nzShowSearch nzAllowClear 
+          nzPlaceHolder="Selecciona una opción"
+          id="skills"
+          formControlName="name"
+        >
+          <nz-option
+            *ngFor="let skill of levels"
+            [nzLabel]="skill.name"
+            [nzValue]="skill.key"
+          ></nz-option
+        ></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+  
+    </form>
+  </ng-container>
+
+  <ng-template #footerLanguaje>
+  
+    <div class="flex-xap">
+      <nz-space class="pd-1">
+        <button
+          *nzSpaceItem
+          nzShape="round"
+          nzDanger
+          nz-button
+          (click)="closeModalLanguaje('ADD')"
+        >
+          Cerrar
+        </button>
+        <button
+          *nzSpaceItem
+          nzShape="round"
+          nzType="primary"
+          nz-button
+          (click)="saveLanguaje()"
+        >
+          Guardar
+        </button>
+      </nz-space>
+    </div>
+  </ng-template>
+</nz-drawer>
+
+
+<nz-drawer
+  [nzVisible]="visibleAddLanguaje"
+  nzPlacement="right"
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzWidth]="520"
+  nzTitle="Editar Habilidad lingüística"
+  [nzFooter]="footerLanguaje"
+  (nzOnClose)="closeModalLanguaje('EDIT')"
+>
+  <ng-container *nzDrawerContent>
+    <form nz-form [formGroup]="languajeForm" class="form-preferences">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Selecciona un idioma</nz-form-label>
+          <nz-select
+          nzShowSearch nzAllowClear 
+          nzPlaceHolder="Selecciona una opción"
+          id="skills"
+          formControlName="name"
+        >
+          <nz-option
+            *ngFor="let skill of languajesSelect"
+            [nzLabel]="skill.name"
+            [nzValue]="skill.key"
+          ></nz-option
+        ></nz-select>
+
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-label>Nivel de dominio</nz-form-label>
+          <nz-select
+          nzShowSearch nzAllowClear 
+          nzPlaceHolder="Selecciona una opción"
+          id="skills"
+          formControlName="name"
+        >
+          <nz-option
+            *ngFor="let skill of levels"
+            [nzLabel]="skill.name"
+            [nzValue]="skill.key"
+          ></nz-option
+        ></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+  
+    </form>
+  </ng-container>
+
+  <ng-template #footerLanguaje>
+  
+    <div class="flex-xap">
+      <nz-space class="pd-1">
+        <button
+          *nzSpaceItem
+          nzShape="round"
+          nzDanger
+          nz-button
+          (click)="closeModalLanguaje('EDIT')"
+        >
+          Cerrar
+        </button>
+        <button
+          *nzSpaceItem
+          nzShape="round"
+          nzType="primary"
+          nz-button
+          (click)="editLanguaje()"
+        >
+          Guardar
+        </button>
+      </nz-space>
+    </div>
+  </ng-template>
+</nz-drawer>
+
+
+<!-- alalslslsls -->
+
 
 
 

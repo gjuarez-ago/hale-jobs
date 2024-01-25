@@ -19,7 +19,6 @@ import { OfferService } from 'src/app/services/offer.service';
   styleUrls: ['./side-menu-rh.component.css'],
 })
 export class SideMenuRh implements OnInit {
-
   public pageSize: number = 10;
   public current: number = 1;
   public subscriptions: Subscription[] = [];
@@ -28,48 +27,41 @@ export class SideMenuRh implements OnInit {
   public listNotications: any[] = [];
   public isLoading = false;
 
-
   isCollapsed = false;
   public user: User | undefined;
   public isVisibleSettings = false;
   public isVisibleHistory = false;
   public isVisibleAD = false;
-  
-  public editPRofile! : FormGroup;
+
+  public editPRofile!: FormGroup;
   public isLoadingGeneral: boolean = false;
-  public listHistory : any[] = [];
+  public listHistory: any[] = [];
   userEdit: any;
   public validateForm!: FormGroup;
   searchForm!: FormGroup;
   visiblePsStatusOffer: boolean = false;
   postulateP: any;
   isLoadingPostulates: boolean = false;
-  public listSubcategories : any[]= [];
+  public listSubcategories: any[] = [];
   prefRH: any;
   public psResponseEmailForm!: FormGroup;
   public isLoadingResponse: boolean = false;
   listOffers: any[] = [];
-
-  
-
-
-
-
-  
+  listADNR: any = 0;
+  initials: string = '';
 
   constructor(
     private authenticationService: AuthService,
     private modal: NzModalService,
     private router: Router,
     private message: NzMessageService,
-    private cvService : CVUserService,
+    private cvService: CVUserService,
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
-    private historyService : HistoryService,
-    private genericService :  GenericService,
-    private offerService : OfferService
+    private historyService: HistoryService,
+    private genericService: GenericService,
+    private offerService: OfferService
   ) {
-
     this.searchForm = this.fb.group({
       title: [''],
     });
@@ -97,8 +89,7 @@ export class SideMenuRh implements OnInit {
       jobTitle: ['', [Validators.required]],
       names: ['', [Validators.required]],
       numberPhone: ['', [Validators.required]],
-      });
-
+    });
   }
 
   ngOnInit(): void {
@@ -107,14 +98,15 @@ export class SideMenuRh implements OnInit {
       // this.redirect(this.user);
       this.getSubcategories();
       this.getOffers();
-      this.historyService.setNewChange(JSON.parse(localStorage.getItem('MyUsersRH_History') || '[]'));
+      this.getNotifications();
+      this.historyService.setNewChange(
+        JSON.parse(localStorage.getItem('MyUsersRH_History') || '[]')
+      );
       this.getHistory();
+      this.getInitials();
     } else {
       this.router.navigateByUrl('/auth/login');
     }
-
-
-    
   }
 
   public onLogOut(): void {
@@ -136,6 +128,8 @@ export class SideMenuRh implements OnInit {
       this.user?.fatherLastName;
     const fullName = nameString.split(' ');
     const initials = fullName.shift()!.charAt(0) + fullName.pop()!.charAt(0);
+
+    this.initials = initials.toUpperCase();
     return initials.toUpperCase();
   }
 
@@ -193,7 +187,6 @@ export class SideMenuRh implements OnInit {
     }
   }
 
-
   public showModalSettings() {
     this.isVisibleSettings = true;
     this.getUserEdit();
@@ -201,6 +194,8 @@ export class SideMenuRh implements OnInit {
   }
 
   public showModalAD() {
+    this.changeStatusNotification();
+    this.getNotifications();
     this.isVisibleAD = true;
   }
 
@@ -212,8 +207,9 @@ export class SideMenuRh implements OnInit {
   public closeModalSettings() {
     this.isVisibleSettings = false;
   }
-  
+
   public closeModalAD() {
+    this.getNotifications();
     this.isVisibleAD = false;
   }
 
@@ -222,16 +218,16 @@ export class SideMenuRh implements OnInit {
   }
 
   getHistory() {
-    this.historyService.setNewChange(JSON.parse(localStorage.getItem('MyUsersRH_History') || '[]'));
+    this.historyService.setNewChange(
+      JSON.parse(localStorage.getItem('MyUsersRH_History') || '[]')
+    );
     this.isLoadingPostulates = true;
     this.historyService.getHistory().subscribe((res) => {
       console.log(this.listHistory);
       this.listHistory = res;
     });
     this.isLoadingPostulates = false;
-
   }
-
 
   getNotifications() {
     this.isLoadingGeneral = true;
@@ -240,7 +236,9 @@ export class SideMenuRh implements OnInit {
         email: this.user?.username,
         pageSize: this.pageSize,
         pageNo: this.current - 1,
-        title: this.searchForm.value["title"] ? this.searchForm.value["title"] : ''
+        title: this.searchForm.value['title']
+          ? this.searchForm.value['title']
+          : '',
       })
       .subscribe(
         (response: any) => {
@@ -250,8 +248,7 @@ export class SideMenuRh implements OnInit {
           this.isLoading = false;
           this.ngxSpinner.hide();
 
-          console.log(this.listNotications);
-
+          this.listADNR = this.listNotications.filter((e : any) => e.status == 0).length;
           this.isLoadingGeneral = false;
         },
         (errorResponse: HttpErrorResponse) => {
@@ -269,10 +266,18 @@ export class SideMenuRh implements OnInit {
     this.getNotifications();
   }
 
-  public navigateViewJob(id : any) {
+  public navigateViewJob(id: any) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/view-job/${id}`]));
-       window.open('#' + url, '_blank');
+      this.router.createUrlTree([`/dashboard/view-worker/${id}`])
+    );
+    window.open('#' + url, '_blank');
+  }
+
+  public navigateViewOffer(id: any) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/view-job/${id}`])
+    );
+    window.open('#' + url, '_blank');
   }
 
   changeCurrentPage($event: number): void {
@@ -280,9 +285,7 @@ export class SideMenuRh implements OnInit {
     this.getNotifications();
   }
 
-
   submitForm(): void {
-    
     let form = this.searchForm.value;
 
     this.isLoadingGeneral = true;
@@ -291,14 +294,14 @@ export class SideMenuRh implements OnInit {
         email: this.user?.username,
         pageSize: this.pageSize,
         pageNo: this.current - 1,
-        title: form.title ? form.title : ''
+        title: form.title ? form.title : '',
       })
       .subscribe(
         (response: any) => {
           this.listNotications = response.content;
           this.total = response.totalElements;
           this.totalElementByPage = response.numberOfElements;
-          this.isLoading =  false;
+          this.isLoading = false;
           this.ngxSpinner.hide();
 
           console.log(this.listNotications);
@@ -315,7 +318,6 @@ export class SideMenuRh implements OnInit {
       );
   }
 
-  
   public sanitazerURL(value: any) {
     if (value) {
       return value;
@@ -323,36 +325,36 @@ export class SideMenuRh implements OnInit {
 
     return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrbkK5L2pzoJpQgvTgwYZlBQigM0rsd2kC8oW3lk-7tQ&s';
   }
-  
-  public deleteNotification(id : any) {
 
+  public deleteNotification(id: any) {
     this.isLoadingGeneral = true;
-    this.cvService
-      .deleteNotification(id)
-      .subscribe(
-        (response: any) => {
-          this.message.create(
-            'success',
-            'Notificación eliminada correctamente!'
-          );
-          this.getNotifications();
-          this.ngxSpinner.hide();
-          this.isLoadingGeneral = false;
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.message.create(
-            'error',
-            'Ha ocurrido un error al realizar la busqueda'
-          );
-          this.isLoadingGeneral = false;
-        }
-      );
+    this.cvService.deleteNotification(id).subscribe(
+      (response: any) => {
+        this.message.create('success', 'Notificación eliminada correctamente!');
+        this.getNotifications();
+        this.ngxSpinner.hide();
+        this.isLoadingGeneral = false;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al realizar la busqueda'
+        );
+        this.isLoadingGeneral = false;
+      }
+    );
   }
 
-  
-  public deleteFavorite(item : any) {
+  public deleteFavorite(item: any) {
     this.historyService.removeChange(item);
-    this.historyService.setNewChange(JSON.parse(localStorage.getItem('MyUsersRH_History') || '[]'));
+    this.historyService.setNewChange(
+      JSON.parse(localStorage.getItem('MyUsersRH_History') || '[]')
+    );
+
+    if (this.listHistory.length == 0) {
+      this.closeModalHistory();
+    }
+
     this.getHistory();
   }
 
@@ -360,6 +362,7 @@ export class SideMenuRh implements OnInit {
     console.log(item);
     this.visiblePsStatusOffer = true;
     this.postulateP = item;
+
   }
 
   public closeModalMessagePostulate() {
@@ -384,24 +387,31 @@ export class SideMenuRh implements OnInit {
 
     this.ngxSpinner.show();
     this.subscriptions.push(
-      this.offerService.messageUSerPostulate({ ...form, offerId: this.postulateP.offer.id, status: 0, userId: this.postulateP.user.id }).subscribe(
-        (response: any) => {
-          this.getNotifications();
-          this.ngxSpinner.hide();
-          this.closeModalMessagePostulate();
-          this.createMessage('success', 'Mensaje enviado :)');
+      this.offerService
+        .messageUSerPostulate({
+          ...form,
+          offerId: this.postulateP.offer.id,
+          status: 0,
+          userId: this.postulateP.user.id,
+        })
+        .subscribe(
+          (response: any) => {
+            this.getNotifications();
+            this.ngxSpinner.hide();
+            this.closeModalMessagePostulate();
+            this.createMessage('success', 'Mensaje enviado :)');
 
-          this.isLoadingGeneral = false;
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.ngxSpinner.hide();
-          this.isLoadingGeneral = false;
-          this.message.create('error', errorResponse.error.message);
-        }
-      )
+            this.isLoadingGeneral = false;
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.ngxSpinner.hide();
+            this.isLoadingGeneral = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
     );
   }
-  
+
   public getUserEdit() {
     this.isLoadingGeneral = true;
     this.subscriptions.push(
@@ -435,8 +445,6 @@ export class SideMenuRh implements OnInit {
   }
 
   public saveSettings() {
-   
-
     if (!this.validateForm.valid) {
       for (const i in this.validateForm.controls) {
         if (this.validateForm.controls.hasOwnProperty(i)) {
@@ -451,25 +459,28 @@ export class SideMenuRh implements OnInit {
     let form = this.validateForm.value;
 
     console.log(form);
-  
+
     this.isLoadingGeneral = true;
-    this.cvService.updatePreferencesRH({...form, id: this.user?.id}).subscribe(
-      (response: any) => {
-        this.message.create("success", '¡Preferencias actualizada correctamente!');
-        this.closeModalSettings();
-        this.isLoadingGeneral = false;       
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.isLoadingGeneral = false;
-        this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
-      }
-    )
-
-
-    
-
+    this.cvService
+      .updatePreferencesRH({ ...form, id: this.user?.id })
+      .subscribe(
+        (response: any) => {
+          this.message.create(
+            'success',
+            '¡Preferencias actualizada correctamente!'
+          );
+          this.closeModalSettings();
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.message.create(
+            'error',
+            'Ha ocurrido un error al recuperar los municipios'
+          );
+        }
+      );
   }
-
 
   getSubcategories() {
     this.isLoadingGeneral = true;
@@ -480,19 +491,21 @@ export class SideMenuRh implements OnInit {
             ...prop,
             key: key + 1,
           };
-        }); 
-        this.isLoadingGeneral = false;       
+        });
+        this.isLoadingGeneral = false;
       },
       (errorResponse: HttpErrorResponse) => {
         this.isLoadingGeneral = false;
-        this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al recuperar los municipios'
+        );
       }
-    )
+    );
   }
 
-
   //VALIDACIÓN DE INPUT DE TELEFONO PARA NO ACEPTAR LETRAS
-  validateFormat(event:any) {
+  validateFormat(event: any) {
     let key;
     if (event.type === 'paste') {
       key = event.clipboardData.getData('text/plain');
@@ -501,172 +514,184 @@ export class SideMenuRh implements OnInit {
       key = String.fromCharCode(key);
     }
     const regex = /[0-9]|\./;
-     if (!regex.test(key)) {
+    if (!regex.test(key)) {
       event.returnValue = false;
-       if (event.preventDefault) {
+      if (event.preventDefault) {
         event.preventDefault();
-       }
-     }
+      }
     }
+  }
 
+  public changeStatusNotification() {
+    this.isLoadingGeneral = true;
+    this.cvService.changeStatusNotification(this.user?.username).subscribe(
+      (response: any) => {
+        this.isLoadingGeneral = false;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al actualizar las notificiaciones'
+        );
+        this.isLoadingGeneral = false;
+      }
+    );
+  }
 
-    getOffers() {
-      this.isLoadingGeneral = true;
-      this.offerService.getOfferByUserId(this.user?.id).subscribe(
-        (response: any) => {
-        
-          this.listOffers = response.map((prop: any, key: any) => {
-            return {
-              ...prop,
-              key: key + 1,
-            };
-          }); 
+  getOffers() {
+    this.isLoadingGeneral = true;
+    this.offerService.getOfferByUserId(this.user?.id).subscribe(
+      (response: any) => {
+        this.listOffers = response.map((prop: any, key: any) => {
+          return {
+            ...prop,
+            key: key + 1,
+          };
+        });
 
-      
-          this.isLoadingGeneral = false;       
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.message.create("error", 'Ha ocurrido un error al recuperar las ofertas');
-          this.isLoadingGeneral = false;
-        }
-      )
-    }
+        this.isLoadingGeneral = false;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al recuperar las ofertas'
+        );
+        this.isLoadingGeneral = false;
+      }
+    );
+  }
 
-  
   public attitudes: any = [
     {
       idAttitude: 1,
-      attitudeName: 'Dominio de un idioma extranjero'
+      attitudeName: 'Dominio de un idioma extranjero',
     },
     {
       idAttitude: 2,
-      attitudeName: 'Un título o certificado'
+      attitudeName: 'Un título o certificado',
     },
     {
       idAttitude: 3,
-      attitudeName: 'Digitando rapido'
+      attitudeName: 'Digitando rapido',
     },
-  ]
+  ];
 
-    public technicalAttitudes: any = [
-      {
-        id: 1,
-        name: 'Manejo de hojas de cálculo'
-      },
-      {
-        id: 2,
-        name: 'Uso de programas de edición fotográfica'
-      },
-      {
-        id: 3,
-        name: 'Redacción de textos'
-      },
-      {
-        id: 4,
-        name: 'Java'
-      },
-      {
-        id: 5,
-        name: 'Programación orientada objetos'
-      },
-      {
-        id: 6,
-        name: 'C#'
-      },
-      {
-        id: 7,
-        name: 'C++'
-      },
-      {
-        id: 8,
-        name: 'AWS Services'
-      },
-      {
-        id: 9,
-        name: 'Azure Devops'
-      },
-      {
-        id: 10,
-        name: 'Google Cloud'
-      },
-      {
-        id: 11,
-        name: 'C'
-      },
-      {
-        id: 12,
-        name: 'Ruby and Rails'
-      },
-      {
-        id: 13,
-        name: 'Python'
-      },
-      {
-        id: 14,
-        name: '.Net Core'
-      },
-      {
-        id: 15,
-        name: 'Angular'
-      },
-      {
-        id: 16,
-        name: 'React.js'
-      },
-      {
-        id: 17,
-        name: 'Next.js'
-      },
-      {
-        id: 18,
-        name: 'MySQL'
-      },
-      {
-        id: 19,
-        name: 'SQL Server'
-      },
-      {
-        id: 20,
-        name: 'RxJS'
-      },
-      {
-        id: 21,
-        name: 'Linux'
-      },
-      {
-        id: 23,
-        name: 'PLSQL-Oracle'
-      },
-      {
-        id: 24,
-        name: 'SQLite'
-      },
-      {
-        id: 25,
-        name: 'Git'
-      },
-      {
-        id: 26,
-        name: 'Spring Boot'
-      },
-      {
-        id: 27,
-        name: 'Spring Framework'
-      },
-      {
-        id: 28,
-        name: 'Servicios Rest'
-      },
-      {
-        id: 29,
-        name: 'Microservicios'
-      },
-      {
-        id: 30,
-        name: 'Servicios SOAP'
-      },
-    ];
-
-
-
+  public technicalAttitudes: any = [
+    {
+      id: 1,
+      name: 'Manejo de hojas de cálculo',
+    },
+    {
+      id: 2,
+      name: 'Uso de programas de edición fotográfica',
+    },
+    {
+      id: 3,
+      name: 'Redacción de textos',
+    },
+    {
+      id: 4,
+      name: 'Java',
+    },
+    {
+      id: 5,
+      name: 'Programación orientada objetos',
+    },
+    {
+      id: 6,
+      name: 'C#',
+    },
+    {
+      id: 7,
+      name: 'C++',
+    },
+    {
+      id: 8,
+      name: 'AWS Services',
+    },
+    {
+      id: 9,
+      name: 'Azure Devops',
+    },
+    {
+      id: 10,
+      name: 'Google Cloud',
+    },
+    {
+      id: 11,
+      name: 'C',
+    },
+    {
+      id: 12,
+      name: 'Ruby and Rails',
+    },
+    {
+      id: 13,
+      name: 'Python',
+    },
+    {
+      id: 14,
+      name: '.Net Core',
+    },
+    {
+      id: 15,
+      name: 'Angular',
+    },
+    {
+      id: 16,
+      name: 'React.js',
+    },
+    {
+      id: 17,
+      name: 'Next.js',
+    },
+    {
+      id: 18,
+      name: 'MySQL',
+    },
+    {
+      id: 19,
+      name: 'SQL Server',
+    },
+    {
+      id: 20,
+      name: 'RxJS',
+    },
+    {
+      id: 21,
+      name: 'Linux',
+    },
+    {
+      id: 23,
+      name: 'PLSQL-Oracle',
+    },
+    {
+      id: 24,
+      name: 'SQLite',
+    },
+    {
+      id: 25,
+      name: 'Git',
+    },
+    {
+      id: 26,
+      name: 'Spring Boot',
+    },
+    {
+      id: 27,
+      name: 'Spring Framework',
+    },
+    {
+      id: 28,
+      name: 'Servicios Rest',
+    },
+    {
+      id: 29,
+      name: 'Microservicios',
+    },
+    {
+      id: 30,
+      name: 'Servicios SOAP',
+    },
+  ];
 }

@@ -63,7 +63,7 @@
   .row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 5px 0px 5px 0px;
   
   }
@@ -83,8 +83,8 @@
   
   .card-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-wrap: wrap;
   }
   

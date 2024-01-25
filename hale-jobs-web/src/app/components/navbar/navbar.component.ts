@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent implements OnInit {
 
   public user: User | undefined;
+  public initials: string = "";
 
   constructor(private authenticationService: AuthService,    private modal: NzModalService,
     private router: Router, private message: NzMessageService) { }
@@ -21,6 +22,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
+      this.getInitials();
     }
 
     // else {
@@ -47,6 +49,10 @@ export class NavbarComponent implements OnInit {
       this.user?.fatherLastName;
     const fullName = nameString.split(' ');
     const initials = fullName.shift()!.charAt(0) + fullName.pop()!.charAt(0);
+
+
+    this.initials = initials;
+    
     return initials.toUpperCase();
   }
 

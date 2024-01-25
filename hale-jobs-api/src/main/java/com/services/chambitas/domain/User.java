@@ -59,14 +59,19 @@ public class User {
 	@Column(nullable = false)	
 	private String username;
 	
+	@Column(columnDefinition = "varchar(100)")
 	private String email;
 	
+	@Column(columnDefinition = "varchar(30)")
+
 	private String gender;
 	
 	private Date dateOfBirth;
 	
+	@Column(columnDefinition = "varchar(11)")
 	private String numberPhone;
 
+	@Column(columnDefinition = "varchar(50)")
 	private String country;
 	 
 	//Puedes iniciar labores de inmediato
@@ -76,7 +81,7 @@ public class User {
     
     private String urlCV;
     
-    @Lob
+	@Column(columnDefinition = "TEXT")
     private String aboutMe;
     
     private String jobTitle;
@@ -97,6 +102,7 @@ public class User {
 	
     private Long companyId;
     
+	@Column(columnDefinition = "varchar(5)")
     private String relocated;
     
     public String findJob;

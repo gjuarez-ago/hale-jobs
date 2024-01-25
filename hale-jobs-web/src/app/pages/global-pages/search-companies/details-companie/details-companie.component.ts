@@ -48,6 +48,7 @@ export class DetailsCompanieComponent implements OnInit {
   isVisibleAdd: boolean = false;
   public isLoadingReview = false;
   rating : any ;
+  role: string = '';
 
   constructor(
     private readonly meta: Meta,
@@ -76,6 +77,7 @@ export class DetailsCompanieComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
+      this.role = this.user.role;
     } 
 
     this.companyId = this.actRoute.snapshot.params.id;
@@ -274,6 +276,17 @@ export class DetailsCompanieComponent implements OnInit {
       { value: 'Solicita personal urgentemente', id: 'A' },
       { value: 'Urgencia moderada', id: 'B' },
       { value: 'Solicita personal', id: 'C' },
+    ];
+    let index: any = urgency.find((e: any) => e.id == item);
+    return index.value;
+  }
+
+  
+  public getUrgencyColor(item: any): string {
+    let urgency = [
+      { value: 'error', id: 'A' },
+      { value: 'warning', id: 'B' },
+      { value: 'processing', id: 'C' },
     ];
     let index: any = urgency.find((e: any) => e.id == item);
     return index.value;

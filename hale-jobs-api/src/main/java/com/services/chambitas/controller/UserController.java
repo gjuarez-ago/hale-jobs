@@ -34,12 +34,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.services.chambitas.domain.Permission;
+import com.services.chambitas.domain.PreferencesRH;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.UserPrincipal;
 import com.services.chambitas.domain.dto.LoginDTO;
 import com.services.chambitas.domain.dto.RecoveryPasswordDTO;
 import com.services.chambitas.domain.dto.RegisterDTO;
 import com.services.chambitas.domain.dto.ResetPasswordDTO;
+import com.services.chambitas.domain.dto.UpdateInformationRHDTO;
 import com.services.chambitas.domain.dto.UserCVBasicDTO;
 import com.services.chambitas.domain.dto.UserCVDTO;
 import com.services.chambitas.domain.dto.UserCVPrincipalDTO;
@@ -133,6 +135,13 @@ public class UserController {
 	        User user = userService.findUserByUsername(username);
 	        return new ResponseEntity<>(user, OK);
 	    }
+	    
+		
+	    @GetMapping("/find-by-id/{id}")
+	    public ResponseEntity<User> getUserByID(@PathVariable("id") Long username) throws UserNotFoundException, UsernameExistException {
+	        User user = userService.findUserById(username);
+	        return new ResponseEntity<>(user, OK);
+	    }
 
 	
 
@@ -170,6 +179,19 @@ public class UserController {
 	        userService.recoveryPassword(request.getEmail());
 	        return response(OK, EMAIL_SENT + request.getEmail());
 	    }
+	    
+	    @PostMapping("/update-pre-rh")
+	    public ResponseEntity<User> updatePreferencesRH(@RequestBody UpdateInformationRHDTO request) throws MessagingException, EmailNotFoundException {
+	    	User response = userService.updatePreferencesRH(request);
+			return new ResponseEntity<>(response, HttpStatus.OK);	
+	    }
+	    
+	    @GetMapping("/find-pre-rh/{key}")
+	    public ResponseEntity<PreferencesRH> getUser(@PathVariable("key") Long id) throws UserNotFoundException, GenericException {
+	    	PreferencesRH user = userService.getPreferencesRH(id);
+	        return new ResponseEntity<>(user, OK);
+	    }
+
 	    
 	    @PostMapping("/reset-password")
 	    public ResponseEntity<HttpResponse> resetPassword(@RequestBody ResetPasswordDTO request) throws MessagingException, EmailNotFoundException, GenericException {

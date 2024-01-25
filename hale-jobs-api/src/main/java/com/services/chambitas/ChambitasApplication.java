@@ -33,9 +33,9 @@ public class ChambitasApplication extends SpringBootServletInitializer{
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowCredentials(false);
-		corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-//		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://192.168.162.58","https://portal.macropay.mx"));
+		corsConfiguration.setAllowCredentials(true);
+//		corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://192.168.162.58","http://localhost:62524", "https://portal.macropay.mx"));
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Jwt-Token", "Authorization", "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));

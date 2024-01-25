@@ -13,6 +13,7 @@ import { NgZoroModulesComponents } from 'src/app/modules/ngzoro-modules-componen
 import { NgxModulesComponents } from 'src/app/modules/ngx-modules-component';
 import { RouterModule } from '@angular/router';
 import { DetailsCompanieComponent } from './search-companies/details-companie/details-companie.component';
+import { RhSellComponent } from './rh-sell/rh-sell.component';
 
 const globalComponets: any = [
   FaqComponent,
@@ -23,6 +24,7 @@ const globalComponets: any = [
   SupportCandidatesComponent,
   TermsConditionsComponent,
   ViewOfferComponent,
+  RhSellComponent,
   DetailsCompanieComponent,
 ]
 

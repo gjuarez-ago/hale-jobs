@@ -224,6 +224,17 @@ export class SearchOffersComponent implements OnInit {
    }
 
    
+  public getUrgencyColor(item: any): string {
+    let urgency = [
+      { value: '#E35B5B', id: 'A' },
+      { value: 'warning', id: 'B' },
+      { value: '#0A7AE9', id: 'C' },
+    ];
+    let index: any = urgency.find((e: any) => e.id == item);
+    return index.value;
+  }
+
+   
 public getSubcategories() {
   this.isLoadingGeneral = true;
   this.subscriptions.push(

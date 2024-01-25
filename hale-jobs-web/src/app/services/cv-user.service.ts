@@ -169,6 +169,10 @@ export class CVUserService {
     return this.http.delete<any>(`${this.url}/notification/delete/${id}`);
   }
 
+  public changeStatusNotification(username: any): Observable<any> {
+    return this.http.delete<any>(`${this.url}/notification/change-status/${username}`);
+  }
+
   public deleteAccount(userId: any): Observable<any> {
     return this.http.get<any>(`${this.url}/user/delete/${userId}`);
   }

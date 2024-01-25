@@ -6,13 +6,14 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.services.chambitas.domain.Permission;
+import com.services.chambitas.domain.PreferencesRH;
 import com.services.chambitas.domain.User;
 import com.services.chambitas.domain.dto.RegisterDTO;
+import com.services.chambitas.domain.dto.UpdateInformationRHDTO;
 import com.services.chambitas.domain.dto.UserCVBasicDTO;
 import com.services.chambitas.domain.dto.UserCVDTO;
 import com.services.chambitas.domain.dto.UserCVPrincipalDTO;
@@ -47,7 +48,9 @@ public interface IUserService {
 	    Page<User> getAllUsersPaginate(int pageNo, int pageSize, String username, String names, String surnames);
 
 	    User findUserByUsername(String username);
-
+	    
+	    User findUserById(Long username) throws UsernameExistException;
+	    
 	    User desactiveProfile(String username) throws UserNotFoundException;
 	    
 	    User changeVisibility(VisibilityDTO request) throws UserNotFoundException;
@@ -59,6 +62,10 @@ public interface IUserService {
 	    List<Permission> findPermissionsByUsername(String username);
 	    
 	    Page<User> searchByFiltersWEB(String city,String state,String salary, String job, String mod, int pageNo, int pageSize);
+	  
+	    User updatePreferencesRH(UpdateInformationRHDTO request);
+	    
+	    PreferencesRH getPreferencesRH(Long userId) throws GenericException;
 	   
 	
 }

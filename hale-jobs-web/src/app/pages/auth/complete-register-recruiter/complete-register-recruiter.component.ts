@@ -70,13 +70,15 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
   registerRecruiterSection3Form = new FormGroup({
     aboutMe: new FormControl(null, [Validators.required, Validators.minLength(50),Validators.maxLength(500)]),
   });
+  initials: string = '';
 
   constructor(
     private message: NzMessageService,
     private router: Router,
     private authenticationService: AuthService,
     private genericService : GenericService,
-    @Inject(LOCALE_ID) public locale: string
+    @Inject(LOCALE_ID) public locale: string,
+    private modal: NzModalService,
   ) {}
 
   ngOnInit(): void {
@@ -86,13 +88,45 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
       this.idUser = this.user.id;
       this.getStates();
       this.getLevelOfStudy();
-      this.getSubcategories();  
+      this.getSubcategories(); 
+      this.getInitials(); 
     } else {
       this.router.navigateByUrl("/auth/login");
     }
-    
   }
 
+  
+  public getInitials() {
+    let nameString =
+      this.user?.names +
+      ' ' +
+      this.user?.motherLastName +
+      ' ' +
+      this.user?.fatherLastName;
+    const fullName = nameString.split(' ');
+    const initials = fullName.shift()!.charAt(0) + fullName.pop()!.charAt(0);
+    this.initials = initials.toUpperCase();
+    return initials.toUpperCase();
+  }
+
+  info(): void {
+    this.modal.warning({
+      nzTitle: '¿Seguro que deseas cerrar sesión?',
+      // nzContent: 'Bla bla ...',
+      nzOkText: 'OK',
+      nzCancelText: 'Cancelar',
+      nzOnOk: () => {
+        this.onLogOut();
+      },
+    });
+  }
+
+  
+  public onLogOut(): void {
+    this.authenticationService.logOut();
+    this.router.navigate(['auth/login']);
+    this.createMessage('success', 'Has cerrado sesión exitosamente 😀');
+  }
 
   public submitFormSection1() {
     if (this.registerRecruiterForm.valid) {
@@ -106,6 +140,11 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
         }
       });
     }
+  }
+
+  
+  createMessage(type: string, message: string): void {
+    this.message.create(type, message);
   }
 
   public submitFormSection2() {

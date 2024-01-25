@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -97,17 +98,16 @@ export class CompleteRegisterUserComponent implements OnInit {
   });
 
   public listRangeAmount : any = [];
+  initials: string = '';
 
   constructor(
     private router: Router,
     private authenticationService: AuthService,
     private message: NzMessageService,
     private genericService : GenericService,
+    private modal: NzModalService,
   ) {
-
-    
-
-
+  
   }
 
 
@@ -120,7 +120,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       this.getSubcategories();  
       this.getModWorks();
       this.getRangeAmount();
-      
+      this.getInitials();
     } else {
       this.router.navigateByUrl("/auth/login");
     }
@@ -180,6 +180,44 @@ export class CompleteRegisterUserComponent implements OnInit {
   pre(): void {
     this.current -= 1;
   }
+
+  
+  public getInitials() {
+    let nameString =
+      this.user?.names +
+      ' ' +
+      this.user?.motherLastName +
+      ' ' +
+      this.user?.fatherLastName;
+    const fullName = nameString.split(' ');
+    const initials = fullName.shift()!.charAt(0) + fullName.pop()!.charAt(0);
+    this.initials = initials.toUpperCase();
+    return initials.toUpperCase();
+  }
+
+  info(): void {
+    this.modal.warning({
+      nzTitle: '¿Seguro que deseas cerrar sesión?',
+      // nzContent: 'Bla bla ...',
+      nzOkText: 'OK',
+      nzCancelText: 'Cancelar',
+      nzOnOk: () => {
+        this.onLogOut();
+      },
+    });
+  }
+
+  
+  public onLogOut(): void {
+    this.authenticationService.logOut();
+    this.router.navigate(['auth/login']);
+    this.createMessage('success', 'Has cerrado sesión exitosamente 😀');
+  }
+
+  createMessage(type: string, message: string): void {
+    this.message.create(type, message);
+  }
+
 
   verificationForms(): void {
     if (this.registerRecruiterCVSection3Form.valid) {

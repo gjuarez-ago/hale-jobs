@@ -4,8 +4,6 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { CvProfileComponent } from './cv-profile/cv-profile.component';
 import { SettingsProfileComponent } from './settings-profile/settings-profile.component';
 import { MyPostulationsComponent } from './my-postulations/my-postulations.component';
-import { PreviewProfileComponent } from './preview-profile/preview-profile.component';
-import { MyExamsComponent } from './my-exams/my-exams.component';
 import { MyHistoryComponent } from './my-history/my-history.component';
 import { MyNotificationsComponent } from './my-notifications/my-notifications.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,10 +19,8 @@ const clientPagesComponents: any = [
   CvProfileComponent,
   SettingsProfileComponent,
   MyPostulationsComponent,
-  PreviewProfileComponent,
-  MyExamsComponent,
   MyHistoryComponent,
-  MyNotificationsComponent
+  MyNotificationsComponent,
 ]
 
 @NgModule({

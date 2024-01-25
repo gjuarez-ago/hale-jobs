@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.services.chambitas.domain.Offer;
 import com.services.chambitas.domain.dto.OfferDTO;
 import com.services.chambitas.domain.dto.OfferEditDTO;
+import com.services.chambitas.domain.response.ChartsDashboardResponse;
 import com.services.chambitas.exception.domain.GenericException;
 
 @Service
@@ -38,5 +39,8 @@ public interface IOfferService {
 	Page<Offer> getOffersByCopy(String keyword, Long user, int pageNo, int pageSize);
 
 	List<Offer> getOffersBySelect(Long userId);
+	
+	List<ChartsDashboardResponse> getDashboard();
+	
 
 }

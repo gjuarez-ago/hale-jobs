@@ -64,11 +64,10 @@ public class Company implements Serializable {
 	
 	private String emailContact;
 	
-	@Lob
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String address;
 	
-	@Lob
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String description;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)

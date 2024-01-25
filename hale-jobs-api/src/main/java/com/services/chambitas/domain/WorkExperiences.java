@@ -32,8 +32,7 @@ public class WorkExperiences implements Serializable{
 	
 	private String company;
 	
-	@Lob
-	@Column
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String description;
 	
 	private String begins;

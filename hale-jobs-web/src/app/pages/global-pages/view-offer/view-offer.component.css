@@ -26,6 +26,11 @@ p {
   height: auto;
 }
 
+.description {
+  width: 100%;
+  margin: 2px 0px;
+  overflow-wrap: break-word !important;
+}
 
 .card-description{
   width: 70%;

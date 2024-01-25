@@ -13,6 +13,14 @@
     background-color: rgb(250, 249, 249);
 }
 
+
+.btn-red {
+    margin: 0px 10px 0px 10px;
+    background-color: red;
+    border-color: black;
+    cursor: pointer;
+  }
+
 .content-right {
     margin: 4% 0px 0px 20%;
     width: 80%;
@@ -280,8 +288,9 @@ nz-date-picker  {
   }
 
   nz-avatar {
-    margin-right: 30px;
+    margin-right: 0px;
     cursor: pointer;
+    background-color: rgb(25, 25, 80);
   }
 
   nz-header {

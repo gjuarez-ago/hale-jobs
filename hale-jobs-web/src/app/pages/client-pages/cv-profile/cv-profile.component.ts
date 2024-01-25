@@ -65,6 +65,17 @@ export class CvProfileComponent implements OnInit {
   public isLoadingSchoolEdit = false;
 
 
+  public listLanguajes : any = [];
+  public languajeEdit : any;
+  public isLoadingLanguaje = false;
+  public visibleAddLanguaje = false;
+
+
+  languajeForm = new FormGroup({
+    name: new FormControl(null, [Validators.required]),
+    level: new FormControl(null, [Validators.required]),
+  });
+
   
 
 
@@ -118,6 +129,7 @@ export class CvProfileComponent implements OnInit {
   });
   public listRangeAmount: any = [];
   styleSheet: string = '';
+  visibleEditLanguaje: boolean = false;
 
   constructor(
     private modalService: NzModalService,
@@ -145,6 +157,7 @@ export class CvProfileComponent implements OnInit {
       this.getCertificationsByUser();
       this.getCurrentUser(this.user);
       this.getRangeAmount();
+      this.getLanguajes();
       
     } else {
       this.router.navigateByUrl("/auth/login");
@@ -215,6 +228,19 @@ export class CvProfileComponent implements OnInit {
     )
   }
 
+  public getLanguajes() {
+    this.isLoadingLanguaje = true;
+    this.cvService.getLanguajesAll(this.userId).subscribe(
+      (response: any) => {
+        this.listLanguajes = response;
+        this.isLoadingLanguaje = false;       
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+        this.isLoadingLanguaje = false;
+      }
+    )
+  }
 
   getWorkExperienceById(id : any) {
     this.isLoadingWorkExperience = true;
@@ -828,6 +854,13 @@ public getRangeAmount() {
 
 
 
+  public downLoadCV() {
+
+    
+
+  }
+
+
 
 
   editEducationUser(): void {
@@ -923,6 +956,103 @@ public getRangeAmount() {
 
     }
    }
+
+
+   // Modal Languaje
+   showModalLanguaje(e : any, type : any): void {  
+    if(type == "ADD") {
+       this.visibleAddLanguaje = true;
+    }else {
+       this.visibleEditLanguaje = true;
+       this.getCertificationById(e.id);
+    }
+  }
+
+   closeModalLanguaje(type : any) {
+    if(type == "ADD") {
+      this.visibleAddLanguaje = false;
+    }else {
+      this.visibleEditLanguaje = false;
+    }
+   }
+
+
+   public getLanguajeById(id : any) {
+    this.isLoadingGeneral = true;
+    this.cvService.getCertificationById(id).subscribe(
+      (response: any) => {
+       this.languajeEdit = response;
+        this.isLoadingGeneral = false;       
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar el lenguaje');
+        this.isLoadingGeneral = false;
+      }
+    )
+   }
+
+
+   public saveLanguaje() {
+
+    if (!this.languajeForm.valid) {
+      Object.values(this.languajeForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      return;
+    }
+
+    let form = this.certificateUserForm.value;
+
+    let data = {
+      "level": form.level,
+      "name": form.name,
+      "userId": this.userId
+    }
+
+    this.isLoadingLanguaje = true;
+    this.ngxSpinner.show();
+
+    this.cvService.addLanguage(data).subscribe(
+      (response: any) => {  
+        this.getCertificationsByUser();
+        this.isLoadingLanguaje = false;     
+        this.visibleAddLanguaje = false;  
+        this.languajeForm.reset()
+        this.ngxSpinner.hide();
+
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+        this.isLoadingLanguaje = false;
+      }
+    )
+
+
+    
+    
+   }
+
+   public editLanguaje() {
+    
+    if (!this.languajeForm.valid) {
+      Object.values(this.languajeForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      return;
+    }
+
+    let data = this.languajeForm.value;
+    this.ngxSpinner.show();
+
+   }
+
+
 
   deleteCertificateUser(): void {
      
@@ -1169,6 +1299,69 @@ public getRangeAmount() {
     },
   ];
 
+ 
+   public languajesSelect = [
+    {
+      name:  "Español",
+      key: "ES"
+    },
+    {
+      name:  "Inglés",
+      key: "EN"
+    },
+    {
+      name:  "Chino Mandarín",
+      key: "CH"
+    },
+    {
+      name:  "Hindi",
+      key: "HI"
+    },
+    {
+      name:  "Arabe",
+      key: "ARA"
+    },
+    {
+      name:  "Bengalí",
+      key: "BENG"
+    },
+    {
+      name:  "Francés",
+      key: "FR"
+    },
+    {
+      name:  "Ruso",
+      key: "URS"
+    },
+    {
+      name:  "Portugués",
+      key: "PORT"
+    },
+    {
+      name:  "Urdu",
+      key: "URDU"
+    },
+    {
+      name:  "Italiano",
+      key: "ITAL"
+    }
+   ]
+
+
+   public levels = [
+    {
+      "name":  "Básico",
+      "key": "AB" 
+    },
+    {
+      "name":  "Intermedio",
+      "key": "MED" 
+    },
+    {
+      "name":  "Avanzado",
+      "key": "AV" 
+    },
+   ]
 
   public printPDF() {
     const printArea : HTMLElement | null = document.getElementById('pdf-2');

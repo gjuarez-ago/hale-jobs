@@ -25,16 +25,13 @@
           </p>
         </div>
 
-      
-
-
         <div class="alala">
           <div class="rate-title">
             <nz-rate  [nzDisabled]="true" [ngModel]="rating" ></nz-rate>
           </div>
 
           <div>
-            <button (click)="showModalAddModal()" nz-button nzType="dashed" nzDanger>Calificar</button>
+            <button [disabled]="role == 'ROLE_HR'" (click)="showModalAddModal()" nz-button nzType="dashed" nzDanger>Calificar</button>
           </div>
         </div>
 
@@ -74,7 +71,7 @@
 
                 
               <nz-tag [nzColor]="'volcano'">{{item.subcategory.valor}}</nz-tag>
-              <nz-tag [nzColor]="'magenta'">{{getUrgency(item.urgency)}} </nz-tag>
+              <nz-tag nzColor="{{getUrgencyColor(item.urgency)}}">{{getUrgency(item.urgency)}} </nz-tag>
 
             </div>
 

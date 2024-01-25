@@ -958,6 +958,26 @@ nz-form-label {
   overflow-wrap: break-word !important;
 }
 
+.btn-red {
+  background-color: rgb(184, 19, 19) !important;
+  border-color: white !important;
+  color: white !important;
+}
+
+.btn-yellow {
+  background-color: rgb(188, 155, 7) !important;
+  border-color: white !important;
+  color: white !important;
+}
+
+
+
+.btn-green {
+  background-color: green !important;
+  border-color: white !important;
+  color: white !important;
+}
+
 .body {
   display: none;
 }

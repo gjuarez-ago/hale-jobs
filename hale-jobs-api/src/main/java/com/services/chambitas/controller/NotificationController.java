@@ -35,6 +35,13 @@ public class NotificationController {
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/change-status/{key}")
+	public ResponseEntity<List<Notification>> changeStatus(@PathVariable("key") String username) throws GenericException {
+		List<Notification> response = service.changeStatusAD(username);
+	    return new ResponseEntity<>(response , HttpStatus.OK);
+	}
+
+	
 	// Editar notificación
 	@PutMapping("/edit/{key}")
 	public ResponseEntity<Notification> editNotification(@PathVariable("key") Long id,@RequestBody NotificationDTO request) throws GenericException {

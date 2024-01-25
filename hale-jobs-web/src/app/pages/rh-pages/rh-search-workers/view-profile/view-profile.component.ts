@@ -153,8 +153,10 @@ export class ViewProfileComponent implements OnInit {
 
   getCurrentUser(username : any) {
     this.isLoadingGeneral = true;
-    this.authenticationService.getCurrentUser(username).subscribe(
+    this.authenticationService.getCurrentUserById(username).subscribe(
       (response: any) => {
+        console.log(response);
+        
        this.userInformation = response;
        this.previewImage = response.profileImageUrl == null ? 'https://thumbs.dreamstime.com/z/no-user-profile-picture-24185395.jpg' : response.profileImageUrl;
        this.isLoadingGeneral = false;       

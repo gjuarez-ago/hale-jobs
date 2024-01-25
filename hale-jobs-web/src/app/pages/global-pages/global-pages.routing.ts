@@ -10,6 +10,7 @@ import { PrivacyPoliciesComponent } from './privacy-policies/privacy-policies.co
 import { DetailsCompanieComponent } from './search-companies/details-companie/details-companie.component';
 import { FaqComponent } from './faq/faq.component';
 import { ViewOfferComponent } from './view-offer/view-offer.component';
+import { RhSellComponent } from './rh-sell/rh-sell.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,8 @@ const routes: Routes = [
           { path: "view-job/:id", component: ViewOfferComponent },
           { path: "privacy-policies", component: PrivacyPoliciesComponent },
           // { path: 'view/:id', component: ViewOfferComponent },
+          { path: "rh-sells", component: RhSellComponent },
+
         ],
         data: { animation: 'HomePage' }
       },

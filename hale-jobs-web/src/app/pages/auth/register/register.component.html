@@ -69,14 +69,14 @@
       <div nz-row class="login-form-margin">
         <div nz-col [nzSpan]="12" class="">
           <label nz-checkbox formControlName="acceptTerms" class="acceptTerms">
-            Acepto los terminos y condiciones
-            <a href="https://www.occ.com.mx/curriculo" target="_blank"> (Ver)  </a>
-
+            Acepto los terminos y condiciones <a routerLink="/terms-and-conditions"> (Visualizar)</a>
           </label>
+          
 
         </div>
+        
         <div nz-col [nzSpan]="12">
-          <a class="login-form-forgot">Aviso de privacidad</a>
+          <a routerLink="/privacy-policies" class="login-form-forgot">Aviso de privacidad</a>
         </div>
       </div>
   

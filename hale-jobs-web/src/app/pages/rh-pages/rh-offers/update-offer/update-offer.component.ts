@@ -87,7 +87,7 @@ export class UpdateOfferComponent implements OnInit {
       rangeAmount: [null, [Validators.required]],
       levelStudy: [null, [Validators.required]],
       workPlace: [null, [Validators.required]],
-      description: [null, [Validators.required, Validators.maxLength(200), Validators.minLength(10)]],
+      description: [null, [Validators.required, Validators.maxLength(500), Validators.minLength(10)]],
       showCompany: ['A'],
       showSalary: ['A'],
     });

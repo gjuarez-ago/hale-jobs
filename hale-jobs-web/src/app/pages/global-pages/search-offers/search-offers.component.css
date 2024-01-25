@@ -189,7 +189,7 @@ a {
 
 .card:hover {
   cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(233, 10, 10, 0.35) 0px 5px 15px;
 }
 
 p {
@@ -228,7 +228,16 @@ p {
 }
 
 .description {
+  width: 100%;
   margin: 10px 0px;
+  
+  overflow-wrap: break-word !important;
+}
+
+.view {
+   display: flex;
+   justify-content: flex-end;
+   margin: 10px 0px;
 }
 
 .company-and-place  {

@@ -27,10 +27,6 @@ import { NgxModulesComponents } from './modules/ngx-modules-component';
 //* components in-wait
 
 import { AppComponent } from './app.component';
-import { RhHistoryComponent } from './pages/rh-pages/rh-history/rh-history.component';
-import { RhPaymentsComponent } from './pages/rh-pages/rh-payments/rh-payments.component';
-import { RhBuyMembershipComponent } from './pages/rh-pages/rh-buy-membership/rh-buy-membership.component';
-import { AdminFilesComponent } from './pages/admin-pages/admin-files/admin-files.component';
 import { NavbarFixedComponent } from './components/navbar-fixed/navbar-fixed.component';
 
 registerLocaleData(es);
@@ -38,10 +34,6 @@ registerLocaleData(es);
 @NgModule({
   declarations: [
     AppComponent,
-    RhHistoryComponent,
-    RhPaymentsComponent,
-    RhBuyMembershipComponent,
-    AdminFilesComponent,
     NavbarFixedComponent,
   ],
   imports: [

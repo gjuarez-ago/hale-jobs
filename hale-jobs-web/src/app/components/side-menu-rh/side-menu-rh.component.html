@@ -23,7 +23,7 @@
           <span class="dark"> Dashboard </span>
       </li>
 
-      <nz-avatar class="avatar" [nzSize]="42" nzText="GJ"></nz-avatar>
+      <nz-avatar class="avatar" [nzSize]="42" nzText="{{initials}}"></nz-avatar>
       <nz-avatar (click)="info()" class="btn-red" [nzSize]="42" [nzIcon]="'logout'"></nz-avatar>
 
 
@@ -41,7 +41,7 @@
     <div class="element" (click)="showModalAD()">
       <p> 
         <span nz-icon nzType="notification" nzTheme="outline"></span>
-        Notificaciones </p>
+        Notificaciones ({{listADNR}}) </p>
     </div>
 
     <div class="element" (click)="showModalSettings()">
@@ -265,25 +265,57 @@
 
 
 <nz-drawer [nzClosable]="true" [nzVisible]="isVisibleAD" nzPlacement="right"
-  [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720"       [nzPlacement]="'left'"
+  [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="750"       [nzPlacement]="'left'"
   nzTitle="Notificaciones y mensajes" [nzFooter]="footerTpl" (nzOnClose)="closeModalAD()">
   <ng-container *nzDrawerContent>
  
     <div class="list">
+
+
+      <div *ngIf="listNotications.length > 0" class="filters">
+
+        <div class="search-s">
+          
+          <form nz-form [nzLayout]="'inline'" [formGroup]="searchForm" (ngSubmit)="submitForm()">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-input-group nzPrefixIcon="one-to-one">
+                  <input formControlName="title" nz-input placeholder="Buscar notificaciones por titulo" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+           
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button nzShape="round" nzType="primary">Realizar busqueda</button>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+    
+        </div>
+    
+    
+    
+    
+    
+      </div>
+
+      
+      
       <nz-list nzItemLayout="horizontal" [nzLoading]="isLoading">
         <nz-list-item *ngFor="let item of listNotications">
           <nz-list-item-meta
-            nzDescription="{{item.title}}"
+            nzDescription="{{item.title}} - {{item.regDateCreated | date:'medium' }}"
           >
             <nz-list-item-meta-title>
-              <a (click)="navigateViewJob(item.offerId)">{{ item.content }}</a>
+              <a (click)="navigateViewOffer(item.offerId)">{{ item.content }}</a>
             </nz-list-item-meta-title>
           </nz-list-item-meta>
       
           <ul nz-list-item-actions>
               <nz-list-item-action>
                 <nz-space>
-                  <button (click)="navigateViewJob(item.offerId)" *nzSpaceItem nz-button  nzType="primary" nzShape="circle">
+                  <button (click)="navigateViewJob(item.userId)" *nzSpaceItem nz-button  nzType="primary" nzShape="circle">
                     <i nz-icon nzType="eye" nzTheme="outline"></i>
                   </button>
   

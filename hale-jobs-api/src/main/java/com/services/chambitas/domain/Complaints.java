@@ -38,10 +38,10 @@ public class Complaints implements Serializable {
 	
 	private String title;
 	
-	@Lob
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String comments;
 	
-	@Lob
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String response;
 	
 	private String status;

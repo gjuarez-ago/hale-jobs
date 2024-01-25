@@ -15,6 +15,18 @@
 
           <strong>{{userInformation && userInformation.surnames}}</strong>
           <p>{{userInformation && userInformation.username}}</p>
+          <p class="p-w">
+            <i nz-icon nzType="aim"></i>
+            <span>  {{userInformation && userInformation.city.valor}},  {{userInformation && userInformation.state.valor}} </span>
+          </p>
+          <p class="p-w">
+            <i nz-icon nzType="phone"></i>
+            <span> {{userInformation && userInformation.numberPhone}} </span>
+          </p>
+          <p class="p-w">
+            <i nz-icon nzType="build"></i>
+              <span> {{userInformation && userInformation.modalidadTrabajo.valor}} </span>
+          </p>
 
           <!-- <div class="btn">
                 <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i>Assign</a>
@@ -22,29 +34,16 @@
               </div> -->
 
           <div class="user-bio">
-            <div class="tags">
-              <nz-space>
-                <nz-tag class="ap" *nzSpaceItem nzColor="#55acee">
-                  <i nz-icon nzType="aim"></i>
-                  <span>  {{userInformation && userInformation.city.valor}},  {{userInformation && userInformation.state.valor}} </span>
-                </nz-tag>                
-              </nz-space>
-            </div>
+          
 
 
             <div class="tags">
               <nz-space>
-            <nz-tag class="ap"  nzColor="#B5B80F">
-              <i nz-icon nzType="phone"></i>
-              <span> {{userInformation && userInformation.numberPhone}} </span>
-            </nz-tag>
+             
           </nz-space>
         </div>
 
-            <nz-tag class="ap"  nzColor="#2B9818">
-              <i nz-icon nzType="phone"></i>
-              <span> {{userInformation && userInformation.modalidadTrabajo.valor}} </span>
-            </nz-tag>      
+              
           </div>
         </div>
       </div>
@@ -108,8 +107,23 @@
             <nz-page-header-extra>
               <nz-space>
                 <!-- <app-print-cv></app-print-cv> -->
-                <button (click)="printPDF()" *nzSpaceItem nz-button>
+                <button class="btn-blue" (click)="printPDF()" *nzSpaceItem nz-button>
+                  <span nz-icon nzType="file-done" nzTheme="outline"></span>
                   Descargar CV (PDF)
+                </button>
+
+                <button class="btn-green" *nzSpaceItem nz-button>
+                
+           
+
+                    <a href="https://api.whatsapp.com/send?phone={{userInformation.numberPhone}}&text=Hola%21%20{{userInformation.names}}"
+                    class="float" target="_blank">
+                    <span nz-icon nzType="whats-app" nzTheme="outline"></span>
+                    Mensaje
+                  </a>
+                
+
+
                 </button>
               </nz-space>
             </nz-page-header-extra>

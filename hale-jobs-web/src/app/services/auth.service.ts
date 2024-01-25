@@ -59,6 +59,10 @@ export class AuthService {
     return this.http.get<User>(`${this.host}/user/find/${username}`);
   }
 
+  public getCurrentUserById(username : any) : Observable<User> {
+    return this.http.get<User>(`${this.host}/user/find-by-id/${username}`);
+  }
+
   public logOut(): void {
     this.token = null;
     this.loggedInUsername = null;
