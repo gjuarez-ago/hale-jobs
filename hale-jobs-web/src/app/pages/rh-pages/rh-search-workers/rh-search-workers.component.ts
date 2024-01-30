@@ -117,7 +117,7 @@ export class RhSearchWorkersComponent implements OnInit {
       this.getModWorks();
       this.getUsersPaginate();
       this.getOffers();
-      this.title.setTitle("Busqueda de personal")
+      this.title.setTitle("Búsqueda de personal")
 
 
     } else {

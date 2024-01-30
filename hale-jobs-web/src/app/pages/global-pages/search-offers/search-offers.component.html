@@ -15,7 +15,7 @@
           <div class="two input">
               <nz-form-item class="input-content">
                   <nz-form-control>
-                    <nz-select class="search" formControlName="state" nzShowSearch nzAllowClear [ngModel]="this.key && this.key.state" nzPlaceHolder="¿En que estado estas buscando?">
+                    <nz-select class="search" formControlName="state" nzShowSearch nzAllowClear [ngModel]="this.key && this.key.state" nzPlaceHolder="¿En qué estado te gustaría buscar?">
                       <nz-option *ngFor="let item of listStates" [nzLabel]="item.valor" [nzValue]="item.clave"></nz-option>
                     </nz-select>
                   </nz-form-control>
@@ -25,7 +25,7 @@
           <div class="three input">
             <button type="submit"  nz-button nzType="primary" [nzSize]="'default'" nzBlock nzShape="round">
               <i nz-icon nzType="search"></i>
-              Realizar busqueda</button>
+              Realizar búsqueda</button>
 
           
           </div>
@@ -191,7 +191,7 @@
             >
             <ng-template #contentTpl>
               <span>
-                No hemos encontrado ofertas, 
+                No hemos encontrado ofertas.
                 <!-- <a routerLink="/search">¿Deseas comenzar a buscar?</a> -->
               </span>
             </ng-template>

@@ -65,7 +65,7 @@
             <div class="col">
               <nz-form-item class="personal-form-control">
                 <nz-form-control nzErrorTip="Por favor selecciona un estado!">
-                  <nz-form-label>¿En que estado de México vives?*</nz-form-label>
+                  <nz-form-label>¿En qué estado de México vives?*</nz-form-label>
                   <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona un estado" #idState id="state"
                     formControlName="state" (ngModelChange)="provinceChange($event)" [(ngModel)]="stateSelected">
                     <nz-option *ngFor="let state of listStates" [nzValue]="state.clave"
@@ -75,10 +75,10 @@
               </nz-form-item>
               <nz-form-item class="personal-form-control">
                 <nz-form-control nzErrorTip="Por favor selecciona un municipio!">
-                  <nz-form-label>¿En que ciudad de tu estado vives?*</nz-form-label>
+                  <nz-form-label>¿En qué ciudad de tu estado vives?*</nz-form-label>
               
 
-                  <nz-select nzSize="large" nzShowSearch [(ngModel)]="citySelected" nzAllowClear nzPlaceHolder="Seleccciona el municipio" id="city"
+                  <nz-select  nzShowSearch [(ngModel)]="citySelected" nzAllowClear nzPlaceHolder="Seleccciona el municipio" id="city"
                   formControlName="city" [nzDisabled]="registerRecruiterForm.get('state')?.value == null">
                   <nz-option *ngFor="let city of listCities" [nzValue]="city.id"
                     [nzLabel]="city.valor"></nz-option>
@@ -89,9 +89,9 @@
 
             <div class="col">
               <nz-form-item class="personal-form-control">
-                <nz-form-control nzErrorTip="Por favor selecciona un genero!">
-                  <nz-form-label>¿Cuál es tu genero?</nz-form-label>
-                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona tu genero" id="gender"
+                <nz-form-control nzErrorTip="Por favor selecciona un género!">
+                  <nz-form-label>¿Cuál es tu género?</nz-form-label>
+                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona tu género" id="gender"
                     formControlName="gender">
                     <nz-option nzLabel="El (Hombre)" nzValue="H"></nz-option>
                     <nz-option nzLabel="Ella (Mujer)" nzValue="M"></nz-option>
@@ -101,11 +101,11 @@
               </nz-form-item>
 
               <nz-form-item class="personal-form-control">
-                <nz-form-control nzErrorTip="Campo requerido! - Minímo 10 carácteres">
+                <nz-form-control nzErrorTip="Campo requerido - Minímo 10 carácteres">
                   <nz-form-label>¿Cuál es tu número de teléfono?</nz-form-label>
                   <nz-input-group nzPrefixIcon="phone">
-                    <input nzPrefixIcon="phone" nz-input id="numberPhone" formControlName="numberPhone" name="mix"
-                      (keypress)="validateFormat($event)" [minlength]="10" [maxlength]="10" required
+                    <input type="text" nzPrefixIcon="phone" nz-input id="numberPhone" formControlName="numberPhone" name="mix"
+                      (keypress)="validateFormat($event)"  [minlength]="10" [maxlength]="10" required
                       placeholder="Escribe tu número de teléfono" />
                   </nz-input-group>
                 </nz-form-control>
@@ -139,7 +139,7 @@
 
           <div class="dl">
             <div class="text">
-              <p>😅 Escucharte es nuestra prioridad, por lo que nos gustaría darte un set de preferencias
+              <p>😅 En esta sección agrega tu experiencia profesional.
               </p>
             </div>
           </div>
@@ -159,7 +159,7 @@
                   </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
-                  <nz-form-control nzErrorTip="Selecciona una opción!">
+                  <nz-form-control nzErrorTip="Selecciona una opción">
                     <nz-form-label>¿Me encuentro buscando empleo en este momento?</nz-form-label>
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="findJob"
                       formControlName="findJob">
@@ -216,7 +216,7 @@
 
                     <div class="col">
                       <nz-form-item class="personal-form-control">
-                        <nz-form-control nzErrorTip="Campo requerido!">
+                        <nz-form-control nzErrorTip="Campo requerido">
                           <nz-form-label>¿Cuál es tu titulo de trabajo actual?*</nz-form-label>
                            <nz-input-group>
                             <input class="text-field-center" type="text" nz-input id="jobTitle"
@@ -227,7 +227,7 @@
 
 
                       <nz-form-item class="personal-form-control">
-                        <nz-form-control nzErrorTip="Campo requerido!">
+                        <nz-form-control nzErrorTip="Campo requerido">
                           <nz-form-label>¿Cuál es tu expectativa salarial?</nz-form-label>
                             <nz-select class="input-text-select"  nzShowSearch nzAllowClear nzPlaceHolder="Rango salarial" formControlName="salary">
                               <nz-option *ngFor="let item of listRangeAmount" [nzLabel]="item.valor" [nzValue]="item.id"></nz-option>                
@@ -238,7 +238,7 @@
 
                     <div class="col">
                       <nz-form-item class="personal-form-control">
-                        <nz-form-control nzErrorTip="Campo requerido!">
+                        <nz-form-control nzErrorTip="Campo requerido">
                           <nz-form-label>¿Qué modalidad de trabajo te gustaría tener?</nz-form-label>
                           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="modalidadTrabajo"
                             formControlName="modalidadTrabajo">
@@ -248,7 +248,7 @@
                       </nz-form-item>
 
                       <nz-form-item class="personal-form-control">
-                        <nz-form-control nzErrorTip="Campo requerido!">
+                        <nz-form-control nzErrorTip="Campo requerido">
                           <nz-form-label>¿Tienes la posibilidad de reubicarte?</nz-form-label>
                           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="relocated"
                             formControlName="relocated">
@@ -264,8 +264,8 @@
 
                     <div class="col-center">
                       <nz-form-item class="personal-form-control">
-                        <nz-form-control nzErrorTip="Campo requerido!">
-                          <nz-form-label>¿En que te especializas actualmente?</nz-form-label>
+                        <nz-form-control nzErrorTip="Campo requerido">
+                          <nz-form-label>¿En qué te especializas actualmente?</nz-form-label>
                           <nz-select nzMode="tags" nzPlaceHolder="Selecciona una o varias opciones" id="skills"
                             formControlName="skills">
                             <nz-option *ngFor="let area of listSubcategories" [nzLabel]="area.valor"
@@ -284,7 +284,7 @@
                       <nz-alert id="alert-a" nzType="warning" nzMessage="Se requiere AGREGAR información" nzShowIcon
                         *ngIf="visibleAlertCV"></nz-alert>
 
-                      <p>😅 ¿Cuáles son los titulos y certificaciones que tienes actualmente?</p>
+                      <p>😅 En esta sección puedes agregar tu experiencia escolar </p>
 
                       <div>
                         <button class="button-white pd-1" nz-button (click)="showModal()">Agregar</button>
@@ -327,18 +327,20 @@
                 <ng-container *ngIf="currentStep == 2">
                   <div class="dl">
                     <div class="text">
-                      <p>😅 Escucharte es nuestra prioridad, por lo que nos gustaria darte un set
-                        de preferencias
+                      <p>😅 Nos gustaría saber un poco mas de ti
                       </p>
 
                       <form nz-form [nzLayout]="'horizontal'" [formGroup]="registerRecruiterCVSection3Form"
                         class="form-personal">
                         <div class="row-col">
                           <nz-form-item>
-                            <nz-form-control nzErrorTip="Campo requerido! - Minímo 50 carácteres">
+                            <nz-form-control nzErrorTip="Campo requerido - Minímo 50 carácteres">
                               <nz-textarea-count [nzMaxCharacterCount]="500">
-                                <textarea rows="10" nz-input
-                                  placeholder="¿Cómo te consideras en un ambiente laboral, cuales crees que son tus fortalezas, debilidades y logros mas importantes?"
+                                <textarea
+                                [minlength]="50"
+                                [maxlength]="500"
+                                rows="10" nz-input
+                                  placeholder="¿Cómo te consideras en un ambiente laboral, cuáles crees que son tus fortalezas, debilidades y logros más importantes?"
                                   id="aboutMe" formControlName="aboutMe"></textarea>
                               </nz-textarea-count>
                             </nz-form-control>
@@ -484,7 +486,7 @@
 
     <form nz-form [formGroup]="registerRecruiterCVSection2Form">
       <nz-form-item class="add-certificate">
-        <nz-form-control nzErrorTip="Campo requerido!- Minímo 8 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido- Minímo 8 carácteres">
           <nz-form-label>Título del certificado</nz-form-label>
           <nz-input-group>
             <input class="number-phone" type="text" nz-input placeholder="Escribe tu título de certificado"
@@ -494,7 +496,7 @@
       </nz-form-item>
 
       <nz-form-item class="add-certificate">
-        <nz-form-control nzErrorTip="Campo requerido!- Minímo 8 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido- Minímo 8 carácteres">
           <nz-form-label>Escuela o institución quien lo expidió</nz-form-label>
           <nz-input-group>
             <input class="number-phone" type="text" nz-input placeholder="Escribe el nombre de la institución"
@@ -504,8 +506,8 @@
       </nz-form-item>
 
       <nz-form-item class="add-certificate">
-        <nz-form-control nzErrorTip="Campo requerido!- Minímo 8 carácteres">
-          <nz-form-label>¿Qué tipo de certificado es?</nz-form-label>
+        <nz-form-control nzErrorTip="Selecciona una opción">
+          <nz-form-label>Nivel académico</nz-form-label>
           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="type"
           formControlName="type">
           <nz-option *ngFor="let e of levelStudies" [nzLabel]="e.valor"
@@ -515,7 +517,7 @@
 
       <div class="col">
         <nz-form-item class="add-certificate">
-          <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-control nzErrorTip="Campo requerido">
             <nz-form-label>Fecha de inicio</nz-form-label>
             <nz-date-picker nzMode="month" nzPlaceHolder="Mes de inicio" nzFormat="MMM-yyy" [nzSize]="'default'" id="begins"
               formControlName="begins"></nz-date-picker>
@@ -524,7 +526,7 @@
 
         <div class="size-box"></div>
         <nz-form-item *ngIf="!checkedSchool" class="add-certificate">
-          <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-control nzErrorTip="Campo requerido">
             <nz-form-label>Fecha de termino</nz-form-label>
             <nz-date-picker nzMode="month" nzPlaceHolder="Mes de termino" nzFormat="MMM-yyy" [nzSize]="'default'" id="ends"
               formControlName="ends"></nz-date-picker>
@@ -533,7 +535,7 @@
       </div>
 
       <div class="size-box-a">
-        <label nz-checkbox [(ngModel)]="checkedSchool" formControlName="checked">Lo estoy consiguiendo aún</label>
+        <label nz-checkbox [(ngModel)]="checkedSchool" formControlName="checked">Sigo estudiando</label>
       </div>
 
     </form>
@@ -558,16 +560,16 @@
     <form nz-form [formGroup]="registerRecruiterExperienceProfessionalForm" class="form-preferences">
 
       <nz-form-item>
-        <nz-form-control nzErrorTip="Es necesario saber este dato!- Minímo 8 carácteres">
-          <nz-form-label>Titulo de trabajo</nz-form-label>
+        <nz-form-control nzErrorTip="Campo requerido- Minímo 8 carácteres">
+          <nz-form-label>Título de trabajo</nz-form-label>
           <input class="number-phone" type="text" nz-input id="job" formControlName="job"
             placeholder="Ejemplo: Ing. De Software" maxlength="50"/>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-control nzErrorTip="Es necesario saber este dato!">
-          <label>¿Cuál es el nombre de la compañia donde trabajas o trabajaste?</label>
+        <nz-form-control nzErrorTip="Campo requerido">
+          <label>¿Cuál es el nombre de la empresa donde trabajas o trabajaste?</label>
           <nz-input-group>
             <input class="number-phone" type="text" nz-input placeholder="Escribe tu título de certificado"
               id="company" formControlName="company" maxlength="50" />
@@ -577,8 +579,8 @@
 
 
       <nz-form-item>
-        <nz-form-control nzErrorTip="Campo requerido!">
-          <nz-form-label>¿Qué habilidades desempeñastes en este trabajo?</nz-form-label>
+        <nz-form-control nzErrorTip="Campo requerido">
+          <nz-form-label>¿Qué habilidades llevaste acabo en este trabajo?</nz-form-label>
 
           <nz-select nzMode="tags" nzPlaceHolder="Selecciona una opción" id="skills"
           formControlName="skills">
@@ -589,7 +591,7 @@
 
       <div class="col">
         <nz-form-item class="add-certificate">
-          <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-control nzErrorTip="Campo requerido">
             <nz-form-label>Fecha de inicio</nz-form-label>
             <nz-date-picker nzMode="month" [nzSize]="'default'" id="begins"
               formControlName="begins" nzFormat="MMM-yyy"></nz-date-picker>
@@ -599,7 +601,7 @@
         <div  class="size-box"></div>
 
         <nz-form-item *ngIf="!checkedWork" class="add-certificate">
-          <nz-form-control nzErrorTip="Campo requerido!">
+          <nz-form-control nzErrorTip="Campo requerido">
             <nz-form-label>Fecha de termino</nz-form-label>
             <nz-date-picker nzMode="month" [nzSize]="'default'" nzFormat="MMM-yyy" id="ends" formControlName="ends"></nz-date-picker>
           </nz-form-control>
@@ -611,8 +613,8 @@
       </div>
 
       <nz-form-item>
-        <nz-form-control nzErrorTip="Campo requerido! - Minímo 50 carácteres">
-          <nz-form-label>Cuentanos acerca de tus actividades diarias</nz-form-label>
+        <nz-form-control nzErrorTip="Campo requerido - Minímo 50 carácteres">
+          <nz-form-label>Cuéntanos  acerca de tus actividades diarias</nz-form-label>
           <nz-textarea-count [nzMaxCharacterCount]="200">
             <textarea rows="7" nz-input placeholder="¿Cúales fuerón tus actividades diarias y principales logros en este trabajo?" id="description" formControlName="description"></textarea>
           </nz-textarea-count>

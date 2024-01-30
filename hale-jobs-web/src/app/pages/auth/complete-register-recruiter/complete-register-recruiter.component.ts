@@ -388,7 +388,7 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
     },
     {
       idAttitude: 3,
-      attitudeName: 'Digitando rapido'
+      attitudeName: 'Escritura formal'
     },
   ]
 

@@ -136,7 +136,7 @@
     (ngSubmit)="saveSettings()">
 
     <nz-form-item class="personal-form-control">
-      <nz-form-control nzErrorTip="Campo requerido! - Minímo 2 carácteres">
+      <nz-form-control nzErrorTip="Campo requerido - Minímo 2 carácteres">
         <nz-form-label>Nombre*</nz-form-label>
         <input nz-input id="jobTitle" formControlName="names" [ngModel]="userEdit && userEdit.names"  minlength="2" [maxlength]="50" required
           placeholder="Escribe tu posición de trabajo" />
@@ -144,7 +144,7 @@
     </nz-form-item>
 
     <nz-form-item class="personal-form-control">
-      <nz-form-control nzErrorTip="Campo requerido! - Minímo 2 carácteres">
+      <nz-form-control nzErrorTip="Campo requerido - Minímo 2 carácteres">
         <nz-form-label>Apellido paterno *</nz-form-label>
         <input nz-input id="jobTitle" formControlName="fatherLastName" [ngModel]="userEdit && userEdit.fatherLastName"  [minlength]="2" [maxlength]="50" required
           placeholder="Escribe tu posición de trabajo" />
@@ -152,7 +152,7 @@
     </nz-form-item>
 
     <nz-form-item class="personal-form-control">
-      <nz-form-control nzErrorTip="Campo requerido! - Minímo 2 carácteres">
+      <nz-form-control nzErrorTip="Campo requerido - Minímo 2 carácteres">
         <nz-form-label>Apellido materno *</nz-form-label>
         <input nz-input id="jobTitle" formControlName="motherLastName" [ngModel]="userEdit && userEdit.motherLastName" name="mix" [minlength]="2" [maxlength]="50" required
           placeholder="Escribe tu posición de trabajo" />
@@ -164,7 +164,7 @@
       <nz-form-item class="personal-form-control">
         <nz-form-control nzErrorTip="Por favor selecciona un género!">
           <nz-form-label>¿Cuál es tu género?</nz-form-label>
-          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona tu genero" id="gender"
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona tu género" id="gender"
             formControlName="gender" [ngModel]="userEdit && userEdit.gender">
             <nz-option nzLabel="El (Hombre)" nzValue="H"></nz-option>
             <nz-option nzLabel="Ella (Mujer)" nzValue="M"></nz-option>
@@ -174,7 +174,7 @@
       </nz-form-item>
 
       <nz-form-item class="personal-form-control">
-        <nz-form-control nzErrorTip="Campo requerido! - Minímo 2 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido - Minímo 2 carácteres">
           <nz-form-label>¿Cuál es tu número de teléfono?*</nz-form-label>
           <nz-input-group nzPrefixIcon="phone" >
           <input  type="number" nz-input id="numberPhone" [ngModel]="userEdit && userEdit.numberPhone" formControlName="numberPhone" name="mix" (keypress)="validateFormat($event)"
@@ -185,7 +185,7 @@
 
 
       <nz-form-item class="personal-form-control">
-        <nz-form-control nzErrorTip="Campo requerido! - Minímo 2 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido - Minímo 2 carácteres">
           <nz-form-label>¿Cuál es tu email de contacto?*</nz-form-label>
           <nz-input-group nzPrefixIcon="mail" >
           <input  type="email" nz-input id="email" [ngModel]="userEdit && userEdit.email" formControlName="emailContact" 
@@ -204,8 +204,8 @@
       </nz-form-item>
 
       <nz-form-item class="personal-form-control">
-        <nz-form-control nzErrorTip="Campo requerido! - Minímo 8 carácteres">
-          <nz-form-label>¿Qué posición ocupas actualmente?*</nz-form-label>
+        <nz-form-control nzErrorTip="Campo requerido - Minímo 8 carácteres">
+          <nz-form-label>¿Qué puesto ocupas actualmente?*</nz-form-label>
           <input nz-input id="jobTitle" formControlName="jobTitle" name="mix" [ngModel]="userEdit && userEdit.jobTitle" [minlength]="2" [maxlength]="50" required
             placeholder="Escribe tu posición de trabajo" />
         </nz-form-control>
@@ -215,7 +215,7 @@
 
     <nz-form-item>
       <nz-form-control nzErrorTip="Es necesario seleccionar al menos una opción!">
-        <nz-form-label>¿En que áreas te encuentras buscando especialistas?*</nz-form-label>
+        <nz-form-label>¿En qué áreas te encuentras buscando especialistas?*</nz-form-label>
         <nz-select nzMode="tags" nzPlaceHolder="Selecciona una ó varias opciones" id="areasSpecialidad"
         formControlName="areasSpecialidad" [ngModel]="prefRH && prefRH.areasSpecialidad">
         <nz-option *ngFor="let area of listSubcategories" [nzLabel]="area.valor"
@@ -224,7 +224,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-control nzErrorTip="Selecciona una opción!">
+      <nz-form-control nzErrorTip="Selecciona una opción">
         <nz-form-label>¿Qué actitudes blandas buscas en tus candidatos?*</nz-form-label>
         <nz-select nzMode="tags" nzPlaceHolder="Selecciona una opción" id="actitudesBlandas"
           formControlName="actitudesBlandas" [ngModel]="prefRH && prefRH.actitudesBlandas">
@@ -236,7 +236,7 @@
 
     <nz-form-item>
       <nz-form-control nzErrorTip="Es necesario seleccionar al menos una opción!">
-        <nz-form-label>¿Qué actitudes tecnicas buscas en tus candidatos?*</nz-form-label>
+        <nz-form-label>¿Qué actitudes técnicas buscas en tus candidatos?*</nz-form-label>
         <nz-select nzMode="tags" nzPlaceHolder="Selecciona una ó varias opciones" id="actitudesTecnicas"
           formControlName="actitudesTecnicas" [ngModel]="prefRH && prefRH.actitudesTecnicas">
           <nz-option *ngFor="let technicalAttitud of technicalAttitudes"
@@ -287,7 +287,7 @@
            
             <nz-form-item>
               <nz-form-control>
-                <button nz-button nzShape="round" nzType="primary">Realizar busqueda</button>
+                <button nz-button nzShape="round" nzType="primary">Realizar búsqueda</button>
               </nz-form-control>
             </nz-form-item>
           </form>

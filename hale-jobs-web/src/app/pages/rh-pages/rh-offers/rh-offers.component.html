@@ -12,10 +12,10 @@
       <div nz-col class="gutter-row" [nzSpan]="6">
         <div class="inner-box">
           <nz-form-item class="input-content">
-            <nz-form-label nzFor="email"> Titulo de la oferta </nz-form-label>
+            <nz-form-label nzFor="email"> Título de la oferta </nz-form-label>
             <nz-form-control nzErrorTip="Campo requerido">
                  <input type="text" class="input-text" nzSize="large" nz-input formControlName="title"
-                  placeholder="Titulo de la oferta" />
+                  placeholder="Título de la oferta" />
            
             </nz-form-control>
           </nz-form-item>
@@ -159,7 +159,7 @@
           <button  type="submit" nz-button
           class="button-white">
           <i nz-icon nzType="search"></i>
-          Realizar Busqueda
+          Realizar Búsqueda
         </button>
         </div>
       </div>
@@ -237,7 +237,7 @@
     >
     <ng-template #contentTpl>
       <span>
-        {{ listCompanies.length == 0 ? 'Aun no has creado una compañia' : 'Aún no has creado ninguna oferta' }}  
+        {{ listCompanies.length == 0 ? 'Aún no has creado una empresa' : 'Aún no has creado ninguna oferta' }}  
       </span>
     </ng-template>
     <ng-template #footerTpl>
@@ -303,7 +303,7 @@
   
           <nz-descriptions nzTitle="{{offer && offer.title}}" nzBordered>
             
-            <nz-descriptions-item nzTitle="Compañia" [nzSpan]="3">
+            <nz-descriptions-item nzTitle="Empresa" [nzSpan]="3">
               {{ offer && offer.company.name}}
             </nz-descriptions-item>
             
@@ -326,7 +326,7 @@
             <nz-descriptions-item nzTitle="Mostrar salario" [nzSpan]="2">
               {{ offer && showValues(offer.showSalary)}}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Mostrar compañia" [nzSpan]="2">
+            <nz-descriptions-item nzTitle="Mostrar empresa" [nzSpan]="2">
               {{ offer && showValues(offer.showCompany)}}
             </nz-descriptions-item>
             <nz-descriptions-item nzTitle="Descripción"  [nzSpan]="3">
@@ -440,7 +440,7 @@
               >
               <ng-template #contentTpl>
                 <span>
-                  Aun no se ha postulado nadie aún
+                  Aún no se ha postulado nadie aún
                   <!-- <a routerLink="/search">¿Deseas comenzar a buscar?</a> -->
                 </span>
               </ng-template>

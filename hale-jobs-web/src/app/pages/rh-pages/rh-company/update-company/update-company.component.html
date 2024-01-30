@@ -6,13 +6,13 @@
           class="site-page-header"
           (nzBack)="onBack()"
           nzBackIcon
-          nzTitle="Actualización de datos de una compañia (Datos esenciales)"
+          nzTitle="Actualización de datos de una empresa (Datos esenciales)"
         ></nz-page-header>
           
          
             <div class="dl">
                 <div class="text">
-                    <p>😅 En esta sección te permitiremos crear una empresa con la cual estaras relacionando tus ofertas, dicha empresa de igual forma nos servira para generar tus facturas por lo cual te sugerimos llenar los datos correctamente.</p>
+                    <p>😅 En esta sección te permitiremos crear una empresa con la cual estarás relacionando tus ofertas, dicha empresa de igual manera nos ayudará a generar tus facturas por lo cual te sugerimos llenar los datos correctamente.</p>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@
                   (change)="handleChange($event)"
                   accept="image/*" style=" visibility: hidden;"/>
 
-                  <p  nz-popover nzPopoverTitle="Permites que tu empresa sea visible en las busquedas y al visualizar las ofertas relacionadas a esta."  nzPopoverPlacement="topRight">
+                  <p  nz-popover nzPopoverTitle="Permites que tu empresa sea visible en las búsquedas y al visualizar las ofertas relacionadas a esta."  nzPopoverPlacement="topRight">
                     
                     Mostrar empresa </p>
                   <nz-switch [(ngModel)]="currentElement && currentElement.isvisible" nzCheckedChildren="Publica" nzUnCheckedChildren="Privada"></nz-switch>
@@ -170,12 +170,12 @@
                         <div class="" nz-row >
                             <div nz-col class="gutter-row" [nzSpan]="24">
                                 <div class="inner-box">
-                                    <nz-form-item nzErrorTip="Campo requerido!">
+                                    <nz-form-item nzErrorTip="Campo requerido">
                                         <nz-form-label  nzFor="email"> Dirección fiscal </nz-form-label>
                                         <nz-form-control>
                                             <nz-textarea-count [nzMaxCharacterCount]="70">
                                                 <textarea formControlName="address" [ngModel]="currentElement && currentElement.address" rows="5" nz-input
-                                                    placeholder="Escribe la dirección fiscal o bien de tu oficina de contacto"></textarea>
+                                                    placeholder="Escribe la dirección fiscal o bien la dirección de tu oficina principal"></textarea>
                                             </nz-textarea-count>
                                         </nz-form-control>
                                     </nz-form-item>
@@ -188,12 +188,12 @@
                         <div class="" nz-row >
                             <div nz-col class="gutter-row" [nzSpan]="24">
                                 <div class="inner-box">
-                                    <nz-form-item nzErrorTip="Campo requerido!">
+                                    <nz-form-item nzErrorTip="Campo requerido">
                                         <nz-form-label  nzFor="email"> Descripción de empresa </nz-form-label>
                                         <nz-form-control>
                                             <nz-textarea-count [nzMaxCharacterCount]="400">
                                                 <textarea formControlName="description" [ngModel]="currentElement && currentElement.description" rows="10" nz-input
-                                                    placeholder="Cuentanos un poco acerca de la empresa y que te gustaria contarle a las personas que visualicen tu muro."></textarea>
+                                                    placeholder="Cuéntanos  un poco acerca de la empresa y que te gustaria contarle a las personas que visualicen tu muro."></textarea>
                                             </nz-textarea-count>
                                         </nz-form-control>
                                     </nz-form-item>

@@ -311,7 +311,7 @@ export class SideMenuRh implements OnInit {
         (errorResponse: HttpErrorResponse) => {
           this.message.create(
             'error',
-            'Ha ocurrido un error al realizar la busqueda'
+            'Ha ocurrido un error al realizar la búsqueda'
           );
           this.isLoadingGeneral = false;
         }
@@ -338,7 +338,7 @@ export class SideMenuRh implements OnInit {
       (errorResponse: HttpErrorResponse) => {
         this.message.create(
           'error',
-          'Ha ocurrido un error al realizar la busqueda'
+          'Ha ocurrido un error al realizar la búsqueda'
         );
         this.isLoadingGeneral = false;
       }
@@ -572,7 +572,7 @@ export class SideMenuRh implements OnInit {
     },
     {
       idAttitude: 3,
-      attitudeName: 'Digitando rapido',
+      attitudeName: 'Escritura formal',
     },
   ];
 

@@ -388,7 +388,7 @@ export class RhOffersComponent implements OnInit {
     this.confirmDeleteModal = this.modal.confirm({
       nzTitle: '¿Seguro que deseas eliminar esta oferta?',
       nzContent:
-        'Al ser eliminada esta oferta, no podra ser visible para los candidatos dentro de la busqueda general, mas sin embargo si dentro de tus ofertas con estatus "cerrada".',
+        'Al ser eliminada esta oferta, no podrá ser visible para los candidatos dentro de la búsqueda general, más sin embargo si dentro de tus ofertas con estatus "cerrada"',
       nzOnOk: () => this.deleteOffer(offer),
     });
   }

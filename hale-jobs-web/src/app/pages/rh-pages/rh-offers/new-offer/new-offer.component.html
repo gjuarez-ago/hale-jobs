@@ -25,9 +25,7 @@
       <div class="dl">
         <div class="text">
           <p>
-            😅 Decidimos no volver complejo nuestro registro, mas sin embargo
-            necesitamos que nos ayudes con cierta información tuya para
-            brindarte una mejor experiencia
+            😅 En esta sección podrás crear tus ofertas, nos enfocamos en tomar los datos más importantes y relevantes, así como ciertas configuraciones qué limitarán qué información puede visualizar el usuario final.
           </p>
         </div>
       </div>
@@ -45,7 +43,7 @@
               <div class="inner-box">
                 <nz-form-item class="input-content">
                   <nz-form-label nzFor="email">
-                    Titulo de la oferta
+                    Título de la oferta
                   </nz-form-label>
                   <nz-form-control nzErrorTip="Campo requerido">
                     <input
@@ -334,7 +332,7 @@
                   <nz-form-label nzFor="email">
                     Descripción de la oferta
                   </nz-form-label>
-                  <nz-form-control nzErrorTip="Campo requerido!">
+                  <nz-form-control nzErrorTip="Campo requerido">
                     <nz-textarea-count [nzMaxCharacterCount]="500">
                       <textarea
                       [minlength]="5" [maxlength]="500"
@@ -343,7 +341,7 @@
                         rows="10"
                         nz-input
                         formControlName="description"
-                        placeholder="Descripción acerca de la oferta..............................."
+                        placeholder="Describe un poco mas acerca de la oferta (Palabras claves, contexto o la razón de esta.)"
                       ></textarea>
                     </nz-textarea-count>
                   </nz-form-control>
@@ -382,14 +380,12 @@
       <div class="dl">
         <div class="text">
           <p>
-            😅 Decidimos no volver complejo nuestro registro, mas sin embargo
-            necesitamos que nos ayudes con cierta información tuya para
-            brindarte una mejor experiencia
+            😅 En esta sección podrás agregar los principales beneficios, actividades y habilidades necesarios qué mostraremos a nuestros prospectos.
           </p>
         </div>
       </div>
 
-      <h3>Principales actividades</h3>
+      <h3>Actividades</h3>
 
       <form
         class="form-a"
@@ -404,7 +400,7 @@
                 nzSize="large"
                 class="passenger-input"
                 nz-input
-                placeholder="Describe la actividadea realizar"
+                placeholder="Describe la actividad a realizar"
               />
             </nz-form-control>
           </nz-form-item>
@@ -442,7 +438,7 @@
         </ul>
       </div>
 
-      <h3>Principales habilidades</h3>
+      <h3>Habilidades necesarias</h3>
 
       <form
         class="form-a"
@@ -458,7 +454,7 @@
                 nzSize="large"
                 class="passenger-input"
                 nz-input
-                placeholder="Describe la actividadea realizar"
+                placeholder="Describe la habilidad necesaria para cubrir el puesto"
               />
             </nz-form-control>
           </nz-form-item>
@@ -496,7 +492,7 @@
         </ul>
       </div>
 
-      <h3>Principales Beneficios</h3>
+      <h3>Beneficios que ofreces</h3>
 
       <form
         class="form-a"
@@ -511,7 +507,7 @@
                 nzSize="large"
                 class="passenger-input"
                 nz-input
-                placeholder="Describe la actividadea realizar"
+                placeholder="Describe el beneficio que ofreces"
               />
             </nz-form-control>
           </nz-form-item>
@@ -584,11 +580,11 @@
       <h1>Creación de oferta (Revisión)</h1>
 
       <nz-descriptions nzTitle="Resumen de la oferta" nzBordered>
-        <nz-descriptions-item nzTitle="Titulo de la oferta" [nzSpan]="3">
+        <nz-descriptions-item nzTitle="Título de la oferta" [nzSpan]="3">
           {{ ofertaForm.title }}
         </nz-descriptions-item>
         
-        <nz-descriptions-item nzTitle="Compañia" [nzSpan]="3">
+        <nz-descriptions-item nzTitle="Empresa" [nzSpan]="3">
           {{getCompany(ofertaForm.company)}}
         </nz-descriptions-item>
 
@@ -610,7 +606,7 @@
         <nz-descriptions-item nzTitle="Mostrar salario">
           {{ showValues(ofertaForm.showSalary)}}
           </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Mostrar compañia">
+        <nz-descriptions-item nzTitle="Mostrar empresa">
           {{showValues(ofertaForm.showCompany)}}
           </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Descripción" [nzSpan]="3">
@@ -677,7 +673,7 @@
          
           <nz-form-item>
             <nz-form-control>
-              <button nz-button type="submit" nzType="primary" nzShape="round" >Realizar busqueda</button>
+              <button nz-button type="submit" nzType="primary" nzShape="round" >Realizar búsqueda</button>
             </nz-form-control>
           </nz-form-item>
         </form>
@@ -704,7 +700,7 @@
             <tr>
               <th>ID</th>
               <th>Puesto</th>
-              <th>Compañia</th>
+              <th>Empresa</th>
               <th>Acción</th>
             </tr>
           </thead>

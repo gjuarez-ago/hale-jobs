@@ -160,7 +160,7 @@ export class MyNotificationsComponent implements OnInit {
         (errorResponse: HttpErrorResponse) => {
           this.message.create(
             'error',
-            'Ha ocurrido un error al realizar la busqueda'
+            'Ha ocurrido un error al realizar la búsqueda'
           );
           this.isLoadingGeneral = false;
         }
@@ -184,7 +184,7 @@ export class MyNotificationsComponent implements OnInit {
         (errorResponse: HttpErrorResponse) => {
           this.message.create(
             'error',
-            'Ha ocurrido un error al realizar la busqueda'
+            'Ha ocurrido un error al realizar la búsqueda'
           );
           this.isLoadingGeneral = false;
         }

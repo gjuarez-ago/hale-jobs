@@ -278,8 +278,8 @@ export class NewCompanyComponent implements OnInit {
       regimenFiscal: new FormControl(null, [Validators.required]),
       rfc: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(13)]),
       size: new FormControl(null, Validators.required),
-      urlLinkedin: new FormControl(null, [Validators.required, Validators.minLength(20), Validators.maxLength(120)]),
-      urlSite: new FormControl(null, [Validators.required, Validators.minLength(20), Validators.maxLength(120)]),
+      urlLinkedin: new FormControl(null, [Validators.required, Validators.minLength(20), Validators.maxLength(150)]),
+      urlSite: new FormControl(null, [Validators.required, Validators.minLength(20), Validators.maxLength(150)]),
       showCompany: new FormControl(true),
       numberPhone: new FormControl(null, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(10), Validators.maxLength(10)]),
       emailContact : new FormControl(null, [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50)]),
@@ -350,6 +350,7 @@ export class NewCompanyComponent implements OnInit {
         this.createForm.reset();
         this.imgLoad = undefined;
         this.previewImage = "https://placehold.jp/150x150.png";
+        this.router.navigateByUrl('/dashboard/my-company');
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create("error",  errorResponse.error.message);

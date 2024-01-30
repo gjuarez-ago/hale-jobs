@@ -62,7 +62,7 @@ export class HistoryService {
       this.wishesList.next(this.itemList);
     }
 
-    // Lógica para las busquedas historicas
+    // Lógica para las búsquedas historicas
 
     getHistory() { 
       return this.wishesListHistoryRH.asObservable();

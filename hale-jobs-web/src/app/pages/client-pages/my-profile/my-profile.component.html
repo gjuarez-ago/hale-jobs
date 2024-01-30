@@ -273,7 +273,7 @@ nzTitle="Mi información principal"
     <form       [nzLayout]="'vertical'" nz-form [formGroup]="userForm" class="login-form" (ngSubmit)="onSubmitForm()">
     
       <nz-form-item>
-        <nz-form-control nzErrorTip="Es necesario saber este dato!- Minímo 8 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido- Minímo 8 carácteres">
           <nz-form-label>Mi nombre (s)</nz-form-label>
           <input class="number-phone" type="text" nz-input id="name" formControlName="name" [(ngModel)]="userInformationOriginal && userInformationOriginal.names"
             placeholder="Ejemplo: Ing. De Software" maxlength="50"/>
@@ -281,7 +281,7 @@ nzTitle="Mi información principal"
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-control nzErrorTip="Es necesario saber este dato!- Minímo 8 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido- Minímo 8 carácteres">
           <nz-form-label>Apellido paterno</nz-form-label>
           <input class="number-phone" type="text" nz-input id="job" formControlName="apellidoPaterno" [(ngModel)]="userInformationOriginal && userInformationOriginal.fatherLastName"
             placeholder="Ejemplo: Ing. De Software" maxlength="50"/>
@@ -289,7 +289,7 @@ nzTitle="Mi información principal"
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-control nzErrorTip="Es necesario saber este dato!- Minímo 8 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido- Minímo 8 carácteres">
           <nz-form-label>Apellido materno</nz-form-label>
           <input class="number-phone" type="text" nz-input id="job" formControlName="apellidoMaterno"  [(ngModel)]="userInformationOriginal && userInformationOriginal.motherLastName"
             placeholder="Ejemplo: Ing. De Software" maxlength="50"/>
@@ -297,7 +297,7 @@ nzTitle="Mi información principal"
       </nz-form-item>
 
       <nz-form-item class="personal-form-control">
-        <nz-form-control nzErrorTip="Campo requerido! - Minímo 10 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido - Minímo 10 carácteres">
           <nz-form-label>¿Cuál es tu número de teléfono?</nz-form-label>
           <nz-input-group nzPrefixIcon="phone">
             <input nzPrefixIcon="phone" nz-input id="numberPhone" formControlName="numberPhone" name="mix" [(ngModel)]="userInformationOriginal && userInformationOriginal.numberPhone"
@@ -309,7 +309,7 @@ nzTitle="Mi información principal"
 
 
       <nz-form-item>
-        <nz-form-control nzErrorTip="Es necesario saber este dato!- Minímo 8 carácteres">
+        <nz-form-control nzErrorTip="Campo requerido- Minímo 8 carácteres">
           <nz-form-label>Correo de contacto</nz-form-label>
           <input class="number-phone" type="text" nz-input id="email" formControlName="email" [(ngModel)]="userInformationOriginal && userInformationOriginal.email"
             placeholder="Ejemplo: Ing. De Software" maxlength="50"/>
@@ -317,9 +317,9 @@ nzTitle="Mi información principal"
       </nz-form-item>
 
       <nz-form-item class="personal-form-control">
-        <nz-form-control nzErrorTip="Por favor selecciona un genero!">
-          <nz-form-label>¿Cuál es tu genero?</nz-form-label>
-          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona tu genero" id="gender" [(ngModel)]="userInformationOriginal && userInformationOriginal.gender"
+        <nz-form-control nzErrorTip="Por favor selecciona un género!">
+          <nz-form-label>¿Cuál es tu género?</nz-form-label>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona tu género" id="gender" [(ngModel)]="userInformationOriginal && userInformationOriginal.gender"
             formControlName="gender">
             <nz-option nzLabel="El (Hombre)" nzValue="H"></nz-option>
             <nz-option nzLabel="Ella (Mujer)" nzValue="M"></nz-option>
@@ -337,7 +337,7 @@ nzTitle="Mi información principal"
 
       <nz-form-item class="personal-form-control">
       <nz-form-control nzErrorTip="Por favor selecciona un estado!">
-        <nz-form-label>¿En que estado de México vives?*</nz-form-label>
+        <nz-form-label>¿En qué estado de México vives?*</nz-form-label>
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona un estado" #idState id="state"
           formControlName="state" (ngModelChange)="provinceChange($event)" 
           [(ngModel)]="userInformationOriginal && userInformationOriginal.state.clave"
@@ -350,7 +350,7 @@ nzTitle="Mi información principal"
 
     <nz-form-item class="personal-form-control">
       <nz-form-control nzErrorTip="Por favor selecciona un municipio!">
-        <nz-form-label>¿En que ciudad de tu estado vives?*</nz-form-label>
+        <nz-form-label>¿En qué ciudad de tu estado vives?*</nz-form-label>
     
 
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Seleccciona el municipio" id="city"
@@ -363,7 +363,7 @@ nzTitle="Mi información principal"
     </nz-form-item>
 
     <nz-form-item class="personal-form-control">
-      <nz-form-control nzErrorTip="Campo requerido!">
+      <nz-form-control nzErrorTip="Campo requerido">
         <nz-form-label>¿Tienes la posibilidad de reubicarte?</nz-form-label>
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción" id="relocated"
           formControlName="relocated"  [(ngModel)]="userInformationOriginal && userInformationOriginal.relocated">
@@ -375,7 +375,7 @@ nzTitle="Mi información principal"
     </nz-form-item>
 
     <nz-form-item class="personal-form-control">
-      <nz-form-control nzErrorTip="Campo requerido!">
+      <nz-form-control nzErrorTip="Campo requerido">
         <nz-form-label>¿Qué modalidad de trabajo te gustaría tener?</nz-form-label>
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una opción"   formControlName="modalidadTrabajo" id="modalidadTrabajo" [(ngModel)]="userInformationOriginal && userInformationOriginal.modalidadTrabajo.id"
 >
