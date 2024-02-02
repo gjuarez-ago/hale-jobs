@@ -1,6 +1,6 @@
 -- Script general
 
-USE HALE_DB;
+USE hale_db;
 
 INSERT INTO cityinegi(clave,valor) VALUES ('AGS','Aguascalientes');
 INSERT INTO cityinegi(clave,valor) VALUES ('AGS','Asientos');

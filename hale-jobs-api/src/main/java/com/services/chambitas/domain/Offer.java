@@ -118,7 +118,7 @@ public class Offer implements Serializable {
 	private LevelStudy levelStudy;
 	
 	// Ciudad de empleo
-	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@ManyToOne(optional = true, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private CityINEGI city;
 	
 	// Categoria
