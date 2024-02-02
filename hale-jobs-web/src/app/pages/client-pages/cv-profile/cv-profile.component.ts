@@ -964,7 +964,7 @@ public getRangeAmount() {
        this.visibleAddLanguaje = true;
     }else {
        this.visibleEditLanguaje = true;
-       this.getCertificationById(e.id);
+       this.getLanguajeById(e.id);
     }
   }
 
@@ -972,6 +972,7 @@ public getRangeAmount() {
     if(type == "ADD") {
       this.visibleAddLanguaje = false;
     }else {
+      this.languajeEdit = undefined;
       this.visibleEditLanguaje = false;
     }
    }
@@ -979,14 +980,14 @@ public getRangeAmount() {
 
    public getLanguajeById(id : any) {
     this.isLoadingGeneral = true;
-    this.cvService.getCertificationById(id).subscribe(
+    this.cvService.getLanguajeById(id).subscribe(
       (response: any) => {
        this.languajeEdit = response;
-        this.isLoadingGeneral = false;       
+        this.isLoadingLanguaje = false;       
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create("error", 'Ha ocurrido un error al recuperar el lenguaje');
-        this.isLoadingGeneral = false;
+        this.isLoadingLanguaje = false;
       }
     )
    }
@@ -1004,7 +1005,7 @@ public getRangeAmount() {
       return;
     }
 
-    let form = this.certificateUserForm.value;
+    let form = this.languajeForm.value;
 
     let data = {
       "level": form.level,
@@ -1017,7 +1018,7 @@ public getRangeAmount() {
 
     this.cvService.addLanguage(data).subscribe(
       (response: any) => {  
-        this.getCertificationsByUser();
+        this.getLanguajes();
         this.isLoadingLanguaje = false;     
         this.visibleAddLanguaje = false;  
         this.languajeForm.reset()
@@ -1025,7 +1026,7 @@ public getRangeAmount() {
 
       },
       (errorResponse: HttpErrorResponse) => {
-        this.message.create("error", 'Ha ocurrido un error al recuperar las experiencias de trabajo');
+        this.message.create("error", 'Ha ocurrido un error al guardar el idioma');
         this.isLoadingLanguaje = false;
       }
     )
@@ -1049,6 +1050,23 @@ public getRangeAmount() {
 
     let data = this.languajeForm.value;
     this.ngxSpinner.show();
+
+    
+    this.cvService.updateLanguaje(this.languajeEdit.id,data).subscribe(
+      (response: any) => {  
+        this.getLanguajes();
+        this.isLoadingLanguaje = false;     
+        this.visibleEditLanguaje = false;  
+        this.languajeForm.reset()
+        this.ngxSpinner.hide();
+
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.message.create("error", 'Ha ocurrido un error al editar la sección de idiomas');
+        this.isLoadingLanguaje = false;
+      }
+    )
+
 
    }
 

@@ -290,25 +290,15 @@
           class="education-content"
           *ngFor="let education of listLanguajes; index as i"
         >
-          <div class="card-edu" (click)="showModalEducation(education, 'EDIT')">
+          <div class="card-edu" (click)="showModalLanguaje(education, 'EDIT')">
             <div class="info">
               <div class="title-edu">
                 <p>
-                  <strong> {{ education.name }} </strong>
+                  <strong> {{ education.name }} - {{education.level}} </strong>
                 </p>
               </div>
-              <div class="title-date">
-                <span>
-                  {{ education.begins | date : "MMM, y" }} -
-                  {{
-                    education.worked
-                      ? "Cursando"
-                      : (education.ends | date : "MMM,y")
-                  }}
-                </span>
-              </div>
               <div class="status">
-                {{ education.schoolName }} - {{ education.type }}
+                {{ education.level }} 
               </div>
             </div>
 
@@ -1339,7 +1329,7 @@
           <nz-option
             *ngFor="let skill of languajesSelect"
             [nzLabel]="skill.name"
-            [nzValue]="skill.key"
+            [nzValue]="skill.name"
           ></nz-option
         ></nz-select>
 
@@ -1353,12 +1343,12 @@
           nzShowSearch nzAllowClear 
           nzPlaceHolder="Selecciona una opción"
           id="skills"
-          formControlName="name"
+          formControlName="level"
         >
           <nz-option
             *ngFor="let skill of levels"
             [nzLabel]="skill.name"
-            [nzValue]="skill.key"
+            [nzValue]="skill.name"
           ></nz-option
         ></nz-select>
         </nz-form-control>
@@ -1397,12 +1387,12 @@
 
 
 <nz-drawer
-  [nzVisible]="visibleAddLanguaje"
+  [nzVisible]="visibleEditLanguaje"
   nzPlacement="right"
   [nzBodyStyle]="{ overflow: 'auto' }"
   [nzWidth]="520"
   nzTitle="Editar Habilidad lingüística"
-  [nzFooter]="footerLanguaje"
+  [nzFooter]="footerLanguaje1"
   (nzOnClose)="closeModalLanguaje('EDIT')"
 >
   <ng-container *nzDrawerContent>
@@ -1411,6 +1401,7 @@
         <nz-form-control nzErrorTip="Campo requerido">
           <nz-form-label>Selecciona un idioma</nz-form-label>
           <nz-select
+          [ngModel]="languajeEdit && languajeEdit.name"
           nzShowSearch nzAllowClear 
           nzPlaceHolder="Selecciona una opción"
           id="skills"
@@ -1419,7 +1410,7 @@
           <nz-option
             *ngFor="let skill of languajesSelect"
             [nzLabel]="skill.name"
-            [nzValue]="skill.key"
+            [nzValue]="skill.name"
           ></nz-option
         ></nz-select>
 
@@ -1430,15 +1421,16 @@
         <nz-form-control nzErrorTip="Campo requerido">
           <nz-form-label>Nivel de dominio</nz-form-label>
           <nz-select
+          [ngModel]="languajeEdit && languajeEdit.level"
           nzShowSearch nzAllowClear 
           nzPlaceHolder="Selecciona una opción"
           id="skills"
-          formControlName="name"
+          formControlName="level"
         >
           <nz-option
             *ngFor="let skill of levels"
             [nzLabel]="skill.name"
-            [nzValue]="skill.key"
+            [nzValue]="skill.name"
           ></nz-option
         ></nz-select>
         </nz-form-control>
@@ -1448,7 +1440,7 @@
     </form>
   </ng-container>
 
-  <ng-template #footerLanguaje>
+  <ng-template #footerLanguaje1>
   
     <div class="flex-xap">
       <nz-space class="pd-1">
@@ -1470,7 +1462,26 @@
         >
           Guardar
         </button>
+
+
+    
+
+
       </nz-space>
+
+      <div           
+      nz-col class="gutter-row" [nzSpan]="4">
+        <button
+          nz-button
+          nzType="primary"
+          nzDanger
+          nzShape="round"
+          (click)="deleteExperienceUser()"
+        >
+          <span nz-icon nzType="delete"></span>
+        </button>
+      </div>
+
     </div>
   </ng-template>
 </nz-drawer>
