@@ -178,16 +178,6 @@ export class CompleteRegisterRecruiterComponent implements OnInit {
 
   public submitFormSection3() {
     if (this.registerRecruiterSection3Form.valid) {
-      this.registerRecruiterForm
-        .get('dateOfBirth')
-        ?.setValue(
-          formatDate(
-            this.registerRecruiterForm.get('dateOfBirth')?.value,
-            'yyyy-dd-MM',
-            this.locale
-          )
-        );
-
       const formData = {
         ...this.registerRecruiterForm.value,
         ...this.registerRecruiterSection2Form.value,
