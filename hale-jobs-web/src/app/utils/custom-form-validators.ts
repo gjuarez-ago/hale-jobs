@@ -16,10 +16,10 @@ export function minimumAgeValidator(age: number): ValidatorFn {
     let limitDate: Date = new Date(controlValue);
     limitDate.setFullYear(limitDate.getFullYear() + age);
 
-    console.log(todayDate);
-    console.log(controlValue);
+    console.log({ todayDate });
+    console.log({ controlValue });
 
-    console.log(limitDate);
+    console.log({ limitDate });
 
     return todayDate >= limitDate ? null : { minimumAge: true };
   };

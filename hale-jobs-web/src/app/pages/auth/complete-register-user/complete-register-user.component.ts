@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { differenceInCalendarDays } from 'date-fns';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
@@ -59,6 +60,8 @@ export class CompleteRegisterUserComponent implements OnInit {
   public stateSelected: any;
 
   index = 'First-content';
+
+  todayDate: Date = new Date();
 
   //DECLARACIÓN DE FORMULARIOS REACTIVOS
   registerRecruiterForm = new FormGroup({
@@ -774,4 +777,7 @@ export class CompleteRegisterUserComponent implements OnInit {
       name: 'Servicios SOAP',
     },
   ];
+
+  public disabledDate = (current: Date): boolean =>
+    differenceInCalendarDays(current, this.todayDate) > 0;
 }

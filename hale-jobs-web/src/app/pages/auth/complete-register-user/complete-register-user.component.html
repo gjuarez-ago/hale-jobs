@@ -860,6 +860,7 @@
               nzPlaceHolder="Mes de inicio"
               nzFormat="MMM-yyy"
               [nzSize]="'default'"
+              [nzDisabledDate]="disabledDate"
               id="begins"
               formControlName="begins"
             ></nz-date-picker>
@@ -875,6 +876,7 @@
               nzPlaceHolder="Mes de termino"
               nzFormat="MMM-yyy"
               [nzSize]="'default'"
+              [nzDisabledDate]="disabledDate"
               id="ends"
               formControlName="ends"
             ></nz-date-picker>
@@ -997,6 +999,7 @@
               id="begins"
               formControlName="begins"
               nzFormat="MMM-yyy"
+              [nzDisabledDate]="disabledDate"
             ></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
@@ -1010,6 +1013,7 @@
               nzMode="month"
               [nzSize]="'default'"
               nzFormat="MMM-yyy"
+              [nzDisabledDate]="disabledDate"
               id="ends"
               formControlName="ends"
             ></nz-date-picker>
