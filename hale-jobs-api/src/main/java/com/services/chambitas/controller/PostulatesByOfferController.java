@@ -74,7 +74,7 @@ public class PostulatesByOfferController {
 		Page<PostulatesOffer> response = service.getPostulatesByUserIdW(keyword, userId, pageNo, pageSize);
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}	
-
+	
 	@GetMapping("/find-by-offer-m/{key}")
 	public ResponseEntity<List<PostulatesOffer>> findPostulationByOfferM(@PathVariable("key") Long id) throws GenericException {
 		List<PostulatesOffer> response = service.getPostulatesByUserIdM(id);

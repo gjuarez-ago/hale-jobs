@@ -8,7 +8,9 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
+import { Offer } from 'src/app/models/core/offer.model';
 import { User } from 'src/app/models/core/user.model';
+import { PostulatesOffer } from 'src/app/models/postulates-offer.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryService } from 'src/app/services/history.service';
 import { OfferService } from 'src/app/services/offer.service';
@@ -16,15 +18,14 @@ import { OfferService } from 'src/app/services/offer.service';
 @Component({
   selector: 'app-view-offer',
   templateUrl: './view-offer.component.html',
-  styleUrls: ['./view-offer.component.css']
+  styleUrls: ['./view-offer.component.css'],
 })
 export class ViewOfferComponent implements OnInit {
-
   public isLoadingGeneral: boolean = false;
-  public user: User| undefined;
-  public userId : any;
+  public user: User | undefined;
+  public userId: any;
   public subscriptions: Subscription[] = [];
-  public currentElement : any;
+  public currentElement: any;
   offerId: any;
 
   public complaintForm!: FormGroup;
@@ -32,11 +33,11 @@ export class ViewOfferComponent implements OnInit {
   isLoadingReview: boolean = false;
   isVisibleAdd: boolean = false;
   isVisibleAddPostulate: boolean = false;
-  public role : any = "";
-  
+  public role: any = '';
+
   constructor(
     private readonly meta: Meta,
-    private readonly title: Title,   
+    private readonly title: Title,
     private authenticationService: AuthService,
     private fb: FormBuilder,
     private modal: NzModalService,
@@ -44,21 +45,18 @@ export class ViewOfferComponent implements OnInit {
     private router: Router,
     private actRoute: ActivatedRoute,
     private ngxSpinner: NgxSpinnerService,
-    private offerService : OfferService,
+    private offerService: OfferService,
     private notification: NzNotificationService,
-    private historyService : HistoryService
-
-  ) { 
-
+    private historyService: HistoryService
+  ) {
     this.complaintForm = this.fb.group({
-      comments: ["", [Validators.required]],
-      category: ["", [Validators.required]]
+      comments: ['', [Validators.required]],
+      category: ['', [Validators.required]],
     });
 
     this.postulateForm = this.fb.group({
-      comments: ["", [Validators.required]]
+      comments: ['', [Validators.required]],
     });
-
   }
 
   ngOnInit(): void {
@@ -70,7 +68,6 @@ export class ViewOfferComponent implements OnInit {
 
     this.offerId = this.actRoute.snapshot.params.id;
     this.getOfferById(this.offerId);
-
   }
 
   public onBack() {
@@ -83,16 +80,26 @@ export class ViewOfferComponent implements OnInit {
     this.offerService.findOfferById(id).subscribe(
       (response: any) => {
         this.currentElement = response;
-        this.title.setTitle(this.currentElement.title + " - "+  this.currentElement.company.name)
-        this.isLoadingGeneral=false;
+        this.title.setTitle(
+          this.currentElement.title + ' - ' + this.currentElement.company.name
+        );
+        this.isLoadingGeneral = false;
         this.ngxSpinner.hide();
+
+        // setTimeout(() => {
+        //   this.currentElement.showCompany = false;
+        //   this.currentElement.showSalary = false;
+        // }, 5000);
       },
       (errorResponse: HttpErrorResponse) => {
-        this.message.create("error",  errorResponse.error.message);
-        this.isLoadingGeneral=false;
+        this.message.create('error', errorResponse.error.message);
+        this.isLoadingGeneral = false;
         this.ngxSpinner.hide();
+      },
+      () => {
+        this.getUserApplications(this.userId);
       }
-    )
+    );
   }
 
   public getWorkPlace(item: any): string {
@@ -105,7 +112,7 @@ export class ViewOfferComponent implements OnInit {
     let index: any = works.find((e: any) => e.id == item);
     return index.value;
   }
-  
+
   public getUrgency(item: any): string {
     let urgency = [
       { value: 'Solicita personal urgentemente', id: 'A' },
@@ -114,19 +121,19 @@ export class ViewOfferComponent implements OnInit {
     ];
     let index: any = urgency.find((e: any) => e.id == item);
     return index.value;
-  }  
-
+  }
 
   public showModalOffer() {
-
     if (!this.authenticationService.isUserLoggedIn()) {
-      this.createNotification('warning', 'Es necesario iniciar sesión para poder postularte');
-      this.router.navigateByUrl("/auth/login");
+      this.createNotification(
+        'warning',
+        'Es necesario iniciar sesión para poder postularte'
+      );
+      this.router.navigateByUrl('/auth/login');
       return;
-    }else {
+    } else {
       this.isVisibleAddPostulate = true;
     }
-
   }
 
   public closeOfferPostulate() {
@@ -135,44 +142,45 @@ export class ViewOfferComponent implements OnInit {
 
   public showModalComplaint() {
     if (!this.authenticationService.isUserLoggedIn()) {
-      this.createNotification('warning', 'Es necesario iniciar sesión para poder levantar una queja o sugerencia');
-      this.router.navigateByUrl("/auth/login");
+      this.createNotification(
+        'warning',
+        'Es necesario iniciar sesión para poder levantar una queja o sugerencia'
+      );
+      this.router.navigateByUrl('/auth/login');
       return;
-    }else {
-    this.isVisibleAdd = true;
+    } else {
+      this.isVisibleAdd = true;
     }
   }
   public closeComplaintModal() {
     this.isVisibleAdd = false;
   }
 
-  public getDays(fecha :any) {
-  
+  public getDays(fecha: any) {
     let r = 1;
-    var fechaIni : any = new Date(fecha);
-// Crear objeto de fecha final (actual)
-var fechaFin : any = new Date();
-var diff = fechaFin - fechaIni;
+    var fechaIni: any = new Date(fecha);
+    // Crear objeto de fecha final (actual)
+    var fechaFin: any = new Date();
+    var diff = fechaFin - fechaIni;
 
     let diferenciaDias = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    if(diferenciaDias == 0) {
-      return "Hace 1 día";
+    if (diferenciaDias == 0) {
+      return 'Hace 1 día';
     }
 
-    if(diferenciaDias == 7) {
-      return "Hace 1 semana";
+    if (diferenciaDias == 7) {
+      return 'Hace 1 semana';
     }
 
-    if(diferenciaDias != 7 && diferenciaDias != 0) {
-      return "Hace " + diferenciaDias + " días";
+    if (diferenciaDias != 7 && diferenciaDias != 0) {
+      return 'Hace ' + diferenciaDias + ' días';
     }
 
     return diferenciaDias;
   }
 
   submitComplaintForm() {
-  
     if (!this.complaintForm.valid) {
       for (const i in this.complaintForm.controls) {
         if (this.complaintForm.controls.hasOwnProperty(i)) {
@@ -180,10 +188,12 @@ var diff = fechaFin - fechaIni;
           this.complaintForm.controls[i].updateValueAndValidity();
         }
       }
-      this.createNotification('warning', 'Es necesario llenar todos los campos!');
+      this.createNotification(
+        'warning',
+        'Es necesario llenar todos los campos!'
+      );
       return;
     }
-
 
     let form = this.complaintForm.value;
 
@@ -214,7 +224,6 @@ var diff = fechaFin - fechaIni;
   }
 
   submitPostulateForm() {
-
     if (!this.postulateForm.valid) {
       for (const i in this.postulateForm.controls) {
         if (this.postulateForm.controls.hasOwnProperty(i)) {
@@ -222,15 +231,17 @@ var diff = fechaFin - fechaIni;
           this.postulateForm.controls[i].updateValueAndValidity();
         }
       }
-      this.createNotification('warning', 'Es necesario llenar todos los campos!');
+      this.createNotification(
+        'warning',
+        'Es necesario llenar todos los campos!'
+      );
       return;
     }
-
 
     let form = this.postulateForm.value;
 
     this.isLoadingReview = true;
-    
+
     this.ngxSpinner.show();
     this.subscriptions.push(
       this.offerService
@@ -245,30 +256,68 @@ var diff = fechaFin - fechaIni;
             this.ngxSpinner.hide();
             this.message.create('success', 'Te has postulado correctamente');
             this.isVisibleAddPostulate = false;
+            this.addToLocalApplications(response);
             this.complaintForm.reset();
           },
           (errorResponse: HttpErrorResponse) => {
             this.ngxSpinner.hide();
+            this.getUserApplications(this.userId);
             this.isLoadingReview = false;
             this.message.create('info', errorResponse.error.message);
           }
         )
     );
-  
-
-
   }
-  
 
-  createNotification(type: string, message: string): void {
-    this.notification.create(
-      type,
-      'Importante!',
-      `${message} 🫠`,
-      { nzPlacement: 'topLeft' }
+  private createNotification(type: string, message: string): void {
+    this.notification.create(type, 'Importante!', `${message} 🫠`, {
+      nzPlacement: 'topLeft',
+    });
+  }
+
+  private getUserApplications(userId: number) {
+    const userApplicationsString = localStorage.getItem('userApplications');
+
+    if (userApplicationsString) {
+      let userApplications: PostulatesOffer[] = JSON.parse(
+        userApplicationsString
+      );
+      this.comparteUserOffers(userApplications, this.currentElement);
+      return;
+    }
+
+    this.subscriptions.push(
+      this.offerService
+        .getUserApplications(userId)
+        .subscribe((response: PostulatesOffer[]) => {
+          localStorage.setItem('userApplications', JSON.stringify(response));
+          this.comparteUserOffers(response, this.currentElement);
+        })
     );
   }
 
+  private comparteUserOffers(
+    userOffers: PostulatesOffer[],
+    currentOffer: Offer
+  ) {
+    let index = userOffers.findIndex(
+      (userOffer) => currentOffer.id === userOffer.offer.id
+    );
 
+    currentOffer.isPostulated = index !== -1;
+  }
 
+  addToLocalApplications(newAplication: Offer) {
+    this.currentElement.isPostulated = true;
+
+    const userApplicationsString = localStorage.getItem('userApplications');
+
+    if (!userApplicationsString) {
+      return;
+    }
+
+    let userApplications: Offer[] = JSON.parse(userApplicationsString);
+    userApplications.push(newAplication);
+    localStorage.setItem('userApplications', JSON.stringify(userApplications));
+  }
 }
