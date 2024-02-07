@@ -29,7 +29,7 @@ public interface IOfferRepository extends JpaRepository<Offer, Long>{
 	@Query(value = "SELECT o.* FROM offer AS o WHERE o.user_id = :title AND o.reg_borrado = 0",nativeQuery = true)
  	List<Offer> findOfferGeneralMovil(@Param("title") String title);
 	
-	@Query(value = "SELECT o FROM Offer o JOIN o.category c JOIN o.subcategory s JOIN o.rangeAmount r JOIN o.typeOfJob t JOIN o.state st WHERE c.id = :category AND o.title LIKE %:title%  AND s.valor LIKE %:subcategory% AND r.clave LIKE %:range_amount% AND o.status = 0 AND st.clave LIKE %:state% AND o.urgency LIKE %:urgency% AND t.clave LIKE %:type_job% AND o.regBorrado = 0 ORDER BY o.regDateCreated ASC")
+	@Query(value = "SELECT o FROM Offer o JOIN o.category c JOIN o.subcategory s JOIN o.rangeAmount r JOIN o.typeOfJob t JOIN o.state st WHERE c.id = :category AND o.title LIKE %:title%  AND s.valor LIKE %:subcategory% AND r.clave LIKE %:range_amount% AND o.status = 0 AND st.clave LIKE %:state% AND o.urgency LIKE %:urgency% AND t.clave LIKE %:type_job% AND o.regBorrado = 0 ORDER BY o.regDateCreated DESC")
  	Page<Offer> findOfferGeneralWEB(@Param("title") String title, @Param("category") Long category,@Param("subcategory") String subcategory, @Param("range_amount") String range, @Param("state") String state, @Param("type_job") String typeJob,@Param("urgency") String urgency,   Pageable pageable);
 	
 	@Query(value = "SELECT o FROM Offer o JOIN o.company c WHERE o.status = 0 AND c.id = :company AND o.regBorrado = 0 ORDER BY o.regDateCreated ASC")

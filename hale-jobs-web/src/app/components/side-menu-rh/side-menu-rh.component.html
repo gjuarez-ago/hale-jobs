@@ -386,13 +386,13 @@
   [nzMaskClosable]="false"
   [nzWidth]="750"
   [nzPlacement]="'left'"
-  nzTitle="Notificaciones y mensajes"
+  nzTitle="Mensajes y notificaciones"
   [nzFooter]="footerTpl"
   (nzOnClose)="closeModalAD()"
 >
   <ng-container *nzDrawerContent>
     <div class="list">
-      <div *ngIf="listNotications.length > 0" class="filters">
+      <div  class="filters">
         <div class="search-s">
           <form
             nz-form
@@ -422,6 +422,9 @@
           </form>
         </div>
       </div>
+
+      <br>
+      
 
       <nz-list nzItemLayout="horizontal" [nzLoading]="isLoading">
         <nz-list-item *ngFor="let item of listNotications">
@@ -465,7 +468,7 @@
           </ul>
         </nz-list-item>
 
-        <div class="form-inline-not">
+        <div *ngIf="listNotications.length > 0"  class="form-inline-not">
           <div class="pagination-content">
             <nz-pagination
               [nzPageSize]="pageSize"
@@ -486,7 +489,7 @@
         >
           <ng-template #contentTpl>
             <span class="span-blo">
-              No existe ninguna notificación en este momento
+              No hemos encontrado ninguna notificación en este momento.
               <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
             </span>
           </ng-template>
@@ -588,7 +591,7 @@
 <nz-modal
   [nzStyle]="{ top: '20px' }"
   [(nzVisible)]="visiblePsStatusOffer"
-  nzTitle="Envia un mensaje a tu prospecto"
+  nzTitle="Envia un mensaje a tu prospecto 1"
   (nzOnCancel)="closeModalMessagePostulate()"
   [nzFooter]="modalFooter"
 >
