@@ -76,6 +76,12 @@ export class SideMenuRh implements OnInit {
           Validators.maxLength(250),
           Validators.minLength(10),
         ],
+      ], 
+      offer: [
+        '',
+        [
+          Validators.required
+        ],
       ],
     });
 
@@ -393,9 +399,9 @@ export class SideMenuRh implements OnInit {
       this.offerService
         .messageUSerPostulate({
           ...form,
-          offerId: this.postulateP.offer.id,
+          offerId: form.offer,
           status: 0,
-          userId: this.postulateP.user.id,
+          userId: this.postulateP.id,
         })
         .subscribe(
           (response: any) => {
@@ -403,7 +409,7 @@ export class SideMenuRh implements OnInit {
             this.ngxSpinner.hide();
             this.closeModalMessagePostulate();
             this.createMessage('success', 'Mensaje enviado :)');
-
+            this.psResponseEmailForm.reset();
             this.isLoadingGeneral = false;
           },
           (errorResponse: HttpErrorResponse) => {

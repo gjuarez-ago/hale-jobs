@@ -65,7 +65,10 @@ public class CompanyServiceImpl implements ICompanyService{
 	@Override
 	public Company deleteCompanyById(Long id) throws GenericException {
 		Company response = existCompany(id);
-		repository.deleteById(id);
+		
+		response.setRegBorrado(1);
+		repository.save(response);
+		
 		return response;
 	}
 
