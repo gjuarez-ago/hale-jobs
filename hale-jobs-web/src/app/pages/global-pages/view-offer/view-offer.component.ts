@@ -34,6 +34,8 @@ export class ViewOfferComponent implements OnInit {
   isVisibleAdd: boolean = false;
   isVisibleAddPostulate: boolean = false;
   public role: any = '';
+  public userApplications: PostulatesOffer[] = [];
+  public isOfferExpired: boolean = false;
 
   constructor(
     private readonly meta: Meta,
@@ -64,6 +66,7 @@ export class ViewOfferComponent implements OnInit {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
       this.role = this.user.role;
+      this.getUserApplications(this.userId);
     }
 
     this.offerId = this.actRoute.snapshot.params.id;
@@ -79,25 +82,26 @@ export class ViewOfferComponent implements OnInit {
     this.ngxSpinner.show();
     this.offerService.findOfferById(id).subscribe(
       (response: any) => {
+        console.log(response);
+
         this.currentElement = response;
         this.title.setTitle(
           this.currentElement.title + ' - ' + this.currentElement.company.name
         );
+        this.comparteUserOffers(this.userApplications, this.currentElement);
         this.isLoadingGeneral = false;
-        this.ngxSpinner.hide();
 
-        // setTimeout(() => {
-        //   this.currentElement.showCompany = false;
-        //   this.currentElement.showSalary = false;
-        // }, 5000);
+        let currentDateTime = new Date().getTime();
+        console.log(new Date());
+        console.log(new Date(response.vencimiento));
+        this.isOfferExpired = currentDateTime > response.vencimiento;
+
+        this.ngxSpinner.hide();
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create('error', errorResponse.error.message);
         this.isLoadingGeneral = false;
         this.ngxSpinner.hide();
-      },
-      () => {
-        this.getUserApplications(this.userId);
       }
     );
   }
@@ -279,10 +283,7 @@ export class ViewOfferComponent implements OnInit {
     const userApplicationsString = localStorage.getItem('userApplications');
 
     if (userApplicationsString) {
-      let userApplications: PostulatesOffer[] = JSON.parse(
-        userApplicationsString
-      );
-      this.comparteUserOffers(userApplications, this.currentElement);
+      this.userApplications = JSON.parse(userApplicationsString);
       return;
     }
 
@@ -291,7 +292,7 @@ export class ViewOfferComponent implements OnInit {
         .getUserApplications(userId)
         .subscribe((response: PostulatesOffer[]) => {
           localStorage.setItem('userApplications', JSON.stringify(response));
-          this.comparteUserOffers(response, this.currentElement);
+          this.userApplications = response;
         })
     );
   }

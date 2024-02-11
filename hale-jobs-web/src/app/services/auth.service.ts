@@ -73,9 +73,14 @@ export class AuthService {
   public logOut(): void {
     this.token = null;
     this.loggedInUsername = null;
+    this.deleteLocalStorageVariables();
+  }
+
+  private deleteLocalStorageVariables() {
     localStorage.removeItem('user_hale');
     localStorage.removeItem('token_hale');
-    localStorage.removeItem('users');
+    localStorage.removeItem('userApplications');
+    localStorage.removeItem('_grecaptcha');
   }
 
   public saveToken(token: string): void {

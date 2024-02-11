@@ -196,6 +196,10 @@
               {{ item.rangeAmount.valor }}
             </div>
 
+            <div class="salary" *ngIf="!item.showSalary">
+              Salario no mostrado
+            </div>
+
             <div class="salary">
               {{ item.typeOfJob.valor }} - {{ getWorkPlace(item.workPlace) }}
             </div>
@@ -221,6 +225,7 @@
 
             <div class="company-and-place">
               <p *ngIf="item.showCompany">{{ item.company.name }} -&nbsp;</p>
+              <p *ngIf="!item.showCompany">Empresa confidencial -&nbsp;</p>
               <p>{{ item.state.valor }}, {{ item.city.valor }}</p>
             </div>
             <div class="date-published">

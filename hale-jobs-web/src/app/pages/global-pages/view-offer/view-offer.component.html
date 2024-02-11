@@ -13,6 +13,10 @@
           {{ currentElement && currentElement.rangeAmount.valor }}
         </div>
 
+        <div class="salary" *ngIf="!currentElement.showSalary">
+          Salario no mostrado
+        </div>
+
         <div class="salary">
           {{ currentElement && currentElement.typeOfJob.valor }} -
           {{ currentElement && getWorkPlace(currentElement.workPlace) }}
@@ -79,6 +83,12 @@
           </div>
         </div>
 
+        <div *ngIf="!currentElement.showCompany">
+          <div class="company-and-place">
+            <p>Empresa confidencial</p>
+          </div>
+        </div>
+
         <div class="category">
           {{ currentElement && currentElement.city.valor }} -
           {{ currentElement && currentElement.state.valor }}
@@ -102,8 +112,17 @@
           [nzActions]="[actionSetting, actionEllipsis]"
         >
           <nz-card-meta
+            *ngIf="currentElement.showCompany"
             nzTitle="{{ currentElement && currentElement.company.name }}"
-            nzDescription="{{ currentElement && currentElement.description }}"
+            nzDescription="{{
+              currentElement && currentElement.company.emailContact
+            }}"
+            [nzAvatar]="avatarTemplate"
+          ></nz-card-meta>
+
+          <nz-card-meta
+            *ngIf="!currentElement.showCompany"
+            nzTitle="Empresa confidencial"
             [nzAvatar]="avatarTemplate"
           ></nz-card-meta>
         </nz-card>
@@ -113,13 +132,23 @@
           </ng-template>
           <ng-template #coverTemplate>
             <img
+              *ngIf="currentElement.showCompany"
               alt="example"
               src="{{ currentElement && currentElement.company.imageURL }}"
+            />
+            <img
+              *ngIf="!currentElement.showCompany"
+              alt="confidential-company"
+              src="https://w7.pngwing.com/pngs/132/496/png-transparent-postage-stamps-paper-label-college-confidential-text-logo-sticker.png"
             />
           </ng-template>
           <ng-template #actionSetting>
             <button
-              [disabled]="role == 'ROLE_HR' || currentElement.isPostulated"
+              [disabled]="
+                role == 'ROLE_HR' ||
+                currentElement.isPostulated ||
+                isOfferExpired
+              "
               (click)="showModalOffer()"
               nz-button
               nzType="default"
@@ -131,7 +160,11 @@
 
           <ng-template #actionEllipsis>
             <button
-              [disabled]="role == 'ROLE_HR' || currentElement.isPostulated"
+              [disabled]="
+                role == 'ROLE_HR' ||
+                currentElement.isPostulated ||
+                isOfferExpired
+              "
               (click)="showModalComplaint()"
               nz-button
               nzType="default"

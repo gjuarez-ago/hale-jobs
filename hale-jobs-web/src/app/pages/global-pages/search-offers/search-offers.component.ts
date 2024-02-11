@@ -54,6 +54,8 @@ export class SearchOffersComponent implements OnInit {
   public listOffers: any = [];
   public listComments: any = [];
 
+  public userApplications: PostulatesOffer[] = [];
+
   constructor(
     private genericService: GenericService,
     private readonly meta: Meta,
@@ -70,6 +72,12 @@ export class SearchOffersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.authService.isUserLoggedIn()) {
+      this.user = this.authService.getUserFromLocalCache();
+      this.userId = this.user.id;
+      this.getUserApplications(this.userId);
+    }
+
     this.searchService.getKeyword().subscribe((res: any) => {
       if (this.current >= 1) {
         this.current = 1;
@@ -91,14 +99,9 @@ export class SearchOffersComponent implements OnInit {
         : (res.rangeAmount = '');
       res.state ? (res.state = res.state) : (res.state = '');
 
-      console.log(this.key);
-
       this.resetFilter();
       this.getListPaginate();
     });
-
-    this.user = this.authService.getUserFromLocalCache();
-    this.userId = this.user.id;
 
     this.validateForm = this.fb.group({
       title: [''],
@@ -156,18 +159,12 @@ export class SearchOffersComponent implements OnInit {
             this.onActivate();
             this.isLoadingTable = false;
             this.ngxSpinner.hide();
-            // setTimeout(() => {
-            //   this.offers[0].showCompany = true;
-            //   this.offers[0].showSalary = false;
-            // }, 5000);
+            this.comparteUserOffers(this.userApplications, this.offers);
           },
           (errorResponse: HttpErrorResponse) => {
             this.isLoadingTable = false;
             this.ngxSpinner.hide();
             this.message.create('error', 'Ha ocurrido un error!');
-          },
-          () => {
-            this.getUserApplications(this.userId);
           }
         )
     );
@@ -225,14 +222,12 @@ export class SearchOffersComponent implements OnInit {
             this.onActivate();
             this.isLoadingTable = false;
             this.ngxSpinner.hide();
+            this.comparteUserOffers(this.userApplications, this.offers);
           },
           (errorResponse: HttpErrorResponse) => {
             this.isLoadingTable = false;
             this.ngxSpinner.hide();
             this.message.create('error', 'Ha ocurrido un error!');
-          },
-          () => {
-            this.getUserApplications(this.userId);
           }
         )
     );
@@ -416,10 +411,7 @@ export class SearchOffersComponent implements OnInit {
     const userApplicationsString = localStorage.getItem('userApplications');
 
     if (userApplicationsString) {
-      let userApplications: PostulatesOffer[] = JSON.parse(
-        userApplicationsString
-      );
-      this.comparteUserOffers(userApplications, this.offers);
+      this.userApplications = JSON.parse(userApplicationsString);
       return;
     }
 
@@ -428,7 +420,7 @@ export class SearchOffersComponent implements OnInit {
         .getUserApplications(userId)
         .subscribe((response: PostulatesOffer[]) => {
           localStorage.setItem('userApplications', JSON.stringify(response));
-          this.comparteUserOffers(response, this.offers);
+          this.userApplications = response;
         })
     );
   }
