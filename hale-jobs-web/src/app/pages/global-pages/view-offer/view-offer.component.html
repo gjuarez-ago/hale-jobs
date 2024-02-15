@@ -1,6 +1,23 @@
 <div class="body-content">
-  <div class="content">
-    <div class="card-body" *ngIf="currentElement">
+  <div class="content" *ngIf="currentElement">
+    <div class="offer-status-card">
+      <span
+        nz-icon
+        nzType="warning"
+        nzTheme="fill"
+        *ngIf="offerStatusMessage === 'La oferta ha expirado'"
+      ></span>
+      <span
+        nz-icon
+        nzType="calendar"
+        nzTheme="fill"
+        *ngIf="offerStatusMessage !== 'La oferta ha expirado'"
+      ></span>
+      <strong>
+        {{ offerStatusMessage }}
+      </strong>
+    </div>
+    <div class="card-body">
       <div class="card-description">
         <div class="card-title">
           <h2>{{ currentElement && currentElement.title }}</h2>

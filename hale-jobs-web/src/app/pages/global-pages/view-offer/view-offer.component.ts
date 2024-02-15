@@ -15,6 +15,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { HistoryService } from 'src/app/services/history.service';
 import { OfferService } from 'src/app/services/offer.service';
 
+import { getEndDate } from 'src/app/utils/end-date-resume';
+
 @Component({
   selector: 'app-view-offer',
   templateUrl: './view-offer.component.html',
@@ -36,6 +38,7 @@ export class ViewOfferComponent implements OnInit {
   public role: any = '';
   public userApplications: PostulatesOffer[] = [];
   public isOfferExpired: boolean = false;
+  public offerStatusMessage: string = '';
 
   constructor(
     private readonly meta: Meta,
@@ -82,8 +85,6 @@ export class ViewOfferComponent implements OnInit {
     this.ngxSpinner.show();
     this.offerService.findOfferById(id).subscribe(
       (response: any) => {
-        console.log(response);
-
         this.currentElement = response;
         this.title.setTitle(
           this.currentElement.title + ' - ' + this.currentElement.company.name
@@ -92,9 +93,8 @@ export class ViewOfferComponent implements OnInit {
         this.isLoadingGeneral = false;
 
         let currentDateTime = new Date().getTime();
-        console.log(new Date());
-        console.log(new Date(response.vencimiento));
         this.isOfferExpired = currentDateTime > response.vencimiento;
+        this.offerStatusMessage = getEndDate(response.vencimiento);
 
         this.ngxSpinner.hide();
       },

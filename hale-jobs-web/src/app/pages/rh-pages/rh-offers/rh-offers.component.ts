@@ -12,6 +12,8 @@ import { CompanyService } from 'src/app/services/company.service';
 import { GenericService } from 'src/app/services/generic.service';
 import { OfferService } from 'src/app/services/offer.service';
 
+import { getEndDate } from 'src/app/utils/end-date-resume';
+
 @Component({
   selector: 'app-rh-offers',
   templateUrl: './rh-offers.component.html',
@@ -172,13 +174,13 @@ export class RhOffersComponent implements OnInit {
     }, 800);
   }
 
-  public navigateViewJob(element : any) {    
+  public navigateViewJob(element: any) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/view-worker/${element.username}`]));
-       window.open('#' + url, '_blank');        
+      this.router.createUrlTree([`/dashboard/view-worker/${element.username}`])
+    );
+    window.open('#' + url, '_blank');
   }
 
-  
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       if (this.validateForm.controls.hasOwnProperty(i)) {
@@ -243,13 +245,11 @@ export class RhOffersComponent implements OnInit {
   }
 
   public navigateCreate() {
-    
-    if(this.listCompanies.length == 0 && this.data.length == 0) {
+    if (this.listCompanies.length == 0 && this.data.length == 0) {
       this.router.navigateByUrl('/dashboard/new-company');
-    }else {
+    } else {
       this.router.navigateByUrl('/dashboard/new-offer');
     }
-
   }
 
   getPostulatesByOffer(): void {
@@ -299,9 +299,7 @@ export class RhOffersComponent implements OnInit {
     this.getPostulatesByOffer();
   }
 
-  
   public getCompaniesByUser(ele: any) {
-  
     this.isLoadingGeneral = true;
     this.subscriptions.push(
       this.companyService.getCompaniesByOwnerWP(ele).subscribe(
@@ -615,22 +613,29 @@ export class RhOffersComponent implements OnInit {
 
     this.ngxSpinner.show();
     this.subscriptions.push(
-      this.offerService.messageUSerPostulate({ ...form, offerId: this.postulateP.offer.id, status: 0, userId: this.postulateP.user.id }).subscribe(
-        (response: any) => {
-          this.getPostulatesByOffer();
-          this.getComplaintsByOffer();
-          this.ngxSpinner.hide();
-          this.closeModalMessagePostulate();
-          this.createMessage('success', 'Mensaje enviado :)');
+      this.offerService
+        .messageUSerPostulate({
+          ...form,
+          offerId: this.postulateP.offer.id,
+          status: 0,
+          userId: this.postulateP.user.id,
+        })
+        .subscribe(
+          (response: any) => {
+            this.getPostulatesByOffer();
+            this.getComplaintsByOffer();
+            this.ngxSpinner.hide();
+            this.closeModalMessagePostulate();
+            this.createMessage('success', 'Mensaje enviado :)');
 
-          this.isLoadingResponse = false;
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.ngxSpinner.hide();
-          this.isLoadingResponse = false;
-          this.message.create('error', errorResponse.error.message);
-        }
-      )
+            this.isLoadingResponse = false;
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.ngxSpinner.hide();
+            this.isLoadingResponse = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
     );
   }
 
@@ -717,6 +722,8 @@ export class RhOffersComponent implements OnInit {
     let index: any = urgency.find((e: any) => e.id == item);
     return index.value;
   }
+
+  public getEndDateFunction = (date: any) => getEndDate(date);
 }
 
 interface Person {

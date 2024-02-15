@@ -229,7 +229,11 @@
               <p>{{ item.state.valor }}, {{ item.city.valor }}</p>
             </div>
             <div class="date-published">
-              <p>{{ getDays(item.regDateCreated) }}</p>
+              <p>
+                {{ getDays(item.regDateCreated) }} ({{
+                  getEndDateFunction(item.vencimiento)
+                }})
+              </p>
             </div>
 
             <div class="view">

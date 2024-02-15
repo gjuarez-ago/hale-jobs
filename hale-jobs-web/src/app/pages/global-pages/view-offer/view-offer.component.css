@@ -29,6 +29,19 @@ p {
   overflow-wrap: break-word !important;
 }
 
+.offer-status-card {
+  width: 70%;
+  /* background-color: aquamarine; */
+  padding: 15px 40px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 2px 5px -1px;
+  border-left: 5px solid #f5ad40;
+  border-top: 5px solid #f5ad40;
+
+  border-radius: 10px;
+  /* padding: 500px 0px; */
+}
+
 .card-description {
   width: 70%;
   /* background-color: aquamarine; */

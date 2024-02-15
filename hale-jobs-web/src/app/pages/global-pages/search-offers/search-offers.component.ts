@@ -17,6 +17,8 @@ import { HistoryService } from 'src/app/services/history.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { SearchService } from 'src/app/services/search.service';
 
+import { getEndDate } from 'src/app/utils/end-date-resume';
+
 @Component({
   selector: 'app-search-offers',
   templateUrl: './search-offers.component.html',
@@ -400,6 +402,8 @@ export class SearchOffersComponent implements OnInit {
 
     return diferenciaDias;
   }
+
+  public getEndDateFunction = (date: any) => getEndDate(date);
 
   createNotification(type: string, message: string): void {
     this.notification.create(type, 'Upps!', `${message}`, {
