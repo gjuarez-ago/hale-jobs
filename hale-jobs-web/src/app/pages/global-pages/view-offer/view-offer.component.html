@@ -170,6 +170,9 @@
               nz-button
               nzType="default"
               class="button-blue btn-wi"
+              nzTooltipTitle="Postularse"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
             >
               <i nz-icon nzType="appstore-add" nzTheme="outline"></i>
             </button>
@@ -186,6 +189,9 @@
               nz-button
               nzType="default"
               class="button-red btn-wi"
+              nzTooltipTitle="Reportar"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
             >
               <i nz-icon nzType="warning" nzTheme="outline"></i>
             </button>
@@ -322,6 +328,31 @@
       [nzLoading]="isLoadingReview"
     >
       Comentar
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="isVisibleLoginRequired"
+  nzTitle="No has iniciado sesión."
+  (nzOnCancel)="isVisibleLoginRequired = false"
+  [nzFooter]="modalFooter3"
+>
+  <ng-container *nzModalContent>
+    <div class="mod">
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">Para continuar debes ingresar a tu cuenta.</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter3>
+    <button nz-button nzType="default" (click)="isVisibleLoginRequired = false">
+      Cerrar
+    </button>
+    <button nz-button nzType="primary" nz-button (click)="goToLogin()">
+      Iniciar sesión
     </button>
   </ng-template>
 </nz-modal>

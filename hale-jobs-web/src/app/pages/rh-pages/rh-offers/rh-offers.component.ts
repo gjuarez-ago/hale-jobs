@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/core/user.model';
@@ -13,6 +14,7 @@ import { GenericService } from 'src/app/services/generic.service';
 import { OfferService } from 'src/app/services/offer.service';
 
 import { getEndDate } from 'src/app/utils/end-date-resume';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-rh-offers',
@@ -20,6 +22,8 @@ import { getEndDate } from 'src/app/utils/end-date-resume';
   styleUrls: ['./rh-offers.component.css'],
 })
 export class RhOffersComponent implements OnInit {
+  private readonly url: string = `${environment.appUrl}`;
+
   confirmDeleteModal?: NzModalRef; // For testing by now
 
   public selectedValue: any;
@@ -98,7 +102,8 @@ export class RhOffersComponent implements OnInit {
     private modal: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService
+    private ngxSpinner: NgxSpinnerService,
+    private notificationService: NzNotificationService
   ) {
     this.isLoadingGeneral = false;
 
@@ -368,6 +373,20 @@ export class RhOffersComponent implements OnInit {
   openViewModal(item: any) {
     this.getOfferById(item.id);
     this.visibleModal = true;
+  }
+
+  shareOffer(item: any) {
+    const areaTmp = document.createElement('textarea');
+    areaTmp.value = `${this.url}/view-job/${item.id}`;
+    document.body.appendChild(areaTmp);
+    areaTmp.select();
+    document.execCommand('copy');
+    document.body.removeChild(areaTmp);
+    this.notificationService.blank(
+      'Compartir',
+      'Se ha copiado el link en el portapapeles.',
+      { nzPlacement: 'topLeft' }
+    );
   }
 
   public sanitazerURL(value: any) {
