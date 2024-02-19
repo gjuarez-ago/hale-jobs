@@ -2,6 +2,8 @@ package com.services.chambitas.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,7 @@ public class PostulatesByOfferController {
 	IPostulatesByOfferService service;
 	
 	@PostMapping("/create")
-	public ResponseEntity<PostulatesOffer> createPostulation(@RequestBody PostulateByOfferDTO request) throws GenericException {
+	public ResponseEntity<PostulatesOffer> createPostulation(@RequestBody PostulateByOfferDTO request) throws GenericException, MessagingException {
 		PostulatesOffer response = service.createPostulation(request);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}

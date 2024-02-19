@@ -86,7 +86,7 @@ export class CvProfileComponent implements OnInit {
       Validators.required,
       Validators.maxLength(50),
     ]),
-    aboutMe: new FormControl(null, Validators.required),
+    aboutMe: new FormControl(null,[ Validators.required, Validators.minLength(30), Validators.maxLength(2500)]),
   });
 
   //VARIABLES EXPERIENCIA USUARIO ------------------------------------------------------
@@ -105,6 +105,7 @@ export class CvProfileComponent implements OnInit {
     description: new FormControl(null, [
       Validators.required,
       Validators.minLength(50),
+      Validators.maxLength(200),
     ]),
   });
 

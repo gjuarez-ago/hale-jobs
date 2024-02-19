@@ -96,11 +96,12 @@ export class MyProfileComponent implements OnInit {
     this.authenticationService.getCurrentUser(this.user?.username).subscribe(
       (response: any) => {
         this.userInformation = response;
-        this.previewImage =
-          response.profileImageUrl == null
-            ? 'https://thumbs.dreamstime.com/z/no-user-profile-picture-24185395.jpg'
-            : response.profileImageUrl;
+        // this.previewImage =
+        //   response.profileImageUrl == null
+        //     ? 'https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg'
+        //     : response.profileImageUrl;
 
+        this.previewImage = 'https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg';
         this.isLoadingGetCurrentUser = false;
       },
       (errorResponse: HttpErrorResponse) => {

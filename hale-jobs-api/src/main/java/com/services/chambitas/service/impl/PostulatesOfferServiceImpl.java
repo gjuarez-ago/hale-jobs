@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.services.chambitas.repository.IOfferRepository;
 import com.services.chambitas.repository.IPostulatesOfferRepository;
 import com.services.chambitas.repository.IUserRepository;
 import com.services.chambitas.service.IPostulatesByOfferService;
+import com.services.chambitas.utility.EmailService;
 
 @Service
 @Transactional
@@ -40,14 +42,19 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	@Autowired 
 	private INotificationRepository noticationRespository;
 	
+	@Autowired
+	private EmailService emailService;
+
+	
+	
 	@Override
-	public PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException {
+	public PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException, MessagingException {
 		
 		PostulatesOffer element = new PostulatesOffer();
 		
 		Offer offer = exisOffer(request.getOfferId());
 		existPostulation(request.getUserId(),offer.getId());		
-		User user =  existUser(request.getUserId());
+		User user = existUser(request.getUserId());
 
 		element.setConsecutive(generateConsecutive());
 		element.setOffer(offer);
@@ -63,6 +70,9 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		postulatesOfferRepository.save(element);
 		createNotication("Se ha registrado un cambio en tu oferta " + offer.getTitle(), "El usuario " + user.getUsername() + " se ha postulado a tu vacante " + offer.getTitle(), offer.getUser().getEmail(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
 
+		emailService.sendNewPasswordEmail("Test 1", "Test 1","bicosind@gmail.com");
+		emailService.sendNotification("Test 2", "Test 2", "bicosind@gmail.com");
+		emailService.resetPassword("Test 3", "Test 3", "bicosind@gmail.com");
 		
 		return element;
 	}

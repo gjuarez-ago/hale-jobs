@@ -22,6 +22,7 @@ import com.services.chambitas.domain.Offer;
 import com.services.chambitas.domain.dto.OfferDTO;
 import com.services.chambitas.domain.dto.OfferEditDTO;
 import com.services.chambitas.domain.dto.ReportOfferDTO;
+import com.services.chambitas.domain.response.ChartsDashboardResponse;
 import com.services.chambitas.exception.domain.GenericException;
 import com.services.chambitas.exception.domain.NotAnImageFileException;
 import com.services.chambitas.exception.domain.UserNotFoundException;
@@ -57,6 +58,13 @@ public class OfferController {
 		Offer response = service.deleteOfferById(offerId, userId);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
+
+	   // Eliminar oferta
+	   @GetMapping("/dashboard/{userId}")
+	   public ResponseEntity<ChartsDashboardResponse> getDashboard( @PathVariable("userId") Long userId) throws GenericException  {
+		ChartsDashboardResponse response = service.getDashboard( userId);
+		   return new ResponseEntity<>(response , HttpStatus.OK);
+	   }
 	
    // Buscar oferta por ID
    @GetMapping("/find/{offerId}")
