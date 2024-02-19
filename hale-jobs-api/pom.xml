@@ -12,11 +12,11 @@
 	<artifactId>chambitas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>chambitas</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	
 	<description>Project for Chambitas</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 	
@@ -28,14 +28,6 @@
        </dependency>
 		
 
-
-     <dependency>
-       <groupId>com.microsoft.sqlserver</groupId>
-       <artifactId>mssql-jdbc_auth</artifactId>
-       <version>8.4.1.x64</version>
-       <type>dll</type>
-   </dependency>
-   
 	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -52,7 +44,6 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>4.1.0</version>
 		</dependency>
-
 	
 
 		<dependency>
@@ -70,12 +61,6 @@
 		</dependency>
 
 
-
-		<dependency>
-			<groupId>com.github.easonjim</groupId>
-			<artifactId>com.sap.conn.jco.sapjco3</artifactId>
-			<version>3.0.11</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -167,7 +152,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>test</finalName>
+		<finalName>hale</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

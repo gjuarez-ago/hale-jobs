@@ -30,7 +30,7 @@ export class RhOffersComponent implements OnInit {
   public subscriptions: Subscription[] = [];
   public total: number = 0;
   public totalElementByPage = 0;
-  public data: any[] = [];
+  public offers: any[] = [];
 
   public pageSizePs: number = 10;
   public currentPs: number = 1;
@@ -140,7 +140,6 @@ export class RhOffersComponent implements OnInit {
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
-      this.getOffers();
       this.getLevelStudy();
       this.getRangeAmount();
       this.getTypeOfJob();
@@ -197,6 +196,9 @@ export class RhOffersComponent implements OnInit {
     this.ngxSpinner.show();
     let form = this.validateForm.value;
 
+    this.offers = [];
+    this.total = 0;
+
     this.isLoadingTable = true;
     this.isLoadingGeneral = true;
     this.subscriptions.push(
@@ -216,7 +218,7 @@ export class RhOffersComponent implements OnInit {
         })
         .subscribe(
           (response: any) => {
-            this.data = response.content;
+            this.offers = response.content;
             this.total = response.totalElements;
             this.totalElementByPage = response.numberOfElements;
 
@@ -245,7 +247,7 @@ export class RhOffersComponent implements OnInit {
   }
 
   public navigateCreate() {
-    if (this.listCompanies.length == 0 && this.data.length == 0) {
+    if (this.listCompanies.length == 0 && this.offers.length == 0) {
       this.router.navigateByUrl('/dashboard/new-company');
     } else {
       this.router.navigateByUrl('/dashboard/new-offer');
@@ -301,11 +303,13 @@ export class RhOffersComponent implements OnInit {
 
   public getCompaniesByUser(ele: any) {
     this.isLoadingGeneral = true;
+    this.ngxSpinner.show();
     this.subscriptions.push(
       this.companyService.getCompaniesByOwnerWP(ele).subscribe(
         (response: any) => {
           this.listCompanies = response;
           this.isLoadingGeneral = false;
+          this.getOffers();
         },
         (errorResponse: HttpErrorResponse) => {
           this.isLoadingGeneral = false;
@@ -527,16 +531,19 @@ export class RhOffersComponent implements OnInit {
         })
         .subscribe(
           (response: any) => {
-            this.data = response.content;
+            this.offers = response.content;
             this.total = response.totalElements;
             this.totalElementByPage = response.numberOfElements;
 
             this.isLoadingTable = false;
             this.isLoadingGeneral = false;
+            this.ngxSpinner.hide();
           },
           (errorResponse: HttpErrorResponse) => {
             this.isLoadingTable = false;
             this.isLoadingGeneral = false;
+            this.ngxSpinner.hide();
+
             this.message.create('error', errorResponse.error.message);
           }
         )

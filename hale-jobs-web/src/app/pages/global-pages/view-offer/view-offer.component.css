@@ -79,6 +79,11 @@ img {
 .points {
   padding: 0px 0px 0px 10px;
 }
+.content-skel {
+  width: 80%;
+  padding: 40px;
+  margin: 0 auto;
+}
 
 .points li {
   margin: 0px 10px;

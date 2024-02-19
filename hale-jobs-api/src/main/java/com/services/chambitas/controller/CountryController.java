@@ -42,5 +42,17 @@ public class CountryController{
 		return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
+	@GetMapping("/test/{id}")
+	public ResponseEntity<String> test(@PathVariable(value = "id") Long id) throws GenericException {
+		
+		if(id == 1) {
+			throw new GenericException("Recibiod exceptions");
+		}
+		
+		String response = "Llego al método";		
+		return new ResponseEntity<>(response , HttpStatus.OK);
+	}
+	
+	
 
 }

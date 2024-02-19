@@ -27,7 +27,7 @@ export class ViewOfferComponent implements OnInit {
   public user: User | undefined;
   public userId: any;
   public subscriptions: Subscription[] = [];
-  public currentElement: any;
+  public currentElement: any = null;
   offerId: any;
 
   public complaintForm!: FormGroup;
@@ -39,6 +39,7 @@ export class ViewOfferComponent implements OnInit {
   public userApplications: PostulatesOffer[] = [];
   public isOfferExpired: boolean = false;
   public offerStatusMessage: string = '';
+  isLoadingGetCurrentElement: boolean = false;
 
   constructor(
     private readonly meta: Meta,
@@ -81,7 +82,7 @@ export class ViewOfferComponent implements OnInit {
   }
 
   public getOfferById(id: any) {
-    this.isLoadingGeneral = true;
+    this.isLoadingGetCurrentElement = true;
     this.ngxSpinner.show();
     this.offerService.findOfferById(id).subscribe(
       (response: any) => {
@@ -95,12 +96,12 @@ export class ViewOfferComponent implements OnInit {
         let currentDateTime = new Date().getTime();
         this.isOfferExpired = currentDateTime > response.vencimiento;
         this.offerStatusMessage = getEndDate(response.vencimiento);
-
+        this.isLoadingGetCurrentElement = false;
         this.ngxSpinner.hide();
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create('error', errorResponse.error.message);
-        this.isLoadingGeneral = false;
+        this.isLoadingGetCurrentElement = false;
         this.ngxSpinner.hide();
       }
     );

@@ -1,6 +1,19 @@
-<div class="body-content">
-  <div class="content" *ngIf="currentElement">
-    <div class="offer-status-card">
+
+
+<div class="content-skel" *ngIf="isLoadingGetCurrentElement && currentElement == null" > 
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+</div>
+<div class="body-content" >
+
+
+  
+  <div class="content" *ngIf="currentElement">   
+    <div class="offer-status-card" *ngIf="!isLoadingGetCurrentElement">
       <span
         nz-icon
         nzType="warning"
@@ -17,7 +30,12 @@
         {{ offerStatusMessage }}
       </strong>
     </div>
-    <div class="card-body">
+    
+    <div class="card-body" >
+      
+
+
+      
       <div class="card-description">
         <div class="card-title">
           <h2>{{ currentElement && currentElement.title }}</h2>
@@ -192,7 +210,10 @@
           </ng-template>
         </div>
       </div>
+
     </div>
+
+
   </div>
 </div>
 

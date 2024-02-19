@@ -57,6 +57,7 @@ export class SearchOffersComponent implements OnInit {
   public listComments: any = [];
 
   public userApplications: PostulatesOffer[] = [];
+  isLoadingGetTypeJob: boolean = false;
 
   constructor(
     private genericService: GenericService,
@@ -124,6 +125,7 @@ export class SearchOffersComponent implements OnInit {
   }
 
   public resetFilter() {
+
     this.validateForm = this.fb.group({
       title: [''],
       subcategory: [''],
@@ -134,10 +136,13 @@ export class SearchOffersComponent implements OnInit {
       state: [''],
     });
 
+
     this.categorySelected = 1;
   }
 
   public getListPaginate(): void {
+
+    this.ngxSpinner.show();
     this.isLoadingTable = true;
     this.subscriptions.push(
       this.offerService
@@ -200,6 +205,9 @@ export class SearchOffersComponent implements OnInit {
 
     this.ngxSpinner.show();
     let form = this.validateForm.value;
+
+    this.temp = [];
+    this.offers = [];
 
     this.isLoadingTable = true;
     this.subscriptions.push(
@@ -326,15 +334,15 @@ export class SearchOffersComponent implements OnInit {
   }
 
   public getTypeOfJob() {
-    this.isLoadingGeneral = true;
+    this.isLoadingGetTypeJob = true;
     this.subscriptions.push(
       this.genericService.getAllTypeOfJobs().subscribe(
         (response: any) => {
           this.listTypeOfJob = response;
-          this.isLoadingGeneral = false;
+          this.isLoadingGetTypeJob = false;
         },
         (errorResponse: HttpErrorResponse) => {
-          this.isLoadingGeneral = false;
+          this.isLoadingGetTypeJob = false;
           this.message.create('error', errorResponse.error.message);
         }
       )
