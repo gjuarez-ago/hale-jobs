@@ -35,6 +35,7 @@ export class ViewOfferComponent implements OnInit {
   isLoadingReview: boolean = false;
   isVisibleAdd: boolean = false;
   isVisibleAddPostulate: boolean = false;
+  isVisibleLoginRequired: boolean = false;
   public role: any = '';
   public userApplications: PostulatesOffer[] = [];
   public isOfferExpired: boolean = false;
@@ -130,11 +131,7 @@ export class ViewOfferComponent implements OnInit {
 
   public showModalOffer() {
     if (!this.authenticationService.isUserLoggedIn()) {
-      this.createNotification(
-        'warning',
-        'Es necesario iniciar sesión para poder postularte'
-      );
-      this.router.navigateByUrl('/auth/login');
+      this.isVisibleLoginRequired = true;
       return;
     } else {
       this.isVisibleAddPostulate = true;
@@ -147,11 +144,7 @@ export class ViewOfferComponent implements OnInit {
 
   public showModalComplaint() {
     if (!this.authenticationService.isUserLoggedIn()) {
-      this.createNotification(
-        'warning',
-        'Es necesario iniciar sesión para poder levantar una queja o sugerencia'
-      );
-      this.router.navigateByUrl('/auth/login');
+      this.isVisibleLoginRequired = true;
       return;
     } else {
       this.isVisibleAdd = true;
@@ -159,6 +152,10 @@ export class ViewOfferComponent implements OnInit {
   }
   public closeComplaintModal() {
     this.isVisibleAdd = false;
+  }
+
+  public goToLogin() {
+    this.router.navigateByUrl('/auth/login');
   }
 
   public getDays(fecha: any) {
