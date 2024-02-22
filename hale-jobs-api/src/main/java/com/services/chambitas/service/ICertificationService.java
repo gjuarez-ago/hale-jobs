@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.services.chambitas.domain.Certification;
-import com.services.chambitas.domain.Skills;
 import com.services.chambitas.exception.domain.GenericException;
 
 @Service

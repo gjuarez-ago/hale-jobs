@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,7 @@ import com.services.chambitas.repository.ITypeOfJobRepository;
 import com.services.chambitas.repository.ITypeOfPaymentRepository;
 import com.services.chambitas.repository.IUserRepository;
 import com.services.chambitas.service.IOfferService;
+import com.services.chambitas.utility.EmailService;
 
 
 @Service
@@ -91,11 +93,7 @@ public class OfferServiceImpl implements IOfferService{
 	private IRangeAmountRepository rangeAmountRepository;
 	
 	@Autowired
-	private INotificationRepository notificationRepository;
-	
-	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
 	
 	
 	@Override
@@ -230,7 +228,8 @@ public class OfferServiceImpl implements IOfferService{
 		
 		Offer offer = exisOffer(id);
 		User user = existUser(userId);
-		
+		existComplaint(user.getId(), offer.getId());
+
 		Complaints complaint = new Complaints();
 		
 		complaint.setComments(comment);
@@ -239,7 +238,7 @@ public class OfferServiceImpl implements IOfferService{
 		complaint.setUser(user);
 		complaint.setRegDateCreated(new Date());
 		complaint.setTitle(category);
-		
+		complaint.setResponse("");
 		offer.setHaveComplaint(true); // La oferta ha sido reportada
 		
 		complaintRepository.save(complaint);
@@ -413,6 +412,17 @@ public class OfferServiceImpl implements IOfferService{
 		return consecutive;
 	}
 
+	private Complaints existComplaint(Long userId, Long offerId) throws GenericException {
+	     
+		Complaints postulate = complaintRepository.findComplaintsByUserAndOffer(userId, offerId);
+		
+		if(postulate != null) {
+			throw new GenericException("Ya has hecho una queja a esta vacante.");
+		}
+		
+		return postulate;
+	}
+
 	@Override
 	public Page<Offer> findOfferGeneralWEB(String title, Long category,String subcategory,String rangeAmount, String state, String typeJob, String urgency, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
@@ -441,9 +451,10 @@ public class OfferServiceImpl implements IOfferService{
 	}
 
 	@Override
-	public List<ChartsDashboardResponse> getDashboard() {
-		// TODO Auto-generated method stub
-		return null;
+	public ChartsDashboardResponse getDashboard(Long userId) {
+	   String SQL = "SELECT (SELECT COUNT(*) FROM offer WHERE user_id = ?) AS offers, (SELECT COUNT(*) FROM complaints WHERE user_id = ?) AS complaints, (SELECT COUNT(*) FROM postulates_offer WHERE user_id = ?) AS prospects";
+  		return jdbcTemplate.queryForObject(SQL, BeanPropertyRowMapper.newInstance(ChartsDashboardResponse.class),
+				new Object[] { userId, userId, userId });
 	}
 	
 	

@@ -7,12 +7,16 @@ import lombok.Data;
 @Data
 public class ChartsDashboardResponse {
 	
-	private List<String> rangeAmounts;
+	private int offers;
+	private int complaints;
+	private int prospects;
 
-	private List<String> subcategories;
+	// private List<String> rangeAmounts;
 
-	private List<Integer> offersByMonth;
+	// private List<String> subcategories;
+
+	// private List<Integer> offersByMonth;
 	
-	private List<Integer> postulatesByMonth;
+	// private List<Integer> postulatesByMonth;
 
 }

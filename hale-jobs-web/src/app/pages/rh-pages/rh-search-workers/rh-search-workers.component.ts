@@ -204,6 +204,10 @@ export class RhSearchWorkersComponent implements OnInit {
       return;
     }
 
+    this.data = [];
+    this.total = 0;
+
+
     this.ngxSpinner.show();
     let form = this.validateForm.value;
 

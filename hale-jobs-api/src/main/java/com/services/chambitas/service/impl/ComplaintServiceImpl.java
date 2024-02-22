@@ -64,6 +64,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 		element.setStatus(request.getStatus());
 		element.setTitle(request.getTitle());
 		element.setUser(user);
+		element.setResponse("");
 	
 		repository.save(element);
 		

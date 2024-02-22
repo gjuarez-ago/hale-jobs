@@ -40,7 +40,7 @@ public interface IOfferService {
 
 	List<Offer> getOffersBySelect(Long userId);
 	
-	List<ChartsDashboardResponse> getDashboard();
+	ChartsDashboardResponse getDashboard(Long userId);
 	
 
 }

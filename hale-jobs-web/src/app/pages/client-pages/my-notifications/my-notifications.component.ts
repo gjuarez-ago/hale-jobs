@@ -99,7 +99,6 @@ export class MyNotificationsComponent implements OnInit {
           this.data = response.content;
           this.total = response.totalElements;
           this.totalElementByPage = response.numberOfElements;
-          this.isLoadingTable = false;
           this.ngxSpinner.hide();
 
           console.log(this.data);
@@ -138,6 +137,11 @@ export class MyNotificationsComponent implements OnInit {
     let form = this.searchForm.value;
 
     this.isLoadingGeneral = true;
+
+    this.data = [];
+    this.totalElementByPage = 0;
+    this.total = 0;
+
     this.cvService
       .getNotificationsByUser({
         email: this.user?.username,
@@ -150,7 +154,6 @@ export class MyNotificationsComponent implements OnInit {
           this.data = response.content;
           this.total = response.totalElements;
           this.totalElementByPage = response.numberOfElements;
-          this.isLoadingTable = false;
           this.ngxSpinner.hide();
 
           console.log(this.data);

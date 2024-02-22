@@ -88,7 +88,9 @@ export class RhCompanyComponent implements OnInit {
 
   this.ngxSpinner.show();
   let form = this.validateForm.value;
-
+  this.data = [];
+  this.total = 0;
+ 
   this.isLoadingTable = true;
   this.isLoadingGeneral = true;
   this.subscriptions.push(
@@ -198,6 +200,7 @@ export class RhCompanyComponent implements OnInit {
           (response: any) => {
             this.message.create('success', "Empresa eliminada correctamente");
             this.getListPaginate();
+            this.isLoadingTable = false;
           },
           (errorResponse: HttpErrorResponse) => {
             this.isLoadingTable = false;

@@ -2,6 +2,8 @@ package com.services.chambitas.service;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ import com.services.chambitas.exception.domain.GenericException;
 public interface IPostulatesByOfferService {
 	
 	// Postularme a una oferta
-	PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException;
+	PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException, MessagingException;
 	
 	Notification messagePostulate(PostulateByOfferDTO request) throws GenericException;
 	

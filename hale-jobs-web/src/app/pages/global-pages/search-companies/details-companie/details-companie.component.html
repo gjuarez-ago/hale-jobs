@@ -6,9 +6,9 @@
           <img src="{{currentElement && currentElement.imageURL}}" alt="" />            
         </div>
 
-        <div >
+        <div class="content-dsl">
           <h1>{{currentElement && currentElement.name}}</h1>
-          <p>
+          <p class="p-s">
             {{currentElement && currentElement.description}}
           </p>
         </div>
@@ -59,7 +59,7 @@
             <h3> <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> {{item.title}} </h3>
             <h4> <i nz-icon nzType="flag" nzTheme="outline"></i> {{item.city.valor}}, {{item.state.valor}} ({{item.typeOfJob.valor}}) -  <i nz-icon nzType="dollar-circle" nzTheme="outline"></i> {{item.rangeAmount.valor}}  </h4>
   
-            <p>
+            <p class="p-s">
               {{item.description}}
             </p>
 
@@ -189,7 +189,7 @@
 
           <div class="content-resume">
                <h2> Resumen </h2>
-               <p>
+               <p class="p-s">
                 {{currentElement && currentElement.description}}  
               </p>
 

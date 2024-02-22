@@ -1,6 +1,19 @@
-<div class="body-content">
-  <div class="content" *ngIf="currentElement">
-    <div class="offer-status-card">
+
+
+<div class="content-skel" *ngIf="isLoadingGetCurrentElement && currentElement == null" > 
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+</div>
+<div class="body-content" >
+
+
+  
+  <div class="content" *ngIf="currentElement">   
+    <div class="offer-status-card" *ngIf="!isLoadingGetCurrentElement">
       <span
         nz-icon
         nzType="warning"
@@ -17,7 +30,12 @@
         {{ offerStatusMessage }}
       </strong>
     </div>
-    <div class="card-body">
+    
+    <div class="card-body" >
+      
+
+
+      
       <div class="card-description">
         <div class="card-title">
           <h2>{{ currentElement && currentElement.title }}</h2>
@@ -217,7 +235,10 @@
           </ng-template>
         </div>
       </div>
+
     </div>
+
+
   </div>
 </div>
 
@@ -296,7 +317,7 @@
 <nz-modal
   [nzStyle]="{ top: '20px' }"
   [(nzVisible)]="isVisibleAddPostulate"
-  nzTitle="Postulate a la siguiente oferta"
+  nzTitle="Postularme a la siguiente oferta"
   (nzOnCancel)="closeOfferPostulate()"
   [nzFooter]="modalFooter1"
 >
@@ -346,7 +367,7 @@
       nz-button
       [nzLoading]="isLoadingReview"
     >
-      Comentar
+      Postularme
     </button>
   </ng-template>
 </nz-modal>

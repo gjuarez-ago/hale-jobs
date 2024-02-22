@@ -85,6 +85,8 @@
             nzAllowClear
             nzPlaceHolder="Lugar de trabajo"
             formControlName="typeOfJob"
+            [nzDisabled]="listTypeOfJob.length == 0"
+            [nzLoading]="isLoadingGetTypeJob"
           >
             <nz-option
               *ngFor="let item of listTypeOfJob"
@@ -164,9 +166,18 @@
   </div>
 
   <section class="request-list">
+  
+
+
     <div class="content-principal">
-      <!-- Lista -->
       <div class="list">
+
+        <nz-skeleton *ngIf="isLoadingTable && offers.length == 0"></nz-skeleton>
+        <nz-skeleton *ngIf="isLoadingTable && offers.length == 0"></nz-skeleton>
+        <nz-skeleton *ngIf="isLoadingTable && offers.length == 0"></nz-skeleton>
+        <nz-skeleton *ngIf="isLoadingTable && offers.length == 0"></nz-skeleton>
+
+
         <div class="stats-filters">
           <div class="total">{{ total }} vacantes encontradas</div>
 
@@ -259,7 +270,7 @@
         </div>
 
         <nz-empty
-          [hidden]="offers.length > 0"
+          [hidden]="isLoadingTable ||  offers.length > 0"
           nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
           [nzNotFoundContent]="contentTpl"
           [nzNotFoundFooter]="footerTpl"
@@ -274,6 +285,8 @@
             <!-- <button nz-button nzType="primary" routerLink="/search" > Buscar </button> -->
           </ng-template>
         </nz-empty>
+
+
       </div>
 
       <!-- Sección de promoción -->
@@ -295,11 +308,14 @@
         <ng-template #coverTemplate>
           <img
             alt="example"
-            src="http://localhost:4200/assets/images/banner.png"
+            src="assets/images/banner.png"
           />
         </ng-template>
       </div>
+
+
     </div>
+
   </section>
 
   <section class="help-search"></section>
