@@ -1,9 +1,21 @@
 <div nz-row class="p-3 container-principal" [nzGutter]="16">
+ 
+ 
+ 
+ 
+ 
   <div nz-col nzSpan="8">
+
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+  
+
     <nz-card class="companie">
       <div >
         <div class="content-img">
-          <img src="{{currentElement && currentElement.imageURL}}" alt="" />            
+          <img src="{{currentElement && previewImage}}" alt="" />            
         </div>
 
         <div class="content-dsl">
@@ -40,11 +52,15 @@
     </nz-card>
   </div>
 
-
-  
   <div nz-col nzSpan="16">
+
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingCompanyAction && !currentElement" ></nz-skeleton>
+
     <nz-card>
-      <nz-tabset nzType="card">
+      <nz-tabset nzType="card"  *ngIf="currentElement">
         
         <nz-tab [nzTitle]="tab1">
         
@@ -83,16 +99,12 @@
           [hidden]="offers.length > 0"
           nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
           [nzNotFoundContent]="contentTpl"
-          [nzNotFoundFooter]="footerTpl"
           >
           <ng-template #contentTpl>
             <span>
               No existe ninguna vacante en este momento
               <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
             </span>
-          </ng-template>
-          <ng-template #footerTpl>
-            <!-- <button nz-button nzType="primary" (click)="navigate()"> Buscar </button> -->
           </ng-template>
          </nz-empty>
 
@@ -108,19 +120,7 @@
               ></nz-pagination>
             </div>
           </div>
-
-          
-        
-
-          
-       
-
-
         </nz-tab>
-
-
-        
-
 
         <nz-tab [nzTitle]="tab2">
         
@@ -180,6 +180,7 @@
 
       
         </nz-tab>
+
         <nz-tab [nzTitle]="tab3">
         
           <ng-template #tab3>
@@ -210,8 +211,10 @@
 
           </div>
         </nz-tab>
+
       </nz-tabset>
     </nz-card>
+
   </div>
 </div>
 
@@ -327,22 +330,17 @@
   </ng-template>
 </nz-modal>
 
-
 <ng-template #contentTplp>
   <nz-empty
-  [hidden]="offers.length > 0"
+  [hidden]="opinions.length > 0"
   nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
-  [nzNotFoundContent]="contentTpl"
-  [nzNotFoundFooter]="footerTpl"
+  [nzNotFoundContent]="contentTpl1"
   >
   <ng-template #contentTpl1>
     <span>
       No existe ningún comentario hasta el momento
       <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
     </span>
-  </ng-template>
-  <ng-template #footerTpl1>
-    <!-- <button nz-button nzType="primary" (click)="navigate()"> Buscar </button> -->
   </ng-template>
  </nz-empty>
   

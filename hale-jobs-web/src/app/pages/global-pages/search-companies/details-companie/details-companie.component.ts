@@ -49,6 +49,8 @@ export class DetailsCompanieComponent implements OnInit {
   public isLoadingReview = false;
   rating : any ;
   role: string = '';
+  isLoadingCompanyAction: boolean = false;
+  public previewImage: string = '';
 
   constructor(
     private readonly meta: Meta,
@@ -85,21 +87,22 @@ export class DetailsCompanieComponent implements OnInit {
   }
 
   getCopmanyById(id: any) {
-    this.isLoadingGeneral = true;
+    this.isLoadingCompanyAction = true;
     this.ngxSpinner.show();
     this.companyService.getCompanyById(id).subscribe(
       (response: any) => {
         this.currentElement = response;
+        this.previewImage = 'data:image/png;base64,' + response.imageBase64;
         this.title.setTitle(this.currentElement.name);
         console.log(this.currentElement);
-        this.isLoadingGeneral = false;
+        this.isLoadingCompanyAction = false;
         this.ngxSpinner.hide();
         this.getOfferByCompany();
         this.getOpinionsByCompany();
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create('error', errorResponse.error.message);
-        this.isLoadingGeneral = false;
+        this.isLoadingCompanyAction = false;
         this.ngxSpinner.hide();
       }
     );

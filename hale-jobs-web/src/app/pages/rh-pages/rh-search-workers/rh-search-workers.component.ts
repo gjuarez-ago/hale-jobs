@@ -376,6 +376,10 @@ export class RhSearchWorkersComponent implements OnInit {
   }
 
 
+  public cutDescription(desc : any) {
+    return desc.substring(0, 200) + ".....";
+  }
+
   
   public showModalMessagePostulate(item: any) {
     this.visiblePsStatusOffer = true;

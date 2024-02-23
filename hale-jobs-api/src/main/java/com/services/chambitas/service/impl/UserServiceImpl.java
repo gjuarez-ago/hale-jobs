@@ -45,6 +45,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.services.chambitas.domain.CityINEGI;
 import com.services.chambitas.domain.Notification;
+import com.services.chambitas.domain.Offer;
 import com.services.chambitas.domain.Permission;
 import com.services.chambitas.domain.PreferencesRH;
 import com.services.chambitas.domain.PreferencesUser;
@@ -397,6 +398,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
 		user.setToken("");
 		user.setPassword(encodePassword(newPassword));
+		
 		userRepository.save(user);
 
 	}
@@ -421,7 +423,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		userRepository.save(user);
 
 		LOGGER.info("Token generate: " + token);
-		emailService.resetPassword(user.getNames(), token, user.getUsername());
+		emailService.resetPassword(token, user.getUsername());
 	}
 
 	@Override

@@ -135,7 +135,7 @@
           <div nz-col nzSpan="10">
             <img
               class="logo"
-              [src]="item.imageURL"
+              [src]="item.imageBase64"
               alt=""
               width="200px"
               height="200px"
@@ -183,7 +183,7 @@
     
     <div class="form-inline">
     <nz-empty
-    [hidden]="data.length > 0"
+    [hidden]="isLoadingTable || data.length > 0"
     nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
     [nzNotFoundContent]="contentTpl"
     [nzNotFoundFooter]="footerTpl"

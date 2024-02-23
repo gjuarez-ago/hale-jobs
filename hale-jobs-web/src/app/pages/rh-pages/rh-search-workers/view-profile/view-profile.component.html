@@ -1,11 +1,19 @@
 <div class="content-profile">
   <div class="body-content">
+    
     <div class="content-profile">
       <div class="img-user-content">
         <div class="card card-user-edit box">
+
+
+
           <div class="cover-bg"></div>
           <br />
-          <div class="content">
+          <nz-skeleton *ngIf="isLoadingcurrentUser && userInformation == null" ></nz-skeleton>
+          <nz-skeleton *ngIf="isLoadingcurrentUser && userInformation == null" ></nz-skeleton>
+          <nz-skeleton *ngIf="isLoadingcurrentUser && userInformation == null" ></nz-skeleton>
+
+          <div class="content" *ngIf="!isLoadingcurrentUser && userInformation">
             <label for="file">
               <div class="content-img">
                 <img [src]="previewImage" alt="" />
@@ -13,7 +21,8 @@
             </label>
           </div>
 
-          <strong>{{ userInformation && userInformation.surnames }}</strong>
+          <div class="user-info-d" *ngIf="!isLoadingcurrentUser && userInformation">
+            <strong>{{ userInformation && userInformation.surnames }}</strong>
           <p>{{ userInformation && userInformation.username }}</p>
           <p class="p-w">
             <i nz-icon nzType="aim"></i>
@@ -43,62 +52,14 @@
               <nz-space> </nz-space>
             </div>
           </div>
+
+          </div>
+
         </div>
       </div>
 
       <div class="content-information">
-        <!-- <div class="content-information-header card">
-              <div class="buttons-content">
       
-      
-                <div class="button-element">
-      
-      
-                  <button class="button-22" role="button" routerLink="/profile/cv">
-                    <nz-space>
-                      <i nz-icon nzType="idcard" nzTheme="outline" *nzSpaceItem></i>
-                      <div class="" *nzSpaceItem> CV </div>
-                    </nz-space>
-                  </button>
-                </div>
-      
-      
-                <div class="button-element">
-                  <button class="button-22" role="button" routerLink="/profile/my-postulations">
-                    <nz-space>
-                      <i nz-icon nzType="audit" nzTheme="outline" *nzSpaceItem></i>
-                      <div class="" *nzSpaceItem>Postulaciones </div>
-                    </nz-space>
-      
-                  </button>
-                </div>
-      
-      
-                <div class="button-element">
-                  <button class="button-22" role="button" routerLink="/profile/my-history">
-                    <nz-space>
-                      <i nz-icon nzType="apartment" nzTheme="outline" *nzSpaceItem></i>
-                      <div class="" *nzSpaceItem>Historial </div>
-                    </nz-space>
-                  </button>
-      
-      
-                </div>
-      
-      
-      
-                <div class="button-element">
-                  <button class="button-23" role="button" routerLink="/search">
-                    <nz-space>
-                      <i nz-icon nzType="search" nzTheme="outline" *nzSpaceItem></i>
-                    </nz-space>
-                  </button>
-                </div>
-      
-      
-              </div>   
-            </div> -->
-
         <div class="content-information-body card">
           <nz-page-header [nzGhost]="false">
             <nz-page-header-title> 📑 Curriculum </nz-page-header-title>
@@ -136,7 +97,11 @@
               </div>
 
               <div class="f">
-                <div class="">
+
+                <nz-skeleton *ngIf="isLoadingcurrentUser && userInformation == null" ></nz-skeleton>
+                <nz-skeleton *ngIf="isLoadingcurrentUser && userInformation == null" ></nz-skeleton>
+                
+                <div class="" *ngIf="!isLoadingcurrentUser && userInformation">
                   <div class="flex-principal">
                     <p class="p-s">
                       <strong> Puesto: </strong>
@@ -168,7 +133,7 @@
                   <nz-skeleton></nz-skeleton>
                 </div>
 
-                <div *ngIf="listWorkExperiences.length > 0">
+                <div *ngIf="!loadingListWorkExperiences && listWorkExperiences.length > 0">
                   <div
                     *ngFor="let experience of listWorkExperiences; index as i"
                   >
@@ -207,7 +172,7 @@
                   </div>
                 </div>
 
-                <div class="card-edus" *ngIf="listWorkExperiences.length == 0">
+                <div class="card-edus" *ngIf="!loadingListWorkExperiences && listWorkExperiences.length == 0">
                   <nz-empty></nz-empty>
                 </div>
               </div>
@@ -364,6 +329,8 @@
         </div>
       </div>
     </div>
+
+
   </div>
 </div>
 

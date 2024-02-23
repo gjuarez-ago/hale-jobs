@@ -43,6 +43,7 @@ export class ViewOfferComponent implements OnInit {
   public isOfferExpired: boolean = false;
   public offerStatusMessage: string = '';
   isLoadingGetCurrentElement: boolean = false;
+  companyImage: string = "";
 
   constructor(
     private readonly meta: Meta,
@@ -96,6 +97,8 @@ export class ViewOfferComponent implements OnInit {
         );
         this.comparteUserOffers(this.userApplications, this.currentElement);
         this.isLoadingGeneral = false;
+
+        this.companyImage = 'data:image/png;base64,' + response.company.imageBase64;
 
         let currentDateTime = new Date().getTime();
         this.isOfferExpired = currentDateTime > response.vencimiento;
