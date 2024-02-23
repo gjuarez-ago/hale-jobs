@@ -12,7 +12,7 @@
 
 
   
-  <div class="content" >   
+  <div class="content" *ngIf="currentElement">   
     <div class="offer-status-card" *ngIf="!isLoadingGetCurrentElement">
       <span
         nz-icon
@@ -169,7 +169,7 @@
             <img
               *ngIf="currentElement.showCompany"
               alt="example"
-              src="{{ currentElement && companyImage }}"
+              src="{{ currentElement && currentElement.company.imageURL }}"
             />
             <img
               *ngIf="!currentElement.showCompany"

@@ -69,6 +69,12 @@
             Empleos
           </ng-template>
 
+          
+    <nz-skeleton *ngIf="isLoadingTableO && offers.length == 0" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingTableO && offers.length == 0" ></nz-skeleton>
+    <nz-skeleton *ngIf="isLoadingTableO && offers.length == 0" ></nz-skeleton>
+  
+
           <div class="offer-content" *ngFor="let item of offers">
             <a routerLink="/view-job/{{item.id}}" target="_blank">
            
@@ -94,20 +100,22 @@
             </a>
           </div>
 
+          <div class="" *ngIf="!isLoadingTableO && offers.length == 0">
+            <nz-empty
+            nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+            [nzNotFoundContent]="contentTpl"
+            >
+            <ng-template #contentTpl>
+              <span>
+                No existe ninguna vacante en este momento
+                <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
+              </span>
+            </ng-template>
+           </nz-empty>
+  
+          </div>
           
-          <nz-empty
-          [hidden]="offers.length > 0"
-          nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
-          [nzNotFoundContent]="contentTpl"
-          >
-          <ng-template #contentTpl>
-            <span>
-              No existe ninguna vacante en este momento
-              <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
-            </span>
-          </ng-template>
-         </nz-empty>
-
+         
           <div class="form-inline">
             <div class="pagination-content">
               <nz-pagination
@@ -129,7 +137,13 @@
             Comentarios
           </ng-template>
 
-          <nz-list [nzNoResult]="contentTplp" [nzDataSource]="opinions" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+          <div class="" *ngIf="isLoadingTableOp && opinions.length == 0" >
+            <nz-skeleton  ></nz-skeleton>
+            <nz-skeleton  ></nz-skeleton>
+            <nz-skeleton  ></nz-skeleton>
+          </div>
+        
+          <nz-list *ngIf="isLoadingTableOp && opinions.length > 0" [nzDataSource]="opinions" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
             <ng-template #item let-item>
               <nz-comment [nzAuthor]="item.title">
                 <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item"></nz-avatar>
@@ -164,6 +178,22 @@
               </nz-comment>
             </ng-template>
           </nz-list>
+
+          <div class="" *ngIf="!isLoadingTableOp && opinions.length == 0">
+            <nz-empty
+            nzNotFoundImage="https://cdn-icons-png.flaticon.com/512/1437/1437185.png"
+            [nzNotFoundContent]="contentTpl"
+            >
+            <ng-template #contentTpl>
+              <span>
+                No existe ninguna vacante en este momento
+                <!-- <a  (click)="navigate()">¿Deseas seguir buscando?</a> -->
+              </span>
+            </ng-template>
+           </nz-empty>
+  
+          </div>
+          
 
           <div class="form-inline">
             <div class="pagination-content">

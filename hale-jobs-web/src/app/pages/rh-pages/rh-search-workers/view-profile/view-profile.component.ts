@@ -38,6 +38,9 @@ export class ViewProfileComponent implements OnInit {
   styleSheet: string = '';
   public isLoadingLanguaje: boolean = false;
   isLoadingcurrentUser: boolean = false;
+  isLoadingGetSkills: boolean = false;
+  isLoadingGetSchool: boolean = false;
+  isLoadingGetCertifications: boolean = false;
   
   constructor(
     private modalService: NzModalService,
@@ -68,6 +71,12 @@ export class ViewProfileComponent implements OnInit {
       this.title.setTitle("buscando...")
       // this.getStates();
   
+      this.loadingListWorkExperiences = true;
+      this.isLoadingGetSkills = true;
+      this.isLoadingGetSchool = true;
+      this.isLoadingGetCertifications = true;
+      this.isLoadingLanguaje = true;
+
       this.getCurrentUser(this.username);
 
       
@@ -86,7 +95,6 @@ export class ViewProfileComponent implements OnInit {
 
   
   getskillsByUser(id : any) {
-    this.isLoadingGeneral = true;
     this.cvService.getSkillsByUser(id).subscribe(
       (response: any) => {
        this.listSkills = [];
@@ -94,18 +102,18 @@ export class ViewProfileComponent implements OnInit {
           this.listSkills.push(prop.value)   
        }); 
 
-        this.isLoadingGeneral = false;       
+        this.isLoadingGetSkills = false;       
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create("error", 'Ha ocurrido un error al recuperar las skills');
-        this.isLoadingGeneral = false;
+        this.isLoadingGetSkills = false;
       }
     )
   }
 
 
   getWorkExperiencesByUser(id : any) {
-    this.loadingListWorkExperiences = true;
+
     this.ngxSpinner.show();
     this.cvService.workExperiencesByUser(id).subscribe(
       (response: any) => {  
@@ -123,21 +131,19 @@ export class ViewProfileComponent implements OnInit {
 
 
   getSchoolsByUser(id : any) {
-    this.isLoadingGeneral = true;
     this.cvService.getSchoolsByUser(id).subscribe(
       (response: any) => {
        this.listSchools = response;
-        this.isLoadingGeneral = false;       
+        this.isLoadingGetSchool = false;       
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create("error", 'Ha ocurrido un error al recuperar las escuelas');
-        this.isLoadingGeneral = false;
+        this.isLoadingGetSchool = false;
       }
     )
   }
 
   public getLanguajes(userId: any) {
-    this.isLoadingLanguaje = true;
     this.cvService.getLanguajesAll(userId).subscribe(
       (response: any) => {
         this.listLanguajes = response;
@@ -154,15 +160,14 @@ export class ViewProfileComponent implements OnInit {
   }
   
   getCertificationsByUser(id : any) {
-    this.isLoadingGeneral = true;
     this.cvService.getCertificationsByUser(id).subscribe(
       (response: any) => {
        this.listCertifications = response;
-        this.isLoadingGeneral = false;       
+        this.isLoadingGetCertifications = false;       
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create("error", 'Ha ocurrido un error al recuperar las certificaciones');
-        this.isLoadingGeneral = false;
+        this.isLoadingGetCertifications = false;
       }
     )
   }
@@ -176,8 +181,8 @@ export class ViewProfileComponent implements OnInit {
         
        this.userInformation = response;
        this.previewImage = 'https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg';
-       this.isLoadingcurrentUser = false;       
-
+       this.isLoadingcurrentUser = false;  
+       
       this.getWorkExperiencesByUser(response.id);
       this.getskillsByUser(response.id);
       this.getSchoolsByUser(response.id);

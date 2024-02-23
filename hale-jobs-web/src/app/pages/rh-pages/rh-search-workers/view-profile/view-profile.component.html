@@ -115,6 +115,7 @@
                   <div class="we">
                     <p class="p-s">
                       <strong> Acerca de mi: </strong>
+                      <br>
                       {{ userInformation && userInformation.aboutMe }}
                     </p>
                   </div>
@@ -126,7 +127,7 @@
                   <div class="title">Experiencia profesional</div>
                 </div>
 
-                <div *ngIf="loadingListWorkExperiences">
+                <div *ngIf="loadingListWorkExperiences && listWorkExperiences.length == 0">
                   <nz-skeleton></nz-skeleton>
                   <nz-skeleton></nz-skeleton>
                   <nz-skeleton></nz-skeleton>
@@ -192,12 +193,18 @@
                   </p>
                 </div>
 
+                  
+                
+                <div *ngIf="listSkills.length == 0 && isLoadingGetSkills">
+                  <nz-skeleton></nz-skeleton>
+                </div>
+
                 <div class="skill-list">
                   <div class="skill-element" *ngFor="let skill of listSkills">
                     {{ skill }}
                   </div>
 
-                  <div class="card-eduss" *ngIf="listSkills.length == 0">
+                  <div class="card-eduss" *ngIf="!isLoadingGetSkills && listSkills.length == 0">
                     <nz-empty></nz-empty>
                   </div>
                 </div>
@@ -208,7 +215,18 @@
                   <div class="title">Educación</div>
                 </div>
 
-                <div *ngIf="listSchools.length > 0">
+
+                <div *ngIf="listSchools.length == 0 && isLoadingGetSchool">
+                  <nz-skeleton></nz-skeleton>
+                  <nz-skeleton></nz-skeleton>
+                  <nz-skeleton></nz-skeleton>
+
+                </div>
+          
+
+
+
+                <div *ngIf="!isLoadingGetSchool && listSchools.length > 0">
                   <div
                     class="education-content"
                     *ngFor="let education of listSchools; index as i"
@@ -238,7 +256,7 @@
                   </div>
                 </div>
 
-                <div class="card-edus" *ngIf="listSchools.length == 0">
+                <div class="card-edus" *ngIf="!isLoadingGetSchool && listSchools.length == 0">
                   <nz-empty></nz-empty>
                 </div>
               </div>
@@ -248,7 +266,13 @@
                   <div class="title">Certificaciones</div>
                 </div>
 
-                <div *ngIf="listCertifications.length > 0">
+                <div *ngIf="listCertifications.length == 0 && isLoadingGetCertifications">
+                  <nz-skeleton></nz-skeleton>
+                  <nz-skeleton></nz-skeleton>
+                  <nz-skeleton></nz-skeleton>
+                </div>
+
+                <div *ngIf="!isLoadingGetCertifications && listCertifications.length > 0">
                   <div
                     class="education-content"
                     *ngFor="let certificate of listCertifications; index as i"
@@ -277,7 +301,7 @@
                   </div>
                 </div>
 
-                <div class="card-edus" *ngIf="listCertifications.length == 0">
+                <div class="card-edus" *ngIf="!isLoadingGetCertifications && listCertifications.length == 0">
                   <nz-empty></nz-empty>
                 </div>
               </div>
@@ -287,7 +311,16 @@
                   <div class="title">Habilidades lingüísticas</div>
                 </div>
 
-                <div *ngIf="listLanguajes.length > 0">
+
+
+                
+                <div *ngIf="listLanguajes.length == 0 && isLoadingLanguaje">
+                  <nz-skeleton></nz-skeleton>
+                  <nz-skeleton></nz-skeleton>
+                  <nz-skeleton></nz-skeleton>
+                </div>
+
+                <div *ngIf="!isLoadingLanguaje && listLanguajes.length > 0">
                   <div
                     class="education-content"
                     *ngFor="let education of listLanguajes; index as i"
@@ -318,7 +351,7 @@
                   </div>
                 </div>
 
-                <div class="card-edus" *ngIf="listLanguajes.length == 0">
+                <div class="card-edus" *ngIf="!isLoadingLanguaje && listLanguajes.length == 0">
                   <nz-empty></nz-empty>
                 </div>
               </div>
@@ -428,6 +461,8 @@
                 </p>
               </article>
             </div>
+
+
           </article>
           <div class="clear"></div>
         </section>

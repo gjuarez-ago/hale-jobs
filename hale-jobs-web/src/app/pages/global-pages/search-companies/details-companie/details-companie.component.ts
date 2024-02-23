@@ -82,6 +82,9 @@ export class DetailsCompanieComponent implements OnInit {
       this.role = this.user.role;
     } 
 
+    this.isLoadingTableO = true;
+    this.isLoadingTableOp = true;
+
     this.companyId = this.actRoute.snapshot.params.id;
     this.getCopmanyById(this.companyId);
   }
@@ -109,7 +112,6 @@ export class DetailsCompanieComponent implements OnInit {
   }
 
   public getOfferByCompany(): void {
-    this.isLoadingTableO = true;
     this.subscriptions.push(
       this.offerService
         .getOfferByCompany({
@@ -148,7 +150,6 @@ export class DetailsCompanieComponent implements OnInit {
   }
 
   public getOpinionsByCompany(): void {
-    this.isLoadingTableOp = true;
     this.subscriptions.push(
       this.companyService
         .getOpinionsByCompay({
