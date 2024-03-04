@@ -125,7 +125,6 @@ export class SearchOffersComponent implements OnInit {
   }
 
   public resetFilter() {
-
     this.validateForm = this.fb.group({
       title: [''],
       subcategory: [''],
@@ -136,12 +135,10 @@ export class SearchOffersComponent implements OnInit {
       state: [''],
     });
 
-
     this.categorySelected = 1;
   }
 
   public getListPaginate(): void {
-
     this.ngxSpinner.show();
     this.isLoadingTable = true;
     this.subscriptions.push(
@@ -232,7 +229,10 @@ export class SearchOffersComponent implements OnInit {
             this.onActivate();
             this.isLoadingTable = false;
             this.ngxSpinner.hide();
-            this.comparteUserOffers(this.userApplications, this.offers);
+            if (this.authService.isUserLoggedIn()) {
+              this.getUserApplications(this.userId);
+              this.comparteUserOffers(this.userApplications, this.offers);
+            }
           },
           (errorResponse: HttpErrorResponse) => {
             this.isLoadingTable = false;

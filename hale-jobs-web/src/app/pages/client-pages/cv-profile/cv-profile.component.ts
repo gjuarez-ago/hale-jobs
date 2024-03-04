@@ -86,7 +86,11 @@ export class CvProfileComponent implements OnInit {
       Validators.required,
       Validators.maxLength(50),
     ]),
-    aboutMe: new FormControl(null,[ Validators.required, Validators.minLength(30), Validators.maxLength(2500)]),
+    aboutMe: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(30),
+      Validators.maxLength(2500),
+    ]),
   });
 
   //VARIABLES EXPERIENCIA USUARIO ------------------------------------------------------
@@ -154,7 +158,7 @@ export class CvProfileComponent implements OnInit {
   isLoadingSkills: boolean = false;
   isLoadingGetSchool: boolean = false;
   isLoadingGetCertifications: boolean = false;
-  isLoadingActionLanguaje: boolean = false; 
+  isLoadingActionLanguaje: boolean = false;
   isLoadingEditUser: boolean = false;
   isLoadingActionExp: boolean = false;
 
@@ -204,6 +208,7 @@ export class CvProfileComponent implements OnInit {
         this.userInformationOriginal = response;
         this.isLoadingUserInformacion = false;
         this.ngxSpinner.hide();
+        console.log(response);
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create(
@@ -974,7 +979,6 @@ export class CvProfileComponent implements OnInit {
           response.ends = undefined;
         }
         this.isLoadingSchoolAction = false;
-
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create(
@@ -1042,7 +1046,6 @@ export class CvProfileComponent implements OnInit {
   }
 
   public saveLanguaje() {
-
     if (!this.languajeForm.valid) {
       Object.values(this.languajeForm.controls).forEach((control) => {
         if (control.invalid) {

@@ -368,163 +368,95 @@
 </div>
 
 <div id="pdf">
-  <div class="body">
-    <div id="drag" class="cv instaFade wrap">
-      <div class="mainDetails">
-        <div id="headshot" class="">
-          <!-- <img
-            src="http://localhost:8081/user/image/gjuarez@agoconsultores.com.mx/gjuarez@agoconsultores.com.mx.jpg"
-            title="Hi, I'm Jenny!"
-            alt="Jennifer Mogan"
-          /> -->
-        </div>
+  <div>
+    <div class="contenedor">
+      <h2 class="mrg-0">¡Hola!</h2>
+      <h2 style="color: black" class="mrg-0">{{ userInformation.surnames }}</h2>
+      <span class="mrg-0"
+        >{{ userInformation.city.valor }},
+        {{ userInformation.state.valor }}</span
+      >
+      <br />
+      <span class="mrg-0">{{ userInformation.numberPhone }}</span> <br />
+      <span class="mrg-0">{{ userInformation.username }}</span>
 
-        <div id="name">
-          <h1 class="quickFade delayTwo">¡Hola!</h1>
-          <h1 class="quickFade delayTwo">
-            Soy {{ userInformation && userInformation.surnames }}
-          </h1>
+      <br />
+
+      <h2 class="list-title">Habilidades</h2>
+      <ul class="mrg-0">
+        <li *ngFor="let skill of listSkills">{{ skill }}</li>
+      </ul>
+
+      <div *ngIf="listWorkExperiences.length > 0">
+        <h2>Experiencia</h2>
+        <div *ngFor="let experience of listWorkExperiences; index as i">
+          <span class="gray-color"
+            >{{ experience.begins | date : "MMM, y" }} -
+            {{
+              experience.worked
+                ? "Actualmente"
+                : (experience.ends | date : "MMM, y")
+            }}</span
+          >
           <br />
-          <h4 class="quickFade delayThree">
-            <i nz-icon nzType="home" nzTheme="outline"></i>
-            {{ userInformation && userInformation.city.valor }},
-            {{ userInformation && userInformation.state.valor }}
-          </h4>
-          <h4 class="quickFade delayThree">
-            <i nz-icon nzType="phone" nzTheme="outline"></i>
-            {{ userInformation && userInformation.numberPhone }}
-          </h4>
-          <h4 class="quickFade delayThree">
-            <i nz-icon nzType="mail" nzTheme="outline"></i>
-            {{ userInformation && userInformation.username }}
-          </h4>
+          <strong>{{ experience.company }}</strong> -
+          <span>{{ experience.job }}</span>
+          <p class="mrg-0">
+            {{ experience.description }}
+          </p>
+          <br />
         </div>
+      </div>
 
-        <div id="contactDetails" class="quickFade delayFour">
-          <ul>
-            <!-- <li><a href="//linkedin.com/in/jennifermogan" title="LinkedIn"><i class="fa fa-print" aria-hidden="true"></i></a></li>-->
+      <div *ngIf="listSchools.length > 0">
+        <h2>Edudcación</h2>
+        <div *ngFor="let education of listSchools; index as i">
+          <div>
+            <span
+              >{{ education.begins | date : "MMM, y" }} -
+              {{
+                education.worked
+                  ? "Cursando"
+                  : (education.ends | date : "MMM,y")
+              }}</span
+            >
+            <br />
+            <strong> {{ education.name }}</strong> -
+            <span>{{ education.schoolName }} - {{ education.type }}</span>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div *ngIf="listCertifications.length > 0">
+        <h2>Certificaciones</h2>
+        <div *ngFor="let certificate of listCertifications; index as i">
+          <div>
+            <strong>{{ certificate.name }} </strong>
+            <p class="mrg-0">
+              {{ certificate.description }}
+            </p>
+            <a [href]="certificate.url" target="_blank" class="mrg-0">{{
+              certificate.url
+            }}</a>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div *ngIf="listLanguajes.length > 0">
+        <h2>Habilidades lingüísticas</h2>
+        <div
+          class="education-content"
+          *ngFor="let education of listLanguajes; index as i"
+        >
+          <ul class="mrg-0">
             <li>
-              <a href="//linkedin.com/in/jennifermogan" title="LinkedIn"
-                ><i class="fa fa-linkedin-square" aria-hidden="true"></i
-              ></a>
+              <strong> {{ education.name }} - {{ education.level }}</strong>
             </li>
           </ul>
         </div>
-        <div class="clear"></div>
-      </div>
-
-      <div id="mainArea" class="quickFade delayFive">
-        <section>
-          <article>
-            <h1 class="quickFade delayTwo">Habilidades</h1>
-          </article>
-          <div class="clear"></div>
-        </section>
-
-        <section>
-          <article>
-            <div class="sectionTitle">
-              <h1>Acerca de mi</h1>
-            </div>
-
-            <div class="sectionContent">
-              <p class="p-s">
-                {{ userInformation && userInformation.aboutMe }}
-              </p>
-            </div>
-          </article>
-          <div class="clear"></div>
-        </section>
-
-        <section>
-          <article>
-            <div class="sectionTitle">
-              <h1>Experiencia profesional</h1>
-            </div>
-
-            <div class="sectionContent">
-              <article
-                *ngFor="let experience of listWorkExperiences; index as i"
-              >
-                <h2>{{ experience.job }}</h2>
-                <h3>{{ experience.company }}</h3>
-                <p class="subDetails">
-                  {{ experience.begins | date : "MMM, y" }} -
-                  {{
-                    experience.worked
-                      ? "Actualmente"
-                      : (experience.ends | date : "MMM, y")
-                  }}
-                </p>
-                <p class="p-s">
-                  {{ experience.description }}
-                </p>
-              </article>
-            </div>
-          </article>
-          <div class="clear"></div>
-        </section>
-
-        <section>
-          <div class="sectionTitle">
-            <h1>Habilidades</h1>
-          </div>
-
-          <div class="sectionContent">
-            <ul class="keySkills">
-              <li *ngFor="let skill of listSkills">
-                {{ skill }}
-              </li>
-            </ul>
-          </div>
-          <div class="clear"></div>
-        </section>
-
-        <section id="Education">
-          <div class="sectionTitle">
-            <h1>Educación</h1>
-          </div>
-
-          <div class="sectionContent">
-            <article *ngFor="let education of listSchools; index as i">
-              <h2>{{ education.name }}</h2>
-              <h3>{{ education.schoolName }} - {{ education.type }}</h3>
-              <p>
-                {{ education.begins | date : "MMM, y" }} -
-                {{
-                  education.worked
-                    ? "Cursando"
-                    : (education.ends | date : "MMM,y")
-                }}
-              </p>
-            </article>
-          </div>
-          <div class="clear"></div>
-        </section>
-
-        <section id="Education">
-          <div class="sectionTitle">
-            <h1>Certificaciones</h1>
-          </div>
-
-          <div class="sectionContent">
-            <article *ngFor="let certificate of listCertifications; index as i">
-              <h2>
-                {{ certificate.name }}
-              </h2>
-              <a href="{{ certificate.url }}" target="_blank">
-                <p class="subDetails">Ver certificado</p>
-              </a>
-              <p class="p-s">{{ certificate.description }}</p>
-            </article>
-          </div>
-          <div class="clear"></div>
-        </section>
       </div>
     </div>
-
-    <!-- <div class="logo">
-      <a href="">  <img src="assets/images/logo-b.png" alt="" > </a>
-    </div> -->
   </div>
 </div>
