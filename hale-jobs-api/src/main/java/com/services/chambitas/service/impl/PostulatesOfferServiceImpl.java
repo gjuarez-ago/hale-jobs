@@ -69,16 +69,13 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		
 		postulatesOfferRepository.save(element);
 		createNotication("Se ha registrado un cambio en tu oferta " + offer.getTitle(), "El usuario " + user.getUsername() + " se ha postulado a tu vacante " + offer.getTitle(), offer.getUser().getEmail(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
-
-		emailService.sendNewPasswordEmail("Test 1", "Test 1","bicosind@gmail.com");
-		emailService.sendNotification("Test 2", "Test 2", "bicosind@gmail.com");
-		emailService.resetPassword("Test 3", "Test 3", "bicosind@gmail.com");
-		
+		emailService.sendNotificationPostulacion(offer, user, offer.getUser().getUsername());
+	
 		return element;
 	}
 
 	@Override
-	public PostulatesOffer changeStatus(Long id, PostulateByOfferDTO request) throws GenericException {
+	public PostulatesOffer changeStatus(Long id, PostulateByOfferDTO request) throws GenericException, MessagingException {
 		
 		PostulatesOffer element =  existPostulatesOffer(id);
 		User user =  existUser(request.getUserId());
@@ -91,16 +88,18 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		element.setCompleted(true);
 		
 		if(request.getStatus() == 1) {
-		  r = "¡Felicides!. Han decidido continuar el proceso contigo, por lo que te recomendamos estar pendiente a tus medios de comunicación que indicaste en tu CV";	
+		  r = "¡Felicides!," + element.getOffer().getCompany().getName() + " ha decidido continuar el proceso contigo para la vacante: " + element.getOffer().getTitle() +  ", por lo que te recomendamos estar pendiente a tus medios de comunicación que indicaste en tu CV";	
+		  emailService.sendNotificationSeleccionado("¡Felicides!,\" + element.getOffer().getCompany().getName() + \" ha decidido continuar el proceso contigo, por lo que te recomendamos estar pendiente a tus medios de comunicación que indicaste en tu CV", element.getOffer(), element.getUser(), element.getUser().getUsername());
 		}
 		
 		if(request.getStatus() == 2) {
 		r = "Lo sentimos, pero al parecer han decidido no continuar el proceso contigo, te pedimos no te desanimes y te agradecemos formar parte de este proceso, te recomendamos buscar mas ofertas dentro de nuestro portal.";	
+		emailService.sendNotificationRechazo("Lamentablemente," + element.getOffer().getCompany().getName()  + " ha decidió no continuar con tu postulación para la vacante '" + element.getOffer().getTitle() + "' en este momento.", element.getOffer(), element.getUser(), element.getUser().getUsername());
 		}
 
 		
 		postulatesOfferRepository.save(element);	
-		createNotication("Se ha registrado un cambio en tu postulación '" + element.getOffer().getTitle() + "'", r, element.getUser().getUsername(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
+		createNotication("Se ha registrado un cambio en tu postulación: '" + element.getOffer().getTitle() + "'", r, element.getUser().getUsername(), user.getUsername(), element.getOffer().getId(), user.getId(), "OFERTAS");
 
 		return element;
 	}
@@ -232,7 +231,7 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 	}
 
 	@Override
-	public Notification messagePostulate(PostulateByOfferDTO request) throws GenericException {
+	public Notification messagePostulate(PostulateByOfferDTO request) throws GenericException, MessagingException {
 		
 		Offer offer = exisOffer(request.getOfferId());
 		User user =  existUser(request.getUserId());
@@ -252,8 +251,9 @@ public class PostulatesOfferServiceImpl implements IPostulatesByOfferService{
 		n.setUserId(request.getUserId());
 		n.setStatus(0);
 		noticationRespository.save(n);
+		emailService.sendNotificationUser(request.getComments(), offer, user, user.getEmail());
 		
-		return null;
+		return n;
 	}
 	
 }

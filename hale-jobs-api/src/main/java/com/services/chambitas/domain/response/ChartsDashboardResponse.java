@@ -1,6 +1,5 @@
 package com.services.chambitas.domain.response;
 
-import java.util.List;
 
 import lombok.Data;
 

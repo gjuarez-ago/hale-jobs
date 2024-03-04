@@ -38,7 +38,6 @@ import com.services.chambitas.repository.ICountriesRepository;
 import com.services.chambitas.repository.IJobCategoryRepository;
 import com.services.chambitas.repository.IJobSubcategoryRepository;
 import com.services.chambitas.repository.ILevelStudyRepository;
-import com.services.chambitas.repository.INotificationRepository;
 import com.services.chambitas.repository.IOfferRepository;
 import com.services.chambitas.repository.IRangeAmountRepository;
 import com.services.chambitas.repository.IStateRepository;
@@ -94,6 +93,9 @@ public class OfferServiceImpl implements IOfferService{
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	private EmailService emailService;
 	
 	
 	@Override
@@ -213,6 +215,7 @@ public class OfferServiceImpl implements IOfferService{
 		element.setRegUpdateBy(userId);
 		
 		offerRepository.save(element);
+		// emailService.sendNotificationCerrar("La oferta DESARROLLADOR JAVA ha sido cerrada.", element, null, null);
 		
 		return element;
 	}

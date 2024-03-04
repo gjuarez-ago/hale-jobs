@@ -192,12 +192,14 @@
       <div class="top-bar"></div>
 
       <div class="content">
+        
+        <!-- [src]="getImage(item.profileImageUrl)" -->
         <img
-          [src]="getImage(item.profileImageUrl)"
+          src="https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg"
           alt=""
         />
         <strong>{{item.surnames}}</strong>
-        <p>{{item.jobTitle}} - {{item.id}}</p>
+        <p>{{item.jobTitle}}</p>
       </div>
       <div class="btn">
         <nz-space>
@@ -244,7 +246,7 @@
 
       <div class="p-s sl">
         <p>
-          {{item.aboutMe}}
+          {{cutDescription(item.aboutMe)}}
         </p>
       </div>
     </div>

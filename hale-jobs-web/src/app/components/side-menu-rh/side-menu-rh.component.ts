@@ -278,9 +278,11 @@ export class SideMenuRh implements OnInit {
     this.getNotifications();
   }
 
-  public navigateViewJob(id: any) {
+  public navigateViewJob(element: any) {
+
+      
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/view-worker/${id}`])
+      this.router.createUrlTree([`/dashboard/view-worker/${element.id}`])
     );
     window.open('#' + url, '_blank');
   }

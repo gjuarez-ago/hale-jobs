@@ -67,5 +67,4 @@ public class PostulatesOffer implements Serializable{
 	@Column(columnDefinition = "integer default 0")
 	private int regBorrado;
 
-
 }

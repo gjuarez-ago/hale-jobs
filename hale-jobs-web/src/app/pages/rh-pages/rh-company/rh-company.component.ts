@@ -106,7 +106,14 @@ export class RhCompanyComponent implements OnInit {
       .subscribe(
         (response: any) => {
 
-          this.data = response.content;
+          this.data = response.content.map((prop: any, key: any) => {
+            return {
+              ...prop,
+              imageBase64: 'data:image/png;base64,' + prop.imageBase64,
+              key: key + 1,
+            };
+          });
+
           this.isLoadingGeneral = false;
           this.total = response.totalElements;
           this.totalElementByPage = response.numberOfElements;
@@ -142,7 +149,13 @@ export class RhCompanyComponent implements OnInit {
         })
         .subscribe(
           (response: any) => {
-            this.data = response.content;
+            this.data = response.content.map((prop: any, key: any) => {
+              return {
+                ...prop,
+                imageBase64: 'data:image/png;base64,' + prop.imageBase64,
+                key: key + 1,
+              };
+            });
             this.total = response.totalElements;
             this.totalElementByPage = response.numberOfElements;
             this.isLoadingTable = false;

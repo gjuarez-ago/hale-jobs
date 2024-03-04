@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -51,6 +52,7 @@ public class Company implements Serializable {
 	
 	private Long ownerId;
 	
+	
 	private String RFC;
 	
 	private String regimenFiscal;
@@ -62,7 +64,14 @@ public class Company implements Serializable {
 	private String numberPhone;
 	
 	private String emailContact;
+
+	@Lob
+    @Column(name = "imagedata", length = 1500)
+    private byte[] imageData;
 	
+	@Column(nullable = false, columnDefinition = "TEXT")
+	private String imageBase64;
+
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String address;
 	

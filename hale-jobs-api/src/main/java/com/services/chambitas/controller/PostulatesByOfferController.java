@@ -37,14 +37,14 @@ public class PostulatesByOfferController {
 	}
 	
 	@PostMapping("/message-user")
-	public ResponseEntity<Notification> messagePostulate(@RequestBody PostulateByOfferDTO request) throws GenericException {
+	public ResponseEntity<Notification> messagePostulate(@RequestBody PostulateByOfferDTO request) throws GenericException, MessagingException {
 		Notification response = service.messagePostulate(request);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}
 	
 	
 	@PostMapping("/change-status/{key}")
-	public ResponseEntity<PostulatesOffer> editPostulation(@PathVariable("key") Long id,@RequestBody PostulateByOfferDTO request) throws GenericException {
+	public ResponseEntity<PostulatesOffer> editPostulation(@PathVariable("key") Long id,@RequestBody PostulateByOfferDTO request) throws GenericException, MessagingException {
 		PostulatesOffer response = service.changeStatus(id, request);
 	    return new ResponseEntity<>(response , HttpStatus.OK);
 	}

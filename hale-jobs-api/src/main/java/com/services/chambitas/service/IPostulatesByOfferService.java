@@ -18,10 +18,10 @@ public interface IPostulatesByOfferService {
 	// Postularme a una oferta
 	PostulatesOffer createPostulation(PostulateByOfferDTO request) throws GenericException, MessagingException;
 	
-	Notification messagePostulate(PostulateByOfferDTO request) throws GenericException;
+	Notification messagePostulate(PostulateByOfferDTO request) throws GenericException, MessagingException;
 	
 	// Editar postulación
-	PostulatesOffer changeStatus(Long id, PostulateByOfferDTO request) throws GenericException;
+	PostulatesOffer changeStatus(Long id, PostulateByOfferDTO request) throws GenericException, MessagingException;
 	
 	// Eliminar postulación
 	PostulatesOffer deletePostulation(Long id, Long userId) throws GenericException;

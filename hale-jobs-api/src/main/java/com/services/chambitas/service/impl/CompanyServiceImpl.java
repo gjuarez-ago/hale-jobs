@@ -16,9 +16,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import org.apache.tomcat.util.codec.binary.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.Base64.Encoder;
 
 import javax.transaction.Transactional;
 
@@ -39,6 +41,7 @@ import com.services.chambitas.exception.domain.NotAnImageFileException;
 import com.services.chambitas.repository.ICompanyRepository;
 import com.services.chambitas.repository.IFileRepository;
 import com.services.chambitas.service.ICompanyService;
+import com.services.chambitas.utility.ImageUtil;
 
 @Service
 @Transactional
@@ -59,7 +62,8 @@ public class CompanyServiceImpl implements ICompanyService{
 		
 	@Override
 	public Company findCompanyById(Long id) throws GenericException {
-		return existCompany(id);
+		Company company= existCompany(id);	
+		return company;
 	}
 
 	@Override
@@ -93,6 +97,12 @@ public class CompanyServiceImpl implements ICompanyService{
 	public Page<Company> getCompaniesGlobal(String keyword, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
 		Page<Company> response = repository.getCompaniesGlobal(keyword, pageable);
+
+		// for (Company company : response.getContent()) {
+		// String encoded64 = new String(company.getImageData()); 
+		// company.setImageBase64(encoded64);
+		// }
+
 		return response;	
 	}
 	
@@ -101,21 +111,27 @@ public class CompanyServiceImpl implements ICompanyService{
 			String urlLinkedin, Long ownerId, String regimenFiscal, String rfc, String address, String numberPhone, String emailContact, String sizeCompany,  boolean showCompany, boolean updateImagen) throws GenericException, NotAnImageFileException, IOException {
 		
 	    Company company = existCompany(id);
-	    validateRFCUpdated(rfc, company.getRFC());
-	    validateNameUpdated(name, company.getName());
+	    // validateRFCUpdated(rfc, company.getRFC());
+	    // validateNameUpdated(name, company.getName());
 	    
-		if(updateImagen) {
-			
-	        File entityFile = new File();
-	        
+		    if(updateImagen) {
+
+				
 			if(!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(image.getContentType())) {
 	            throw new NotAnImageFileException(image.getOriginalFilename() + "is not an image file. Please upload an image file");
 			}
-			
-			saveImage(ownerId, entityFile, image);
-		    company.setImageURL(entityFile.getRouteFile());
+				byte[] imageB = Base64.encodeBase64(image.getBytes());
+				String result = new String(imageB);
+				System.out.println(result);
+				
+		company.setImageData(imageB);
+		company.setImageBase64(result);
+	
+			}
+	        
 
-		}
+
+		
 		
 		company.setEmailContact(emailContact);
 		company.setNumberPhone(numberPhone);
@@ -131,10 +147,11 @@ public class CompanyServiceImpl implements ICompanyService{
 	    company.setRFC(rfc);
 	    company.setSizeCompany(sizeCompany);	    
 	    company.setUrlLinkedin(urlLinkedin);
-	    company.setUrlSite(urlSite);
-	   
+	    company.setUrlSite(urlSite);   
 	    company.setRegDateUpdated(new Date());
 	    company.setRegUpdateBy(ownerId);
+		repository.save(company);
+
 	    
 		return company;
 	}
@@ -148,6 +165,12 @@ public class CompanyServiceImpl implements ICompanyService{
 	public Page<Company> getCompaniesByOwner(Long ownerId,  String name, String rfc, String category, int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);   
 		Page<Company> response = repository.getCompaniesByOwnerId(ownerId, name, rfc, category,pageable);
+
+		// for (Company company : response.getContent()) {
+		// 	String encoded64 = new String(company.getImageData()); 
+		// 	company.setImageBase64(encoded64);
+		// }
+
 		return response;
 	}
 	
@@ -174,7 +197,12 @@ public class CompanyServiceImpl implements ICompanyService{
             throw new NotAnImageFileException(image.getOriginalFilename() + "is not an image file. Please upload an image file");
 		}
 		
-		saveImage(ownerId, entityFile, image);	
+
+		
+		byte[] imageB = Base64.encodeBase64(image.getBytes());
+		String result = new String(imageB);
+		System.out.println(result);
+
 		
 		company.setEmailContact(emailContact);
 		company.setNumberPhone(numberPhone);
@@ -189,10 +217,11 @@ public class CompanyServiceImpl implements ICompanyService{
 	    company.setRegimenFiscal(regimenFiscal);
 	    company.setRFC(rfc);
 	    company.setSizeCompany(sizeCompany);
-	    
+		company.setImageData(imageB);    
+		company.setImageBase64(result);
 	    company.setImageURL(entityFile.getRouteFile());
 	    company.setUrlLinkedin(urlLinkedin);
-	    company.setUrlSite(urlSite);
+	    company.setUrlSite("");
 	    
 	    company.setRegDateCreated(new Date());
 	    company.setRegCreatedBy(ownerId);

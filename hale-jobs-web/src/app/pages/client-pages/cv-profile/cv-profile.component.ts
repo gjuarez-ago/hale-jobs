@@ -109,7 +109,7 @@ export class CvProfileComponent implements OnInit {
     description: new FormControl(null, [
       Validators.required,
       Validators.minLength(50),
-      Validators.maxLength(200),
+      Validators.maxLength(500),
     ]),
   });
 
@@ -208,7 +208,6 @@ export class CvProfileComponent implements OnInit {
         this.userInformationOriginal = response;
         this.isLoadingUserInformacion = false;
         this.ngxSpinner.hide();
-        console.log(response);
       },
       (errorResponse: HttpErrorResponse) => {
         this.message.create(
