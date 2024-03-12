@@ -1649,6 +1649,21 @@
 
         <br />
 
+        <h2 class="list-title">Información personal</h2>
+        <br />
+        <strong>Puesto: </strong
+        ><span class="mrg-0">{{ userInformationOriginal.jobTitle }}</span>
+        <br />
+        <strong>Salrio: </strong>
+        <span class="mrg-0">{{ userInformationOriginal.salary.valor }}</span>
+        <br />
+        <strong>Acerca de mí: </strong>
+        <p class="mrg-0">
+          {{ userInformationOriginal.aboutMe }}
+        </p>
+        
+        <br />
+
         <h2 class="list-title">Habilidades</h2>
         <ul class="mrg-0">
           <li *ngFor="let skill of listSkills">{{ skill }}</li>
