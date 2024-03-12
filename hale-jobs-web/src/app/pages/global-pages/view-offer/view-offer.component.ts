@@ -34,6 +34,8 @@ export class ViewOfferComponent implements OnInit {
 
   public complaintForm!: FormGroup;
   public postulateForm!: FormGroup;
+  public rememberPostulateForm: boolean = false;
+
   isLoadingReview: boolean = false;
   isVisibleAdd: boolean = false;
   isVisibleAddPostulate: boolean = false;
@@ -43,7 +45,7 @@ export class ViewOfferComponent implements OnInit {
   public isOfferExpired: boolean = false;
   public offerStatusMessage: string = '';
   isLoadingGetCurrentElement: boolean = false;
-  companyImage: string = "";
+  companyImage: string = '';
 
   constructor(
     private readonly meta: Meta,
@@ -76,6 +78,7 @@ export class ViewOfferComponent implements OnInit {
       this.userId = this.user.id;
       this.role = this.user.role;
       this.getUserApplications(this.userId);
+      this.getAnswerFromLocal();
     }
 
     this.offerId = this.actRoute.snapshot.params.id;
@@ -98,7 +101,8 @@ export class ViewOfferComponent implements OnInit {
         this.comparteUserOffers(this.userApplications, this.currentElement);
         this.isLoadingGeneral = false;
 
-        this.companyImage = 'data:image/png;base64,' + response.company.imageBase64;
+        this.companyImage =
+          'data:image/png;base64,' + response.company.imageBase64;
 
         let currentDateTime = new Date().getTime();
         this.isOfferExpired = currentDateTime > response.vencimiento;
@@ -266,7 +270,7 @@ export class ViewOfferComponent implements OnInit {
             this.message.create('success', 'Te has postulado correctamente');
             this.isVisibleAddPostulate = false;
             this.addToLocalApplications(response);
-            this.complaintForm.reset();
+            this.rememberAnswerForm(form.comments);
           },
           (errorResponse: HttpErrorResponse) => {
             this.ngxSpinner.hide();
@@ -276,6 +280,15 @@ export class ViewOfferComponent implements OnInit {
           }
         )
     );
+  }
+
+  private rememberAnswerForm(answer: string) {
+    if (this.rememberPostulateForm) {
+      localStorage.setItem('offerPostulationAnswer', answer);
+    } else {
+      this.postulateForm.reset();
+      localStorage.removeItem('offerPostulationAnswer');
+    }
   }
 
   private createNotification(type: string, message: string): void {
@@ -300,6 +313,16 @@ export class ViewOfferComponent implements OnInit {
           this.userApplications = response;
         })
     );
+  }
+
+  private getAnswerFromLocal() {
+    const localAnswer = localStorage.getItem('offerPostulationAnswer');
+    if (localAnswer !== '' && localAnswer !== null) {
+      console.log('Existe una respuesta guardada', localAnswer);
+
+      this.postulateForm.patchValue({ comments: localAnswer });
+      this.rememberPostulateForm = true;
+    }
   }
 
   private comparteUserOffers(

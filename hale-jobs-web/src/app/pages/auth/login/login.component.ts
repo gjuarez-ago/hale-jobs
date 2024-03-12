@@ -40,7 +40,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      username: [null, [Validators.required]],
+      username: [
+        localStorage.getItem('username') || null,
+        [Validators.required],
+      ],
       password: [null, [Validators.required]],
       recaptcha: ['', Validators.required],
       remember: [true],
@@ -82,6 +85,7 @@ export class LoginComponent implements OnInit {
           this.isSpinning = false;
           // this.authenticationService.setUserActive(response.body);
           this.ngxSpinner.hide();
+          this.rememberUser(user.remember, user.username);
 
           if (this.offerId !== null) {
             this.router.navigateByUrl(`/view-job/${this.offerId}`);
@@ -96,6 +100,14 @@ export class LoginComponent implements OnInit {
         }
       )
     );
+  }
+
+  rememberUser(remember: boolean, username: string) {
+    if (remember) {
+      localStorage.setItem('username', username);
+    } else {
+      localStorage.removeItem('username');
+    }
   }
 
   createMessage(type: string, message: string): void {

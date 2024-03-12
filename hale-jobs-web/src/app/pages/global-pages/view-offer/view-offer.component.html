@@ -1,18 +1,28 @@
-
-
-<div class="content-skel" *ngIf="isLoadingGetCurrentElement && currentElement == null" > 
-<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
-<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
-<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
-<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
-<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
-<nz-skeleton *ngIf="isLoadingGetCurrentElement && currentElement == null" ></nz-skeleton>
+<div
+  class="content-skel"
+  *ngIf="isLoadingGetCurrentElement && currentElement == null"
+>
+  <nz-skeleton
+    *ngIf="isLoadingGetCurrentElement && currentElement == null"
+  ></nz-skeleton>
+  <nz-skeleton
+    *ngIf="isLoadingGetCurrentElement && currentElement == null"
+  ></nz-skeleton>
+  <nz-skeleton
+    *ngIf="isLoadingGetCurrentElement && currentElement == null"
+  ></nz-skeleton>
+  <nz-skeleton
+    *ngIf="isLoadingGetCurrentElement && currentElement == null"
+  ></nz-skeleton>
+  <nz-skeleton
+    *ngIf="isLoadingGetCurrentElement && currentElement == null"
+  ></nz-skeleton>
+  <nz-skeleton
+    *ngIf="isLoadingGetCurrentElement && currentElement == null"
+  ></nz-skeleton>
 </div>
-<div class="body-content" >
-
-
-  
-  <div class="content" *ngIf="currentElement">   
+<div class="body-content">
+  <div class="content" *ngIf="currentElement">
     <div class="offer-status-card" *ngIf="!isLoadingGetCurrentElement">
       <span
         nz-icon
@@ -30,12 +40,8 @@
         {{ offerStatusMessage }}
       </strong>
     </div>
-    
-    <div class="card-body" >
-      
 
-
-      
+    <div class="card-body">
       <div class="card-description">
         <div class="card-title">
           <h2>{{ currentElement && currentElement.title }}</h2>
@@ -149,18 +155,22 @@
           <nz-card-meta
             *ngIf="currentElement.showCompany"
             nzTitle="{{ currentElement && currentElement.company.name }}"
-            nzDescription="{{
-              currentElement && currentElement.company.emailContact
-            }}"
+            [nzDescription]="cardDescription1"
             [nzAvatar]="avatarTemplate"
           ></nz-card-meta>
-
+          <br />
           <nz-card-meta
             *ngIf="!currentElement.showCompany"
             nzTitle="Empresa confidencial"
             [nzAvatar]="avatarTemplate"
           ></nz-card-meta>
         </nz-card>
+
+        <ng-template #cardDescription1>
+          {{ currentElement.company.emailContact }} <br />
+          Teléfono: {{ currentElement.company.numberPhone }}
+        </ng-template>
+
         <div class="card-footer">
           <ng-template #avatarTemplate>
             <!-- <nz-avatar nzSrc="{{currentElement && currentElement.company.imageURL}}"></nz-avatar> -->
@@ -198,11 +208,6 @@
 
           <ng-template #shareSetting>
             <button
-              [disabled]="
-                role == 'ROLE_HR' ||
-                currentElement.isPostulated ||
-                isOfferExpired
-              "
               (click)="shareOffer(currentElement)"
               nz-button
               nzType="default"
@@ -235,10 +240,7 @@
           </ng-template>
         </div>
       </div>
-
     </div>
-
-
   </div>
 </div>
 
@@ -353,6 +355,10 @@
           </div>
         </nz-spin>
       </form>
+
+      <label nz-checkbox [(ngModel)]="rememberPostulateForm"
+        >Recuerda mi respuesta</label
+      >
     </div>
   </ng-container>
 

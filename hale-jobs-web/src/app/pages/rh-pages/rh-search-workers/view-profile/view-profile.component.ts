@@ -174,8 +174,6 @@ export class ViewProfileComponent implements OnInit {
     this.isLoadingcurrentUser = true;
     this.authenticationService.getCurrentUserById(username).subscribe(
       (response: any) => {
-        console.log(response);
-
         this.userInformation = response;
         this.previewImage =
           'https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg';
@@ -210,7 +208,11 @@ export class ViewProfileComponent implements OnInit {
     printWindow.document.close();
     printWindow.document.close();
     // printWindow.focus();
-    printWindow.document.title = this.userInformation.username;
+
+    printWindow.document.title = `${this.userInformation.surnames.replace(
+      / /g,
+      '-'
+    )}-CV`;
     printWindow.print();
   }
 }

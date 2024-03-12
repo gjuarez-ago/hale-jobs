@@ -1632,8 +1632,8 @@
   <!-- alalslslsls -->
 
   <div id="pdf-2">
-    <div class="body" *ngIf="userInformationOriginal">
-      <div class="contenedor">
+    <div class="body">
+      <div class="contenedor" *ngIf="userInformationOriginal">
         <h2 class="mrg-0">¡Hola!</h2>
         <h2 style="color: black" class="mrg-0">
           {{ userInformationOriginal.surnames }}
@@ -1703,9 +1703,9 @@
               <p class="mrg-0">
                 {{ certificate.description }}
               </p>
-              <a [href]="certificate.url" target="_blank" class="mrg-0">{{
-                certificate.url
-              }}</a>
+              <a [href]="certificate.url" target="_blank" class="mrg-0"
+                >Ver cerificado</a
+              >
             </div>
             <br />
           </div>

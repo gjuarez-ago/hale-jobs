@@ -1442,7 +1442,10 @@ export class CvProfileComponent implements OnInit {
     );
     printWindow.document.close();
     // printWindow.focus();
-    printWindow.document.title = this.userInformationOriginal.username;
+    printWindow.document.title = `${this.userInformationOriginal.surnames.replace(
+      / /g,
+      '-'
+    )}-CV`;
     printWindow.print();
   }
 

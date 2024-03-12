@@ -82,6 +82,7 @@
 
                 <button class="btn-green" *nzSpaceItem nz-button>
                   <a
+                    *ngIf="userInformation"
                     href="https://api.whatsapp.com/send?phone={{
                       userInformation.numberPhone
                     }}&text=Hola%21%20{{ userInformation.names }}"
@@ -403,9 +404,11 @@
 
 <div id="pdf">
   <div class="body">
-    <div class="contenedor">
+    <div class="contenedor" *ngIf="userInformation">
       <h2 class="mrg-0">¡Hola!</h2>
-      <h2 style="color: black" class="mrg-0">{{ userInformation.surnames }}</h2>
+      <h2 style="color: black" class="mrg-0">
+        {{ userInformation?.surnames }}
+      </h2>
       <span class="mrg-0"
         >{{ userInformation.city.valor }},
         {{ userInformation.state.valor }}</span
@@ -470,9 +473,9 @@
             <p class="mrg-0">
               {{ certificate.description }}
             </p>
-            <a [href]="certificate.url" target="_blank" class="mrg-0">{{
-              certificate.url
-            }}</a>
+            <a [href]="certificate.url" target="_blank" class="mrg-0"
+              >Ver certificado</a
+            >
           </div>
           <br />
         </div>
