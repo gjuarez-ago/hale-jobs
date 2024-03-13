@@ -282,7 +282,7 @@ export class SideMenuRh implements OnInit {
 
       
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/view-worker/${element.id}`])
+      this.router.createUrlTree([`/dashboard/view-worker/${element}`])
     );
     window.open('#' + url, '_blank');
   }
