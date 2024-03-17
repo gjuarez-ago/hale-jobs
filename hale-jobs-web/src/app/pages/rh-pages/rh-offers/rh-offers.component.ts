@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
@@ -103,7 +104,8 @@ export class RhOffersComponent implements OnInit {
     private message: NzMessageService,
     private router: Router,
     private ngxSpinner: NgxSpinnerService,
-    private notificationService: NzNotificationService
+    private notificationService: NzNotificationService,
+    private readonly title: Title
   ) {
     this.isLoadingGeneral = false;
 
@@ -142,6 +144,7 @@ export class RhOffersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.title.setTitle('Hale | Mis ofertas');
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;

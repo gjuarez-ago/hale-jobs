@@ -20,14 +20,12 @@ import { WorkersService } from 'src/app/services/workers.service';
   styleUrls: ['./rh-search-workers.component.css'],
 })
 export class RhSearchWorkersComponent implements OnInit {
+  public user: User | undefined;
+  public userId: any;
 
-  public user: User| undefined;
-  public userId : any;
-
-  
   // * Variables de la tabla
   public data: any[] = [];
-  public pageSize: number = 10 ;
+  public pageSize: number = 10;
   public current: number = 1;
   public subscriptions: Subscription[] = [];
   public total: number = 0;
@@ -54,11 +52,9 @@ export class RhSearchWorkersComponent implements OnInit {
   public listRangeAmount: any[] = [];
   public listCities: any[] = [];
   citySelected: any;
-  stateSelected : any;
+  stateSelected: any;
   public isLoadingResponse = false;
-  listOffers : any[] = [];
-
-
+  listOffers: any[] = [];
 
   public psResponseEmailForm!: FormGroup;
   public visiblePsStatusOffer: boolean = false;
@@ -72,11 +68,10 @@ export class RhSearchWorkersComponent implements OnInit {
     private router: Router,
     private ngxSpinner: NgxSpinnerService,
     private userService: WorkersService,
-    private offerService : OfferService,
-    private genericService : GenericService,
-    private readonly title: Title,   
-    private historyService : HistoryService
-
+    private offerService: OfferService,
+    private genericService: GenericService,
+    private readonly title: Title,
+    private historyService: HistoryService
   ) {
     this.validateForm = this.fb.group({
       jobTitle: [''],
@@ -96,15 +91,8 @@ export class RhSearchWorkersComponent implements OnInit {
           Validators.minLength(10),
         ],
       ],
-      offer: [
-        '',
-        [
-          Validators.required
-        ],
-      ],
+      offer: ['', [Validators.required]],
     });
-
-    
   }
 
   ngOnInit(): void {
@@ -117,14 +105,12 @@ export class RhSearchWorkersComponent implements OnInit {
       this.getModWorks();
       this.getUsersPaginate();
       this.getOffers();
-      this.title.setTitle("Búsqueda de personal")
-
-
+      this.title.setTitle('Hale | Buscar personal');
     } else {
-      this.router.navigateByUrl("/auth/login");
+      this.router.navigateByUrl('/auth/login');
     }
 
-    this.loader();   
+    this.loader();
   }
 
   public loader() {
@@ -166,7 +152,7 @@ export class RhSearchWorkersComponent implements OnInit {
           salary: this.validateForm.value['salary']
             ? this.validateForm.value['salary']
             : '',
-            findJob: this.validateForm.value['findJob']
+          findJob: this.validateForm.value['findJob']
             ? this.validateForm.value['findJob']
             : '',
           state: this.validateForm.value['state']
@@ -207,7 +193,6 @@ export class RhSearchWorkersComponent implements OnInit {
     this.data = [];
     this.total = 0;
 
-
     this.ngxSpinner.show();
     let form = this.validateForm.value;
 
@@ -244,34 +229,27 @@ export class RhSearchWorkersComponent implements OnInit {
     );
   }
 
-  public navigateViewJob(element : any) {   
+  public navigateViewJob(element: any) {
     this.historyService.addchange(element);
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/view-worker/${element.id}`]));
-       window.open('#' + url, '_blank');        
+      this.router.createUrlTree([`/dashboard/view-worker/${element.id}`])
+    );
+    window.open('#' + url, '_blank');
   }
-
-
-
-
-
-
 
   createMessage(type: string, message: string): void {
     this.message.create(type, message);
   }
 
-
-  provinceChange(value:any): void {
-    if(value) {
+  provinceChange(value: any): void {
+    if (value) {
       this.citySelected = undefined;
       this.getCities(value);
-    }else {
+    } else {
       this.listCities = [];
       this.citySelected = undefined;
     }
   }
-
 
   // Llenar catalogos
 
@@ -279,108 +257,110 @@ export class RhSearchWorkersComponent implements OnInit {
     this.isLoadingGeneral = true;
     this.genericService.getAllTypeOfJobs().subscribe(
       (response: any) => {
-      
         this.listModwork = response.map((prop: any, key: any) => {
           return {
             ...prop,
             key: key + 1,
           };
-        }); 
-        this.isLoadingGeneral = false;       
+        });
+        this.isLoadingGeneral = false;
       },
       (errorResponse: HttpErrorResponse) => {
-        this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al recuperar los estados'
+        );
         this.isLoadingGeneral = false;
       }
-    )
+    );
   }
 
-  
   getStates() {
     this.isLoadingGeneral = true;
     this.genericService.getAllStates().subscribe(
       (response: any) => {
-       
         this.listStates = response.map((prop: any, key: any) => {
           return {
             ...prop,
             key: key + 1,
           };
-        }); 
-        this.isLoadingGeneral = false;       
+        });
+        this.isLoadingGeneral = false;
       },
       (errorResponse: HttpErrorResponse) => {
-        this.message.create("error", 'Ha ocurrido un error al recuperar los estados');
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al recuperar los estados'
+        );
         this.isLoadingGeneral = false;
       }
-    )
+    );
   }
 
   public getRangeAmount() {
     this.isLoadingGeneral = true;
     this.subscriptions.push(
-      this.genericService
-        .getAllRangeAmount()
-        .subscribe(
-          (response: any) => {
-            this.listRangeAmount = response;
-            this.isLoadingGeneral = false;
-          },
-          (errorResponse: HttpErrorResponse) => {
-            this.isLoadingGeneral = false;
-            this.message.create('error', errorResponse.error.message);
-          }
-        )
+      this.genericService.getAllRangeAmount().subscribe(
+        (response: any) => {
+          this.listRangeAmount = response;
+          this.isLoadingGeneral = false;
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.isLoadingGeneral = false;
+          this.message.create('error', errorResponse.error.message);
+        }
+      )
     );
   }
 
-
-  getCities(p : any) {
+  getCities(p: any) {
     this.isLoadingGeneral = true;
     this.genericService.getAllCities(p).subscribe(
       (response: any) => {
-      
         this.listCities = response.map((prop: any, key: any) => {
           return {
             ...prop,
             key: key + 1,
           };
-        });        
+        });
         this.isLoadingGeneral = false;
       },
       (errorResponse: HttpErrorResponse) => {
-        this.message.create("error", 'Ha ocurrido un error al recuperar los municipios');
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al recuperar los municipios'
+        );
         this.isLoadingGeneral = false;
       }
-    )
+    );
   }
 
   getOffers() {
     this.isLoadingGeneral = true;
     this.offerService.getOfferByUserId(this.userId).subscribe(
       (response: any) => {
-      
         this.listOffers = response.map((prop: any, key: any) => {
           return {
             ...prop,
             key: key + 1,
           };
-        }); 
-        this.isLoadingGeneral = false;       
+        });
+        this.isLoadingGeneral = false;
       },
       (errorResponse: HttpErrorResponse) => {
-        this.message.create("error", 'Ha ocurrido un error al recuperar las ofertas');
+        this.message.create(
+          'error',
+          'Ha ocurrido un error al recuperar las ofertas'
+        );
         this.isLoadingGeneral = false;
       }
-    )
+    );
   }
 
-
-  public cutDescription(desc : any) {
-    return desc.substring(0, 200) + ".....";
+  public cutDescription(desc: any) {
+    return desc.substring(0, 200) + '.....';
   }
 
-  
   public showModalMessagePostulate(item: any) {
     this.visiblePsStatusOffer = true;
     this.postulateP = item;
@@ -408,34 +388,37 @@ export class RhSearchWorkersComponent implements OnInit {
 
     this.ngxSpinner.show();
     this.subscriptions.push(
-      this.offerService.messageUSerPostulate({ ...form, offerId: form.offer, status: 0, userId: this.postulateP.id }).subscribe(
-        (response: any) => {
-          this.ngxSpinner.hide();
-          this.closeModalMessagePostulate();
-          this.createMessage('success', 'Mensaje enviado :)');
+      this.offerService
+        .messageUSerPostulate({
+          ...form,
+          offerId: form.offer,
+          status: 0,
+          userId: this.postulateP.id,
+        })
+        .subscribe(
+          (response: any) => {
+            this.ngxSpinner.hide();
+            this.closeModalMessagePostulate();
+            this.createMessage('success', 'Mensaje enviado :)');
 
-          this.isLoadingResponse = false;
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.ngxSpinner.hide();
-          this.isLoadingResponse = false;
-          this.message.create('error', errorResponse.error.message);
-        }
-      )
+            this.isLoadingResponse = false;
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.ngxSpinner.hide();
+            this.isLoadingResponse = false;
+            this.message.create('error', errorResponse.error.message);
+          }
+        )
     );
   }
 
-
-  public getImage(e : any) {
-
-    if(e == null) {
-      return "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/no-profile-picture-icon.png";
+  public getImage(e: any) {
+    if (e == null) {
+      return 'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/no-profile-picture-icon.png';
     }
 
     return e;
   }
-
-
 }
 
 interface Person {

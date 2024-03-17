@@ -11,18 +11,24 @@ import { OfferService } from 'src/app/services/offer.service';
 import { FormBuilder } from '@angular/forms';
 import { formatDistance } from 'date-fns';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Color, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
-
+import {
+  Color,
+  Label,
+  monkeyPatchChartJsLegend,
+  monkeyPatchChartJsTooltip,
+  SingleDataSet,
+} from 'ng2-charts';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-rh-dashboard',
   templateUrl: './rh-dashboard.component.html',
-  styleUrls: ['./rh-dashboard.component.css']
+  styleUrls: ['./rh-dashboard.component.css'],
 })
 export class RhDashboardComponent implements OnInit {
   userId: any;
   user: any;
-  
+
   constructor(
     private companyService: CompanyService,
     private genericService: GenericService,
@@ -31,34 +37,40 @@ export class RhDashboardComponent implements OnInit {
     private modal: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    private ngxSpinner: NgxSpinnerService
-  ) {    monkeyPatchChartJsTooltip();
+    private ngxSpinner: NgxSpinnerService,
+    private readonly title: Title
+  ) {
+    monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
 
   ngOnInit(): void {
+    this.title.setTitle('Hale | Dashboard');
 
     if (this.authenticationService.isUserLoggedIn()) {
       this.user = this.authenticationService.getUserFromLocalCache();
       this.userId = this.user.id;
-    } 
-    
+    }
+
     this.ngxSpinner.show();
 
     setTimeout(() => {
       this.ngxSpinner.hide();
     }, 2000);
-    
-
-
   }
 
-  
   lineChartData: ChartDataSets[] = [
     { data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices' },
   ];
 
-  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];
+  lineChartLabels: Label[] = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+  ];
 
   lineChartOptions = {
     responsive: true,
@@ -72,11 +84,11 @@ export class RhDashboardComponent implements OnInit {
   ];
 
   lineChartLegend = true;
-  lineChartPlugins : any = [];
-  lineChartType : ChartType = 'line';
+  lineChartPlugins: any = [];
+  lineChartType: ChartType = 'line';
 
   //2nd
-  
+
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -91,14 +103,25 @@ export class RhDashboardComponent implements OnInit {
   barChartOptions: ChartOptions = {
     responsive: true,
   };
-  barChartLabels: Label[] = ['Apple', 'Banana', 'Kiwifruit', 'Blueberry', 'Orange', 'Grapes'];
+  barChartLabels: Label[] = [
+    'Apple',
+    'Banana',
+    'Kiwifruit',
+    'Blueberry',
+    'Orange',
+    'Grapes',
+  ];
   barChartType: ChartType = 'bar';
   barChartLegend = true;
   barChartPlugins = [];
-  barChartColors: Color[] = [{borderColor: 'rgba(2, 11, 110, 1)',backgroundColor: 'rgba(90, 152, 252, 3)'}];
-
-  barChartData: ChartDataSets[] = [
-    { data: [45, 37, 60, 70, 46, 33], label: 'Best Fruits' }
+  barChartColors: Color[] = [
+    {
+      borderColor: 'rgba(2, 11, 110, 1)',
+      backgroundColor: 'rgba(90, 152, 252, 3)',
+    },
   ];
 
+  barChartData: ChartDataSets[] = [
+    { data: [45, 37, 60, 70, 46, 33], label: 'Best Fruits' },
+  ];
 }
